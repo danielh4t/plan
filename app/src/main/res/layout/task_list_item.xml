@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="app.stacq.plan.ui.tasks.TasksViewModel" />
+
+        <variable
+            name="task"
+            type="app.stacq.plan.data.model.Task" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp">
+
+        <CheckBox
+            android:id="@+id/task_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:button="@drawable/custom_checkbox"
+            android:checked="@{task.completed}"
+            android:onCheckedChanged="@{() -> viewmodel.complete(task)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:taskCategoryColor="@{task}" />
+
+        <TextView
+            android:id="@+id/task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{task.title}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/task_category"
+            app:layout_constraintStart_toEndOf="@id/task_completed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@string/task_title" />
+
+        <TextView
+            android:id="@+id/task_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_completed"
+            app:layout_constraintTop_toBottomOf="@id/task_title"
+            app:taskCategory="@{task}"
+            tools:text="@string/task_category" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

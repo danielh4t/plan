@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_tasks">
+
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="app.stacq.plan.ui.tasks.TasksFragment"
+        android:label="@string/menu_tasks"
+        tools:layout="@layout/fragment_tasks" />
+
+    <fragment
+        android:id="@+id/nav_input"
+        android:name="app.stacq.plan.ui.input.InputFragment"
+        android:label="@string/input" >
+        <action
+            android:id="@+id/action_inputFragment_to_nav_tasks"
+            app:destination="@id/nav_tasks" />
+    </fragment>
+</navigation>
