@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import app.stacq.plan.databinding.ActivityCreateBinding
+import coil.load
 
 class CreateActivity : AppCompatActivity() {
 
