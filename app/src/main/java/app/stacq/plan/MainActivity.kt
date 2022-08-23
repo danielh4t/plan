@@ -1,8 +1,10 @@
 package app.stacq.plan
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,9 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         binding.appBarMain.fab.setOnClickListener {
-            //navController.navigate(R.id.nav_input)
+            startActivity(Intent(this, CreateActivity::class.java))
         }
     }
 
