@@ -13,7 +13,8 @@ import app.stacq.plan.data.model.Task
 @BindingAdapter("taskCategory")
 fun TextView.getTaskCategoryTitle(item: Task?) {
     item?.let {
-        text = item.category.name
+        val category = item.category.name.lowercase().replaceFirstChar { it.uppercase() }
+        text = category
     }
 }
 
