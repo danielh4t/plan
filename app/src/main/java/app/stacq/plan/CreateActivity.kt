@@ -13,6 +13,9 @@ class CreateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create)
+        binding.createImage.load("https://plan-node-api.herokuapp.com/images/image.png") {
+            placeholder(R.color.purple_500)
+        }
 
     }
 }
