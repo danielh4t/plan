@@ -1,5 +1,6 @@
 package app.stacq.plan
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         binding.appBarMain.fab.setOnClickListener {
-            //navController.navigate(R.id.nav_input)
+            startActivity(Intent(this, CreateActivity::class.java))
         }
     }
 
