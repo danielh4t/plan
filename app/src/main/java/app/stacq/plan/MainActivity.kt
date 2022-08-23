@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         binding.appBarMain.fab.setOnClickListener {
-            navController.navigate(R.id.nav_input)
+            //navController.navigate(R.id.nav_input)
         }
     }
 

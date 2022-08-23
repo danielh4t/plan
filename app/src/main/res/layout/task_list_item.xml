@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp">
+        android:onClick="@{() -> viewmodel.openTask(task.id)}">
 
         <CheckBox
             android:id="@+id/task_completed"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toEndOf="@id/task_completed"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@string/task_title" />
+            tools:text="@string/task" />
 
         <TextView
             android:id="@+id/task_category"

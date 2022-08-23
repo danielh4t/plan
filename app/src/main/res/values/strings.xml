@@ -4,9 +4,9 @@
     <string name="nav_header_subtitle">danielh4t@pm.me</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="task_title">Task</string>
+    <string name="tasks">Tasks</string>
+    <string name="task">Task</string>
     <string name="task_category">Category</string>
-    <string name="menu_tasks">Tasks</string>
     <string name="add">add</string>
     <string name="save">save</string>
     <string name="input">input</string>

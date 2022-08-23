@@ -13,9 +13,12 @@ class TasksLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
 
-
     override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
         taskDao.getTasks()
+    }
+
+    override suspend fun getTaskById(taskId: String): LiveData<Task> = withContext(ioDispatcher) {
+        taskDao.getTaskById(taskId)
     }
 
     override suspend fun insert(task: Task) = withContext(ioDispatcher) {

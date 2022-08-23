@@ -15,6 +15,16 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun getTasks(): LiveData<List<Task>>
 
+
+    /**
+     * Select all tasks from the task_table.
+     *
+     * @return all tasks.
+     */
+    @Query("SELECT * FROM task_table WHERE id = :taskId")
+    fun getTaskById(taskId: String): LiveData<Task>
+
+
     /**
      * Insert a task in the database.
      * If the task already exists, replace it.

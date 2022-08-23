@@ -10,6 +10,8 @@ interface TasksDataSource {
 
     suspend fun getTasks(): LiveData<List<Task>>
 
+    suspend fun getTaskById(taskId: String): LiveData<Task>
+
     suspend fun insert(task: Task)
 
     suspend fun update(task: Task)

@@ -20,6 +20,10 @@ class TasksRepository(
         return tasksLocalDataSource.getTasks()
     }
 
+    override suspend fun getTaskById(taskId: String): LiveData<Task> {
+        return tasksLocalDataSource.getTaskById(taskId)
+    }
+
     override suspend fun insert(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.insert(task)
     }

@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
-import app.stacq.plan.util.ViewModelFactory
+import app.stacq.plan.ui.task.TaskViewModelFactory
 import kotlinx.coroutines.Dispatchers
 
 class TasksFragment : Fragment() {
 
     private var _binding: FragmentTasksBinding? = null
-
 
     private val binding get() = _binding!!
 
@@ -33,19 +33,29 @@ class TasksFragment : Fragment() {
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
 
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
-        val viewModelFactory = ViewModelFactory(tasksRepository)
-        val tasksViewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
+        val taskViewModelFactory = TasksViewModelFactory(tasksRepository)
+        val tasksViewModel = ViewModelProvider(this, taskViewModelFactory)[TasksViewModel::class.java]
         val taskAdapter = TaskAdapter(tasksViewModel)
+
+
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
+        binding.lifecycleOwner = this
+        binding.viewmodel = tasksViewModel
+        binding.taskList.adapter = taskAdapter
+
         tasksViewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
                 taskAdapter.submitList(it)
             }
         }
 
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
-        binding.lifecycleOwner = this
-        binding.viewmodel = tasksViewModel
-        binding.taskList.adapter = taskAdapter
+        tasksViewModel.navigateTask.observe(viewLifecycleOwner) { taskId ->
+            taskId?.let {
+                val action = TasksFragmentDirections.actionNavTasksToNavTask(taskId)
+                this.findNavController().navigate(action)
+                tasksViewModel.doneNavigatingToTask()
+            }
+        }
 
         return binding.root
     }
