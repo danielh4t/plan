@@ -16,10 +16,9 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         emitSource(tasksRepository.getTasks())
     }
 
-    fun save() {
+    fun save(task: Task) {
         viewModelScope.launch {
-//            val task = Task(title = newTaskTitle.get().toString(), category = Category.CODE)
-//            tasksRepository.insert(task)
+            tasksRepository.insert(task)
         }
     }
 

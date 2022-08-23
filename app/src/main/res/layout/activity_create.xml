@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="app.stacq.plan.ui.tasks.TasksViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,6 +43,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
                 android:hint="@string/title"
                 tools:ignore="TextContrastCheck" />
 
