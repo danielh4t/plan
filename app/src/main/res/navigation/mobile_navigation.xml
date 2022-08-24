@@ -21,5 +21,8 @@
         <argument
             android:name="taskId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_nav_task_to_nav_tasks"
+            app:destination="@id/nav_tasks" />
     </fragment>
 </navigation>

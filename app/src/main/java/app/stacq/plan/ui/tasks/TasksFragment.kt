@@ -13,13 +13,11 @@ import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
-import app.stacq.plan.ui.task.TaskViewModelFactory
 import kotlinx.coroutines.Dispatchers
 
 class TasksFragment : Fragment() {
 
     private var _binding: FragmentTasksBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -54,7 +52,7 @@ class TasksFragment : Fragment() {
             taskId?.let {
                 val action = TasksFragmentDirections.actionNavTasksToNavTask(taskId)
                 this.findNavController().navigate(action)
-                tasksViewModel.doneNavigatingToTask()
+                tasksViewModel.closeTask()
             }
         }
 

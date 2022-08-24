@@ -31,9 +31,8 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         _navigateToTask.value = taskId
     }
 
-    fun doneNavigatingToTask() {
+    fun closeTask() {
         _navigateToTask.value = null
     }
-
 
 }
