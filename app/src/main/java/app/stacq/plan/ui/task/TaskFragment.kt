@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
@@ -24,6 +25,8 @@ class TaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        _binding = FragmentTaskBinding.inflate(inflater, container, false)
+
         val args = TaskFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
 
@@ -33,10 +36,16 @@ class TaskFragment : Fragment() {
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
         val taskViewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
         val taskViewModel = ViewModelProvider(this, taskViewModelFactory)[TaskViewModel::class.java]
-
-        _binding = FragmentTaskBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
         binding.viewmodel = taskViewModel
+        binding.lifecycleOwner = this
+
+        taskViewModel.task.observe(viewLifecycleOwner) { task ->
+            // task is deleted navigate to tasks
+            task ?: run {
+                val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+                this.findNavController().navigate(action)
+            }
+        }
 
         return binding.root
     }

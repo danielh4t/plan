@@ -13,4 +13,6 @@
     <string name="create_fab">create action</string>
     <string name="create_image">create image</string>
     <string name="title">Title</string>
+    <string name="delete">delete</string>
+    <string name="content_delete">delete items</string>
 </resources>
