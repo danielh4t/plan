@@ -15,7 +15,7 @@
         tools:showIn="@layout/activity_create">
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/create_image"
             android:layout_width="match_parent"
             android:layout_height="256dp"
@@ -23,10 +23,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:contentDescription="@string/create_image"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@color/purple_500" />
+            app:srcCompat="@color/purple_500"
+            app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/title_layout"

@@ -11,4 +11,11 @@
     <color name="hack">#00CC8F</color>
     <color name="life">#F6FFA4</color>
     <color name="work">#FF5C58</color>
+    <!-- placeholder colors -->
+    <color name="placeholder_0">#5352ED</color>
+    <color name="placeholder_1">#80FFA502</color>
+    <color name="placeholder_2">#801E90FF</color>
+    <color name="placeholder_3">#FF7F50</color>
+    <color name="placeholder_4">#80FF837B</color>
+    <color name="placeholder_5">#80FFE9C8</color>
 </resources>
