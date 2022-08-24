@@ -27,6 +27,8 @@ class TasksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
@@ -34,13 +36,12 @@ class TasksFragment : Fragment() {
 
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
         val taskViewModelFactory = TasksViewModelFactory(tasksRepository)
-        val tasksViewModel = ViewModelProvider(this, taskViewModelFactory)[TasksViewModel::class.java]
-        val taskAdapter = TaskAdapter(tasksViewModel)
-
-
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
-        binding.lifecycleOwner = this
+        val tasksViewModel =
+            ViewModelProvider(this, taskViewModelFactory)[TasksViewModel::class.java]
         binding.viewmodel = tasksViewModel
+        binding.lifecycleOwner = this
+
+        val taskAdapter = TaskAdapter(tasksViewModel)
         binding.taskList.adapter = taskAdapter
 
         tasksViewModel.tasks.observe(viewLifecycleOwner) {

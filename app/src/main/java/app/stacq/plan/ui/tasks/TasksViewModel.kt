@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 
 class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
-
     private val _navigateToTask = MutableLiveData<String?>()
     val navigateTask: LiveData<String?> = _navigateToTask
 
