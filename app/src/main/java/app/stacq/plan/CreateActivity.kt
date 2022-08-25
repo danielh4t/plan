@@ -2,6 +2,7 @@ package app.stacq.plan
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -42,6 +43,10 @@ class CreateActivity : AppCompatActivity() {
         val categories = Category.values().map { it.name.titleCase() }.toTypedArray()
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_menu_item, categories)
         binding.category.setAdapter(arrayAdapter)
+        binding.category.setOnFocusChangeListener { view, _ ->
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
 
         binding.createFab.setOnClickListener {
             val title: String = binding.title.text.toString()
