@@ -57,7 +57,7 @@ interface TaskDao {
      * @param taskId id of the task
      * @param isCompleted status of task to be updated
      */
-    @Query("UPDATE task_table SET isCompleted = :isCompleted WHERE id = :taskId")
-    suspend fun updateTaskIsCompletedById(taskId: String, isCompleted: Boolean)
+    @Query("UPDATE task_table SET isCompleted = :isCompleted, completed_at = :completedAt WHERE id = :taskId")
+    suspend fun updateTaskIsCompletedById(taskId: String, isCompleted: Boolean, completedAt: Long)
 
 }

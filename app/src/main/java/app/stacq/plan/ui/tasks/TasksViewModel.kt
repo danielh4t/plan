@@ -23,7 +23,7 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
 
     fun complete(task: Task) {
         viewModelScope.launch {
-            tasksRepository.complete(task.id, !task.isCompleted)
+            tasksRepository.complete(task.id, !task.isCompleted, System.currentTimeMillis())
         }
     }
 
