@@ -9,7 +9,6 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.IMAGES_MAX
 import app.stacq.plan.data.source.remote.REMOTE_ENDPOINT
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.ActivityCreateBinding
@@ -45,29 +44,29 @@ class CreateActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-        val seed = (0..IMAGES_MAX).random()
-        val image = imageUrl(seed)
-        val placeholder = placeHolder(seed)
+        val max = Category.values().size - 1
+        val seed = (0..max).random()
+        val category = Category.values()[seed]
+        val image = imageUrl(category)
+        val placeholder = placeHolder(category)
         binding.createImage.load(image) {
             crossfade(true)
             placeholder(placeholder)
         }
     }
 
-    private fun imageUrl(seed: Int): String {
+    private fun imageUrl(category: Category): String {
         val endpoint = REMOTE_ENDPOINT
-        val file = "$seed.png"
+        val file = "${category.name.lowercase()}.png"
         return "$endpoint/images/$file"
     }
 
-    private fun placeHolder(seed: Int): Int {
-        return when (seed) {
-            1 -> R.color.placeholder_1
-            2 -> R.color.placeholder_2
-            3 -> R.color.placeholder_3
-            4 -> R.color.placeholder_4
-            5 -> R.color.placeholder_5
-            else -> R.color.placeholder_0
+    private fun placeHolder(category: Category): Int {
+        return when (category) {
+            Category.CODE -> R.color.placeholder_code
+            Category.HACK -> R.color.placeholder_hack
+            Category.LIFE -> R.color.placeholder_life
+            Category.WORK -> R.color.placeholder_work
         }
     }
 
