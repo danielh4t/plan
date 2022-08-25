@@ -8,11 +8,10 @@
     <string name="task">Task</string>
     <string name="task_category">Category</string>
     <string name="add">add</string>
-    <string name="save">save</string>
     <string name="create">create</string>
     <string name="create_fab">create action</string>
     <string name="create_image">create image</string>
     <string name="title">Title</string>
     <string name="delete">delete</string>
-    <string name="content_delete">delete items</string>
+    <string name="dropdown_icon">drop down icon</string>
 </resources>
