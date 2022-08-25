@@ -13,4 +13,5 @@
     <string name="create_image">create image</string>
     <string name="title">Title</string>
     <string name="delete">delete</string>
+    <string name="dropdown_icon">drop down icon</string>
 </resources>

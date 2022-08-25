@@ -2,6 +2,7 @@ package app.stacq.plan
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.ActivityCreateBinding
 import app.stacq.plan.ui.tasks.TasksViewModel
 import app.stacq.plan.ui.tasks.TasksViewModelFactory
+import app.stacq.plan.util.titleCase
 import coil.load
 import kotlinx.coroutines.Dispatchers
 
@@ -37,9 +39,14 @@ class CreateActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewmodel = tasksViewModel
 
+        val categories = Category.values().map { it.name.titleCase() }.toTypedArray()
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_menu_item, categories)
+        binding.category.setAdapter(arrayAdapter)
+
         binding.createFab.setOnClickListener {
             val title: String = binding.title.text.toString()
-            val task = Task(title = title, category = Category.CODE)
+            val category: Category = Category.valueOf(binding.category.text.toString())
+            val task = Task(title = title, category = category)
             tasksViewModel.save(task)
             startActivity(Intent(this, MainActivity::class.java))
         }
@@ -63,10 +70,10 @@ class CreateActivity : AppCompatActivity() {
 
     private fun placeHolder(category: Category): Int {
         return when (category) {
-            Category.CODE -> R.color.placeholder_code
-            Category.HACK -> R.color.placeholder_hack
-            Category.LIFE -> R.color.placeholder_life
-            Category.WORK -> R.color.placeholder_work
+            Category.Code -> R.color.placeholder_code
+            Category.Hack -> R.color.placeholder_hack
+            Category.Life -> R.color.placeholder_life
+            Category.Work -> R.color.placeholder_work
         }
     }
 

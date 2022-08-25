@@ -17,6 +17,6 @@ data class Task(
     val createdAt: Long = System.currentTimeMillis(),
 
     var title: String = "",
-    var category: Category = Category.LIFE,
+    var category: Category = Category.Code,
     var isCompleted: Boolean = false
 )
