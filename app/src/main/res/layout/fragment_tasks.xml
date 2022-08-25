@@ -24,5 +24,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
