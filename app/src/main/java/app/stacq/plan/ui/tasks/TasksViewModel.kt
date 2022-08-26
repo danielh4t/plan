@@ -1,12 +1,13 @@
 package app.stacq.plan.ui.tasks
 
-
 import androidx.lifecycle.*
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
 
-class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class TasksViewModel(
+    private val tasksRepository: TasksRepository
+) : ViewModel() {
 
     private val _navigateToTask = MutableLiveData<String?>()
     val navigateTask: LiveData<String?> = _navigateToTask

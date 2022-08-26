@@ -15,7 +15,6 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun getTasks(): LiveData<List<Task>>
 
-
     /**
      * Select all tasks from the task_table.
      *
