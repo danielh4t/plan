@@ -14,4 +14,5 @@
     <string name="title">Title</string>
     <string name="delete">delete</string>
     <string name="dropdown_icon">drop down icon</string>
+    <string name="text_empty_create">Empty create details</string>
 </resources>

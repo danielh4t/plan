@@ -15,12 +15,6 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         emitSource(tasksRepository.getTasks())
     }
 
-    fun save(task: Task) {
-        viewModelScope.launch {
-            tasksRepository.insert(task)
-        }
-    }
-
     fun complete(task: Task) {
         viewModelScope.launch {
             tasksRepository.complete(task.id, !task.isCompleted, System.currentTimeMillis())
