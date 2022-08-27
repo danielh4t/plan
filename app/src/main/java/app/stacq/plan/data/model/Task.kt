@@ -18,5 +18,8 @@ data class Task(
 
     var title: String = "",
     var category: Category = Category.Code,
-    var isCompleted: Boolean = false
+
+    var isCompleted: Boolean = false,
+    @ColumnInfo(name = "completed_at")
+    val completedAt: Long = 0
 )

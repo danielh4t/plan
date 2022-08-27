@@ -1,4 +1,4 @@
-package app.stacq.plan
+package app.stacq.plan.ui.create
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import app.stacq.plan.MainActivity
+import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
@@ -14,10 +16,9 @@ import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.REMOTE_ENDPOINT
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.ActivityCreateBinding
-import app.stacq.plan.ui.tasks.TasksViewModel
-import app.stacq.plan.ui.tasks.TasksViewModelFactory
 import app.stacq.plan.util.titleCase
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 
 class CreateActivity : AppCompatActivity() {
@@ -32,13 +33,13 @@ class CreateActivity : AppCompatActivity() {
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
 
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
-        val taskViewModelFactory = TasksViewModelFactory(tasksRepository)
-        val tasksViewModel =
-            ViewModelProvider(this, taskViewModelFactory)[TasksViewModel::class.java]
+        val createViewModelFactory = CreateViewModelFactory(tasksRepository)
+        val createViewModel =
+            ViewModelProvider(this, createViewModelFactory)[CreateViewModel::class.java]
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create)
         binding.lifecycleOwner = this
-        binding.viewmodel = tasksViewModel
+        binding.viewmodel = createViewModel
 
         val categories = Category.values().map { it.name.titleCase() }.toTypedArray()
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_menu_item, categories)
@@ -48,11 +49,19 @@ class CreateActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        binding.createFab.setOnClickListener {
+        binding.createFab.setOnClickListener { view ->
             val title: String = binding.title.text.toString()
-            val category: Category = Category.valueOf(binding.category.text.toString())
+            val categoryName: String = binding.category.text.toString()
+
+            if (title.isEmpty() or categoryName.isEmpty()) {
+                Snackbar.make(view, R.string.text_empty_create, Snackbar.LENGTH_LONG)
+                    .setAnchorView(view)
+                    .show()
+                return@setOnClickListener
+            }
+            val category: Category = Category.valueOf(categoryName)
             val task = Task(title = title, category = category)
-            tasksViewModel.save(task)
+            createViewModel.createTask(task)
             startActivity(Intent(this, MainActivity::class.java))
         }
 

@@ -36,8 +36,8 @@ class TasksRepository(
         tasksLocalDataSource.delete(task)
     }
 
-    override suspend fun complete(taskId: String, isCompleted: Boolean) = withContext(ioDispatcher) {
-        tasksLocalDataSource.complete(taskId, isCompleted)
-    }
-
+    override suspend fun complete(taskId: String, isCompleted: Boolean, completedAt: Long) =
+        withContext(ioDispatcher) {
+            tasksLocalDataSource.complete(taskId, isCompleted, completedAt)
+        }
 }

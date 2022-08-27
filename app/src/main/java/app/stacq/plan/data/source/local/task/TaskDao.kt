@@ -15,7 +15,6 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun getTasks(): LiveData<List<Task>>
 
-
     /**
      * Select all tasks from the task_table.
      *
@@ -57,7 +56,7 @@ interface TaskDao {
      * @param taskId id of the task
      * @param isCompleted status of task to be updated
      */
-    @Query("UPDATE task_table SET isCompleted = :isCompleted WHERE id = :taskId")
-    suspend fun updateTaskIsCompletedById(taskId: String, isCompleted: Boolean)
+    @Query("UPDATE task_table SET isCompleted = :isCompleted, completed_at = :completedAt WHERE id = :taskId")
+    suspend fun updateTaskIsCompletedById(taskId: String, isCompleted: Boolean, completedAt: Long)
 
 }
