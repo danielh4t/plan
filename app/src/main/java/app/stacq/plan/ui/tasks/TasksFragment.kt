@@ -42,8 +42,8 @@ class TasksFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val taskAdapter = TaskAdapter(tasksViewModel)
-        binding.taskList.adapter = taskAdapter
-        binding.taskList.addItemDecoration(
+        binding.tasksList.adapter = taskAdapter
+        binding.tasksList.addItemDecoration(
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin))
         )
 

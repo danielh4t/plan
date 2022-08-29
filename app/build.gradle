@@ -60,6 +60,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
     implementation 'androidx.databinding:databinding-common:7.2.2'
+    implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
@@ -73,5 +74,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    debugImplementation "androidx.fragment:fragment-testing:1.5.2"
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
