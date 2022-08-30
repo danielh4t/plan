@@ -1,17 +1,12 @@
-package app.stacq.plan
+package app.stacq.plan.ui.create
 
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.stacq.plan.ui.create.CreateActivity
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.core.Is.`is`
-import org.hamcrest.core.StringContains.containsString
+import app.stacq.plan.R
 import org.junit.Rule
 
 import org.junit.Test

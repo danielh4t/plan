@@ -1,6 +1,8 @@
 package app.stacq.plan.util
 
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import junit.framework.TestCase.assertEquals
+import org.hamcrest.Matchers.`is`
 import org.junit.Test
 
 class UtilUnitTest {
@@ -13,7 +15,7 @@ class UtilUnitTest {
 
         val actual: String = case.sentenceCase()
 
-        assertEquals(expected, actual)
+        assertThat(expected, `is`(actual))
     }
 
 }
