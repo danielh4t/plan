@@ -61,6 +61,9 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.3'
     implementation 'androidx.databinding:databinding-common:7.2.2'
     implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.7'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
@@ -68,6 +71,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'io.coil-kt:coil:2.2.0'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
