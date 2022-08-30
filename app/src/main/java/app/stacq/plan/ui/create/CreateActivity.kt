@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.MainActivity
+import app.stacq.plan.ui.main.MainActivity
 import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
