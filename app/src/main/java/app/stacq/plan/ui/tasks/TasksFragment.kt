@@ -8,13 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
-import app.stacq.plan.util.MarginItemDecoration
+import app.stacq.plan.util.ui.MarginItemDecoration
 import kotlinx.coroutines.Dispatchers
 
 class TasksFragment : Fragment() {
@@ -42,8 +41,8 @@ class TasksFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val taskAdapter = TaskAdapter(tasksViewModel)
-        binding.taskList.adapter = taskAdapter
-        binding.taskList.addItemDecoration(
+        binding.tasksList.adapter = taskAdapter
+        binding.tasksList.addItemDecoration(
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin))
         )
 

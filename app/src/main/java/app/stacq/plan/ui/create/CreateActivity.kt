@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.MainActivity
+import app.stacq.plan.ui.main.MainActivity
 import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
@@ -16,7 +16,7 @@ import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.REMOTE_ENDPOINT
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.ActivityCreateBinding
-import app.stacq.plan.util.titleCase
+import app.stacq.plan.util.sentenceCase
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +41,7 @@ class CreateActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewmodel = createViewModel
 
-        val categories = Category.values().map { it.name.titleCase() }.toTypedArray()
+        val categories = Category.values().map { it.name.sentenceCase() }.toTypedArray()
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_menu_item, categories)
         binding.category.setAdapter(arrayAdapter)
         binding.category.setOnFocusChangeListener { view, _ ->

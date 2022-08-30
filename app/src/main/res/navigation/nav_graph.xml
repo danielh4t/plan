@@ -8,7 +8,7 @@
         android:id="@+id/nav_tasks"
         android:name="app.stacq.plan.ui.tasks.TasksFragment"
         android:label="@string/tasks"
-        tools:layout="@layout/fragment_tasks" >
+        tools:layout="@layout/fragment_tasks">
         <action
             android:id="@+id/action_nav_tasks_to_nav_task"
             app:destination="@id/nav_task" />
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/nav_task"
         android:name="app.stacq.plan.ui.task.TaskFragment"
-        android:label="@string/task" >
+        android:label="@string/task">
         <argument
             android:name="taskId"
             app:argType="string" />

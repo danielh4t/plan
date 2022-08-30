@@ -1,4 +1,4 @@
-package app.stacq.plan.util
+package app.stacq.plan.util.ui
 
 import android.graphics.Rect
 import android.view.View

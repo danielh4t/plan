@@ -8,13 +8,13 @@ import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
-import app.stacq.plan.util.titleCase
+import app.stacq.plan.util.sentenceCase
 
 
 @BindingAdapter("taskCategory")
 fun TextView.getTaskCategoryTitle(item: Task?) {
     item?.let {
-        val category = item.category.name.titleCase()
+        val category = item.category.name.sentenceCase()
         text = category
     }
 }
