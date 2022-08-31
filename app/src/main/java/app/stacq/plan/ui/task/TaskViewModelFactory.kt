@@ -6,7 +6,6 @@ package app.stacq.plan.ui.task
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.ui.tasks.TasksViewModel
 
 
 class TaskViewModelFactory(private val tasksRepository: TasksRepository, private val taskId: String)

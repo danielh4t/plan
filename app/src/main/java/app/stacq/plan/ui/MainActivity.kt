@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.main
+package app.stacq.plan.ui
 
 import android.os.Bundle
 import android.view.Menu

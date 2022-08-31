@@ -68,10 +68,12 @@ interface TaskDao {
      * When updating a row with a value already set in a column,
      * replaces the old value with the new one.
      *
-     * @param task new value to write
+     * @param id task id
+     * @param title new task title
+     * @param categoryId new task category id
      */
-    @Update
-    suspend fun update(task: Task)
+    @Query("UPDATE task SET title = :title, category_id = :categoryId WHERE id = :id")
+    suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
 
     /**
      * Delete a task.

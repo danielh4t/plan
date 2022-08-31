@@ -19,15 +19,16 @@ import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
-import app.stacq.plan.util.sentenceCase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 
 class CreateFragment : Fragment() {
 
     private var _binding: FragmentCreateBinding? = null
-
     private val binding get() = _binding!!
+
+    private lateinit var viewModelFactory: CreateViewModelFactory
+    private lateinit var viewModel: CreateViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,14 +46,14 @@ class CreateFragment : Fragment() {
 
         val tasksRepository = TasksRepository(tasksLocalDataSource, Dispatchers.Main)
         val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
-        val createViewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
-        val createViewModel =
-            ViewModelProvider(this, createViewModelFactory)[CreateViewModel::class.java]
+        viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[CreateViewModel::class.java]
 
-        binding.viewmodel = createViewModel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        createViewModel.categories.observe(viewLifecycleOwner) {
+        viewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
                 val categories = it.map { category -> category.name }
                 val arrayAdapter =
@@ -71,17 +72,17 @@ class CreateFragment : Fragment() {
             val categoryName: String = binding.category.text.toString()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
-                Snackbar.make(view, R.string.text_empty_create, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, R.string.empty_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(view)
                     .show()
                 return@setOnClickListener
             }
 
-            val categories: List<Category>? = createViewModel.categories.value
+            val categories: List<Category>? = viewModel.categories.value
             val category: Category? = categories?.firstOrNull { it.name == categoryName }
             if (category != null) {
                 val task = Task(title = title, categoryId = category.id)
-                createViewModel.createTask(task)
+                viewModel.createTask(task)
             }
             val action = CreateFragmentDirections.actionNavCreateToNavTasks()
             this.findNavController().navigate(action)

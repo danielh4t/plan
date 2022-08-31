@@ -36,8 +36,12 @@ class TasksLocalDataSource(
         taskDao.insert(task)
     }
 
-    override suspend fun update(task: Task) = withContext(ioDispatcher) {
-        taskDao.update(task)
+    override suspend fun updateTaskTitleAndCategoryById(
+        id: String,
+        title: String,
+        categoryId: Int
+    ) = withContext(ioDispatcher) {
+        taskDao.updateTaskTitleAndCategoryById(id, title, categoryId)
     }
 
     override suspend fun delete(task: Task) = withContext(ioDispatcher) {

@@ -22,6 +22,9 @@ class TasksFragment : Fragment() {
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModelFactory: TasksViewModelFactory
+    private lateinit var viewModel: TasksViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,15 +36,14 @@ class TasksFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
-        val taskViewModelFactory = TasksViewModelFactory(tasksRepository)
-        val tasksViewModel =
-            ViewModelProvider(this, taskViewModelFactory)[TasksViewModel::class.java]
-        binding.viewmodel = tasksViewModel
+
+        viewModelFactory = TasksViewModelFactory(tasksRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        val taskAdapter = TaskAdapter(tasksViewModel)
+        val taskAdapter = TaskAdapter(viewModel)
         binding.tasksList.adapter = taskAdapter
         binding.tasksList.addItemDecoration(
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin))
@@ -52,17 +54,17 @@ class TasksFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-        tasksViewModel.tasks.observe(viewLifecycleOwner) {
+        viewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
                 taskAdapter.submitList(it)
             }
         }
 
-        tasksViewModel.navigateTask.observe(viewLifecycleOwner) { taskId ->
+        viewModel.navigateTask.observe(viewLifecycleOwner) { taskId ->
             taskId?.let {
                 val action = TasksFragmentDirections.actionNavTasksToNavTask(taskId)
                 this.findNavController().navigate(action)
-                tasksViewModel.closeTask()
+                viewModel.closeTask()
             }
         }
 
