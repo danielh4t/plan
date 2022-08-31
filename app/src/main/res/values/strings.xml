@@ -15,5 +15,6 @@
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_failure">Sign In Failure</string>
     <string name="content_description_sign_in">click to sign in</string>
-    <string name="sign_in">Sign In</string>>
+    <string name="sign_in">Sign In</string>
+    <string name="completed">Completed</string>>
 </resources>
