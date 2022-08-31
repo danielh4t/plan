@@ -16,6 +16,7 @@ import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 import kotlinx.coroutines.Dispatchers
 
+
 class TasksFragment : Fragment() {
 
     private var _binding: FragmentTasksBinding? = null
@@ -46,6 +47,11 @@ class TasksFragment : Fragment() {
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin))
         )
 
+        binding.createFab.setOnClickListener {
+            val action = TasksFragmentDirections.actionNavTasksToNavCreate()
+            this.findNavController().navigate(action)
+        }
+
         tasksViewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
                 taskAdapter.submitList(it)
@@ -59,6 +65,7 @@ class TasksFragment : Fragment() {
                 tasksViewModel.closeTask()
             }
         }
+
 
         return binding.root
     }

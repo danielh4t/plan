@@ -1,13 +1,16 @@
 package app.stacq.plan.ui.create
 
-import android.content.Intent
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.ui.main.MainActivity
+import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
@@ -16,20 +19,25 @@ import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.databinding.ActivityCreateBinding
-import app.stacq.plan.util.sentenceCase
-import coil.load
+import app.stacq.plan.databinding.FragmentCreateBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 
-class CreateActivity : AppCompatActivity() {
+class CreateFragment : Fragment() {
 
-    private lateinit var binding: ActivityCreateBinding
+    private var _binding: FragmentCreateBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val binding get() = _binding!!
 
-        val application = requireNotNull(this).application
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        _binding = FragmentCreateBinding.inflate(inflater, container, false)
+
+        val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
         val tasksLocalDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
@@ -40,23 +48,22 @@ class CreateActivity : AppCompatActivity() {
         val createViewModel =
             ViewModelProvider(this, createViewModelFactory)[CreateViewModel::class.java]
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create)
-        binding.lifecycleOwner = this
         binding.viewmodel = createViewModel
+        binding.lifecycleOwner = this
 
 
-        createViewModel.categories.observe(this) {
+        createViewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
                 val categories = it.map { category -> category.name }
-                val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_menu_item, categories)
+                val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
                 binding.category.setAdapter(arrayAdapter)
             }
         }
 
-        binding.category.setOnFocusChangeListener { view, _ ->
-            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
+//        binding.category.setOnFocusChangeListener { view, _ ->
+//            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.hideSoftInputFromWindow(view.windowToken, 0)
+//        }
 
         binding.createFab.setOnClickListener { view ->
             val title: String = binding.title.text.toString()
@@ -75,13 +82,17 @@ class CreateActivity : AppCompatActivity() {
                 val task = Task(title = title, categoryId = category.id)
                 createViewModel.createTask(task)
             }
+            val action = CreateFragmentDirections.actionNavCreateToNavTasks()
+            this.findNavController().navigate(action)
 
-            startActivity(Intent(this, MainActivity::class.java))
         }
 
-
+        return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
