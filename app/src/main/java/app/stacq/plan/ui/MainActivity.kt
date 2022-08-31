@@ -66,10 +66,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.user -> {
-                handleAuthentication()
-                true
-            }
             R.id.settings -> {
                 val action = TasksFragmentDirections.actionNavTasksToSettings()
                 navController().navigate(action)
@@ -98,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     showAuthenticatedUI(user)
                 } else {
                     // Sign in failure
-                    showAuthenticatedUI(null)
+                    Toast.makeText(baseContext, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -107,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         if (user != null) {
             Toast.makeText(baseContext, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(baseContext, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
+            handleAuthentication()
         }
     }
 }

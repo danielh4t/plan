@@ -1,25 +1,24 @@
 <resources>
     <string name="app_name">Plan</string>
-    <string name="action_settings">Settings</string>
+    <!-- Main -->
     <string name="tasks">Tasks</string>
-    <string name="task">Task</string>
-    <string name="task_category">Category</string>
     <string name="add">add</string>
-    <string name="create">Create</string>
-    <string name="create_fab">create action</string>
-    <string name="create_image">create image</string>
-    <string name="title">Title</string>
-    <string name="dropdown_icon">drop down icon</string>
+    <string name="task">Task</string>
+    <string name="category">Category</string>
     <!-- Create fragment -->
+    <string name="create">Create</string>
+    <string name="title">Title</string>
+    <string name="create_fab">create action</string>
     <string name="empty_details">Empty details</string>
-    <!-- Sign In -->
+    <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_failure">Sign In Failure</string>
-    <string name="content_description_sign_in">click to sign in</string>
-    <string name="sign_in">Sign In</string>
+    <!-- Task fragment -->
     <string name="completed">Completed</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <!-- Menu -->
+    <string name="settings">Settings</string>
     <!-- Preference Titles -->
     <string name="sync_header">Sync</string>
     <string name="build_header">Build</string>
