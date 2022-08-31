@@ -25,8 +25,12 @@ class TasksRepository(
         return tasksLocalDataSource.getTasks()
     }
 
-    override suspend fun getTaskById(taskId: String): LiveData<Task> {
-        return tasksLocalDataSource.getTaskById(taskId)
+    override suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> {
+        return tasksLocalDataSource.getTaskCategoryById(id)
+    }
+
+    override suspend fun getTaskById(id: String): LiveData<Task> {
+        return tasksLocalDataSource.getTaskById(id)
     }
 
     override suspend fun insert(task: Task) = withContext(ioDispatcher) {
@@ -41,8 +45,12 @@ class TasksRepository(
         tasksLocalDataSource.delete(task)
     }
 
-    override suspend fun complete(taskId: String, isCompleted: Boolean, completedAt: Long) =
+    override suspend fun deleteById(id: String)  = withContext(ioDispatcher) {
+        tasksLocalDataSource.deleteById(id)
+    }
+
+    override suspend fun complete(id: String, isCompleted: Boolean, completedAt: Long) =
         withContext(ioDispatcher) {
-            tasksLocalDataSource.complete(taskId, isCompleted, completedAt)
+            tasksLocalDataSource.complete(id, isCompleted, completedAt)
         }
 }

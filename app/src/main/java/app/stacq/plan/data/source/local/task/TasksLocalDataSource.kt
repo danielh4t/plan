@@ -23,8 +23,13 @@ class TasksLocalDataSource(
         taskDao.getTasks()
     }
 
-    override suspend fun getTaskById(taskId: String): LiveData<Task> = withContext(ioDispatcher) {
-        taskDao.getTaskById(taskId)
+    override suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> =
+        withContext(ioDispatcher) {
+            taskDao.getTaskCategoryById(id)
+        }
+
+    override suspend fun getTaskById(id: String): LiveData<Task> = withContext(ioDispatcher) {
+        taskDao.getTaskById(id)
     }
 
     override suspend fun insert(task: Task) = withContext(ioDispatcher) {
@@ -39,8 +44,12 @@ class TasksLocalDataSource(
         taskDao.delete(task)
     }
 
-    override suspend fun complete(taskId: String, isCompleted: Boolean, completedAt: Long) =
+    override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
+        taskDao.deleteById(id)
+    }
+
+    override suspend fun complete(id: String, isCompleted: Boolean, completedAt: Long) =
         withContext(ioDispatcher) {
-            taskDao.updateTaskIsCompletedById(taskId, isCompleted, completedAt)
+            taskDao.updateTaskIsCompletedById(id, isCompleted, completedAt)
         }
 }
