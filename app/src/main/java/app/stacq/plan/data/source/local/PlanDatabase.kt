@@ -4,13 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.local.category.CategoryDao
 import app.stacq.plan.data.source.local.task.TaskDao
 
-@Database(entities = [Task::class], version = 1, exportSchema = false)
+@Database(entities = [Task::class, Category::class], version = 1, exportSchema = false)
 abstract class PlanDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
+
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         @Volatile

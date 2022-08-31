@@ -2,6 +2,7 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.TasksDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,6 +16,10 @@ class TasksRepository(
     private val tasksLocalDataSource: TasksLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
+
+    override suspend fun getTaskAndCategoryName(): LiveData<List<TaskCategory>> {
+        return tasksLocalDataSource.getTaskAndCategoryName()
+    }
 
     override suspend fun getTasks(): LiveData<List<Task>> {
         return tasksLocalDataSource.getTasks()

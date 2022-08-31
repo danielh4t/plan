@@ -72,7 +72,7 @@
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/category_icon"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            app:taskCategory="@{viewmodel.task}"
+            
             tools:text="@string/task_category" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 
-@Entity(tableName = "task_table")
+@Entity(tableName = "task")
 data class Task(
 
     @PrimaryKey
@@ -17,9 +17,13 @@ data class Task(
     val createdAt: Long = System.currentTimeMillis(),
 
     var title: String = "",
-    var category: Category = Category.Code,
 
+    @ColumnInfo(name = "category_id")
+    var categoryId: Int,
+
+    @ColumnInfo(name = "is_completed")
     var isCompleted: Boolean = false,
+
     @ColumnInfo(name = "completed_at")
     val completedAt: Long = 0
 )
