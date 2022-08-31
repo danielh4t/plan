@@ -47,6 +47,10 @@ class TaskFragment : Fragment() {
             }
         }
 
+        binding.completedButton.setOnClickListener {
+            taskViewModel.complete()
+        }
+
         return binding.root
     }
 

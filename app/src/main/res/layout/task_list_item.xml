@@ -10,7 +10,7 @@
 
         <variable
             name="task"
-            type="app.stacq.plan.data.model.Task" />
+            type="app.stacq.plan.data.model.TaskCategory" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             android:layout_gravity="center|end"
             android:button="@drawable/custom_checkbox"
             android:checked="@{task.completed}"
-            android:onClick="@{() -> viewmodel.complete(task)}"
+            android:onClick="@{() -> viewmodel.complete(task.id, task.isCompleted)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

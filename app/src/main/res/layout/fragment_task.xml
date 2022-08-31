@@ -5,7 +5,9 @@
     tools:context=".ui.task.TaskFragment">
 
     <data>
+
         <import type="com.google.android.material.textfield.TextInputEditText" />
+
         <variable
             name="viewmodel"
             type="app.stacq.plan.ui.task.TaskViewModel" />
@@ -22,10 +24,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
             android:fontFamily="@font/roboto"
             android:text="@{viewmodel.task.title}"
             android:textSize="32sp"
-            android:autoSizeTextType="uniform"
             app:layout_constraintEnd_toStartOf="@+id/delete_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -48,20 +50,6 @@
             app:layout_constraintStart_toEndOf="@+id/task_title_text"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/category_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/task_category"
-            app:layout_constraintEnd_toStartOf="@+id/task_category_text"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            app:srcCompat="@drawable/ic_list_outline" />
-
         <TextView
             android:id="@+id/task_category_text"
             android:layout_width="wrap_content"
@@ -69,11 +57,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
+            android:text="@{viewmodel.task.categoryName}"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/category_icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            app:taskCategory="@{viewmodel.task}"
             tools:text="@string/task_category" />
+
+        <Button
+            android:id="@+id/completed_button"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/completed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

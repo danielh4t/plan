@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_nav_tasks_to_settings"
             app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_create"
+            app:destination="@id/nav_create" />
     </fragment>
 
     <fragment
@@ -28,6 +31,17 @@
             android:id="@+id/action_nav_task_to_nav_tasks"
             app:destination="@id/nav_tasks" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_create"
+        android:name="app.stacq.plan.ui.create.CreateFragment"
+        android:label="@string/create">
+        <action
+            android:id="@+id/action_nav_create_to_nav_tasks"
+            app:destination="@id/nav_tasks" />
+    </fragment>
+
     <fragment
         android:id="@+id/nav_settings"
         android:name="app.stacq.plan.ui.settings.SettingsFragment"

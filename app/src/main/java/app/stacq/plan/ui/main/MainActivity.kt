@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,7 +18,6 @@ import app.stacq.plan.ui.tasks.TasksFragmentDirections
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var provider: OAuthProvider.Builder
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onStart() {
@@ -38,16 +35,11 @@ class MainActivity : AppCompatActivity() {
         showAuthenticatedUI(currentUser)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        // Initialize Firebase Auth
         firebaseAuth = Firebase.auth
-        provider = OAuthProvider.newBuilder("github.com")
         binding = ActivityMainBinding.inflate(layoutInflater)
-
 
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)

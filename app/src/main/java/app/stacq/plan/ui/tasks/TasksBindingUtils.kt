@@ -6,25 +6,21 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
-import app.stacq.plan.data.model.Category
-import app.stacq.plan.data.model.Task
-import app.stacq.plan.util.sentenceCase
-
+import app.stacq.plan.data.model.TaskCategory
 
 @BindingAdapter("taskCategory")
-fun TextView.getTaskCategoryTitle(item: Task?) {
-    item?.let {
-        val category = item.category.name.sentenceCase()
+fun TextView.getTaskCategoryTitle(taskCategory: TaskCategory) {
+        val category = taskCategory.categoryName
         text = category
-    }
 }
 
 @BindingAdapter("taskCategoryColor")
-fun CheckBox.setColor(item: Task) {
-    buttonTintList = when (item.category) {
-        Category.Code -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.code))
-        Category.Hack -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
-        Category.Life -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
-        Category.Work -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
+fun CheckBox.setColor(taskCategory: TaskCategory) {
+    buttonTintList = when (taskCategory.categoryName) {
+        "Code" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.code))
+        "Hack" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
+        "Life" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
+        "Work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
+        else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.black))
     }
 }

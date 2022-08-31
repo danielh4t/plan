@@ -9,11 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="code">#FF7F50</color>
     <color name="hack">#2ED573</color>
-    <color name="life">#1E90FF</color>
-    <color name="work">#FFE9C8</color>
-    <!-- placeholder colors -->
-    <color name="placeholder_code">#FF7F50</color>
-    <color name="placeholder_hack">#802ED573</color>
-    <color name="placeholder_life">#801E90FF</color>
-    <color name="placeholder_work">#80FFE9C8</color>
+    <color name="life">#FDCD21</color>
+    <color name="work">#1E90FF</color>
 </resources>

@@ -2,6 +2,7 @@ package app.stacq.plan.ui.tasks
 
 import androidx.lifecycle.*
 import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
 
@@ -12,18 +13,18 @@ class TasksViewModel(
     private val _navigateToTask = MutableLiveData<String?>()
     val navigateTask: LiveData<String?> = _navigateToTask
 
-    val tasks: LiveData<List<Task>> = liveData {
-        emitSource(tasksRepository.getTasks())
+    val tasks: LiveData<List<TaskCategory>> = liveData {
+        emitSource(tasksRepository.getTaskAndCategoryName())
     }
 
-    fun complete(task: Task) {
+    fun complete(id: String, isCompleted: Boolean) {
         viewModelScope.launch {
-            tasksRepository.complete(task.id, !task.isCompleted, System.currentTimeMillis())
+            tasksRepository.complete(id, !isCompleted, System.currentTimeMillis())
         }
     }
 
-    fun openTask(taskId: String) {
-        _navigateToTask.value = taskId
+    fun openTask(id: String) {
+        _navigateToTask.value = id
     }
 
     fun closeTask() {

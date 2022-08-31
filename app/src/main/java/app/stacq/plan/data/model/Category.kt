@@ -1,8 +1,12 @@
 package app.stacq.plan.data.model
 
-enum class Category {
-    Code,
-    Hack,
-    Life,
-    Work
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "category")
+data class Category (
+
+    @PrimaryKey
+    var id: Int,
+    var name: String,
+)
