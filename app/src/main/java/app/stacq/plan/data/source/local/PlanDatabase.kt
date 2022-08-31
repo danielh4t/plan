@@ -28,7 +28,8 @@ abstract class PlanDatabase : RoomDatabase() {
                         context.applicationContext,
                         PlanDatabase::class.java,
                         PLAN_DATABASE
-                    ).build()
+                    ).createFromAsset("database/${PLAN_DATABASE}.db")
+                        .build()
 
                     INSTANCE = instance
                 }
