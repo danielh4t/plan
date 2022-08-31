@@ -1,4 +1,4 @@
-package app.stacq.plan
+package app.stacq.plan.ui.edit
 
 import androidx.lifecycle.ViewModel
 
