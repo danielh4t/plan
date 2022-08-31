@@ -54,7 +54,7 @@ class CreateFragment : Fragment() {
 
         createViewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
-                val categories = it.map { category -> category.name.sentenceCase() }
+                val categories = it.map { category -> category.name }
                 val arrayAdapter =
                     ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
                 binding.category.setAdapter(arrayAdapter)
@@ -68,7 +68,7 @@ class CreateFragment : Fragment() {
 
         binding.createFab.setOnClickListener { view ->
             val title: String = binding.title.text.toString()
-            val categoryName: String = binding.category.text.toString().lowercase()
+            val categoryName: String = binding.category.text.toString()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
                 Snackbar.make(view, R.string.text_empty_create, Snackbar.LENGTH_LONG)
