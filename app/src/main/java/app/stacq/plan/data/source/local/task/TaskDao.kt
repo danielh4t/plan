@@ -14,8 +14,8 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query(
-        "SELECT task.id, task.title,task.is_completed AS isCompleted, " +
-                "category.name AS categoryName " +
+        "SELECT task.id, task.title, task.completed_at AS completedAt, " +
+                "task.is_completed AS isCompleted, category.name AS categoryName " +
                 "FROM task, category " +
                 "WHERE category.id = task.category_id"
     )
@@ -31,15 +31,14 @@ interface TaskDao {
     )
     fun getTasks(): LiveData<List<Task>>
 
-
     /**
      * Select all tasks from the task.
      *
      * @return all tasks.
      */
     @Query(
-        "SELECT task.id, task.title,task.is_completed AS isCompleted, " +
-                "category.name AS categoryName " +
+        "SELECT task.id, task.title, task.is_completed AS isCompleted, " +
+                "task.completed_at AS completedAt,  category.name AS categoryName " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"
@@ -69,10 +68,12 @@ interface TaskDao {
      * When updating a row with a value already set in a column,
      * replaces the old value with the new one.
      *
-     * @param task new value to write
+     * @param id task id
+     * @param title new task title
+     * @param categoryId new task category id
      */
-    @Update
-    suspend fun update(task: Task)
+    @Query("UPDATE task SET title = :title, category_id = :categoryId WHERE id = :id")
+    suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
 
     /**
      * Delete a task.

@@ -7,7 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.stacq.plan.ui.main.MainActivity
+import app.stacq.plan.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +24,7 @@ class MainActivityTest {
         onView(withId(R.id.fab))
             .perform(click())
 
-        onView(ViewMatchers.withText(R.string.text_empty_create))
+        onView(ViewMatchers.withText(R.string.empty_details))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 

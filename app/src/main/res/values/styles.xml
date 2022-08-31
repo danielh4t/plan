@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
-        <item name="cornerSizeTopLeft">64dp</item>
-        <item name="cornerSizeBottomRight">64dp</item>
+        <item name="cornerSize">64dp</item>
     </style>
 </resources>

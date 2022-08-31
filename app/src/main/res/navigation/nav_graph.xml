@@ -23,20 +23,25 @@
     <fragment
         android:id="@+id/nav_task"
         android:name="app.stacq.plan.ui.task.TaskFragment"
-        android:label="@string/task">
+        android:label="@string/task"
+        tools:layout="@layout/fragment_task">
         <argument
             android:name="taskId"
             app:argType="string" />
         <action
             android:id="@+id/action_nav_task_to_nav_tasks"
             app:destination="@id/nav_tasks" />
+        <action
+            android:id="@+id/action_nav_task_to_editFragment"
+            app:destination="@id/nav_edit" />
     </fragment>
 
 
     <fragment
         android:id="@+id/nav_create"
         android:name="app.stacq.plan.ui.create.CreateFragment"
-        android:label="@string/create">
+        android:label="@string/create"
+        tools:layout="@layout/fragment_create">
         <action
             android:id="@+id/action_nav_create_to_nav_tasks"
             app:destination="@id/nav_tasks" />
@@ -46,4 +51,18 @@
         android:id="@+id/nav_settings"
         android:name="app.stacq.plan.ui.settings.SettingsFragment"
         android:label="Settings" />
+
+    <fragment
+        android:id="@+id/nav_edit"
+        android:name="app.stacq.plan.ui.edit.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit">
+        <argument
+            android:name="taskId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_nav_edit_to_nav_tasks"
+            app:destination="@id/nav_tasks" />
+    </fragment>
+
 </navigation>

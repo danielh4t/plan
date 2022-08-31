@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 
-/**
- * Main entry point for accessing posts data.
- */
 interface TasksDataSource {
 
     suspend fun getTaskAndCategoryName(): LiveData<List<TaskCategory>>
@@ -19,7 +16,7 @@ interface TasksDataSource {
 
     suspend fun insert(task: Task)
 
-    suspend fun update(task: Task)
+    suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
 
     suspend fun delete(task: Task)
 

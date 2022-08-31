@@ -16,8 +16,10 @@ import kotlinx.coroutines.Dispatchers
 class TaskFragment : Fragment() {
 
     private var _binding: FragmentTaskBinding? = null
-
     private val binding get() = _binding!!
+
+    private lateinit var viewModelFactory: TaskViewModelFactory
+    private lateinit var viewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,12 +36,13 @@ class TaskFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
         val tasksRepository = TasksRepository(localDataSource, Dispatchers.Main)
-        val taskViewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
-        val taskViewModel = ViewModelProvider(this, taskViewModelFactory)[TaskViewModel::class.java]
-        binding.viewmodel = taskViewModel
+
+        viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
+        viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        taskViewModel.task.observe(viewLifecycleOwner) { task ->
+        viewModel.task.observe(viewLifecycleOwner) { task ->
             // task is deleted navigate to tasks
             task ?: run {
                 val action = TaskFragmentDirections.actionNavTaskToNavTasks()
@@ -47,8 +50,15 @@ class TaskFragment : Fragment() {
             }
         }
 
+        binding.editButton.setOnClickListener {
+            val action = TaskFragmentDirections.actionNavTaskToEditFragment(taskId)
+            this.findNavController().navigate(action)
+        }
+
         binding.completedButton.setOnClickListener {
-            taskViewModel.complete()
+            viewModel.complete()
+            val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+            this.findNavController().navigate(action)
         }
 
         return binding.root

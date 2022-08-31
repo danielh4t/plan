@@ -9,9 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Interface to the data layer.
- */
+
 class TasksRepository(
     private val tasksLocalDataSource: TasksLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -37,15 +35,19 @@ class TasksRepository(
         tasksLocalDataSource.insert(task)
     }
 
-    override suspend fun update(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.update(task)
+    override suspend fun updateTaskTitleAndCategoryById(
+        id: String,
+        title: String,
+        categoryId: Int
+    ) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTaskTitleAndCategoryById(id, title, categoryId)
     }
 
     override suspend fun delete(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.delete(task)
     }
 
-    override suspend fun deleteById(id: String)  = withContext(ioDispatcher) {
+    override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
         tasksLocalDataSource.deleteById(id)
     }
 

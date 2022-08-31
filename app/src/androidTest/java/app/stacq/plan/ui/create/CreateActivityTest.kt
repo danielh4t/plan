@@ -24,7 +24,7 @@ class CreateActivityTest {
         onView(withId(R.id.create_fab))
             .perform(click())
 
-        onView(withText(R.string.text_empty_create))
+        onView(withText(R.string.empty_details))
             .check(matches(isDisplayed()))
     }
 }

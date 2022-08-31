@@ -63,6 +63,7 @@ dependencies {
     implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.7'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'

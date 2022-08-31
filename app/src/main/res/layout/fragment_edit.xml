@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="app.stacq.plan.ui.create.CreateViewModel" />
+            type="app.stacq.plan.ui.edit.EditViewModel" />
     </data>
 
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_layout"
+            android:id="@+id/edit_title_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/title"
+                android:id="@+id/edit_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -39,7 +39,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/category_layout"
+            android:id="@+id/edit_category_layout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,27 +49,27 @@
             android:hint="@string/task_category"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout">
+            app:layout_constraintTop_toBottomOf="@+id/edit_title_layout">
 
             <AutoCompleteTextView
-                android:id="@+id/category"
+                android:id="@+id/edit_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:labelFor="@id/category"
+                android:labelFor="@id/edit_category"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/create_fab"
+            android:id="@+id/edit_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
             android:contentDescription="@string/create_fab"
-            android:text="@string/create"
-            app:icon="@drawable/ic_flash"
+            android:text="@string/edit"
+            app:icon="@drawable/ic_edit_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
