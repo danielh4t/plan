@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +19,7 @@ import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
+import app.stacq.plan.util.sentenceCase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 
@@ -40,7 +40,8 @@ class CreateFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
         val tasksLocalDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
+        val categoryLocalDataSource =
+            CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
 
         val tasksRepository = TasksRepository(tasksLocalDataSource, Dispatchers.Main)
         val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
@@ -51,23 +52,23 @@ class CreateFragment : Fragment() {
         binding.viewmodel = createViewModel
         binding.lifecycleOwner = this
 
-
         createViewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
-                val categories = it.map { category -> category.name }
-                val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
+                val categories = it.map { category -> category.name.sentenceCase() }
+                val arrayAdapter =
+                    ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
                 binding.category.setAdapter(arrayAdapter)
             }
         }
 
-//        binding.category.setOnFocusChangeListener { view, _ ->
-//            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(view.windowToken, 0)
-//        }
+        binding.category.setOnFocusChangeListener { view, _ ->
+            val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
 
         binding.createFab.setOnClickListener { view ->
             val title: String = binding.title.text.toString()
-            val categoryName: String = binding.category.text.toString()
+            val categoryName: String = binding.category.text.toString().lowercase()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
                 Snackbar.make(view, R.string.text_empty_create, Snackbar.LENGTH_LONG)
@@ -76,7 +77,7 @@ class CreateFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val categories: List<Category>? = createViewModel.categories.value;
+            val categories: List<Category>? = createViewModel.categories.value
             val category: Category? = categories?.firstOrNull { it.name == categoryName }
             if (category != null) {
                 val task = Task(title = title, categoryId = category.id)
