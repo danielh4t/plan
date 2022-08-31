@@ -17,10 +17,10 @@ fun TextView.getTaskCategoryTitle(taskCategory: TaskCategory) {
 @BindingAdapter("taskCategoryColor")
 fun CheckBox.setColor(taskCategory: TaskCategory) {
     buttonTintList = when (taskCategory.categoryName) {
-        "code" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.code))
-        "hack" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
-        "life" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
-        "work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
+        "Code" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.code))
+        "Hack" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
+        "Life" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
+        "Work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
         else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.black))
     }
 }

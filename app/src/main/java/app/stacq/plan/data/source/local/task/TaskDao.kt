@@ -37,8 +37,8 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query(
-        "SELECT task.id, task.title, task.completed_at AS completedAt, " +
-                "task.is_completed AS isCompleted, category.name AS categoryName " +
+        "SELECT task.id, task.title, task.is_completed AS isCompleted, " +
+                "task.completed_at AS completedAt,  category.name AS categoryName " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"
