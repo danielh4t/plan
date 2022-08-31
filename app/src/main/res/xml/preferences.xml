@@ -2,9 +2,21 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        app:key="version"
-        app:title="Build Version"
-        app:summary="@string/versionName"/>
+    <PreferenceCategory app:title="@string/build_header">
+
+        <Preference
+            app:key="version"
+            app:title="Build Version"
+            app:summary="@string/versionName"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+    <SwitchPreferenceCompat
+        app:key="sync"
+        app:title="@string/sync_title" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

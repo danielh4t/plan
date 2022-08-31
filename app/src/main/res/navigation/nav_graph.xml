@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_nav_task_to_nav_tasks"
             app:destination="@id/nav_tasks" />
+        <action
+            android:id="@+id/action_nav_task_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
 
 
@@ -46,4 +49,9 @@
         android:id="@+id/nav_settings"
         android:name="app.stacq.plan.ui.settings.SettingsFragment"
         android:label="Settings" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="app.stacq.plan.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
 </navigation>
