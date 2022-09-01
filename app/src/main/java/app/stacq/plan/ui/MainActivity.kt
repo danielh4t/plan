@@ -24,21 +24,16 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var firebaseAuth: FirebaseAuth
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = firebaseAuth.currentUser
-        showAuthenticatedUI(currentUser)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         firebaseAuth = Firebase.auth
+        showAuthenticatedUI(firebaseAuth.currentUser)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
@@ -75,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController().navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+    override fun onSupportNavigateUp() =
+        navController().navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+
 
     private fun navController(): NavController {
         val navHostFragment =

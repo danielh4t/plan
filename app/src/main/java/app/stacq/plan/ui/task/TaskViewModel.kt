@@ -20,9 +20,9 @@ class TaskViewModel(
     fun complete() {
         viewModelScope.launch {
             task.value?.let {
-                tasksRepository.complete(
+                tasksRepository.updateTaskCompletedById(
                     it.id,
-                    !it.isCompleted,
+                    !it.completed,
                     System.currentTimeMillis()
                 )
             }

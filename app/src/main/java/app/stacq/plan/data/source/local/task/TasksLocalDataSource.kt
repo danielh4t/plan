@@ -48,8 +48,8 @@ class TasksLocalDataSource(
         taskDao.deleteById(id)
     }
 
-    override suspend fun complete(id: String, isCompleted: Boolean, completedAt: Long) =
+    override suspend fun updateTaskCompletedById(id: String, completed: Boolean, completedAt: Long) =
         withContext(ioDispatcher) {
-            taskDao.updateTaskIsCompletedById(id, isCompleted, completedAt)
+            taskDao.updateTaskCompletedById(id, completed, completedAt)
         }
 }

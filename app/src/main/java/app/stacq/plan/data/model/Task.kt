@@ -21,8 +21,7 @@ data class Task(
     @ColumnInfo(name = "category_id")
     var categoryId: Int,
 
-    @ColumnInfo(name = "is_completed")
-    var isCompleted: Boolean = false,
+    var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")
     val completedAt: Long = 0

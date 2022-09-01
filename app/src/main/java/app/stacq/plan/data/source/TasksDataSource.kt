@@ -20,6 +20,6 @@ interface TasksDataSource {
 
     suspend fun deleteById(id: String)
 
-    suspend fun complete(id: String, isCompleted: Boolean, completedAt: Long)
+    suspend fun updateTaskCompletedById(id: String, completed: Boolean, completedAt: Long)
 
 }

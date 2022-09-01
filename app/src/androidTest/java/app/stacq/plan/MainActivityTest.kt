@@ -19,15 +19,5 @@ class MainActivityTest {
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
 
-    @Test
-    fun click_fab_startCreateActivity() {
-        onView(withId(R.id.fab))
-            .perform(click())
-
-        onView(ViewMatchers.withText(R.string.empty_details))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-    }
-
-
 }
 

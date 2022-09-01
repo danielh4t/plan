@@ -17,9 +17,9 @@ class TasksViewModel(
         emitSource(tasksRepository.getTaskCategoryAll())
     }
 
-    fun complete(id: String, isCompleted: Boolean) {
+    fun complete(id: String, completed: Boolean) {
         viewModelScope.launch {
-            tasksRepository.complete(id, !isCompleted, System.currentTimeMillis())
+            tasksRepository.complete(id, !completed, System.currentTimeMillis())
         }
     }
 
