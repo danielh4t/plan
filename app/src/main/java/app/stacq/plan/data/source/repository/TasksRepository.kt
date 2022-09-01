@@ -15,8 +15,8 @@ class TasksRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
 
-    override suspend fun getTaskAndCategoryName(): LiveData<List<TaskCategory>> {
-        return tasksLocalDataSource.getTaskAndCategoryName()
+    override suspend fun getTaskCategoryAll(): LiveData<List<TaskCategory>> {
+        return tasksLocalDataSource.getTaskCategoryAll()
     }
 
     override suspend fun getTasks(): LiveData<List<Task>> {
@@ -41,10 +41,6 @@ class TasksRepository(
         categoryId: Int
     ) = withContext(ioDispatcher) {
         tasksLocalDataSource.updateTaskTitleAndCategoryById(id, title, categoryId)
-    }
-
-    override suspend fun delete(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.delete(task)
     }
 
     override suspend fun deleteById(id: String) = withContext(ioDispatcher) {

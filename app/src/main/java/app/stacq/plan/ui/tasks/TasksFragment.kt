@@ -12,6 +12,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.databinding.FragmentCreateBinding
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 import kotlinx.coroutines.Dispatchers
@@ -30,8 +31,8 @@ class TasksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
+
+        _binding = FragmentTasksBinding.inflate(inflater, container, false)
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
@@ -67,7 +68,6 @@ class TasksFragment : Fragment() {
                 viewModel.closeTask()
             }
         }
-
 
         return binding.root
     }
