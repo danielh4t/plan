@@ -15,11 +15,11 @@ interface TaskDao {
      */
     @Query(
         "SELECT task.id, task.title, task.completed_at AS completedAt, " +
-                "task.is_completed AS isCompleted, category.name AS categoryName " +
-                "FROM task, category " +
-                "WHERE category.id = task.category_id"
+                "task.completed AS completed, category.name AS categoryName " +
+                "FROM task " +
+                "JOIN category ON category.id = task.category_id"
     )
-    fun getTaskAndCategoryNames(): LiveData<List<TaskCategory>>
+    fun getTaskCategoryAll(): LiveData<List<TaskCategory>>
 
     /**
      * Select all tasks from the task.
@@ -37,7 +37,7 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query(
-        "SELECT task.id, task.title, task.is_completed AS isCompleted, " +
+        "SELECT task.id, task.title, task.completed AS completed, " +
                 "task.completed_at AS completedAt,  category.name AS categoryName " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id " +
@@ -75,13 +75,6 @@ interface TaskDao {
     @Query("UPDATE task SET title = :title, category_id = :categoryId WHERE id = :id")
     suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
 
-    /**
-     * Delete a task.
-     *
-     * @param task task to be delete
-     */
-    @Delete
-    suspend fun delete(task: Task)
 
     /**
      * Delete a task. by id
@@ -95,9 +88,9 @@ interface TaskDao {
      * Update the complete status of a task
      *
      * @param id id of the task
-     * @param isCompleted status of task to be updated
+     * @param completed status of task to be updated
      */
-    @Query("UPDATE task SET is_completed = :isCompleted, completed_at = :completedAt WHERE id = :id")
-    suspend fun updateTaskIsCompletedById(id: String, isCompleted: Boolean, completedAt: Long)
+    @Query("UPDATE task SET completed = :completed, completed_at = :completedAt WHERE id = :id")
+    suspend fun updateTaskCompletedById(id: String, completed: Boolean, completedAt: Long)
 
 }

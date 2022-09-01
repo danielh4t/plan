@@ -60,7 +60,7 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            tools:text="@string/task_category" />
+            tools:text="@string/category" />
 
         <Button
             android:id="@+id/completed_button"

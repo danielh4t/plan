@@ -14,12 +14,12 @@ class TasksViewModel(
     val navigateTask: LiveData<String?> = _navigateToTask
 
     val tasks: LiveData<List<TaskCategory>> = liveData {
-        emitSource(tasksRepository.getTaskAndCategoryName())
+        emitSource(tasksRepository.getTaskCategoryAll())
     }
 
-    fun complete(id: String, isCompleted: Boolean) {
+    fun complete(id: String, completed: Boolean) {
         viewModelScope.launch {
-            tasksRepository.complete(id, !isCompleted, System.currentTimeMillis())
+            tasksRepository.complete(id, !completed, System.currentTimeMillis())
         }
     }
 
