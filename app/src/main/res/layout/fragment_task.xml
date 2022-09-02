@@ -54,13 +54,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
             android:text="@{viewmodel.task.categoryName}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
             tools:text="@string/category" />
+
+        <TextView
+            android:id="@+id/task_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto"
+            app:taskTime="@{viewmodel.task.createdAt}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
+            tools:text="@string/time" />
 
         <Button
             android:id="@+id/completed_button"
@@ -77,14 +89,13 @@
 
         <Button
             android:id="@+id/delete_button"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.Material3.Button.TextButton.Error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:onClick="@{()-> viewmodel.delete()}"
             android:text="@string/delete"
-            android:textColor="?attr/colorError"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/completed_button"
             app:layout_constraintHorizontal_bias="0.5"
