@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.Category
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
@@ -17,16 +18,21 @@ class EditViewModel(
 ) : ViewModel() {
 
     val task: LiveData<TaskCategory> = liveData {
-        emitSource(tasksRepository.getTaskCategoryById(taskId))
+        emitSource(tasksRepository.readTaskCategoryById(taskId))
     }
 
     val categories: LiveData<List<Category>> = liveData {
         emitSource(categoryRepository.getCategories())
     }
 
-    fun editTask(id: String, title: String, categoryId: Int) {
+    fun editTask(title: String, categoryId: Int) {
         viewModelScope.launch {
-            tasksRepository.updateTaskTitleAndCategoryById(id, title, categoryId)
+            task.value?.let { it ->
+                val updateTask =
+                    Task(taskId, it.createdAt, title, categoryId, it.completed, it.completedAt)
+                tasksRepository.updateTask(updateTask)
+            }
+
         }
     }
 

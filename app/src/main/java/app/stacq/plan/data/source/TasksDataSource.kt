@@ -6,20 +6,20 @@ import app.stacq.plan.data.model.TaskCategory
 
 interface TasksDataSource {
 
-    suspend fun getTaskCategoryAll(): LiveData<List<TaskCategory>>
-
     suspend fun getTasks(): LiveData<List<Task>>
 
-    suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory>
+    suspend fun createTask(task: Task)
 
-    suspend fun getTaskById(id: String): LiveData<Task>
+    suspend fun readTaskById(id: String): LiveData<Task>
 
-    suspend fun insert(task: Task)
-
-    suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
+    suspend fun updateTask(task: Task)
 
     suspend fun deleteById(id: String)
 
-    suspend fun updateTaskCompletedById(id: String, completed: Boolean, completedAt: Long)
+    suspend fun updateTaskCompletionById(id: String)
+
+    suspend fun getTasksCategory(): LiveData<List<TaskCategory>>
+
+    suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory>
 
 }

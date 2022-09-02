@@ -16,6 +16,8 @@ import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
+import app.stacq.plan.data.source.remote.PlanApiService
+import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
@@ -40,12 +42,15 @@ class CreateFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
-        val tasksLocalDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
+        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
+        val remoteDataSource =
+            TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
+
         val categoryLocalDataSource =
             CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
-
-        val tasksRepository = TasksRepository(tasksLocalDataSource, Dispatchers.Main)
         val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
+
         viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
         viewModel =
             ViewModelProvider(this, viewModelFactory)[CreateViewModel::class.java]

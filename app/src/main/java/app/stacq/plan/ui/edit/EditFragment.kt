@@ -13,6 +13,8 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
+import app.stacq.plan.data.source.remote.PlanApiService
+import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
@@ -41,11 +43,12 @@ class EditFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val tasksLocalDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
+        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
         val categoryLocalDataSource =
             CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
 
-        val tasksRepository = TasksRepository(tasksLocalDataSource, Dispatchers.Main)
+        val remoteDataSource = TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource,Dispatchers.Main)
         val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
 
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
@@ -81,7 +84,7 @@ class EditFragment : Fragment() {
             val categories: List<Category>? = viewModel.categories.value
             val category: Category? = categories?.firstOrNull { it.name == categoryName }
             if (category != null) {
-                viewModel.editTask(taskId, title, category.id)
+                viewModel.editTask(title, category.id)
             }
             val action = EditFragmentDirections.actionNavEditToNavTasks()
             this.findNavController().navigate(action)
