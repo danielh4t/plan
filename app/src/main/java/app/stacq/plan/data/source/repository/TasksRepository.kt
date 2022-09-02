@@ -5,6 +5,7 @@ import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.TasksDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
+import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,6 +13,7 @@ import kotlinx.coroutines.withContext
 
 class TasksRepository(
     private val tasksLocalDataSource: TasksLocalDataSource,
+    private val tasksRemoteDataSource: TasksRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
 
@@ -33,6 +35,7 @@ class TasksRepository(
 
     override suspend fun insert(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.insert(task)
+        tasksRemoteDataSource.createTask(task)
     }
 
     override suspend fun updateTaskTitleAndCategoryById(

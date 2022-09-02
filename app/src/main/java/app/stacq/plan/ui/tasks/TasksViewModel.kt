@@ -1,7 +1,6 @@
 package app.stacq.plan.ui.tasks
 
 import androidx.lifecycle.*
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
@@ -19,7 +18,7 @@ class TasksViewModel(
 
     fun complete(id: String, completed: Boolean) {
         viewModelScope.launch {
-            tasksRepository.complete(id, !completed, System.currentTimeMillis())
+            tasksRepository.updateTaskCompletedById(id, !completed, System.currentTimeMillis())
         }
     }
 
