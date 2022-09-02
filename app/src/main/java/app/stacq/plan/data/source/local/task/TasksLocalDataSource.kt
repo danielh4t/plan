@@ -14,42 +14,38 @@ class TasksLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
 
-    override suspend fun getTaskCategoryAll(): LiveData<List<TaskCategory>> =
-        withContext(ioDispatcher) {
-            taskDao.getTaskCategoryAll()
-        }
-
     override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
         taskDao.getTasks()
     }
 
-    override suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> =
-        withContext(ioDispatcher) {
-            taskDao.getTaskCategoryById(id)
-        }
-
-    override suspend fun getTaskById(id: String): LiveData<Task> = withContext(ioDispatcher) {
-        taskDao.getTaskById(id)
+    override suspend fun createTask(task: Task) = withContext(ioDispatcher) {
+        taskDao.createTask(task)
     }
 
-    override suspend fun insert(task: Task) = withContext(ioDispatcher) {
-        taskDao.insert(task)
+    override suspend fun readTaskById(id: String): LiveData<Task> = withContext(ioDispatcher) {
+        taskDao.readTaskById(id)
     }
 
-    override suspend fun updateTaskTitleAndCategoryById(
-        id: String,
-        title: String,
-        categoryId: Int
-    ) = withContext(ioDispatcher) {
-        taskDao.updateTaskTitleAndCategoryById(id, title, categoryId)
+    override suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
+        taskDao.updateTask(task)
     }
 
     override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
         taskDao.deleteById(id)
     }
 
-    override suspend fun updateTaskCompletedById(id: String, completed: Boolean, completedAt: Long) =
+    override suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
+        taskDao.updateTaskCompletionById(id)
+    }
+
+    override suspend fun getTasksCategory(): LiveData<List<TaskCategory>> =
         withContext(ioDispatcher) {
-            taskDao.updateTaskCompletedById(id, completed, completedAt)
+            taskDao.getTasksCategory()
         }
+
+    override suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory> =
+        withContext(ioDispatcher) {
+            taskDao.readTaskCategoryById(id)
+        }
+
 }

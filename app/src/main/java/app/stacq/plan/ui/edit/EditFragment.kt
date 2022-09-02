@@ -84,7 +84,7 @@ class EditFragment : Fragment() {
             val categories: List<Category>? = viewModel.categories.value
             val category: Category? = categories?.firstOrNull { it.name == categoryName }
             if (category != null) {
-                viewModel.editTask(taskId, title, category.id)
+                viewModel.editTask(title, category.id)
             }
             val action = EditFragmentDirections.actionNavEditToNavTasks()
             this.findNavController().navigate(action)

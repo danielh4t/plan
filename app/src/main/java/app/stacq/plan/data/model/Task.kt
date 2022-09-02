@@ -15,7 +15,7 @@ data class Task(
     var id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_at")
-    val createdAt: Long = System.currentTimeMillis(),
+    val createdAt: Long = System.currentTimeMillis() / 1000,
 
     var title: String = "",
 
@@ -25,5 +25,6 @@ data class Task(
     var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")
-    val completedAt: Long = 0
+    var completedAt: Long = 0
 )
+

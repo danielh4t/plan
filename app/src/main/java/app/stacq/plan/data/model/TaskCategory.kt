@@ -2,8 +2,9 @@ package app.stacq.plan.data.model
 
 data class TaskCategory(
     var id: String,
+    var createdAt: Long,
     var title: String,
     var completed: Boolean,
-    val completedAt: Long,
+    var completedAt: Long,
     var categoryName: String,
 )

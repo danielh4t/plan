@@ -14,18 +14,12 @@ class TaskViewModel(
 ) : ViewModel() {
 
     val task: LiveData<TaskCategory> = liveData {
-        emitSource(tasksRepository.getTaskCategoryById(taskId))
+        emitSource(tasksRepository.readTaskCategoryById(taskId))
     }
 
     fun complete() {
         viewModelScope.launch {
-            task.value?.let {
-                tasksRepository.updateTaskCompletedById(
-                    it.id,
-                    !it.completed,
-                    System.currentTimeMillis()
-                )
-            }
+            tasksRepository.updateTaskCompletionById(taskId)
         }
     }
 
