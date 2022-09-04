@@ -11,6 +11,8 @@
     <string name="title">Title</string>
     <string name="create_fab">create action</string>
     <string name="empty_details">Empty details</string>
+    <!-- Task fragment -->
+    <string name="complete_fab">complete action</string>
     <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_failure">Sign In Failure</string>

@@ -19,15 +19,15 @@
 
         <TextView
             android:id="@+id/task_title_text"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/roboto"
             android:text="@{viewmodel.task.title}"
-            android:textSize="32sp"
+            android:textSize="34sp"
             app:layout_constraintEnd_toStartOf="@+id/edit_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -69,23 +69,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto"
-            app:taskTime="@{viewmodel.task.createdAt}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
+            app:taskTime="@{viewmodel.task.createdAt}"
             tools:text="@string/time" />
 
-        <Button
-            android:id="@+id/completed_button"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/completed"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/delete_button" />
 
         <Button
             android:id="@+id/delete_button"
@@ -101,6 +89,20 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/completed_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:contentDescription="@string/create_fab"
+            android:text="@string/completed"
+            app:icon="@drawable/ic_done_all_outline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/delete_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
