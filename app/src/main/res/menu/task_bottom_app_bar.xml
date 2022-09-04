@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:shownIn="@layout/fragment_task">
+
+    <item
+        android:id="@+id/task_edit"
+        android:icon="@drawable/ic_edit_outline"
+        android:title="@string/edit"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/content_description_task_edit"/>
+
+    <item
+        android:id="@+id/task_delete"
+        android:icon="@drawable/ic_trash_outline"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/content_description_task_delete"/>
+
+    <item
+        android:id="@+id/task_timer"
+        android:icon="@drawable/ic_clock_outline"
+        android:title="@string/timer"
+        app:showAsAction="ifRoom"
+        android:contentDescription="@string/content_description_task_timer"/>
+
+</menu>

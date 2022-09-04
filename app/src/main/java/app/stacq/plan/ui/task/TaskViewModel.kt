@@ -8,7 +8,7 @@ import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
 
-class TaskViewModel(
+class  TaskViewModel(
     private val tasksRepository: TasksRepository,
     private val taskId: String
 ) : ViewModel() {
@@ -17,7 +17,7 @@ class TaskViewModel(
         emitSource(tasksRepository.readTaskCategoryById(taskId))
     }
 
-    fun complete() {
+    fun completed() {
         viewModelScope.launch {
             tasksRepository.updateTaskCompletionById(taskId)
         }

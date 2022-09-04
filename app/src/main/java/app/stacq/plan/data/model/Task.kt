@@ -26,5 +26,6 @@ data class Task(
 
     @ColumnInfo(name = "completed_at")
     var completedAt: Long = 0
+
 )
 

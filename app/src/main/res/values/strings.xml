@@ -19,6 +19,7 @@
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_failure">Sign In Failure</string>
     <!-- Task fragment -->
+    <string name="timer">Timer</string>
     <string name="completed">Completed</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
@@ -29,5 +30,8 @@
     <string name="build_header">Build</string>
     <!-- Sync Preferences -->
     <string name="sync_title">Sync periodically</string>
+    <string name="content_description_task_edit">Edit Task</string>
+    <string name="content_description_task_delete">Delete Task</string>
+    <string name="content_description_task_timer">Task Timer</string>
 
 </resources>

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
-        <item name="cornerSize">64dp</item>
-    </style>
 
-    <style name="Widget.Material3.Button.TextButton.Error" parent="Widget.Material3.Button.TextButton">
-        <item name="android:textColor">?attr/colorError</item>
-        <item name="rippleColor">?attr/colorError</item>
-    </style>
 </resources>

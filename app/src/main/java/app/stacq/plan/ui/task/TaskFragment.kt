@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.PlanApiService
@@ -45,21 +46,33 @@ class TaskFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.task.observe(viewLifecycleOwner) { task ->
-            // task is deleted navigate to tasks
-            task ?: run {
-                val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-                this.findNavController().navigate(action)
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.task_edit -> {
+                    // Handle edit icon press
+                    val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
+                    this.findNavController().navigate(action)
+                    true
+                }
+                R.id.task_delete -> {
+                    // Handle delete icon press
+                    viewModel.delete()
+                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+                    this.findNavController().navigate(action)
+                    true
+                }
+                R.id.task_timer -> {
+                    // Handle timer icon press
+                    val action = TaskFragmentDirections.actionNavTaskToNavTimer()
+                    this.findNavController().navigate(action)
+                    true
+                }
+                else -> false
             }
         }
 
-        binding.editButton.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToEditFragment(taskId)
-            this.findNavController().navigate(action)
-        }
-
-        binding.completedButton.setOnClickListener {
-            viewModel.complete()
+        binding.completedFab.setOnClickListener {
+            viewModel.completed()
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }
