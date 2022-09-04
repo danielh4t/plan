@@ -35,6 +35,7 @@ class TaskFragment : Fragment() {
         val args = TaskFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
 
+
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
@@ -45,6 +46,13 @@ class TaskFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.task.observe(viewLifecycleOwner) { task ->
+            // task is deleted navigate to tasks
+            task ?: run {
+
+            }
+        }
 
         binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
