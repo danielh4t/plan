@@ -3,7 +3,6 @@ package app.stacq.plan.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
 import java.util.*
 
 
@@ -25,7 +24,10 @@ data class Task(
     var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")
-    var completedAt: Long = 0
+    var completedAt: Long = 0,
+
+    @ColumnInfo(name = "timer_at")
+    var timerAt: Long = 0
 
 )
 
