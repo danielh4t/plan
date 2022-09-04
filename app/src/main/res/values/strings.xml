@@ -5,6 +5,7 @@
     <string name="add">add</string>
     <string name="task">Task</string>
     <string name="category">Category</string>
+    <string name="time">01 January 1970 00:00</string>
     <!-- Create fragment -->
     <string name="create">Create</string>
     <string name="title">Title</string>
