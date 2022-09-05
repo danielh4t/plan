@@ -26,8 +26,8 @@ data class Task(
     @ColumnInfo(name = "completed_at")
     var completedAt: Long = 0,
 
-    @ColumnInfo(name = "timer_at")
-    var timerAt: Long = 0
+    @ColumnInfo(name = "timer_finish_at")
+    var timerFinishAt: Long = 0
 
 )
 
