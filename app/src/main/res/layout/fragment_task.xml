@@ -66,20 +66,6 @@
                 app:taskTime="@{viewmodel.task.createdAt}"
                 tools:text="@string/time" />
 
-
-            <TextView
-                android:id="@+id/task_complete_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/task_time_text"
-                app:taskTime="@{viewmodel.task.completedAt}"
-                tools:text="@string/time" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -22,4 +22,5 @@ interface TasksDataSource {
 
     suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory>
 
+    suspend fun updateTaskTimerById(id: String, finishAt: Long)
 }

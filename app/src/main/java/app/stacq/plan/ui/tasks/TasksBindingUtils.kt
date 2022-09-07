@@ -10,7 +10,6 @@ import app.stacq.plan.data.model.TaskCategory
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 @BindingAdapter("taskCategory")
 fun TextView.getTaskCategoryTitle(taskCategory: TaskCategory) {

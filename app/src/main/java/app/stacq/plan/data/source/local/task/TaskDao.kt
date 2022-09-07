@@ -67,6 +67,16 @@ interface TaskDao {
     suspend fun updateTaskCompletionById(id: String)
 
     /**
+     * Update task timer finish at time
+     *
+     * @param id of the task
+     * @param finishAt timer timer
+     */
+    @Query("UPDATE task SET timer_finish_at = :finishAt WHERE id = :id")
+    suspend fun updateTaskTimerById(id: String, finishAt: Long)
+
+
+    /**
      * Delete a task. by id
      *
      * @param id task to be delete
@@ -81,7 +91,8 @@ interface TaskDao {
      */
     @Query(
         "SELECT task.id, task.created_at AS createdAt,task.title, task.completed_at AS completedAt, " +
-                "task.completed AS completed, category.name AS categoryName " +
+                "task.completed AS completed, category.name AS categoryName, " +
+                "task.timer_finish_at AS timerFinishAt " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id"
     )
@@ -94,7 +105,8 @@ interface TaskDao {
      */
     @Query(
         "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
-                "task.completed_at AS completedAt,  category.name AS categoryName " +
+                "task.completed_at AS completedAt,  category.name AS categoryName, " +
+                "task.timer_finish_at AS timerFinishAt " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"

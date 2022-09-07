@@ -50,4 +50,8 @@ class TasksRepository(
     suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory> {
         return tasksLocalDataSource.readTaskCategoryById(id)
     }
+
+    suspend fun updateTaskTimerById(id: String, finishAt: Long) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTaskTimerById(id, finishAt)
+    }
 }

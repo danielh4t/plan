@@ -16,6 +16,7 @@ import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import kotlinx.coroutines.Dispatchers
 
+
 class TaskFragment : Fragment() {
 
     private var _binding: FragmentTaskBinding? = null
@@ -35,24 +36,17 @@ class TaskFragment : Fragment() {
         val args = TaskFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
 
-
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val remoteDataSource = TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource,Dispatchers.Main)
+        val remoteDataSource =
+            TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
 
         viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
-        viewModel.task.observe(viewLifecycleOwner) { task ->
-            // task is deleted navigate to tasks
-            task ?: run {
-
-            }
-        }
 
         binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -71,7 +65,8 @@ class TaskFragment : Fragment() {
                 }
                 R.id.task_timer -> {
                     // Handle timer icon press
-                    val action = TaskFragmentDirections.actionNavTaskToNavTimer()
+                    val finishAt: Long = viewModel.timer()
+                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(finishAt)
                     this.findNavController().navigate(action)
                     true
                 }
