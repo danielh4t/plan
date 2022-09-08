@@ -3,8 +3,8 @@ package app.stacq.plan.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
-import java.util.*
+import java.time.Instant
+import java.util.UUID
 
 
 @Entity(tableName = "task")
@@ -15,7 +15,7 @@ data class Task(
     var id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_at")
-    val createdAt: Long = System.currentTimeMillis() / 1000,
+    val createdAt: Long = Instant.now().epochSecond,
 
     var title: String = "",
 
@@ -25,6 +25,9 @@ data class Task(
     var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")
-    var completedAt: Long = 0
-)
+    var completedAt: Long = 0,
 
+    @ColumnInfo(name = "timer_finish_at")
+    var timerFinishAt: Long = 0
+
+)

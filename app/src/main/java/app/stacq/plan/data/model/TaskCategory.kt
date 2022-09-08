@@ -7,4 +7,5 @@ data class TaskCategory(
     var completed: Boolean,
     var completedAt: Long,
     var categoryName: String,
+    var timerFinishAt: Long,
 )

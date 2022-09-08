@@ -48,4 +48,9 @@ class TasksLocalDataSource(
             taskDao.readTaskCategoryById(id)
         }
 
+    override suspend fun updateTaskTimerById(id: String, finishAt: Long) =
+        withContext(ioDispatcher) {
+            taskDao.updateTaskTimerById(id, finishAt)
+        }
+
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.PlanApiService
@@ -14,6 +15,7 @@ import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import kotlinx.coroutines.Dispatchers
+
 
 class TaskFragment : Fragment() {
 
@@ -37,29 +39,43 @@ class TaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val remoteDataSource = TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource,Dispatchers.Main)
+        val remoteDataSource =
+            TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
 
         viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.task.observe(viewLifecycleOwner) { task ->
-            // task is deleted navigate to tasks
-            task ?: run {
-                val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-                this.findNavController().navigate(action)
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.task_edit -> {
+                    // Handle edit icon press
+                    val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
+                    this.findNavController().navigate(action)
+                    true
+                }
+                R.id.task_delete -> {
+                    // Handle delete icon press
+                    viewModel.delete()
+                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+                    this.findNavController().navigate(action)
+                    true
+                }
+                R.id.task_timer -> {
+                    // Handle timer icon press
+                    val finishAt: Long = viewModel.timer()
+                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(finishAt)
+                    this.findNavController().navigate(action)
+                    true
+                }
+                else -> false
             }
         }
 
-        binding.editButton.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToEditFragment(taskId)
-            this.findNavController().navigate(action)
-        }
-
-        binding.completedButton.setOnClickListener {
-            viewModel.complete()
+        binding.completedFab.setOnClickListener {
+            viewModel.completed()
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }

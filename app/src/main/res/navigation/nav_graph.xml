@@ -32,8 +32,11 @@
             android:id="@+id/action_nav_task_to_nav_tasks"
             app:destination="@id/nav_tasks" />
         <action
-            android:id="@+id/action_nav_task_to_editFragment"
+            android:id="@+id/action_nav_task_to_nav_edit"
             app:destination="@id/nav_edit" />
+        <action
+            android:id="@+id/action_nav_task_to_nav_timer"
+            app:destination="@id/nav_timer" />
     </fragment>
 
 
@@ -63,6 +66,16 @@
         <action
             android:id="@+id/action_nav_edit_to_nav_tasks"
             app:destination="@id/nav_tasks" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_timer"
+        android:name="app.stacq.plan.ui.timer.TimerFragment"
+        android:label="@string/timer"
+        tools:layout="@layout/fragment_timer" >
+        <argument
+            android:name="finishAt"
+            app:argType="long" />
     </fragment>
 
 </navigation>
