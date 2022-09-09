@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentTimerBinding
-import app.stacq.plan.ui.timer.TimerConstants.MINUTE_IN_MILLIS
+import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
 import java.time.Instant
 
 
@@ -36,10 +36,11 @@ class TimerFragment : Fragment() {
         val finishAt = args.finishAt
 
         val millisInFuture: Long = (finishAt - Instant.now().epochSecond) * 1000L
+        val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
 
-        object : CountDownTimer(millisInFuture, MINUTE_IN_MILLIS) {
+        object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.timeText.text = "${millisUntilFinished / MINUTE_IN_MILLIS}"
+                binding.timeText.text = "${millisUntilFinished / millisInterval}"
             }
 
             override fun onFinish() {
