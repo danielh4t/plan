@@ -15,9 +15,13 @@ import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
 import app.stacq.plan.ui.tasks.TasksFragmentDirections
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -27,10 +31,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var provider: OAuthProvider.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        provider = OAuthProvider.newBuilder("github.com")
         firebaseAuth = Firebase.auth
         showAuthenticatedUI(firebaseAuth.currentUser)
 
@@ -81,22 +87,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleAuthentication() {
-        firebaseAuth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success
-                    val user = firebaseAuth.currentUser
-                    showAuthenticatedUI(user)
-                } else {
-                    // Sign in failure
-                    Toast.makeText(baseContext, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
+        val pendingResultTask: Task<AuthResult>? = firebaseAuth.pendingAuthResult
+        if (pendingResultTask != null) {
+            pendingResultTask
+                .addOnSuccessListener(
+                    OnSuccessListener {
+                        // User is signed in.
+                        Toast.makeText(this, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
+                        // it.additionalUserInfo?.username
+                        // authResult.getCredential().getAccessToken().
+                    })
+                .addOnFailureListener {
+                    // Handle failure.
+                    Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
                 }
-            }
+        } else {
+            // There's no pending result so you need to start the sign-in flow.
+            firebaseAuth
+                .startActivityForSignInWithProvider( /* activity= */this, provider.build())
+                .addOnSuccessListener {
+                    // User is signed in.
+                    // IdP data available in
+                    // authResult.getAdditionalUserInfo().getProfile().
+                    // The OAuth access token can also be retrieved:
+                    // authResult.getCredential().getAccessToken().
+                    Toast.makeText(this, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    // Handle failure.
+                    Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun showAuthenticatedUI(user: FirebaseUser?) {
         if (user != null) {
-            Toast.makeText(baseContext, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, user.displayName, Toast.LENGTH_SHORT).show()
         } else {
             handleAuthentication()
         }
