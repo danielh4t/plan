@@ -34,7 +34,6 @@ class TimerFragment : Fragment() {
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val finishAt: Long = args.finishAt
 
-
         val millisInFuture: Long = (finishAt - Instant.now().epochSecond) * 1000L
         val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
 
