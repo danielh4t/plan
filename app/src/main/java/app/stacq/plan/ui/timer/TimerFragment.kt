@@ -32,7 +32,8 @@ class TimerFragment : Fragment() {
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
-        val finishAt = args.finishAt
+        val finishAt: Long = args.finishAt
+
 
         val millisInFuture: Long = (finishAt - Instant.now().epochSecond) * 1000L
         val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
@@ -49,6 +50,7 @@ class TimerFragment : Fragment() {
 
         alarmMgr = this.context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
+            intent.putExtra("finishAt", finishAt)
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }
 
@@ -64,6 +66,8 @@ class TimerFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

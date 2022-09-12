@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/blank_time" />
-        
+
         <CheckBox
             android:id="@+id/timer_alarm"
             android:layout_width="wrap_content"

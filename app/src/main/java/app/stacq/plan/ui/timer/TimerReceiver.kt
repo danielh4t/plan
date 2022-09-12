@@ -4,15 +4,19 @@ import android.content.BroadcastReceiver
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import androidx.core.app.NotificationManagerCompat
+import app.stacq.plan.util.NotificationUtil
 
-private const val TAG = "TimerBroadcastReceiver"
 
 class TimerReceiver : BroadcastReceiver() {
 
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d(TAG, "Receive")
+        with(NotificationManagerCompat.from(context)) {
+            val notificationId: Int = intent.getIntExtra("finishAt", 0)
+            notify(notificationId, NotificationUtil.buildTimerNotification(context))
+        }
     }
+
 
 }

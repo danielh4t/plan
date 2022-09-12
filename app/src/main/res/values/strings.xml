@@ -33,5 +33,8 @@
     <string name="content_description_task_edit">Edit Task</string>
     <string name="content_description_task_delete">Delete Task</string>
     <string name="content_description_task_timer">Task Timer</string>
+    <!-- Notifications -->
+    <string name="timer_channel_name">Timer</string>
+    <string name="timer_channel_description">Timer Alerts</string>
 
 </resources>
