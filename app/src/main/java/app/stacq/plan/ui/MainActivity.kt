@@ -14,7 +14,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
-import app.stacq.plan.ui.tasks.TasksFragmentDirections
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
@@ -67,9 +66,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.settings -> {
-                val action = TasksFragmentDirections.actionNavTasksToSettings()
-                navController().navigate(action)
+            R.id.sign_in -> {
+                showAuthenticatedUI(firebaseAuth.currentUser)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -94,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                     OnSuccessListener {
                         // User is signed in.
                         Toast.makeText(this, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
-                        // it.additionalUserInfo?.username
                         // authResult.getCredential().getAccessToken().
                     })
                 .addOnFailureListener {
