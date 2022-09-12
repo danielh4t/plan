@@ -43,8 +43,7 @@ class TimerFragment : Fragment() {
             }
 
             override fun onFinish() {
-                binding.timeText.visibility = View.GONE
-                binding.timeImage.visibility = View.VISIBLE
+                binding.timeText.text = "0"
             }
         }.start()
 
