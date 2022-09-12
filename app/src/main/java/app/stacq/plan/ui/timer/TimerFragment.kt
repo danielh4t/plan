@@ -39,7 +39,7 @@ class TimerFragment : Fragment() {
 
         object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.timeText.text = "${ millisUntilFinished / millisInterval}"
+                binding.timeText.text = "${millisUntilFinished / millisInterval}"
             }
 
             override fun onFinish() {
@@ -65,7 +65,6 @@ class TimerFragment : Fragment() {
 
         return binding.root
     }
-
 
 
     override fun onDestroyView() {

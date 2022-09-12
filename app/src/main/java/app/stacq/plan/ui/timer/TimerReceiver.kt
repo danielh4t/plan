@@ -16,6 +16,4 @@ class TimerReceiver : BroadcastReceiver() {
             notify(notificationId, NotificationUtil.buildTimerNotification(context))
         }
     }
-
-
 }
