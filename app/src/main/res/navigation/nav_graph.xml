@@ -13,9 +13,6 @@
             android:id="@+id/action_nav_tasks_to_nav_task"
             app:destination="@id/nav_task" />
         <action
-            android:id="@+id/action_nav_tasks_to_settings"
-            app:destination="@id/nav_settings" />
-        <action
             android:id="@+id/action_nav_tasks_to_nav_create"
             app:destination="@id/nav_create" />
     </fragment>
