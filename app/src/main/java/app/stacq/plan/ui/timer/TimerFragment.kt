@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
 import java.time.Instant
@@ -40,11 +39,12 @@ class TimerFragment : Fragment() {
 
         object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.timeText.text = "${millisUntilFinished / millisInterval}"
+                binding.timeText.text = "${ millisUntilFinished / millisInterval}"
             }
 
             override fun onFinish() {
-                binding.timeText.text = getString(R.string.completed)
+                binding.timeText.visibility = View.GONE
+                binding.timeImage.visibility = View.VISIBLE
             }
         }.start()
 

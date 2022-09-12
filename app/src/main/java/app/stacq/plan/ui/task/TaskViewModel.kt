@@ -9,7 +9,6 @@ import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TIME_IN_SECONDS
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.temporal.ChronoUnit
 
 
 class TaskViewModel(
@@ -34,7 +33,7 @@ class TaskViewModel(
     }
 
     fun timer(): Long {
-        val instant = Instant.now().plus(TIMER_TIME_IN_SECONDS, ChronoUnit.SECONDS)
+        val instant = Instant.now().plusSeconds(TIMER_TIME_IN_SECONDS)
         var finishAt: Long = instant.epochSecond
         viewModelScope.launch {
             task.value?.let {

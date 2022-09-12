@@ -11,7 +11,6 @@ private const val TAG = "TimerBroadcastReceiver"
 class TimerReceiver : BroadcastReceiver() {
 
 
-
     override fun onReceive(context: Context, intent: Intent) {
         Log.d(TAG, "Receive")
     }
