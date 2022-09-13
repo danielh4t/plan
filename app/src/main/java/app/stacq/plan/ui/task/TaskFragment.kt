@@ -48,35 +48,26 @@ class TaskFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.task_edit -> {
-                    // Handle edit icon press
-                    val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
-                    this.findNavController().navigate(action)
-                    true
-                }
-                R.id.task_delete -> {
-                    // Handle delete icon press
-                    viewModel.delete()
-                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-                    this.findNavController().navigate(action)
-                    true
-                }
-                R.id.task_timer -> {
-                    // Handle timer icon press
-                    val finishAt: Long = viewModel.timer()
-                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(finishAt)
-                    this.findNavController().navigate(action)
-                    true
-                }
-                else -> false
-            }
+        binding.editTaskButton.setOnClickListener {
+            val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
+            this.findNavController().navigate(action)
         }
 
-        binding.completedFab.setOnClickListener {
+        binding.completeTaskButton.setOnClickListener {
             viewModel.completed()
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+            this.findNavController().navigate(action)
+        }
+
+        binding.deleteTaskButton.setOnClickListener {
+            viewModel.delete()
+            val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+            this.findNavController().navigate(action)
+        }
+
+        binding.taskTimerFab.setOnClickListener {
+            val finishAt: Long = viewModel.timer()
+            val action = TaskFragmentDirections.actionNavTaskToNavTimer(finishAt)
             this.findNavController().navigate(action)
         }
 
