@@ -90,8 +90,8 @@ interface TaskDao {
      * @return all tasks with category name.
      */
     @Query(
-        "SELECT task.id, task.created_at AS createdAt,task.title, task.completed_at AS completedAt, " +
-                "task.completed AS completed, category.name AS categoryName, " +
+        "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
+                "task.completed_at AS completedAt, category.name AS categoryName, " +
                 "task.timer_finish_at AS timerFinishAt " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id"

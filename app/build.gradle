@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "app.stacq.plan"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -26,7 +26,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            applicationIdSuffix ".debug"
             debuggable true
         }
     }
@@ -55,19 +54,19 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
     implementation 'androidx.databinding:databinding-common:7.2.2'
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.7'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.8'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
@@ -88,7 +87,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
-    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.1'
+    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.2'
     debugImplementation 'androidx.fragment:fragment-testing:1.5.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
