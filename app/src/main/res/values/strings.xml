@@ -19,7 +19,12 @@
     <string name="blank_time">90</string>
     <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
+    <string name="sign_in_dismiss">Sign In Dismiss</string>
     <string name="sign_in_failure">Sign In Failure</string>
+    <string name="content_sign_in">Sign in </string>
+    <string name="sign_out_success">Sign Out Success</string>
+    <string name="sign_out_failure">Sign Out Failure</string>
+    <string name="content_nav_header_image">app icon or profile image</string>
     <!-- Task fragment -->
     <string name="timer">Timer</string>
     <string name="completed">Completed</string>
@@ -38,11 +43,10 @@
     <!-- Notifications -->
     <string name="timer_channel_name">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
-    <string name="content_github_sign_in">Sign in using GitHub</string>
-    <string name="github_sign_in">GitHub Sign in</string>
     <string name="content_timer">Timer</string>
     <string name="content_task_time">Task created time calendar icon</string>
     <string name="content_edit_task">Edit task</string>
+    <string name="sign_in">sign in</string>
 
 
 </resources>

@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/sign_in"
-        android:icon="@drawable/ic_github"
-        android:title="@string/github_sign_in"
+        android:icon="@drawable/ic_person_outline"
+        android:title="@string/sign_in"
         app:showAsAction="ifRoom"
-        android:contentDescription="@string/content_github_sign_in" />
+        android:contentDescription="@string/content_sign_in" />
 </menu>
