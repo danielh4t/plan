@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
+import app.stacq.plan.util.installCheckProviderFactory
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -22,7 +23,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -41,9 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()
-        )
+        installCheckProviderFactory(firebaseAppCheck)
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         firebaseAuth = Firebase.auth
@@ -90,7 +89,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp() =
         navController().navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
-
     private fun navController(): NavController {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -114,6 +112,7 @@ class MainActivity : AppCompatActivity() {
             // If response is null the user canceled the sign-in flow using the back button.
             if (response == null) {
                 Toast.makeText(this, R.string.sign_in_dismiss, Toast.LENGTH_SHORT).show()
+                throw RuntimeException("Test Crash")
             } else {
                 response.error?.let {
                     val params = Bundle()
