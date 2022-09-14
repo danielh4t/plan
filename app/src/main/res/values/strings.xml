@@ -21,7 +21,7 @@
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_dismiss">Sign In Dismiss</string>
     <string name="sign_in_failure">Sign In Failure</string>
-    <string name="content_sign_in">Sign in </string>
+    <string name="content_sign_in_out">Sign In / Sign Out </string>
     <string name="sign_out_success">Sign Out Success</string>
     <string name="sign_out_failure">Sign Out Failure</string>
     <string name="content_nav_header_image">app icon or profile image</string>

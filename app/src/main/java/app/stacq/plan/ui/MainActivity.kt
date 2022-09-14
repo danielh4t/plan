@@ -14,12 +14,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
-import app.stacq.plan.databinding.NavHeaderMainBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
@@ -31,9 +32,9 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navHeaderMainBinding: NavHeaderMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +46,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        navHeaderMainBinding = NavHeaderMainBinding.inflate(layoutInflater)
-
         firebaseAuth = Firebase.auth
+        firebaseAnalytics = Firebase.analytics
 
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -112,10 +112,14 @@ class MainActivity : AppCompatActivity() {
         } else {
             // Sign in failed
             // If response is null the user canceled the sign-in flow using the back button.
-            // Otherwise check response.getError().getErrorCode() and handle the error.
             if (response == null) {
                 Toast.makeText(this, R.string.sign_in_dismiss, Toast.LENGTH_SHORT).show()
             } else {
+                response.error?.let {
+                    val params = Bundle()
+                    params.putInt("login_failure", it.errorCode)
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, params)
+                }
                 Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
             }
 
@@ -131,6 +135,7 @@ class MainActivity : AppCompatActivity() {
             AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener {
+                    invalidateOptionsMenu()
                     Toast.makeText(this, R.string.sign_out_success, Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(this, R.string.sign_out_failure, Toast.LENGTH_SHORT).show()
