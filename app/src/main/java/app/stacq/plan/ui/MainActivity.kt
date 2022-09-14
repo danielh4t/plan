@@ -15,8 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
 import app.stacq.plan.databinding.NavHeaderMainBinding
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -39,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         FirebaseApp.initializeApp(this)
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
@@ -70,42 +67,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ) { res ->
-        onSignInResult(res)
-    }
-
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            //val user = FirebaseAuth.getInstance().currentUser
-            Toast.makeText(this, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
-        } else {
-            // Sign in failed
-            // If response is null the user canceled the sign-in flow using the back button.
-            // Otherwise check response.getError().getErrorCode() and handle the error.
-            if (response == null) {
-                Toast.makeText(this, R.string.sign_in_dismiss, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
-            }
-
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.sign_in)?.let { showAuthenticatedUI(firebaseAuth.currentUser, it) }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sign_in -> {
-                showAuthenticatedUI(firebaseAuth.currentUser)
+                signInUser(firebaseAuth.currentUser)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -122,8 +97,36 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment.navController
     }
 
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        onSignInResult(res)
+    }
 
-    private fun showAuthenticatedUI(user: FirebaseUser?) {
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            invalidateOptionsMenu()
+            Toast.makeText(this, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
+        } else {
+            // Sign in failed
+            // If response is null the user canceled the sign-in flow using the back button.
+            // Otherwise check response.getError().getErrorCode() and handle the error.
+            if (response == null) {
+                Toast.makeText(this, R.string.sign_in_dismiss, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    private fun showAuthenticatedUI(user: FirebaseUser?, menuItem: MenuItem) {
+        if (user != null) menuItem.setIcon(R.drawable.ic_person_done_outline)
+    }
+
+    private fun signInUser(user: FirebaseUser?) {
         if (user != null) {
             AuthUI.getInstance()
                 .signOut(this)
@@ -145,9 +148,7 @@ class MainActivity : AppCompatActivity() {
                 .setTheme(R.style.Theme_Plan)
                 .build()
             signInLauncher.launch(signInIntent)
-
         }
     }
-
 
 }
