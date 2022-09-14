@@ -13,7 +13,7 @@ import app.stacq.plan.ui.tasks.TasksFragment
 
 private const val TIMER_CHANNEL_ID = "TIMER_CHANNEL"
 
-class NotificationUtil() {
+class NotificationUtil {
 
     companion object {
 
@@ -32,7 +32,7 @@ class NotificationUtil() {
             return NotificationCompat.Builder(context, TIMER_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_circle_check)
                 .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(context.getString(R.string.completed))
+                .setContentText(context.getString(R.string.complete))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

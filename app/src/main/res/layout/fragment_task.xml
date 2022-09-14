@@ -50,17 +50,6 @@
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
             tools:text="@string/category" />
 
-        <ImageView
-            android:id="@+id/task_time_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_calendar_outline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:id="@+id/task_time_text"
             android:layout_width="wrap_content"
@@ -70,8 +59,9 @@
             android:fontFamily="@font/roboto"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_time_image"
+            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
             app:taskTime="@{viewmodel.task.createdAt}"
+            android:contentDescription="@string/content_timer"
             tools:text="@string/time" />
 
 
@@ -83,6 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="@string/edit"
+            android:contentDescription="@string/content_edit_task"
             app:icon="@drawable/ic_edit_outline"
             app:layout_constraintEnd_toStartOf="@+id/complete_task_button"
             app:layout_constraintHorizontal_bias="0.5"
@@ -96,7 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/complete"
+            android:text="@string/completion"
+            android:contentDescription="@string/content_task_completion"
             app:icon="@drawable/ic_done_all_outline"
             app:layout_constraintEnd_toStartOf="@+id/delete_task_button"
             app:layout_constraintHorizontal_bias="0.5"
@@ -111,6 +103,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:text="@string/delete"
+            android:contentDescription="@string/content_delete_task"
             app:icon="@drawable/ic_trash_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -128,18 +121,6 @@
             app:icon="@drawable/ic_clock_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/created_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/created"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/task_time_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_text" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
-package app.stacq.plan.ui.tasks
+package app.stacq.plan.util.ui
 
 import android.content.res.ColorStateList
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.content.ContextCompat

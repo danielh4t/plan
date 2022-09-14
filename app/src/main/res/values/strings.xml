@@ -27,25 +27,20 @@
     <string name="content_nav_header_image">app icon or profile image</string>
     <!-- Task fragment -->
     <string name="timer">Timer</string>
-    <string name="completed">Completed</string>
+    <string name="content_task_time">Task created time calendar icon</string>
+    <string name="content_timer">Open Timer</string>
     <string name="edit">Edit</string>
+    <string name="content_edit_task">Edit Task</string>
+    <string name="completion">Completion</string>
+    <string name="content_task_completion">Task Completion</string>
     <string name="delete">Delete</string>
+    <string name="content_delete_task">Delete Task</string>
     <!-- Menu -->
     <string name="settings">Settings</string>
-    <!-- Preference Titles -->
-    <string name="sync_header">Sync</string>
-    <string name="build_header">Build</string>
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync periodically</string>
-    <string name="content_description_task_edit">Edit Task</string>
-    <string name="content_description_task_delete">Delete Task</string>
-    <string name="content_description_task_timer">Task Timer</string>
     <!-- Notifications -->
     <string name="timer_channel_name">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
-    <string name="content_timer">Timer</string>
-    <string name="content_task_time">Task created time calendar icon</string>
-    <string name="content_edit_task">Edit task</string>
+
     <string name="sign_in">sign in</string>
 
 
