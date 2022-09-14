@@ -47,7 +47,10 @@ class TimerFragment : Fragment() {
             }
         }.start()
 
+
+
         alarmMgr = this.context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
         alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
             intent.putExtra("finishAt", finishAt)
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
@@ -58,6 +61,8 @@ class TimerFragment : Fragment() {
             finishAt,
             alarmIntent
         )
+
+
 
         binding.timerAlarm.setOnCheckedChangeListener { _, checked ->
             if (checked) alarmMgr?.cancel(alarmIntent)

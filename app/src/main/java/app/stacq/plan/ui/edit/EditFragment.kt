@@ -54,7 +54,7 @@ class EditFragment : Fragment() {
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.task.observe(viewLifecycleOwner) { task ->
             binding.editTitle.setText(task.title)

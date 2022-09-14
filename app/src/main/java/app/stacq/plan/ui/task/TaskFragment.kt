@@ -46,7 +46,7 @@ class TaskFragment : Fragment() {
         viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.editTaskButton.setOnClickListener {
             val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)

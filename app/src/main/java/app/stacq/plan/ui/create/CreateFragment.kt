@@ -56,7 +56,7 @@ class CreateFragment : Fragment() {
             ViewModelProvider(this, viewModelFactory)[CreateViewModel::class.java]
 
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
