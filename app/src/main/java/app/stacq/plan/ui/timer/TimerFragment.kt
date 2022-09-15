@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,6 @@ class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
     private val binding get() = _binding!!
 
-    private var alarmMgr: AlarmManager? = null
     private lateinit var alarmIntent: PendingIntent
 
     override fun onCreateView(
@@ -34,7 +34,8 @@ class TimerFragment : Fragment() {
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val finishAt: Long = args.finishAt
 
-        val millisInFuture: Long = (finishAt - Instant.now().epochSecond) * 1000L
+        val now: Long = Instant.now().epochSecond
+        val millisInFuture: Long = (finishAt - now) * 1000L
         val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
 
         object : CountDownTimer(millisInFuture, millisInterval) {
@@ -43,29 +44,25 @@ class TimerFragment : Fragment() {
             }
 
             override fun onFinish() {
-                binding.timeText.text = "0"
+                binding.timeText.text = ":)"
             }
         }.start()
-
-
-
-        alarmMgr = this.context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
             intent.putExtra("finishAt", finishAt)
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }
 
-        alarmMgr?.setAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            finishAt,
+        val alarmManager = this.context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+
+        alarmManager?.setExactAndAllowWhileIdle(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + millisInFuture,
             alarmIntent
         )
 
-
-
         binding.timerAlarm.setOnCheckedChangeListener { _, checked ->
-            if (checked) alarmMgr?.cancel(alarmIntent)
+            if (checked && alarmManager != null) alarmManager.cancel(alarmIntent)
         }
 
         return binding.root
