@@ -31,7 +31,6 @@ class TasksRepository(
 
     suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.updateTask(task)
-        tasksRemoteDataSource.updateTask(task)
     }
 
     suspend fun deleteById(id: String) = withContext(ioDispatcher) {
@@ -40,7 +39,6 @@ class TasksRepository(
 
     suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
         tasksLocalDataSource.updateTaskCompletionById(id)
-        tasksRemoteDataSource.updateTaskCompletionById(id)
     }
 
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>> {
