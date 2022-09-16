@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
-private var BASE_URL = if (BuildConfig.DEBUG) BuildConfig.planapi else BuildConfig.plandebugapi
+private var BASE_URL = if (BuildConfig.DEBUG) BuildConfig.plandebugapi else BuildConfig.planapi
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -24,4 +24,5 @@ private val retrofit = Retrofit.Builder()
 object PlanApiService {
     val planApiService: PlanApiService by lazy { retrofit.create(PlanApiService::class.java) }
 }
+
 

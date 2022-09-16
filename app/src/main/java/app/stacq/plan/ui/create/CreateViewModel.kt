@@ -15,6 +15,7 @@ class CreateViewModel(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
+
     val categories: LiveData<List<Category>> = liveData {
         emitSource(categoryRepository.getCategories())
     }
