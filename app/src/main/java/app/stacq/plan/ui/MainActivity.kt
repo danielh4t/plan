@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 response.error?.let {
                     val params = Bundle()
-                    params.putInt("login_failure", it.errorCode)
+                    params.putInt("login_error", it.errorCode)
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, params)
                 }
                 Toast.makeText(this, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
