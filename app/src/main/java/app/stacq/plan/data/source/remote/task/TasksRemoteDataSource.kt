@@ -32,11 +32,6 @@ class TasksRemoteDataSource(
         planApiService.deleteTaskById(id)
     }
 
-    suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
-        planApiService.updateTaskCompletionById(id)
-    }
-
-
     suspend fun getTasksCategory(): List<TaskCategory> = withContext(ioDispatcher) {
         planApiService.getTasksCategory()
     }
