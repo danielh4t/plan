@@ -43,6 +43,7 @@
 
     <string name="sign_in">sign in</string>
     <string name="task_created">Task Created</string>
+    <string name="timer_complete">Timer complete</string>
 
 
 </resources>

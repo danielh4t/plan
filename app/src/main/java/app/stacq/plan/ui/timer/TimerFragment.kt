@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
 import java.time.Instant
@@ -22,6 +24,7 @@ class TimerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var alarmIntent: PendingIntent
+    private val viewModel: TimerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,18 +38,18 @@ class TimerFragment : Fragment() {
         val finishAt: Long = args.finishAt
 
         val now: Long = Instant.now().epochSecond
+
+        viewModel.isTimerFinished(now, finishAt)
+        viewModel
         val millisInFuture: Long = (finishAt - now) * 1000L
-        val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
 
-        object : CountDownTimer(millisInFuture, millisInterval) {
-            override fun onTick(millisUntilFinished: Long) {
-                binding.timeText.text = "${millisUntilFinished / millisInterval}"
-            }
+        if(millisInFuture > 0) { // count down
+            startCountDownTimer(millisInFuture)
 
-            override fun onFinish() {
-                binding.timeText.text = ":)"
-            }
-        }.start()
+        } else{ // countdown finished
+
+        }
+
 
         alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
             intent.putExtra("finishAt", finishAt)
@@ -66,6 +69,32 @@ class TimerFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+
+    binding.timerText.visibility = View.GONE
+    binding.timerImage.visibility = View.VISIBLE
+    val checkmarkAnimation = binding.timerImage.drawable as Animatable
+    checkmarkAnimation.start()
+    private fun startCountDownTimer(millisInFuture: Long) {
+        val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
+
+        object : CountDownTimer(millisInFuture, millisInterval) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.timerText.text = "${millisUntilFinished / millisInterval}"
+            }
+
+            override fun onFinish() {
+                binding.timerText.visibility = View.GONE
+                binding.timerImage.visibility = View.VISIBLE
+                val checkmarkAnimation = binding.timerImage.drawable as Animatable
+                checkmarkAnimation.start()
+            }
+        }.start()
+    }
+
+    private fun setAlarm(){
+
     }
 
 

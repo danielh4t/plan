@@ -10,11 +10,12 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/time_text"
+            android:id="@+id/timer_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:textSize="180sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,11 +26,21 @@
             android:id="@+id/timer_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:button="@drawable/timer_alarm_checkbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/timer_image"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:src="@drawable/avd_checkmark"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/timer_complete"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
