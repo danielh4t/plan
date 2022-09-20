@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
             app:taskTime="@{viewmodel.task.createdAt}"
-            android:contentDescription="@string/content_timer"
+            android:contentDescription="@string/content_task_creation"
             tools:text="@string/time" />
 
 

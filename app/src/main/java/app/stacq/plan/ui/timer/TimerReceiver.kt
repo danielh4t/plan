@@ -12,7 +12,7 @@ class TimerReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         with(NotificationManagerCompat.from(context)) {
-            val notificationId: Int = intent.getIntExtra("finishAt", 0)
+            val notificationId: Int = intent.getLongExtra("finishAt", 0).toInt()
             notify(notificationId, NotificationUtil.buildTimerNotification(context))
         }
     }

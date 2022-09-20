@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.timer.TimerFragment">
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="app.stacq.plan.ui.timer.TimerViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +20,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:textSize="180sp"
-
+            android:text="@{viewmodel.timerTime}"
+            app:timerTextVisibility="@{viewmodel.timerFinished}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,13 +40,14 @@
             android:id="@+id/timer_image"
             android:layout_width="240dp"
             android:layout_height="240dp"
+            android:contentDescription="@string/timer_complete"
             android:src="@drawable/avd_checkmark"
             android:visibility="gone"
+            app:timerImageVisibility="@{viewmodel.timerFinished}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/timer_complete"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

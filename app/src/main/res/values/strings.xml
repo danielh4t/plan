@@ -35,6 +35,7 @@
     <string name="content_task_completion">Task Completion</string>
     <string name="delete">Delete</string>
     <string name="content_delete_task">Delete Task</string>
+    <string name="content_task_creation">Task creation date and time</string>
     <!-- Menu -->
     <string name="settings">Settings</string>
     <!-- Notifications -->
@@ -42,6 +43,8 @@
     <string name="timer_channel_description">Timer Alerts</string>
 
     <string name="sign_in">sign in</string>
+    <string name="timer_complete">Timer complete</string>
+    <string name="task_created">Task created</string>
 
 
 </resources>

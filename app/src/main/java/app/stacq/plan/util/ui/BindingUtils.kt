@@ -1,7 +1,9 @@
 package app.stacq.plan.util.ui
 
 import android.content.res.ColorStateList
+import android.view.View
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -36,4 +38,15 @@ fun CheckBox.setColor(taskCategory: TaskCategory) {
         "Work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
         else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.black))
     }
+}
+
+@BindingAdapter("timerTextVisibility")
+fun TextView.setVisibility(timerFinished: Boolean) {
+    visibility = if (timerFinished) View.INVISIBLE else View.VISIBLE
+}
+
+
+@BindingAdapter("timerImageVisibility")
+fun ImageView.setVisibility(timerFinished: Boolean) {
+    visibility = if (timerFinished) View.VISIBLE else View.INVISIBLE
 }

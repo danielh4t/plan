@@ -6,15 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.databinding.FragmentTimerBinding
-import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
 import java.time.Instant
 
 
@@ -23,8 +21,11 @@ class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModelFactory: TimerViewModelFactory
+    private lateinit var viewModel: TimerViewModel
+
+    private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
-    private val viewModel: TimerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,64 +38,44 @@ class TimerFragment : Fragment() {
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val finishAt: Long = args.finishAt
 
+
+        viewModelFactory = TimerViewModelFactory(finishAt)
+        viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
+
         val now: Long = Instant.now().epochSecond
 
-        viewModel.isTimerFinished(now, finishAt)
-        viewModel
         val millisInFuture: Long = (finishAt - now) * 1000L
+        val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
-        if(millisInFuture > 0) { // count down
-            startCountDownTimer(millisInFuture)
-
-        } else{ // countdown finished
-
+        if (millisInFuture > 0) { // count down
+            viewModel.timer(millisInFuture, millisInterval)
+            setAlarm(finishAt, millisInFuture)
+        } else { // countdown finished
+            val checkmarkAnimation = binding.timerImage.drawable as Animatable
+            checkmarkAnimation.start()
         }
-
-
-        alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
-            intent.putExtra("finishAt", finishAt)
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        }
-
-        val alarmManager = this.context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-
-        alarmManager?.setExactAndAllowWhileIdle(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + millisInFuture,
-            alarmIntent
-        )
 
         binding.timerAlarm.setOnCheckedChangeListener { _, checked ->
-            if (checked && alarmManager != null) alarmManager.cancel(alarmIntent)
+            if (checked) alarmManager.cancel(alarmIntent)
         }
 
         return binding.root
     }
 
 
-    binding.timerText.visibility = View.GONE
-    binding.timerImage.visibility = View.VISIBLE
-    val checkmarkAnimation = binding.timerImage.drawable as Animatable
-    checkmarkAnimation.start()
-    private fun startCountDownTimer(millisInFuture: Long) {
-        val millisInterval: Long = TIMER_TICK_IN_SECONDS * 1000L
+    private fun setAlarm(finishAt: Long, millisInFuture: Long) {
+        alarmManager = (this.context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager)!!
 
-        object : CountDownTimer(millisInFuture, millisInterval) {
-            override fun onTick(millisUntilFinished: Long) {
-                binding.timerText.text = "${millisUntilFinished / millisInterval}"
-            }
+        alarmIntent = Intent(context, TimerReceiver::class.java).let { intent ->
+            intent.putExtra("finishAt", finishAt)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        }
 
-            override fun onFinish() {
-                binding.timerText.visibility = View.GONE
-                binding.timerImage.visibility = View.VISIBLE
-                val checkmarkAnimation = binding.timerImage.drawable as Animatable
-                checkmarkAnimation.start()
-            }
-        }.start()
-    }
-
-    private fun setAlarm(){
-
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + millisInFuture,
+            alarmIntent
+        )
     }
 
 
