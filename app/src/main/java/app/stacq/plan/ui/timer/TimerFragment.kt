@@ -49,19 +49,13 @@ class TimerFragment : Fragment() {
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
         if (millisInFuture > 0) { // count down
-            object : CountDownTimer(millisInFuture, millisInterval) {
-                override fun onTick(millisUntilFinished: Long) {
-                    binding.timerText.text = "${millisUntilFinished / millisInterval}"
-                }
-
-                override fun onFinish() {
-                    binding.timerText.text
-                }
-            }.start()
+            viewModel.timer(millisInFuture, millisInterval)
             setAlarm(finishAt, millisInFuture)
-        } else { // countdown finished
-            val checkmarkAnimation = binding.timerImage.drawable as Animatable
-            checkmarkAnimation.start()
+        }
+
+        viewModel.timerFinished.observe(viewLifecycleOwner) {
+            // countdown finished
+            if (it!!) (binding.timerImage.drawable as Animatable).start()
         }
 
         binding.timerAlarm.setOnCheckedChangeListener { _, checked ->

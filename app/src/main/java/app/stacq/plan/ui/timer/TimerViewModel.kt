@@ -20,5 +20,16 @@ class TimerViewModel(finishAt: Long) : ViewModel() {
         _timerFinished.value = now > finishAt
     }
 
+    fun timer(millisInFuture: Long, millisInterval: Long) {
+        object : CountDownTimer(millisInFuture, millisInterval) {
+            override fun onTick(millisUntilFinished: Long) {
+                _timerTime.value = "${millisUntilFinished / millisInterval}"
+            }
 
+            override fun onFinish() {
+                _timerFinished.value = true
+            }
+        }.start()
+
+    }
 }
