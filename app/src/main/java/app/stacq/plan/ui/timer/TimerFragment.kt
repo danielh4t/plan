@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +49,15 @@ class TimerFragment : Fragment() {
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
         if (millisInFuture > 0) { // count down
-            viewModel.timer(millisInFuture, millisInterval)
+            object : CountDownTimer(millisInFuture, millisInterval) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.timerText.text = "${millisUntilFinished / millisInterval}"
+                }
+
+                override fun onFinish() {
+                    binding.timerText.text
+                }
+            }.start()
             setAlarm(finishAt, millisInFuture)
         } else { // countdown finished
             val checkmarkAnimation = binding.timerImage.drawable as Animatable
