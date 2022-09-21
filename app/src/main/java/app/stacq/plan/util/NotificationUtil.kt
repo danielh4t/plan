@@ -30,7 +30,7 @@ class NotificationUtil {
             )
 
             return NotificationCompat.Builder(context, TIMER_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_circle_check)
+                .setSmallIcon(R.drawable.ic_checkmark)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(context.getString(R.string.complete))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
