@@ -16,7 +16,7 @@
                     android:fillAlpha="0"
                     android:strokeColor="#3ddb85"
                     android:strokeWidth="1"
-                    android:trimPathStart="1"
+                    android:trimPathEnd="0"
                     android:strokeLineCap="round"
                     android:strokeLineJoin="round"/>
             </group>
@@ -27,19 +27,19 @@
             <set>
                 <objectAnimator
                     android:propertyName="trimPathEnd"
-                    android:duration="1500"
+                    android:duration="2000"
                     android:valueFrom="0"
                     android:valueTo="1"
                     android:valueType="floatType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
                     android:propertyName="fillAlpha"
-                    android:startOffset="100"
-                    android:duration="1900"
+                    android:startOffset="1750"
+                    android:duration="250"
                     android:valueFrom="0"
                     android:valueTo="1"
                     android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
             </set>
         </aapt:attr>
     </target>

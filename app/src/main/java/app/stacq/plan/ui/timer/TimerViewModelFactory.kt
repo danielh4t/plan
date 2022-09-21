@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 
 
 class TimerViewModelFactory(
-    private val finishAt: Long,
+    private val finishAt: Long
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {

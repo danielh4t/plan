@@ -45,7 +45,6 @@ fun TextView.setVisibility(timerFinished: Boolean) {
     visibility = if (timerFinished) View.INVISIBLE else View.VISIBLE
 }
 
-
 @BindingAdapter("timerImageVisibility")
 fun ImageView.setVisibility(timerFinished: Boolean) {
     visibility = if (timerFinished) View.VISIBLE else View.INVISIBLE

@@ -42,7 +42,6 @@
             android:layout_height="240dp"
             android:contentDescription="@string/timer_complete"
             android:src="@drawable/avd_checkmark"
-            android:visibility="gone"
             app:timerImageVisibility="@{viewmodel.timerFinished}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

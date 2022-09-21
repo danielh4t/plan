@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.databinding.FragmentTimerBinding
-import java.time.Instant
 
 
 class TimerFragment : Fragment() {
@@ -39,23 +37,21 @@ class TimerFragment : Fragment() {
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val finishAt: Long = args.finishAt
 
-
         viewModelFactory = TimerViewModelFactory(finishAt)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        val now: Long = Instant.now().epochSecond
-
-        val millisInFuture: Long = (finishAt - now) * 1000L
-        val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
-
-        if (millisInFuture > 0) { // count down
-            viewModel.timer(millisInFuture, millisInterval)
-            setAlarm(finishAt, millisInFuture)
+        viewModel.millisInFuture.observe(viewLifecycleOwner) {
+            if (it > 0) {
+                setAlarm(finishAt, it)
+            }
         }
 
         viewModel.timerFinished.observe(viewLifecycleOwner) {
-            // countdown finished
-            if (it!!) (binding.timerImage.drawable as Animatable).start()
+            if (it!!) {
+                (binding.timerImage.drawable as Animatable).start()
+            }
         }
 
         binding.timerAlarm.setOnCheckedChangeListener { _, checked ->
