@@ -31,7 +31,7 @@ class NotificationUtil {
 
             return NotificationCompat.Builder(context, TIMER_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_checkmark)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(context.getString(R.string.timer_complete))
                 .setContentText(context.getString(R.string.complete))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
