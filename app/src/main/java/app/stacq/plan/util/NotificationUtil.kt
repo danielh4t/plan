@@ -13,6 +13,14 @@ import app.stacq.plan.ui.tasks.TasksFragment
 
 private const val TIMER_CHANNEL_ID = "TIMER_CHANNEL"
 
+
+
+fun NotificationManager.sendNotification(body: String, applicationContext: Context){
+
+
+}
+
+
 class NotificationUtil {
 
     companion object {
