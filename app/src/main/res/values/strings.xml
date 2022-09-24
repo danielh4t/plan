@@ -39,7 +39,8 @@
     <!-- Menu -->
     <string name="settings">Settings</string>
     <!-- Notifications -->
-    <string name="timer_channel_name">Timer</string>
+    <string name="timer_channel_id" translatable="false">timer_channel</string>
+    <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
     <string name="sign_in">sign in</string>
