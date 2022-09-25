@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.repository.TasksRepository
 
 
-class TaskViewModelFactory(private val tasksRepository: TasksRepository, private val taskId: String)
-    : ViewModelProvider.Factory {
+class TaskViewModelFactory(
+    private val tasksRepository: TasksRepository,
+    private val taskId: String
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

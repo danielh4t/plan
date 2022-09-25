@@ -66,8 +66,8 @@
         android:label="@string/timer"
         tools:layout="@layout/fragment_timer" >
         <argument
-            android:name="finishAt"
-            app:argType="long" />
+            android:name="taskId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

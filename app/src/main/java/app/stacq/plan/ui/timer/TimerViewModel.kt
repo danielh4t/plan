@@ -4,10 +4,14 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.stacq.plan.data.source.repository.TasksRepository
 import java.time.Instant
 
 
-class TimerViewModel(finishAt: Long) : ViewModel() {
+class TimerViewModel(
+    private val tasksRepository: TasksRepository,
+    private val taskId: String
+) : ViewModel() {
 
     private val _timerTime = MutableLiveData<String?>()
     val timerTime: LiveData<String?> = _timerTime
@@ -36,7 +40,7 @@ class TimerViewModel(finishAt: Long) : ViewModel() {
             }
         }.start()
 
-        val time: Long =  _millisInFuture.value!! / millisInterval
+        val time: Long = _millisInFuture.value!! / millisInterval
         _timerTime.value = "$time"
         _timerFinished.value = now > finishAt
     }

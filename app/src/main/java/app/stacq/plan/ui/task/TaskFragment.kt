@@ -33,7 +33,7 @@ class TaskFragment : Fragment() {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
 
         val args = TaskFragmentArgs.fromBundle(requireArguments())
-        val taskId = args.taskId
+        val taskId: String = args.taskId
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
@@ -66,7 +66,7 @@ class TaskFragment : Fragment() {
 
         binding.taskTimerFab.setOnClickListener {
             val finishAt: Long = viewModel.timer()
-            val action = TaskFragmentDirections.actionNavTaskToNavTimer(finishAt)
+            val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
             this.findNavController().navigate(action)
         }
 
