@@ -38,6 +38,10 @@ class TasksLocalDataSource(
         taskDao.updateTaskCompletionById(id)
     }
 
+    override suspend fun updateTaskTimerAlarmById(id: String) = withContext(ioDispatcher) {
+        taskDao.updateTaskTimerAlarmById(id)
+    }
+
     override suspend fun getTasksCategory(): LiveData<List<TaskCategory>> =
         withContext(ioDispatcher) {
             taskDao.getTasksCategory()

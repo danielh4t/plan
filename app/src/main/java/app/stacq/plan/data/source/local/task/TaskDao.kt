@@ -67,14 +67,6 @@ interface TaskDao {
     suspend fun updateTaskCompletionById(id: String)
 
     /**
-     * Update the timer alarm of a task
-     *
-     * @param id of the task
-     */
-    @Query("UPDATE task SET timer_alarm = NOT timer_alarm WHERE id = :id")
-    suspend fun updateTaskTimerAlarmById(id: String)
-
-    /**
      * Update task timer finish at time
      *
      * @param id of the task
@@ -83,6 +75,13 @@ interface TaskDao {
     @Query("UPDATE task SET timer_finish_at = :finishAt WHERE id = :id")
     suspend fun updateTaskTimerById(id: String, finishAt: Long)
 
+    /**
+     * Update the timer alarm of a task
+     *
+     * @param id of the task
+     */
+    @Query("UPDATE task SET timer_alarm = NOT timer_alarm WHERE id = :id")
+    suspend fun updateTaskTimerAlarmById(id: String)
 
     /**
      * Delete a task. by id
@@ -100,7 +99,7 @@ interface TaskDao {
     @Query(
         "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
                 "task.completed_at AS completedAt, category.name AS categoryName, " +
-                "task.timer_finish_at AS timerFinishAt " +
+                "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id"
     )
@@ -114,7 +113,7 @@ interface TaskDao {
     @Query(
         "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
                 "task.completed_at AS completedAt,  category.name AS categoryName, " +
-                "task.timer_finish_at AS timerFinishAt " +
+                "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm " +
                 "FROM task " +
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"
