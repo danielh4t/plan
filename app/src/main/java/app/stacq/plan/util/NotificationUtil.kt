@@ -12,7 +12,7 @@ import app.stacq.plan.ui.tasks.TasksFragment
 
 
 private const val TIMER_CHANNEL_ID = "TIMER_CHANNEL"
-
+private const val TIMER_NOTIFICATION_ID: Int = 0
 
 fun NotificationManager.sendNotification(contentText: String, applicationContext: Context) {
 
@@ -23,6 +23,8 @@ fun NotificationManager.sendNotification(contentText: String, applicationContext
         .setSmallIcon(R.drawable.ic_checkmark)
         .setContentTitle(applicationContext.getString(R.string.timer_complete))
         .setContentText(contentText)
+
+    notify(TIMER_NOTIFICATION_ID, builder.build())
 }
 
 
