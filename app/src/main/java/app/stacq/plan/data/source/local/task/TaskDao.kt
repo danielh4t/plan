@@ -67,6 +67,14 @@ interface TaskDao {
     suspend fun updateTaskCompletionById(id: String)
 
     /**
+     * Update the timer alarm of a task
+     *
+     * @param id of the task
+     */
+    @Query("UPDATE task SET timer_alarm = NOT timer_alarm WHERE id = :id")
+    suspend fun updateTaskTimerAlarmById(id: String)
+
+    /**
      * Update task timer finish at time
      *
      * @param id of the task
