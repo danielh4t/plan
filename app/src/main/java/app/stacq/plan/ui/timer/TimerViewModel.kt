@@ -7,12 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
+import kotlinx.coroutines.launch
 import java.time.Instant
 
 
@@ -23,25 +21,32 @@ class TimerViewModel(
 ) : AndroidViewModel(app) {
 
 
-    val task: LiveData<TaskCategory> = liveData {
-        emitSource(tasksRepository.readTaskCategoryById(taskId))
-    }
+    private val _task = MutableLiveData<TaskCategory?>()
+    val task: LiveData<TaskCategory?> = _task
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private val notificationPendingIntent: PendingIntent
-    private val notificationIntent = Intent(app, TimerReceiver::class.java)
+    private val notificationIntent: Intent
 
 
-    private val _timerTime = MutableLiveData<String?>()
-    val timerTime: LiveData<String?> = _timerTime
+    private val _timerTime = MutableLiveData<String>()
+    val timerTime: LiveData<String> = _timerTime
 
-    private val _timerFinished = MutableLiveData<Boolean?>()
-    val timerFinished: LiveData<Boolean?> = _timerFinished
+    private val _timerFinished = MutableLiveData<Boolean>()
+    val timerFinished: LiveData<Boolean> = _timerFinished
 
-    private val _millisInFuture = MutableLiveData<Long>()
-    val millisInFuture: LiveData<Long> = _millisInFuture
 
     init {
+        viewModelScope.launch {
+            _task.value = tasksRepository.readTaskCategoryById(taskId).value
+        }
+
+        val finishAt: Long = task.value!!.timerFinishAt
+        val title: String = task.value!!.title
+
+        notificationIntent = Intent(app, TimerReceiver::class.java)
+            .putExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, finishAt)
+            .putExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY, title)
 
         notificationPendingIntent =
             PendingIntent.getBroadcast(
@@ -52,11 +57,10 @@ class TimerViewModel(
             )
 
         val now: Long = Instant.now().epochSecond
-
-        _millisInFuture.value = (task.value!!.timerFinishAt - now) * 1000L
+        val millisInFuture: Long = (finishAt - now) * 1000L
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
-        object : CountDownTimer(_millisInFuture.value!!, millisInterval) {
+        object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 _timerTime.value = "${millisUntilFinished / millisInterval}"
             }
@@ -66,16 +70,31 @@ class TimerViewModel(
             }
         }.start()
 
-        val time: Long = _millisInFuture.value!! / millisInterval
+        val time: Long = millisInFuture / millisInterval
         _timerTime.value = "$time"
         _timerFinished.value = now > task.value!!.timerFinishAt
+
+        if (task.value!!.timerAlarm) {
+            setAlarm(millisInFuture)
+        }
+    }
+
+    fun updateAlarm(isChecked: Boolean) {
+        if(isChecked) {
+            cancelAlarm()
+            viewModelScope.launch {
+                tasksRepository.updateTaskTimerAlarmById(taskId)
+            }
+        }
+
     }
 
 
     private fun setAlarm(millisInFuture: Long) {
+        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + millisInFuture,
+            triggerTime,
             notificationPendingIntent
         )
     }

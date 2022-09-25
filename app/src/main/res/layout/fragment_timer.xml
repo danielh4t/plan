@@ -33,6 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/timer_alarm_checkbox"
+            android:checked="@{viewmodel.task.timerAlarm}"
+            android:onCheckedChanged="@{()->viewmodel.updateAlarm(viewmodel.task.timerAlarm)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

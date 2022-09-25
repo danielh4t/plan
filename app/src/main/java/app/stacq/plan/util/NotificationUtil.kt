@@ -1,20 +1,28 @@
 package app.stacq.plan.util
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import app.stacq.plan.R
-import app.stacq.plan.ui.tasks.TasksFragment
+import app.stacq.plan.ui.MainActivity
 
 
-private const val TIMER_CHANNEL_ID = "TIMER_CHANNEL"
-private const val TIMER_NOTIFICATION_ID: Int = 0
+fun NotificationManagerCompat.sendNotification(notificationId: Int, contentText: String, applicationContext: Context) {
 
-fun NotificationManager.sendNotification(contentText: String, applicationContext: Context) {
+    val intent = Intent(applicationContext, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
+
+    val pendingIntent: PendingIntent = PendingIntent.getActivity(
+        applicationContext,
+        0,
+        intent,
+        PendingIntent.FLAG_IMMUTABLE
+    )
 
     val builder = NotificationCompat.Builder(
         applicationContext,
@@ -23,49 +31,23 @@ fun NotificationManager.sendNotification(contentText: String, applicationContext
         .setSmallIcon(R.drawable.ic_checkmark)
         .setContentTitle(applicationContext.getString(R.string.timer_complete))
         .setContentText(contentText)
+        .setContentIntent(pendingIntent)
 
-    notify(TIMER_NOTIFICATION_ID, builder.build())
+    notify(notificationId, builder.build())
 }
 
 
-class NotificationUtil {
+fun NotificationManager.createNotificationChannel(
+    channelId: String,
+    channelName: String,
+    channelDescription: String
+) {
 
-    companion object {
-
-        fun buildTimerNotification(context: Context): Notification {
-
-            createTimerNotificationChannel(context)
-
-            val intent = Intent(context, TasksFragment::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(
-                context,
-                0, intent, PendingIntent.FLAG_IMMUTABLE
-            )
-
-            return NotificationCompat.Builder(context, TIMER_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_checkmark)
-                .setContentTitle(context.getString(R.string.timer_complete))
-                .setContentText(context.getString(R.string.complete))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build()
+    val channel =
+        NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH).apply {
+            description = channelDescription
         }
 
-        private fun createTimerNotificationChannel(context: Context) {
-            val name = context.getString(R.string.timer_channel_name)
-            val descriptionText = context.getString(R.string.timer_channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(TIMER_CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
+    createNotificationChannel(channel)
 
 }
