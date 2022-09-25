@@ -28,6 +28,9 @@ data class Task(
     var completedAt: Long = 0,
 
     @ColumnInfo(name = "timer_finish_at")
-    var timerFinishAt: Long = 0
+    var timerFinishAt: Long = 0,
+
+    @ColumnInfo(name = "timer_alarm")
+    var timerAlarm: Boolean = true
 
 )

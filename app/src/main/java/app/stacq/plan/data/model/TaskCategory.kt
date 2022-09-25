@@ -8,4 +8,5 @@ data class TaskCategory(
     var completedAt: Long,
     var categoryName: String,
     var timerFinishAt: Long,
+    var timerAlarm: Boolean,
 )

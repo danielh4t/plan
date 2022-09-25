@@ -41,6 +41,14 @@ class TasksRepository(
         tasksLocalDataSource.updateTaskCompletionById(id)
     }
 
+    suspend fun updateTaskTimerById(id: String, finishAt: Long) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTaskTimerFinishById(id, finishAt)
+    }
+
+    suspend fun updateTaskTimerAlarmById(id: String) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTaskTimerAlarmById(id)
+    }
+
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>> {
         return tasksLocalDataSource.getTasksCategory()
     }
@@ -49,7 +57,4 @@ class TasksRepository(
         return tasksLocalDataSource.readTaskCategoryById(id)
     }
 
-    suspend fun updateTaskTimerById(id: String, finishAt: Long) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTaskTimerById(id, finishAt)
-    }
 }
