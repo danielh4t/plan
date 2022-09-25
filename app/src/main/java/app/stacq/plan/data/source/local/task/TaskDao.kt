@@ -73,7 +73,7 @@ interface TaskDao {
      * @param finishAt timer timer
      */
     @Query("UPDATE task SET timer_finish_at = :finishAt WHERE id = :id")
-    suspend fun updateTaskTimerById(id: String, finishAt: Long)
+    suspend fun updateTaskTimerFinishById(id: String, finishAt: Long)
 
     /**
      * Update the timer alarm of a task
