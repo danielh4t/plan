@@ -1,9 +1,12 @@
 package app.stacq.plan.ui.timer
 
 import android.os.CountDownTimer
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 import java.time.Instant
 
@@ -11,7 +14,12 @@ import java.time.Instant
 class TimerViewModel(
     private val tasksRepository: TasksRepository,
     private val taskId: String
-) : ViewModel() {
+) : AndroidViewModel(app) {
+
+
+    val task: LiveData<TaskCategory> = liveData {
+        emitSource(tasksRepository.readTaskCategoryById(taskId))
+    }
 
     private val _timerTime = MutableLiveData<String?>()
     val timerTime: LiveData<String?> = _timerTime
