@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.ui.timer.TimerConstants.TIMER_TIME_IN_SECONDS
+import app.stacq.plan.ui.timer.TimerConstants
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -32,20 +32,6 @@ class TaskViewModel(
         }
     }
 
-    fun timer(): Long {
-        val instant = Instant.now().plusSeconds(TIMER_TIME_IN_SECONDS)
-        var finishAt: Long = instant.epochSecond
-        viewModelScope.launch {
-            task.value?.let {
-                // timer has not be set
-                if (it.timerFinishAt == 0L) {
-                    tasksRepository.updateTaskTimerById(taskId, finishAt)
-                } else {
-                    finishAt = it.timerFinishAt
-                }
-            }
-        }
-        return finishAt
-    }
+
 
 }

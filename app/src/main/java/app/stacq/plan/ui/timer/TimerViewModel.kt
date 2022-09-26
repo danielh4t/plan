@@ -1,12 +1,7 @@
 package app.stacq.plan.ui.timer
 
-import android.app.AlarmManager
-import android.app.Application
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
+
 import android.os.CountDownTimer
-import android.os.SystemClock
 import androidx.lifecycle.*
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
@@ -15,19 +10,9 @@ import java.time.Instant
 
 
 class TimerViewModel(
-    app: Application,
     private val tasksRepository: TasksRepository,
-    private val taskId: String
-) : AndroidViewModel(app) {
-
-
-    private val _task = MutableLiveData<TaskCategory?>()
-    val task: LiveData<TaskCategory?> = _task
-
-    private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val notificationPendingIntent: PendingIntent
-    private val notificationIntent: Intent
-
+    private val task: TaskCategory
+) : ViewModel() {
 
     private val _timerTime = MutableLiveData<String>()
     val timerTime: LiveData<String> = _timerTime
@@ -35,30 +20,42 @@ class TimerViewModel(
     private val _timerFinished = MutableLiveData<Boolean>()
     val timerFinished: LiveData<Boolean> = _timerFinished
 
+    private val _timerAlarm = MutableLiveData<Boolean>()
+    val timerAlarm: LiveData<Boolean> = _timerAlarm
 
     init {
-        viewModelScope.launch {
-            _task.value = tasksRepository.readTaskCategoryById(taskId).value
+        // finish at is not set
+        if(task.timerFinishAt == 0L)  {
+            setFinishAt()
         }
 
-        val finishAt: Long = task.value!!.timerFinishAt
-        val title: String = task.value!!.title
-
-        notificationIntent = Intent(app, TimerReceiver::class.java)
-            .putExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, finishAt)
-            .putExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY, title)
-
-        notificationPendingIntent =
-            PendingIntent.getBroadcast(
-                getApplication(),
-                0,
-                notificationIntent,
-                PendingIntent.FLAG_IMMUTABLE
-            )
-
         val now: Long = Instant.now().epochSecond
-        val millisInFuture: Long = (finishAt - now) * 1000L
+        val isTimerFinished: Boolean = now > task.timerFinishAt
+        _timerFinished.value = isTimerFinished
+
+        // timer not finished
+        if (!isTimerFinished) {
+            startTimer()
+            // set alarm only if timer is not finished
+            _timerAlarm.value = task.timerAlarm
+        }
+    }
+
+
+    private fun setFinishAt() {
+        val finishAt = Instant.now().plusSeconds(TimerConstants.TIMER_TIME_IN_SECONDS).epochSecond
+        task.timerFinishAt = finishAt
+        viewModelScope.launch {
+            tasksRepository.updateTaskTimerFinishById(task.id, finishAt)
+        }
+    }
+
+    private fun startTimer() {
+        val millisInFuture: Long = millisInFuture(task.timerFinishAt)
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
+
+        val time: Long = millisInFuture / millisInterval
+        _timerTime.value = "$time"
 
         object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
@@ -69,39 +66,18 @@ class TimerViewModel(
                 _timerFinished.value = true
             }
         }.start()
+    }
 
-        val time: Long = millisInFuture / millisInterval
-        _timerTime.value = "$time"
-        _timerFinished.value = now > task.value!!.timerFinishAt
-
-        if (task.value!!.timerAlarm) {
-            setAlarm(millisInFuture)
+    fun updateTaskTimerAlarm() {
+        task.timerAlarm = !task.timerAlarm
+        _timerAlarm.value = !timerAlarm.value!!
+        viewModelScope.launch {
+            tasksRepository.updateTaskTimerAlarmById(task.id)
         }
     }
 
-    fun updateAlarm(isChecked: Boolean) {
-        if(isChecked) {
-            cancelAlarm()
-            viewModelScope.launch {
-                tasksRepository.updateTaskTimerAlarmById(taskId)
-            }
-        }
-
+    fun millisInFuture(finishAt: Long): Long {
+        return (finishAt - Instant.now().epochSecond) * 1000L
     }
-
-
-    private fun setAlarm(millisInFuture: Long) {
-        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            triggerTime,
-            notificationPendingIntent
-        )
-    }
-
-    private fun cancelAlarm() {
-        alarmManager.cancel(notificationPendingIntent)
-    }
-
 
 }

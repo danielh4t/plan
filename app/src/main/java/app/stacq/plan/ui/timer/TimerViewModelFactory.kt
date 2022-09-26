@@ -2,22 +2,25 @@
 
 package app.stacq.plan.ui.timer
 
-import android.app.Application
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 
 
 class TimerViewModelFactory(
-    private val app: Application,
     private val tasksRepository: TasksRepository,
-    private val taskId: String
-) : ViewModelProvider.AndroidViewModelFactory(app) {
+    private val task: TaskCategory
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {
                 isAssignableFrom(TimerViewModel::class.java) ->
-                    return TimerViewModel(app, tasksRepository, taskId) as T
+                    return TimerViewModel(
+                        tasksRepository,
+                        task
+                    ) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }

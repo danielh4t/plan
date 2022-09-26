@@ -11,7 +11,6 @@ import app.stacq.plan.util.sendNotification
 
 class TimerReceiver : BroadcastReceiver() {
 
-
     override fun onReceive(context: Context, intent: Intent) {
         with(NotificationManagerCompat.from(context)) {
             val notificationId: Int =
@@ -21,6 +20,5 @@ class TimerReceiver : BroadcastReceiver() {
             sendNotification(notificationId, contextText, context)
         }
     }
-
 
 }

@@ -66,8 +66,8 @@
         android:label="@string/timer"
         tools:layout="@layout/fragment_timer" >
         <argument
-            android:name="taskId"
-            app:argType="string" />
+            android:name="taskCategory"
+            app:argType="app.stacq.plan.data.model.TaskCategory" />
     </fragment>
 
 </navigation>
