@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.stacq.plan.data.model.TaskCategory
+
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.PlanApiService
@@ -65,8 +67,8 @@ class TaskFragment : Fragment() {
         }
 
         binding.taskTimerFab.setOnClickListener {
-            val finishAt: Long = viewModel.timer()
-            val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+            val task: TaskCategory = viewModel.task.value!!
+            val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
             this.findNavController().navigate(action)
         }
 

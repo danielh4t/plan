@@ -1,15 +1,20 @@
 package app.stacq.plan.ui.timer
 
+import android.app.AlarmManager
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.R
+import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.PlanApiService
@@ -28,6 +33,8 @@ class TimerFragment : Fragment() {
     private lateinit var viewModelFactory: TimerViewModelFactory
     private lateinit var viewModel: TimerViewModel
 
+    private var alarmManager: AlarmManager? = null
+    private var notificationPendingIntent: PendingIntent? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +45,7 @@ class TimerFragment : Fragment() {
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
-        val taskId: String = args.taskId
+        val task: TaskCategory = args.taskCategory
 
         val application = requireNotNull(this.activity).application
 
@@ -48,13 +55,22 @@ class TimerFragment : Fragment() {
             TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
 
-        viewModelFactory = TimerViewModelFactory(application, tasksRepository, taskId)
+        viewModelFactory = TimerViewModelFactory(tasksRepository, task)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+
+        viewModel.timerAlarm.observe(viewLifecycleOwner) {
+            if(it) {
+                setAlarm(application, task.timerFinishAt, task.title)
+            } else {
+                cancelAlarm()
+            }
+        }
+
         viewModel.timerFinished.observe(viewLifecycleOwner) {
-            if (it!!) {
+            if (it) {
                 (binding.timerImage.drawable as Animatable).start()
             }
         }
@@ -72,6 +88,38 @@ class TimerFragment : Fragment() {
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         notificationManager.createNotificationChannel(channelId, channelName, description)
+    }
+
+    private fun setAlarm(applicationContext: Context, finishAt: Long, title: String) {
+
+        val notificationIntent: Intent = Intent(applicationContext, TimerReceiver::class.java)
+            .putExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, finishAt)
+            .putExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY, title)
+
+
+        notificationPendingIntent =
+            PendingIntent.getBroadcast(
+                applicationContext,
+                0,
+                notificationIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+        val triggerTime = SystemClock.elapsedRealtime() + viewModel.millisInFuture(finishAt)
+        alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager?.setExactAndAllowWhileIdle(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerTime,
+            notificationPendingIntent
+        )
+
+    }
+
+    private fun cancelAlarm() {
+        if (notificationPendingIntent != null) {
+            alarmManager?.cancel(notificationPendingIntent)
+        }
     }
 
 
