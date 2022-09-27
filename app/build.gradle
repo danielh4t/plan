@@ -20,13 +20,15 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        proguardFiles 'proguard-rules.pro'
     }
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+            'proguard-rules.pro', 'retrofit2.pro', 'moshi.pro'
         }
         debug {
             applicationIdSuffix ".debug"
@@ -86,8 +88,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'io.coil-kt:coil:2.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
-    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
+    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.10'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
     implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'junit:junit:4.13.2'
@@ -98,6 +101,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.navigation:navigation-testing:2.5.2'
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.2'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
