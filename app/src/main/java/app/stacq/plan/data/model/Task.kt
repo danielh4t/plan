@@ -1,5 +1,6 @@
 package app.stacq.plan.data.model
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,6 +8,7 @@ import java.time.Instant
 import java.util.UUID
 
 
+@Keep
 @Entity(tableName = "task")
 data class Task(
 
