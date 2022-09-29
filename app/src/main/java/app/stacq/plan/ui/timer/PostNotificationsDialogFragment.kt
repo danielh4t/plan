@@ -34,13 +34,14 @@ class PostNotificationsDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.post_notifications))
-            .setPositiveButton(getString(R.string.allow)) {_,_ ->
+            .setPositiveButton(getString(R.string.notify)) {_,_ ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
+                Log.d(TAG, "Notify")
             }
-            .setNegativeButton(getString(R.string.deny)) {_,_ ->
-                Log.d(TAG, "Denied")
+            .setNegativeButton(getString(R.string.silent)) {_,_ ->
+                Log.d(TAG, "Silent")
             }
             .create()
 
