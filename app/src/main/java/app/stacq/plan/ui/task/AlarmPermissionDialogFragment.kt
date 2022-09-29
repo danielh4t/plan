@@ -14,4 +14,8 @@ class AlarmPermissionDialogFragment : DialogFragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ -> }
             .create()
 
+    companion object {
+        const val TAG = "AlarmPermissionDialog"
+    }
+
 }
