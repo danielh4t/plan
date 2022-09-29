@@ -1,16 +1,9 @@
 package app.stacq.plan.ui.task
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -32,8 +25,6 @@ class TaskFragment : Fragment() {
     private lateinit var viewModelFactory: TaskViewModelFactory
     private lateinit var viewModel: TaskViewModel
 
-    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,20 +32,6 @@ class TaskFragment : Fragment() {
     ): View {
 
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
-
-        requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission is granted.
-                    Log.d(PostNotificationsDialogFragment.TAG, "Permission granted")
-                } else {
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied.
-                    Log.d(PostNotificationsDialogFragment.TAG, "Permission denied")
-                }
-            }
 
         val args = TaskFragmentArgs.fromBundle(requireArguments())
         val taskId: String = args.taskId
@@ -88,10 +65,7 @@ class TaskFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-
-
         binding.taskTimerFab.setOnClickListener {
-            this.context?.let { it1 -> handlePostNotificationsPermission(it1) }
             val task: TaskCategory = viewModel.task.value!!
             val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
             this.findNavController().navigate(action)
@@ -106,27 +80,5 @@ class TaskFragment : Fragment() {
         _binding = null
     }
 
-
-    private fun handlePostNotificationsPermission(context: Context) {
-        when {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                // You can use the API that requires the permission.
-                return
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected. In this UI,
-                // include a "cancel" or "no thanks" button that allows the user to
-                // continue using your app without granting the permission.
-                PostNotificationsDialogFragment().show(
-                    this.childFragmentManager,
-                    PostNotificationsDialogFragment.TAG
-                )
-            }
-        }
-    }
 
 }
