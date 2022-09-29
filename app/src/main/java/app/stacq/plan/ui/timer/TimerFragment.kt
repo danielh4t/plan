@@ -84,7 +84,7 @@ class TimerFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.timerAlarm.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 setAlarm(application, task.timerFinishAt, task.title)
             } else {
                 cancelAlarm()
@@ -131,11 +131,22 @@ class TimerFragment : Fragment() {
         val triggerTime = SystemClock.elapsedRealtime() + viewModel.millisInFuture(finishAt)
         alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        alarmManager?.setExactAndAllowWhileIdle(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            triggerTime,
-            notificationPendingIntent
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager?.canScheduleExactAlarms() == true) {
+                alarmManager?.setExactAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime,
+                    notificationPendingIntent
+                )
+            }
+        }
+        else {
+            alarmManager?.setExactAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                triggerTime,
+                notificationPendingIntent
+            )
+        }
 
     }
 
