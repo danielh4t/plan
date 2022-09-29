@@ -70,8 +70,10 @@ class TaskFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
+
+
         binding.taskTimerFab.setOnClickListener {
-            this.context?.let { it1 -> handleScheduleExactAlarmPermission(it1) }
+            this.context?.let { it1 -> handlePostNotificationsPermission(it1) }
             val task: TaskCategory = viewModel.task.value!!
             val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
             this.findNavController().navigate(action)
@@ -87,16 +89,16 @@ class TaskFragment : Fragment() {
     }
 
 
-    private fun handleScheduleExactAlarmPermission(context: Context) {
+    private fun handlePostNotificationsPermission(context: Context) {
         when {
             ContextCompat.checkSelfPermission(
                 context,
-                Manifest.permission.SCHEDULE_EXACT_ALARM
+                Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
                 return
             }
-            shouldShowRequestPermissionRationale(Manifest.permission.SCHEDULE_EXACT_ALARM) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
             // In an educational UI, explain to the user why your app requires this
             // permission for a specific feature to behave as expected. In this UI,
             // include a "cancel" or "no thanks" button that allows the user to
@@ -107,6 +109,6 @@ class TaskFragment : Fragment() {
     }
 
     private fun showInContextDialog() {
-        TODO("Not yet implemented")
+        PostNotificationsDialogFragment().show(this.childFragmentManager, PostNotificationsDialogFragment.TAG)
     }
 }

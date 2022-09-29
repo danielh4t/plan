@@ -46,8 +46,8 @@
     <string name="sign_in">sign in</string>
     <string name="timer_complete">Timer complete</string>
     <string name="task_created">Task created</string>
-    <string name="ok">ok</string>
-    <string name="alarm_permission">Alarm permission</string>
+    <string name="ok">Allow</string>
+    <string name="post_notifications">Allow app to send notifications</string>
 
 
 </resources>
