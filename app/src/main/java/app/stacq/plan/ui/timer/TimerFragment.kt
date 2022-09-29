@@ -161,7 +161,7 @@ class TimerFragment : Fragment() {
                 // permission for a specific feature to behave as expected. In this UI,
                 // include a "cancel" or "no thanks" button that allows the user to
                 // continue using your app without granting the permission.
-                val result = PostNotificationsDialogFragment().show(
+                PostNotificationsDialogFragment().show(
                     this.childFragmentManager,
                     PostNotificationsDialogFragment.TAG
                 )
