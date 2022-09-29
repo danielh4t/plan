@@ -17,7 +17,9 @@ class TimerReceiver : BroadcastReceiver() {
                 intent.getLongExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, 0).toInt()
             val contextText: String =
                 intent.getStringExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY).toString()
-            sendNotification(notificationId, contextText, context)
+            if(areNotificationsEnabled()) {
+                sendNotification(notificationId, contextText, context)
+            }
         }
     }
 
