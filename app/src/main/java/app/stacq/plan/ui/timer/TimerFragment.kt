@@ -1,16 +1,23 @@
 package app.stacq.plan.ui.timer
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Animatable
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.R
@@ -35,6 +42,7 @@ class TimerFragment : Fragment() {
 
     private var alarmManager: AlarmManager? = null
     private var notificationPendingIntent: PendingIntent? = null
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +51,21 @@ class TimerFragment : Fragment() {
     ): View {
 
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
+
+        requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Permission is granted.
+                    Log.d(PostNotificationsDialogFragment.TAG, "Permission granted")
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // features requires a permission that the user has denied.
+                    Log.d(PostNotificationsDialogFragment.TAG, "Permission denied")
+                }
+            }
+
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val task: TaskCategory = args.taskCategory
@@ -60,7 +83,6 @@ class TimerFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-
         viewModel.timerAlarm.observe(viewLifecycleOwner) {
             if(it) {
                 setAlarm(application, task.timerFinishAt, task.title)
@@ -76,6 +98,7 @@ class TimerFragment : Fragment() {
         }
 
         createTimerChannel(application)
+        handlePostNotificationsPermission()
 
         return binding.root
     }
@@ -119,6 +142,35 @@ class TimerFragment : Fragment() {
     private fun cancelAlarm() {
         if (notificationPendingIntent != null) {
             alarmManager?.cancel(notificationPendingIntent)
+        }
+    }
+
+    private fun handlePostNotificationsPermission() {
+        when {
+            context?.let {
+                ContextCompat.checkSelfPermission(
+                    it.applicationContext,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            } == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+                return
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                // In an educational UI, explain to the user why your app requires this
+                // permission for a specific feature to behave as expected. In this UI,
+                // include a "cancel" or "no thanks" button that allows the user to
+                // continue using your app without granting the permission.
+                val result = PostNotificationsDialogFragment().show(
+                    this.childFragmentManager,
+                    PostNotificationsDialogFragment.TAG
+                )
+            }
+            else -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
         }
     }
 

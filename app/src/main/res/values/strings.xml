@@ -48,6 +48,8 @@
     <string name="task_created">Task created</string>
     <string name="ok">Allow</string>
     <string name="post_notifications">Allow app to send notifications</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
 
 
 </resources>
