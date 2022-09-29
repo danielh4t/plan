@@ -101,8 +101,12 @@ class TaskFragment : Fragment() {
             // permission for a specific feature to behave as expected. In this UI,
             // include a "cancel" or "no thanks" button that allows the user to
             // continue using your app without granting the permission.
+            showInContextDialog()
+        }
+        }
+    }
 
-        }
-        }
+    private fun showInContextDialog() {
+        TODO("Not yet implemented")
     }
 }
