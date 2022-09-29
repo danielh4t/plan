@@ -1,9 +1,13 @@
 package app.stacq.plan.ui.task
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -67,10 +71,12 @@ class TaskFragment : Fragment() {
         }
 
         binding.taskTimerFab.setOnClickListener {
+            this.context?.let { it1 -> handleScheduleExactAlarmPermission(it1) }
             val task: TaskCategory = viewModel.task.value!!
             val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
             this.findNavController().navigate(action)
         }
+
 
         return binding.root
     }
@@ -78,5 +84,25 @@ class TaskFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    private fun handleScheduleExactAlarmPermission(context: Context) {
+        when {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.SCHEDULE_EXACT_ALARM
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+                return
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.SCHEDULE_EXACT_ALARM) -> {
+            // In an educational UI, explain to the user why your app requires this
+            // permission for a specific feature to behave as expected. In this UI,
+            // include a "cancel" or "no thanks" button that allows the user to
+            // continue using your app without granting the permission.
+
+        }
+        }
     }
 }
