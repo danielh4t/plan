@@ -94,12 +94,6 @@ class TimerViewModel(
         return (finishAt - Instant.now().epochSecond) * 1000L
     }
 
-    fun logPermission(isGranted: Boolean) {
-        _notificationPermission.value = isGranted
-        val access = if (isGranted) "granted" else "denied"
-        val params = Bundle()
-        params.putString(AnalyticsConstants.Param.POST_NOTIFICATIONS, access)
-        firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION, params)
-    }
+
 
 }
