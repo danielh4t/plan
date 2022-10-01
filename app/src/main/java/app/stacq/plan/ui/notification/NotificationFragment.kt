@@ -3,7 +3,6 @@ package app.stacq.plan.ui.notification
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ class NotificationFragment : Fragment() {
 
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
@@ -55,9 +53,9 @@ class NotificationFragment : Fragment() {
                         Snackbar.LENGTH_SHORT
                     ).show()
                     viewModel.logPermission(false)
-
                 }
-                val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(task)
+                val action =
+                    NotificationFragmentDirections.actionNavNotificationToNavTimer(task, isGranted)
                 this.findNavController().navigate(action)
             }
 
@@ -65,6 +63,16 @@ class NotificationFragment : Fragment() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
+        }
+
+        binding.noThanksButton.setOnClickListener {
+            Snackbar.make(
+                binding.noThanksButton,
+                R.string.no_notification,
+                Snackbar.LENGTH_SHORT
+            ).show()
+            val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(task, false)
+            this.findNavController().navigate(action)
         }
 
         return binding.root

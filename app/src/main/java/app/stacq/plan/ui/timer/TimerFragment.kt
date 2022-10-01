@@ -48,9 +48,9 @@ class TimerFragment : Fragment() {
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val task: TaskCategory = args.taskCategory
+        val notify: Boolean = args.notify
 
         val application = requireNotNull(this.activity).application
-
         val database = PlanDatabase.getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
         val remoteDataSource =
@@ -63,8 +63,7 @@ class TimerFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.timerAlarm.observe(viewLifecycleOwner) {
-            val canPostNotifications = viewModel.notificationPermission.value == true
-            if (it && canPostNotifications) {
+            if (it && notify) {
                 setAlarm(application, task.timerFinishAt, task.title)
             } else {
                 cancelAlarm()
