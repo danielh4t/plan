@@ -75,8 +75,8 @@
     <fragment
         android:id="@+id/nav_notification"
         android:name="app.stacq.plan.ui.notification.NotificationFragment"
-        android:label="fragment_notification"
-        tools:layout="@layout/fragment_notification" >
+        android:label="Notification"
+        tools:layout="@layout/fragment_notification">
         <action
             android:id="@+id/action_nav_notification_to_nav_timer"
             app:destination="@id/nav_timer" />
