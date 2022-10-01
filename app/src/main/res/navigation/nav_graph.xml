@@ -35,7 +35,7 @@
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
         <action
-            android:id="@+id/action_nav_task_to_notificationFragment"
+            android:id="@+id/action_nav_task_to_nav_notification"
             app:destination="@id/nav_notification" />
     </fragment>
 
