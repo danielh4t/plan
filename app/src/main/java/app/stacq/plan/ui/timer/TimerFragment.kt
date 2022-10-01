@@ -24,6 +24,7 @@ import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.createNotificationChannel
+import app.stacq.plan.util.millisInFuture
 import kotlinx.coroutines.Dispatchers
 
 
@@ -106,7 +107,7 @@ class TimerFragment : Fragment() {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-        val triggerTime = SystemClock.elapsedRealtime() + viewModel.millisInFuture(finishAt)
+        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture(finishAt)
         alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
