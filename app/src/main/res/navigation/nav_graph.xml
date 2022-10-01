@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
+        <action
+            android:id="@+id/action_nav_task_to_notificationFragment"
+            app:destination="@id/nav_notification" />
     </fragment>
 
 
@@ -68,6 +71,15 @@
         <argument
             android:name="taskCategory"
             app:argType="app.stacq.plan.data.model.TaskCategory" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="app.stacq.plan.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_nav_notification_to_nav_timer"
+            app:destination="@id/nav_timer" />
     </fragment>
 
 </navigation>
