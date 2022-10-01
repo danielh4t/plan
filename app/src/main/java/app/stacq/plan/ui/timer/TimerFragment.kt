@@ -11,6 +11,7 @@ import android.graphics.drawable.Animatable
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.createNotificationChannel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 
 
@@ -59,10 +61,17 @@ class TimerFragment : Fragment() {
                 if (isGranted) {
                     // Permission is granted.
                     Log.d(PostNotificationsDialogFragment.TAG, "Permission granted")
+                    viewModel.logPermission(true)
                 } else {
                     // Explain to the user that the feature is unavailable because the
                     // features requires a permission that the user has denied.
                     Log.d(PostNotificationsDialogFragment.TAG, "Permission denied")
+                    Snackbar.make(
+                        binding.timerText,
+                        R.string.no_notification,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    viewModel.logPermission(false)
                 }
             }
 
@@ -84,7 +93,8 @@ class TimerFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.timerAlarm.observe(viewLifecycleOwner) {
-            if (it) {
+            val canPostNotifications = viewModel.notificationPermission.value == true
+            if (it && canPostNotifications) {
                 setAlarm(application, task.timerFinishAt, task.title)
             } else {
                 cancelAlarm()
@@ -139,13 +149,13 @@ class TimerFragment : Fragment() {
                     notificationPendingIntent
                 )
             }
-        }
-        else {
-            alarmManager?.setExactAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                triggerTime,
-                notificationPendingIntent
-            )
+        } else {
+            val intent = Intent().apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+                }
+            }
+            startActivity(intent)
         }
 
     }
@@ -156,6 +166,9 @@ class TimerFragment : Fragment() {
         }
     }
 
+    /**
+     * Handles request for app post notification permission
+     */
     private fun handlePostNotificationsPermission() {
         when {
             context?.let {
@@ -169,22 +182,39 @@ class TimerFragment : Fragment() {
             }
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                 // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected. In this UI,
-                // include a "cancel" or "no thanks" button that allows the user to
-                // continue using your app without granting the permission.
+                // permission for a specific feature to behave as expected.
+                this.childFragmentManager.setFragmentResultListener(
+                    "requestKey",
+                    this
+                ) { _, bundle ->
+                    // app request cancel or rejected
+                    val result = bundle.getBoolean("bundleKey", false)
+                }
                 PostNotificationsDialogFragment().show(
                     this.childFragmentManager,
                     PostNotificationsDialogFragment.TAG
                 )
             }
             else -> {
+                this.childFragmentManager.setFragmentResultListener(
+                    "requestKey",
+                    this
+                ) { _, bundle ->
+                    // app request cancel or rejected
+                    val result = bundle.getBoolean("bundleKey", false)
+                }
+                PostNotificationsDialogFragment().show(
+                    this.childFragmentManager,
+                    PostNotificationsDialogFragment.TAG
+                )
+                // You can directly ask for the permission.
+                // The registered ActivityResultCallback gets the result of this request.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

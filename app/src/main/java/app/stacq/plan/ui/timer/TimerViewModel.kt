@@ -1,10 +1,18 @@
 package app.stacq.plan.ui.timer
 
 
+import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.util.AnalyticsConstants
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -23,9 +31,14 @@ class TimerViewModel(
     private val _timerAlarm = MutableLiveData<Boolean>()
     val timerAlarm: LiveData<Boolean> = _timerAlarm
 
+    private val _notificationPermission = MutableLiveData(true)
+    val notificationPermission: LiveData<Boolean> = _notificationPermission
+
+    private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+
     init {
         // finish at is not set
-        if(task.timerFinishAt == 0L)  {
+        if (task.timerFinishAt == 0L) {
             setFinishAt()
         }
 
@@ -39,6 +52,7 @@ class TimerViewModel(
             // set alarm only if timer is not finished
             _timerAlarm.value = task.timerAlarm
         }
+
     }
 
 
@@ -78,6 +92,14 @@ class TimerViewModel(
 
     fun millisInFuture(finishAt: Long): Long {
         return (finishAt - Instant.now().epochSecond) * 1000L
+    }
+
+    fun logPermission(isGranted: Boolean) {
+        _notificationPermission.value = isGranted
+        val access = if (isGranted) "granted" else "denied"
+        val params = Bundle()
+        params.putString(AnalyticsConstants.Param.POST_NOTIFICATIONS, access)
+        firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION, params)
     }
 
 }

@@ -46,9 +46,10 @@
     <string name="sign_in">sign in</string>
     <string name="timer_complete">Timer complete</string>
     <string name="task_created">Task created</string>
-    <string name="post_notifications">Allow app to send notifications when the timer is finished</string>
+    <string name="post_notifications">Allow app to send notification when the timer is completed</string>
     <string name="notify">Notify me</string>
-    <string name="silent">Silent</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="no_notification">Notification will not be sent</string>
 
 
 </resources>
