@@ -41,7 +41,8 @@ class TimerViewModel(
             setFinishAt()
         }
 
-        _timerFinished.value = isFinishAtInFuture(task.timerFinishAt)
+        val isTimerFinished: Boolean = isFinishAtInFuture(task.timerFinishAt)
+        _timerFinished.value = isTimerFinished
 
         // timer not finished
         if (!isTimerFinished) {
@@ -86,8 +87,5 @@ class TimerViewModel(
             tasksRepository.updateTaskTimerAlarmById(task.id)
         }
     }
-
-
-
 
 }

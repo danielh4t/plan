@@ -17,6 +17,7 @@ import app.stacq.plan.data.source.remote.PlanApiService
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
+import app.stacq.plan.util.isFinishAtInFuture
 import kotlinx.coroutines.Dispatchers
 
 
@@ -71,8 +72,8 @@ class TaskFragment : Fragment() {
         binding.taskTimerFab.setOnClickListener {
             val task: TaskCategory = viewModel.task.value!!
             val notify: Boolean = hasPostNotificationsPermission()
-            val can
-            if (notify and task.timerFinishAt) {
+            val finished: Boolean = isFinishAtInFuture(task.timerFinishAt)
+            if (notify and !finished) {
                 val action = TaskFragmentDirections.actionNavTaskToNavTimer(task, true)
                 this.findNavController().navigate(action)
             } else {
