@@ -14,7 +14,8 @@ import java.time.Instant
 
 class TimerViewModel(
     private val tasksRepository: TasksRepository,
-    private val task: TaskCategory
+    private val task: TaskCategory,
+    notify: Boolean
 ) : ViewModel() {
 
     private val _timerTime = MutableLiveData<String>()
@@ -26,7 +27,13 @@ class TimerViewModel(
     private val _timerAlarm = MutableLiveData<Boolean>()
     val timerAlarm: LiveData<Boolean> = _timerAlarm
 
+    private val _postNotifications = MutableLiveData<Boolean>()
+    val postNotifications: LiveData<Boolean> = _postNotifications
+
     init {
+
+        _postNotifications.value = notify
+
         // finish at is not set
         if (task.timerFinishAt == 0L) {
             setFinishAt()
@@ -39,7 +46,7 @@ class TimerViewModel(
         // timer not finished
         if (!isTimerFinished) {
             startTimer()
-            // set alarm only if timer is not finished
+            // set alarm when timer not finished
             _timerAlarm.value = task.timerAlarm
         }
 

@@ -11,7 +11,8 @@ import app.stacq.plan.data.source.repository.TasksRepository
 
 class TimerViewModelFactory(
     private val tasksRepository: TasksRepository,
-    private val task: TaskCategory
+    private val task: TaskCategory,
+    private val notify: Boolean
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
@@ -19,7 +20,8 @@ class TimerViewModelFactory(
                 isAssignableFrom(TimerViewModel::class.java) ->
                     return TimerViewModel(
                         tasksRepository,
-                        task
+                        task,
+                        notify
                     ) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
