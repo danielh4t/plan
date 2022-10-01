@@ -1,7 +1,6 @@
 package app.stacq.plan.ui.timer
 
 
-import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,17 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.util.AnalyticsConstants
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import app.stacq.plan.util.isFinishAtInFuture
+import app.stacq.plan.util.millisInFuture
 import kotlinx.coroutines.launch
 import java.time.Instant
 
 
 class TimerViewModel(
     private val tasksRepository: TasksRepository,
-    private val task: TaskCategory
+    private val task: TaskCategory,
+    notify: Boolean
 ) : ViewModel() {
 
     private val _timerTime = MutableLiveData<String>()
@@ -31,25 +29,25 @@ class TimerViewModel(
     private val _timerAlarm = MutableLiveData<Boolean>()
     val timerAlarm: LiveData<Boolean> = _timerAlarm
 
-    private val _notificationPermission = MutableLiveData(true)
-    val notificationPermission: LiveData<Boolean> = _notificationPermission
-
-    private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+    private val _postNotifications = MutableLiveData<Boolean>()
+    val postNotifications: LiveData<Boolean> = _postNotifications
 
     init {
+
+        _postNotifications.value = notify
+
         // finish at is not set
         if (task.timerFinishAt == 0L) {
             setFinishAt()
         }
 
-        val now: Long = Instant.now().epochSecond
-        val isTimerFinished: Boolean = now > task.timerFinishAt
+        val isTimerFinished: Boolean = isFinishAtInFuture(task.timerFinishAt)
         _timerFinished.value = isTimerFinished
 
         // timer not finished
         if (!isTimerFinished) {
             startTimer()
-            // set alarm only if timer is not finished
+            // set alarm when timer not finished
             _timerAlarm.value = task.timerAlarm
         }
 
@@ -88,18 +86,6 @@ class TimerViewModel(
         viewModelScope.launch {
             tasksRepository.updateTaskTimerAlarmById(task.id)
         }
-    }
-
-    fun millisInFuture(finishAt: Long): Long {
-        return (finishAt - Instant.now().epochSecond) * 1000L
-    }
-
-    fun logPermission(isGranted: Boolean) {
-        _notificationPermission.value = isGranted
-        val access = if (isGranted) "granted" else "denied"
-        val params = Bundle()
-        params.putString(AnalyticsConstants.Param.POST_NOTIFICATIONS, access)
-        firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION, params)
     }
 
 }

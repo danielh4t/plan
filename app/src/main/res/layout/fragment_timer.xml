@@ -36,7 +36,8 @@
             android:button="@drawable/timer_alarm_checkbox"
             android:checked="@{viewmodel.timerAlarm}"
             android:onCheckedChanged="@{()->viewmodel.updateTaskTimerAlarm()}"
-            app:timerCheckBoxVisibility="@{viewmodel.timerFinished}"
+            app:timerFinished="@{viewmodel.timerFinished}"
+            app:postNotifications="@{viewmodel.postNotifications}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
