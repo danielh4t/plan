@@ -1,9 +1,12 @@
 package app.stacq.plan.ui.task
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -66,9 +69,14 @@ class TaskFragment : Fragment() {
         }
 
         binding.taskTimerFab.setOnClickListener {
-            val task: TaskCategory = viewModel.task.value!!
-            val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
-            this.findNavController().navigate(action)
+            if (hasPostNotificationsPermission()) {
+                val task: TaskCategory = viewModel.task.value!!
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
+                this.findNavController().navigate(action)
+            } else {
+                val action = TaskFragmentDirections.actionNavTaskToNavNotification()
+                this.findNavController().navigate(action)
+            }
         }
 
 
@@ -80,5 +88,31 @@ class TaskFragment : Fragment() {
         _binding = null
     }
 
+
+    /**
+     * Handles request for app post notification permission
+     */
+    private fun hasPostNotificationsPermission(): Boolean {
+        when {
+            context?.let {
+                ContextCompat.checkSelfPermission(
+                    it.applicationContext,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            } == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+                return true
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                // In an educational UI, explain to the user why your app requires this
+                // permission for a specific feature to behave as expected.
+
+                return false
+            }
+            else -> {
+                return false
+            }
+        }
+    }
 
 }
