@@ -15,7 +15,7 @@
                     android:fillColor="#3ddb85"
                     android:fillAlpha="0"
                     android:strokeColor="#3ddb85"
-                    android:strokeWidth="1"
+                    android:strokeWidth="0.25"
                     android:trimPathEnd="0"
                     android:strokeLineCap="round"
                     android:strokeLineJoin="round"/>
