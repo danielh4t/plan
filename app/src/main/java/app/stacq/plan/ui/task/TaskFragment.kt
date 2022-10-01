@@ -70,8 +70,9 @@ class TaskFragment : Fragment() {
 
         binding.taskTimerFab.setOnClickListener {
             val task: TaskCategory = viewModel.task.value!!
-            if (hasPostNotificationsPermission()) {
-                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
+            val notify: Boolean = hasPostNotificationsPermission()
+            if (notify) {
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task, true)
                 this.findNavController().navigate(action)
             } else {
                 val action = TaskFragmentDirections.actionNavTaskToNavNotification(task)
