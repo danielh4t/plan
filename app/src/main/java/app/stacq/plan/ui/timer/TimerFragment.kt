@@ -57,7 +57,7 @@ class TimerFragment : Fragment() {
             TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
 
-        viewModelFactory = TimerViewModelFactory(tasksRepository, task)
+        viewModelFactory = TimerViewModelFactory(tasksRepository, task, notify)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

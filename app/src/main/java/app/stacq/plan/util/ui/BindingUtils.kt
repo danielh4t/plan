@@ -50,7 +50,7 @@ fun ImageView.setVisibility(timerFinished: Boolean) {
     visibility = if (timerFinished) View.VISIBLE else View.INVISIBLE
 }
 
-@BindingAdapter("timerCheckBoxVisibility")
-fun CheckBox.setVisibility(timerFinished: Boolean) {
-    visibility = if (timerFinished) View.INVISIBLE else View.VISIBLE
+@BindingAdapter("timerFinished", "postNotifications")
+fun CheckBox.setVisibility(timerFinished: Boolean, postNotifications: Boolean) {
+    visibility = if (timerFinished or !postNotifications) View.INVISIBLE else View.VISIBLE
 }
