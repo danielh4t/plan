@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.util.isFinishAtInFuture
+import app.stacq.plan.util.millisInFuture
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -39,9 +41,7 @@ class TimerViewModel(
             setFinishAt()
         }
 
-        val now: Long = Instant.now().epochSecond
-        val isTimerFinished: Boolean = now > task.timerFinishAt
-        _timerFinished.value = isTimerFinished
+        _timerFinished.value = isFinishAtInFuture(task.timerFinishAt)
 
         // timer not finished
         if (!isTimerFinished) {
@@ -87,9 +87,7 @@ class TimerViewModel(
         }
     }
 
-    fun millisInFuture(finishAt: Long): Long {
-        return (finishAt - Instant.now().epochSecond) * 1000L
-    }
+
 
 
 }
