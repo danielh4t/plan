@@ -52,6 +52,8 @@
     <string name="no_notification">Notification will not be sent</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_notified">Get notified!</string>
+    <string name="content_notification_bell">Notification Bell</string>
 
 
 </resources>
