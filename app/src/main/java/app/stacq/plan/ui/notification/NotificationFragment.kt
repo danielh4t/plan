@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.databinding.FragmentNotificationBinding
-import app.stacq.plan.ui.timer.PostNotificationsDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -46,12 +45,10 @@ class NotificationFragment : Fragment() {
             ) { isGranted: Boolean ->
                 if (isGranted) {
                     // Permission is granted.
-                    Log.d(PostNotificationsDialogFragment.TAG, "Permission granted")
                     viewModel.logPermission(true)
                 } else {
                     // Explain to the user that the feature is unavailable because the
                     // features requires a permission that the user has denied.
-                    Log.d(PostNotificationsDialogFragment.TAG, "Permission denied")
                     Snackbar.make(
                         binding.notifyButton,
                         R.string.no_notification,
