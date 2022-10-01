@@ -39,8 +39,7 @@ class CreateViewModel(
                 }.onException {
                     val params = Bundle()
                     params.putString("exception", it.message)
-                    firebaseAnalytics.logEvent(AnalyticsConstants.CREATE_TASK, params)
-
+                    firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_TASK, params)
                 }
         }
     }
