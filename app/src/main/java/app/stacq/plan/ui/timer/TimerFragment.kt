@@ -61,7 +61,6 @@ class TimerFragment : Fragment() {
                 if (isGranted) {
                     // Permission is granted.
                     Log.d(PostNotificationsDialogFragment.TAG, "Permission granted")
-                    viewModel.logPermission(true)
                 } else {
                     // Explain to the user that the feature is unavailable because the
                     // features requires a permission that the user has denied.
@@ -71,7 +70,6 @@ class TimerFragment : Fragment() {
                         R.string.no_notification,
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    viewModel.logPermission(false)
                 }
             }
 
