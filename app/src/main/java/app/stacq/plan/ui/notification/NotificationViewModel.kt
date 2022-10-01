@@ -11,7 +11,6 @@ class NotificationViewModel : ViewModel() {
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-
     fun logPermission(isGranted: Boolean) {
         val access = if (isGranted) "granted" else "denied"
         val params = Bundle()
