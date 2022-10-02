@@ -117,16 +117,20 @@ class TimerFragment : Fragment() {
                     triggerTime,
                     notificationPendingIntent
                 )
-            }
-        } else {
-            val intent = Intent().apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            } else {
+                val intent = Intent().apply {
                     action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
                 }
+                startActivity(intent)
             }
-            startActivity(intent)
-        }
 
+        } else {
+            alarmManager?.setExactAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                triggerTime,
+                notificationPendingIntent
+            )
+        }
     }
 
     private fun cancelAlarm() {
