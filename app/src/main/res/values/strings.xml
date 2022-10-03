@@ -30,9 +30,9 @@
     <string name="content_task_time">Task created time calendar icon</string>
     <string name="content_timer">Open Timer</string>
     <string name="edit">Edit</string>
-    <string name="content_edit_task">Edit Task</string>
+    <string name="content_edit_task">Edit Task Button</string>
     <string name="completion">Completion</string>
-    <string name="content_task_completion">Task Completion</string>
+    <string name="content_task_completion">Task Completion Button</string>
     <string name="delete">Delete</string>
     <string name="content_delete_task">Delete Task</string>
     <string name="content_task_creation">Task creation date and time</string>
