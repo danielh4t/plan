@@ -16,7 +16,7 @@
     <string name="complete_fab">complete action</string>
     <string name="created">Created On</string>
     <!-- Timer fragment  -->
-    <string name="blank_time">90</string>
+    <string name="blank_time">70</string>
     <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_dismiss">Sign In Dismiss</string>
