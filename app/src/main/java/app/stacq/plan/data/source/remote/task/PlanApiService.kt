@@ -28,4 +28,7 @@ interface PlanApiService {
     @GET("/tasksCategory/{taskId}")
     suspend fun readTaskCategoryById(@Path("taskId") id: String): List<TaskCategory>
 
+    @POST("/auth")
+    suspend fun verifyId(@Body tokenId: String)
+
 }

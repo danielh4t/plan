@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -131,14 +133,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun signInUser(user: FirebaseUser?) {
         if (user != null) {
-            AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
+
+            lifecycleScope.launch {
+                try {
+                    AuthUI.getInstance().signOut(this@MainActivity)
                     invalidateOptionsMenu()
-                    Toast.makeText(this, R.string.sign_out_success, Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener {
-                    Toast.makeText(this, R.string.sign_out_failure, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, R.string.sign_out_success, Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, R.string.sign_out_failure, Toast.LENGTH_SHORT).show()
                 }
+            }
 
         } else {
             val providers = arrayListOf(
