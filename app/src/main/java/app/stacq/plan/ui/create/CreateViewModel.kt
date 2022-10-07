@@ -9,8 +9,6 @@ import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.util.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
@@ -20,7 +18,6 @@ class CreateViewModel(
 ) : ViewModel() {
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
-    private var firebaseAuth: FirebaseAuth = Firebase.auth
 
     private val _taskCreated = MutableLiveData<Boolean?>()
     val taskCreated: LiveData<Boolean?> = _taskCreated
@@ -35,6 +32,7 @@ class CreateViewModel(
                 tasksRepository.createTask(task)
                 _taskCreated.value = true
             } catch (e: Error) {
+
                 val params = Bundle()
                 params.putString("exception", e.message)
                 firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_TASK, params)
