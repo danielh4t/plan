@@ -26,7 +26,6 @@ import app.stacq.plan.util.createNotificationChannel
 import app.stacq.plan.util.millisInFuture
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
 
 
 class TimerFragment : Fragment() {
@@ -54,12 +53,11 @@ class TimerFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
-        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
 
+        val localDataSource = TasksLocalDataSource(database.taskDao())
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
 
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
-
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.IO)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
         viewModelFactory = TimerViewModelFactory(tasksRepository, task, notify)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
