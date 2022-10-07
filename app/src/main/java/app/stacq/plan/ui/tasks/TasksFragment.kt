@@ -10,11 +10,12 @@ import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.PlanApiService
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 
 
@@ -37,8 +38,11 @@ class TasksFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val remoteDataSource = TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource,Dispatchers.Main)
+
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
+
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.IO)
+
 
         viewModelFactory = TasksViewModelFactory(tasksRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]

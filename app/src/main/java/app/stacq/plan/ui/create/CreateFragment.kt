@@ -16,12 +16,13 @@ import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.PlanApiService
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 
 class CreateFragment : Fragment() {
@@ -40,15 +41,16 @@ class CreateFragment : Fragment() {
 
         _binding = FragmentCreateBinding.inflate(inflater, container, false)
 
+
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
+
         val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val remoteDataSource =
-            TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
 
         val categoryLocalDataSource =
-            CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
+            CategoryLocalDataSource(database.categoryDao(), Dispatchers.IO)
         val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
 
         viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)

@@ -22,6 +22,7 @@ class TasksRepository(
 
     suspend fun createTask(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.createTask(task)
+        tasksRemoteDataSource.createTask(task)
     }
 
     suspend fun readTaskById(id: String): LiveData<Task> {

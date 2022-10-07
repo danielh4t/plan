@@ -13,12 +13,14 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.PlanApiService
+
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 
 class EditFragment : Fragment() {
@@ -47,9 +49,10 @@ class EditFragment : Fragment() {
         val categoryLocalDataSource =
             CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
 
-        val remoteDataSource = TasksRemoteDataSource(PlanApiService.planApiService, Dispatchers.Main)
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource,Dispatchers.Main)
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
+
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.IO)
+        val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.IO)
 
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]

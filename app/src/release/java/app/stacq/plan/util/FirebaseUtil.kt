@@ -6,6 +6,6 @@ import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 
 fun installCheckProviderFactory(firebaseAppCheck: FirebaseAppCheck) {
     firebaseAppCheck.installAppCheckProviderFactory(
-        SafetyNetAppCheckProviderFactory.getInstance()
-    )
+        PlayIntegrityAppCheckProviderFactory.getInstance()
+    );
 }

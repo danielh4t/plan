@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         installCheckProviderFactory(firebaseAppCheck)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         firebaseAuth = Firebase.auth
         firebaseAnalytics = Firebase.analytics
