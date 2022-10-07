@@ -45,14 +45,13 @@ class EditFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val categoryLocalDataSource =
-            CategoryLocalDataSource(database.categoryDao(), Dispatchers.Main)
+        val localDataSource = TasksLocalDataSource(database.taskDao())
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
 
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.IO)
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.IO)
+        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryRepository = CategoryRepository(categoryLocalDataSource)
 
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]
