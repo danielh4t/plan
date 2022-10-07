@@ -45,13 +45,12 @@ class CreateFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.Main)
+        val localDataSource = TasksLocalDataSource(database.taskDao())
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
-        val categoryLocalDataSource =
-            CategoryLocalDataSource(database.categoryDao(), Dispatchers.IO)
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, Dispatchers.Main)
+        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryRepository = CategoryRepository(categoryLocalDataSource)
 
         viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
         viewModel =
