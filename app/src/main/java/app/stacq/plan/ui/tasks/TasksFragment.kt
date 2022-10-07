@@ -37,11 +37,10 @@ class TasksFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
-        val localDataSource = TasksLocalDataSource(database.taskDao(), Dispatchers.Main)
+        val localDataSource = TasksLocalDataSource(database.taskDao())
 
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore, Dispatchers.IO)
-
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource, Dispatchers.IO)
+        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
+        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
 
         viewModelFactory = TasksViewModelFactory(tasksRepository)

@@ -48,7 +48,7 @@ class TaskFragment : Fragment() {
         val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
 
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
-        
+
         viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
