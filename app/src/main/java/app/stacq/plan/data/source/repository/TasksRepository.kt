@@ -31,6 +31,7 @@ class TasksRepository(
 
     suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.updateTask(task)
+        tasksRemoteDataSource.updateTask(task)
     }
 
     suspend fun deleteById(id: String) = withContext(ioDispatcher) {

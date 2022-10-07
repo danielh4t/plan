@@ -25,4 +25,17 @@ class TasksRemoteDataSource(
         firestore.collection("tasks").document(task.id).set(taskMap)
     }
 
+    suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
+        val taskMap = hashMapOf(
+            "createdAt" to task.createdAt,
+            "title" to task.title,
+            "categoryId" to task.categoryId,
+            "completed" to task.completed,
+            "completedAt" to task.completedAt,
+            "timerFinishAt" to task.timerFinishAt,
+            "timerAlarm" to task.timerAlarm
+        )
+        firestore.collection("tasks").document(task.id).set(taskMap)
+    }
+
 }

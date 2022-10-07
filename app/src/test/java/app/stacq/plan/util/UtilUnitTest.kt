@@ -1,8 +1,8 @@
 package app.stacq.plan.util
 
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import junit.framework.TestCase.assertEquals
-import org.hamcrest.Matchers.`is`
+
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class UtilUnitTest {
