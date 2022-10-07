@@ -13,7 +13,6 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
@@ -21,7 +20,6 @@ import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
 
 class EditFragment : Fragment() {
 
