@@ -16,9 +16,8 @@ class TasksRemoteDataSource(
         planApiService.getTasks()
     }
 
-    suspend fun createTask(task: Task, tokenId: String) = withContext(ioDispatcher) {
+    suspend fun createTask(task: Task) = withContext(ioDispatcher) {
         planApiService.createTask(task)
-        planApiService.verifyId(tokenId)
     }
 
     suspend fun readTaskById(id: String): Task = withContext(ioDispatcher) {

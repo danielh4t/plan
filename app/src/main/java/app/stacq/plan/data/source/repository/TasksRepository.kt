@@ -20,9 +20,8 @@ class TasksRepository(
         return tasksLocalDataSource.getTasks()
     }
 
-    suspend fun createTask(task: Task, tokenId: String) = withContext(ioDispatcher) {
+    suspend fun createTask(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.createTask(task)
-        tasksRemoteDataSource.createTask(task, tokenId)
     }
 
     suspend fun readTaskById(id: String): LiveData<Task> {
