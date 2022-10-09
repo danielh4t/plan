@@ -28,4 +28,15 @@ class UtilUnitTest {
         assertThat(expected, `is`(actual))
     }
 
+    @Test
+    fun test_MillisInFuture() {
+        val finishAt: Long = 1600016000
+        val now: Long = 160000000
+
+        val expected: Long = 1440016000000
+        val actual: Long = millisInFuture(finishAt, now)
+
+        assertThat(expected, `is`(actual))
+    }
+
 }
