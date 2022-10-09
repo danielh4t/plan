@@ -18,4 +18,14 @@ class UtilUnitTest {
         assertThat(expected, `is`(actual))
     }
 
+    @Test
+    fun test_IsFinishAtInFuture() {
+        val finishAt: Long = 1600000000
+
+        val expected = true
+        val actual: Boolean = isFinishAtInFuture(finishAt)
+
+        assertThat(expected, `is`(actual))
+    }
+
 }
