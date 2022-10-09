@@ -63,7 +63,8 @@ class TimerViewModel(
     }
 
     private fun startTimer() {
-        val millisInFuture: Long = millisInFuture(task.timerFinishAt)
+        val now: Long = Instant.now().epochSecond
+        val millisInFuture: Long = millisInFuture(task.timerFinishAt, now)
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
         val time: Long = millisInFuture / millisInterval

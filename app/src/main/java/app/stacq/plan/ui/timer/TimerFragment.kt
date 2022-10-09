@@ -26,6 +26,7 @@ import app.stacq.plan.util.createNotificationChannel
 import app.stacq.plan.util.millisInFuture
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.time.Instant
 
 
 class TimerFragment : Fragment() {
@@ -108,7 +109,8 @@ class TimerFragment : Fragment() {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture(finishAt)
+        val now: Long = Instant.now().epochSecond
+        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture(finishAt, now)
         alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
