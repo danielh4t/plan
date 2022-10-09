@@ -75,21 +75,21 @@
             android:text="@string/edit"
             android:contentDescription="@string/content_edit_task"
             app:icon="@drawable/ic_edit_outline"
-            app:layout_constraintEnd_toStartOf="@+id/complete_task_button"
+            app:layout_constraintEnd_toStartOf="@+id/clone_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_time_text" />
 
         <Button
-            android:id="@+id/complete_task_button"
+            android:id="@+id/clone_task_button"
             style="@style/Widget.Material3.Button.TonalButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/completion"
-            android:contentDescription="@string/content_task_completion"
-            app:icon="@drawable/ic_done_all_outline"
+            android:contentDescription="@string/content_task_clone"
+            android:text="@string/clone"
+            app:icon="@drawable/copy_outline"
             app:layout_constraintEnd_toStartOf="@+id/delete_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/edit_task_button"
@@ -107,7 +107,7 @@
             app:icon="@drawable/ic_trash_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/complete_task_button"
+            app:layout_constraintStart_toEndOf="@+id/clone_task_button"
             app:layout_constraintTop_toBottomOf="@+id/task_time_text" />
 
 

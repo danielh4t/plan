@@ -58,8 +58,8 @@ class TaskFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-        binding.completeTaskButton.setOnClickListener {
-            viewModel.completed()
+        binding.cloneTaskButton.setOnClickListener {
+            viewModel.clone()
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }

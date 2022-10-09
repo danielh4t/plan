@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.ui.timer.TimerConstants
 import kotlinx.coroutines.launch
-import java.time.Instant
 
 
 class TaskViewModel(
@@ -20,9 +19,13 @@ class TaskViewModel(
         emitSource(tasksRepository.readTaskCategoryById(taskId))
     }
 
-    fun completed() {
+    fun clone() {
+        val title = task.value?.title
+        val task = title?.let { Task(title = it, categoryId = 0) }
         viewModelScope.launch {
-            tasksRepository.updateTaskCompletionById(taskId)
+            if (task != null) {
+                tasksRepository.createTask(task)
+            }
         }
     }
 
@@ -31,7 +34,6 @@ class TaskViewModel(
             task.value?.let { tasksRepository.deleteById(it.id) }
         }
     }
-
 
 
 }
