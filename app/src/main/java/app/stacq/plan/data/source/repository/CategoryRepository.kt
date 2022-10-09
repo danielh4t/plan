@@ -20,6 +20,10 @@ class CategoryRepository(
         return categoryLocalDataSource.getCategories()
     }
 
+    override suspend fun getCategoryIdByName(name: String): Int? = withContext(ioDispatcher) {
+        categoryLocalDataSource.getCategoryIdByName(name)
+    }
+
     override suspend fun insert(category: Category) = withContext(ioDispatcher) {
         categoryLocalDataSource.insert(category)
     }

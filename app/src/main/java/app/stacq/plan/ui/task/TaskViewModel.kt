@@ -23,11 +23,12 @@ class TaskViewModel(
 
     fun clone() {
         val title = task.value?.title
-        val
-        val task = title?.let { Task(title = it, categoryId = 0) }
+        val category = task.value?.categoryName
+
         viewModelScope.launch {
-            val categories = categoryRepository.getCategories().value
-            if (task != null) {
+            val categoryId = category?.let { categoryRepository.getCategoryIdByName(it) }
+            if (title != null && categoryId != null) {
+                val task = Task(title = title, categoryId = categoryId)
                 tasksRepository.createTask(task)
             }
         }
@@ -38,6 +39,5 @@ class TaskViewModel(
             task.value?.let { tasksRepository.deleteById(it.id) }
         }
     }
-
 
 }

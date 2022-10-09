@@ -23,7 +23,7 @@ interface CategoryDao {
      * @return category id.
      */
     @Query(
-        "SELECT * FROM category WHERE name=:name"
+        "SELECT id FROM category WHERE name=:name"
     )
     fun getCategoryIdByName(name: String): Int?
 
