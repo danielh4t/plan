@@ -6,12 +6,14 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
 
 
 class TaskViewModel(
     private val tasksRepository: TasksRepository,
+    private val categoryRepository: CategoryRepository,
     private val taskId: String
 ) : ViewModel() {
 
@@ -21,8 +23,10 @@ class TaskViewModel(
 
     fun clone() {
         val title = task.value?.title
+        val
         val task = title?.let { Task(title = it, categoryId = 0) }
         viewModelScope.launch {
+            val categories = categoryRepository.getCategories().value
             if (task != null) {
                 tasksRepository.createTask(task)
             }

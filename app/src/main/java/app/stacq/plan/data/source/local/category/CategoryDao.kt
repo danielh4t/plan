@@ -3,8 +3,6 @@ package app.stacq.plan.data.source.local.category
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import app.stacq.plan.data.model.Category
-import app.stacq.plan.data.model.Task
-import app.stacq.plan.data.model.TaskCategory
 
 @Dao
 interface CategoryDao {
@@ -19,6 +17,15 @@ interface CategoryDao {
     )
     fun getCategories(): LiveData<List<Category>>
 
+    /**
+     * Select category id from the category.
+     *
+     * @return category id.
+     */
+    @Query(
+        "SELECT * FROM category WHERE name=:name"
+    )
+    fun getCategoryIdByName(name: String): Int
 
     /**
      * Insert a category.

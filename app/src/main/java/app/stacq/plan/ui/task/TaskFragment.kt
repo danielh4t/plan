@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.local.PlanDatabase
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
 import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
+import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.util.isFinishAtInFuture
@@ -48,7 +50,10 @@ class TaskFragment : Fragment() {
 
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
-        viewModelFactory = TaskViewModelFactory(tasksRepository, taskId)
+        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryRepository = CategoryRepository(categoryLocalDataSource)
+
+        viewModelFactory = TaskViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

@@ -17,6 +17,10 @@ class CategoryLocalDataSource(
         categoryDao.getCategories()
     }
 
+    override suspend fun getCategoryIdByName(name: String): Int = withContext(ioDispatcher) {
+        categoryDao.getCategoryIdByName(name)
+    }
+
     override suspend fun insert(category: Category) = withContext(ioDispatcher) {
         categoryDao.insert(category)
     }
