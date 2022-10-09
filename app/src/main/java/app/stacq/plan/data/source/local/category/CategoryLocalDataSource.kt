@@ -17,7 +17,7 @@ class CategoryLocalDataSource(
         categoryDao.getCategories()
     }
 
-    override suspend fun getCategoryIdByName(name: String): Int = withContext(ioDispatcher) {
+    override suspend fun getCategoryIdByName(name: String): Int? = withContext(ioDispatcher) {
         categoryDao.getCategoryIdByName(name)
     }
 
