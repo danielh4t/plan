@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
-import app.stacq.plan.data.model.Category
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
@@ -89,12 +87,7 @@ class CreateFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val categories: List<Category>? = viewModel.categories.value
-            val category: Category? = categories?.firstOrNull { it.name == categoryName }
-            if (category != null) {
-                val task = Task(title = title, categoryId = category.id)
-                viewModel.createTask(task)
-            }
+            viewModel.createTask(title, categoryName)
             val action = CreateFragmentDirections.actionNavCreateToNavTasks()
             this.findNavController().navigate(action)
 

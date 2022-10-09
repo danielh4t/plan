@@ -26,13 +26,17 @@ class CreateViewModel(
         emitSource(categoryRepository.getCategories())
     }
 
-    fun createTask(task: Task) {
+    fun createTask(title: String, categoryName: String) {
+        val categories: List<Category>? = categories.value
+        val category: Category? = categories?.firstOrNull { it.name == categoryName }
         viewModelScope.launch {
             try {
-                tasksRepository.createTask(task)
-                _taskCreated.value = true
+                val task = category?.let { Task(title = title, categoryId = it.id) }
+                if (task != null) {
+                    tasksRepository.createTask(task)
+                    _taskCreated.value = true
+                }
             } catch (e: Error) {
-
                 val params = Bundle()
                 params.putString("exception", e.message)
                 firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_TASK, params)
