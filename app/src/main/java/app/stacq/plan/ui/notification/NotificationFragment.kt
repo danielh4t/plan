@@ -30,6 +30,12 @@ class NotificationFragment : Fragment() {
     ): View {
 
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
+        return binding.root
+        
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val args = NotificationFragmentArgs.fromBundle(requireArguments())
         val task: TaskCategory = args.taskCategory
@@ -75,7 +81,6 @@ class NotificationFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-        return binding.root
     }
 
 
