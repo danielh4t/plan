@@ -47,6 +47,11 @@ class TimerFragment : Fragment() {
     ): View {
 
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
         val task: TaskCategory = args.taskCategory
@@ -80,8 +85,6 @@ class TimerFragment : Fragment() {
         }
 
         createTimerChannel(application)
-
-        return binding.root
     }
 
     private fun createTimerChannel(applicationContext: Context) {
