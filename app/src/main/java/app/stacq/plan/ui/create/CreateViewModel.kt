@@ -19,9 +19,6 @@ class CreateViewModel(
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    private val _taskCreated = MutableLiveData<Boolean?>()
-    val taskCreated: LiveData<Boolean?> = _taskCreated
-
     val categories: LiveData<List<Category>> = liveData {
         emitSource(categoryRepository.getCategories())
     }
@@ -34,7 +31,6 @@ class CreateViewModel(
                 val task = category?.let { Task(title = title, categoryId = it.id) }
                 if (task != null) {
                     tasksRepository.createTask(task)
-                    _taskCreated.value = true
                 }
             } catch (e: Error) {
                 val params = Bundle()
