@@ -34,6 +34,12 @@ class TasksFragment : Fragment() {
 
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao())
@@ -72,7 +78,6 @@ class TasksFragment : Fragment() {
             }
         }
 
-        return binding.root
     }
 
     override fun onDestroyView() {
