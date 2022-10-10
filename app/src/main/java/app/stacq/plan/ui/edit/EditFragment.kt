@@ -36,6 +36,12 @@ class EditFragment : Fragment() {
     ): View {
 
         _binding = FragmentEditBinding.inflate(inflater, container, false)
+        return binding.root
+        
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val args = EditFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
@@ -91,7 +97,6 @@ class EditFragment : Fragment() {
 
         }
 
-        return binding.root
     }
 
     override fun onDestroyView() {

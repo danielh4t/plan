@@ -31,7 +31,7 @@ class NotificationFragment : Fragment() {
 
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
-        
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
