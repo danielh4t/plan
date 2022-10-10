@@ -37,7 +37,12 @@ class CreateFragment : Fragment() {
     ): View {
 
         _binding = FragmentCreateBinding.inflate(inflater, container, false)
+        return binding.root
 
+    }
+
+    override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
@@ -90,10 +95,8 @@ class CreateFragment : Fragment() {
             viewModel.createTask(title, categoryName)
             val action = CreateFragmentDirections.actionNavCreateToNavTasks()
             this.findNavController().navigate(action)
-
         }
 
-        return binding.root
     }
 
     override fun onDestroyView() {
