@@ -41,7 +41,7 @@ class CreateFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val application = requireNotNull(this.activity).application
@@ -70,18 +70,18 @@ class CreateFragment : Fragment() {
             }
         }
 
-        binding.category.setOnFocusChangeListener { view, _ ->
+        binding.category.setOnFocusChangeListener { focusedView, _ ->
             val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
+            imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
         }
 
-        binding.createFab.setOnClickListener { view ->
+        binding.createFab.setOnClickListener { clickedView ->
             val title: String = binding.title.text.toString()
             val categoryName: String = binding.category.text.toString()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
-                Snackbar.make(view, R.string.empty_details, Snackbar.LENGTH_LONG)
-                    .setAnchorView(view)
+                Snackbar.make(clickedView, R.string.empty_details, Snackbar.LENGTH_LONG)
+                    .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
             }
