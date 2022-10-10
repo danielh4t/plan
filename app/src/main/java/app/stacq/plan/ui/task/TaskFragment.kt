@@ -38,6 +38,12 @@ class TaskFragment : Fragment() {
     ): View {
 
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
+        return binding.root
+        
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val args = TaskFragmentArgs.fromBundle(requireArguments())
         val taskId: String = args.taskId
@@ -87,9 +93,6 @@ class TaskFragment : Fragment() {
                 this.findNavController().navigate(action)
             }
         }
-
-
-        return binding.root
     }
 
     override fun onDestroyView() {
