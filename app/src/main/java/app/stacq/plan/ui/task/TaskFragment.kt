@@ -93,7 +93,7 @@ class TaskFragment : Fragment() {
                 this.findNavController().navigate(action)
             }
         }
-        
+
     }
 
     override fun onDestroyView() {
