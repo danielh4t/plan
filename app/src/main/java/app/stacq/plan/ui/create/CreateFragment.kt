@@ -61,12 +61,6 @@ class CreateFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.taskCreated.observe(viewLifecycleOwner) {
-            it?.let {
-                Snackbar.make(container!!, R.string.task_created, Snackbar.LENGTH_LONG).show()
-            }
-        }
-
         viewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
                 val categories = it.map { category -> category.name }
