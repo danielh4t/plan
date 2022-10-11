@@ -8,5 +8,9 @@
             android:id="@+id/nav_tasks"
             android:icon="@drawable/ic_circle_check"
             android:title="@string/tasks" />
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/ic_color_palette_outline"
+            android:title="@string/categories" />
     </group>
 </menu>

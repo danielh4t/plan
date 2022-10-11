@@ -33,6 +33,9 @@ data class Task(
     var timerFinishAt: Long = 0,
 
     @ColumnInfo(name = "timer_alarm")
-    var timerAlarm: Boolean = true
+    var timerAlarm: Boolean = true,
+
+    @ColumnInfo(name= "position_at")
+    val positionAt: Long = createdAt
 
 )
