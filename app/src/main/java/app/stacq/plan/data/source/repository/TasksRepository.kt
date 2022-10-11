@@ -50,6 +50,10 @@ class TasksRepository(
         tasksLocalDataSource.updateTaskTimerAlarmById(id)
     }
 
+    suspend fun updateTaskPositionById(id: String, positionAt: Long) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTaskPositionById(id, positionAt)
+    }
+
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>> {
         return tasksLocalDataSource.getTasksCategory()
     }

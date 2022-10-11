@@ -1,18 +1,18 @@
 package app.stacq.plan.ui.tasks
 
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.databinding.TaskListItemBinding
+import java.util.*
 
 
-class TasksAdapter(val viewModel: TasksViewModel):
+class TasksAdapter(private val viewModel: TasksViewModel) :
     ListAdapter<TaskCategory, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
 
@@ -51,7 +51,6 @@ class TaskDiffCallback : DiffUtil.ItemCallback<TaskCategory>() {
         return oldItem.id == newItem.id
     }
 
-    // item contents has changed
     override fun areContentsTheSame(oldItem: TaskCategory, newItem: TaskCategory): Boolean {
         return oldItem == newItem
     }
@@ -67,17 +66,20 @@ val taskItemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        val adapter = recyclerView.adapter as TasksAdapter
 
+        val adapter = recyclerView.adapter as TasksAdapter
         val fromPos = viewHolder.adapterPosition
         val toPos = target.adapterPosition
 
-        adapter.notifyItemMoved(fromPos, toPos)
+        val tasks = adapter.currentList.toMutableList()
+        Collections.swap(tasks, fromPos, toPos)
+        adapter.submitList(tasks)
+
         return true
-        
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
     }
+
 
 }

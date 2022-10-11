@@ -84,6 +84,15 @@ interface TaskDao {
     suspend fun updateTaskTimerAlarmById(id: String)
 
     /**
+     * Update the position_at of a task
+     *
+     * @param id of the task
+     * @param positionAt position of task
+     */
+    @Query("UPDATE task SET position_at = :positionAt WHERE id = :id")
+    suspend fun updateTaskPositionAById(id: String, positionAt: Long)
+
+    /**
      * Delete a task. by id
      *
      * @param id task to be delete
@@ -102,7 +111,8 @@ interface TaskDao {
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
                 "task.position_at AS positionAt " +
                 "FROM task " +
-                "JOIN category ON category.id = task.category_id"
+                "JOIN category ON category.id = task.category_id "+
+                "ORDER BY position_at"
     )
     fun getTasksCategory(): LiveData<List<TaskCategory>>
 
