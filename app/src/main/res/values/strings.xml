@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Plan</string>
-    <!-- Main -->
+    <!-- Nav-->
     <string name="tasks">Tasks</string>
+    <string name="categories">Categories</string>
     <string name="add">add</string>
     <string name="task">Task</string>
     <string name="category">Category</string>
