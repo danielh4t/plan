@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
@@ -53,11 +54,10 @@ class TasksFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val taskAdapter = TaskAdapter(viewModel)
-        binding.tasksList.adapter = taskAdapter
-        binding.tasksList.addItemDecoration(
-            MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin))
-        )
+        val tasksAdapter = TasksAdapter(viewModel)
+        binding.tasksList.adapter = tasksAdapter
+        binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
+        ItemTouchHelper(taskItemTouchHelperCallback).attachToRecyclerView(binding.tasksList)
 
         binding.createFab.setOnClickListener {
             val action = TasksFragmentDirections.actionNavTasksToNavCreate()
@@ -66,7 +66,7 @@ class TasksFragment : Fragment() {
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
-                taskAdapter.submitList(it)
+                tasksAdapter.submitList(it)
             }
         }
 
