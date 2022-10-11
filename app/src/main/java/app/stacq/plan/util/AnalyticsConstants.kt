@@ -5,6 +5,7 @@ object AnalyticsConstants {
 
     object Event {
         const val CREATE_TASK = "create_task"
+        const val CREATE_CATEGORY = "create_category"
         const val APP_PERMISSION = "app_permission"
     }
 
