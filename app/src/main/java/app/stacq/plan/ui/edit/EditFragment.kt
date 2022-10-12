@@ -76,13 +76,13 @@ class EditFragment : Fragment() {
             }
         }
 
-        binding.editFab.setOnClickListener { view ->
+        binding.editFab.setOnClickListener { clickedView ->
             val title: String = binding.editTitle.text.toString()
             val categoryName: String = binding.editCategory.text.toString()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
-                Snackbar.make(view, R.string.empty_details, Snackbar.LENGTH_LONG)
-                    .setAnchorView(view)
+                Snackbar.make(clickedView, R.string.empty_details, Snackbar.LENGTH_LONG)
+                    .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
             }
