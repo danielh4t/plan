@@ -25,8 +25,8 @@ class CategoryRepository(
         categoryLocalDataSource.getCategoryIdByName(name)
     }
 
-    override suspend fun insert(category: Category): Unit = withContext(ioDispatcher) {
-        categoryLocalDataSource.insert(category)
+    override suspend fun create(category: Category): Unit = withContext(ioDispatcher) {
+        categoryLocalDataSource.create(category)
         categoryRemoteDataSource.createCategory(category)
     }
 

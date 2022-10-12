@@ -21,16 +21,16 @@ class TasksRepository(
     }
 
     suspend fun createTask(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.createTask(task)
+        tasksLocalDataSource.create(task)
         tasksRemoteDataSource.createTask(task)
     }
 
     suspend fun readTaskById(id: String): LiveData<Task> {
-        return tasksLocalDataSource.readTaskById(id)
+        return tasksLocalDataSource.readById(id)
     }
 
     suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTask(task)
+        tasksLocalDataSource.update(task)
         tasksRemoteDataSource.updateTask(task)
     }
 
@@ -39,19 +39,19 @@ class TasksRepository(
     }
 
     suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTaskCompletionById(id)
+        tasksLocalDataSource.updateCompletionById(id)
     }
 
     suspend fun updateTaskTimerFinishById(id: String, finishAt: Long) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTaskTimerFinishById(id, finishAt)
+        tasksLocalDataSource.updateTimerFinishById(id, finishAt)
     }
 
     suspend fun updateTaskTimerAlarmById(id: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTaskTimerAlarmById(id)
+        tasksLocalDataSource.updateTimerAlarmById(id)
     }
 
     suspend fun updateTaskPositionById(id: String, positionAt: Long) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTaskPositionById(id, positionAt)
+        tasksLocalDataSource.updatePositionById(id, positionAt)
     }
 
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>> {

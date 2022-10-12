@@ -19,37 +19,37 @@ class TaskLocalDataSource(
         taskDao.getTasks()
     }
 
-    override suspend fun createTask(task: Task) = withContext(ioDispatcher) {
-        taskDao.createTask(task)
+    override suspend fun create(task: Task) = withContext(ioDispatcher) {
+        taskDao.create(task)
     }
 
-    override suspend fun readTaskById(id: String): LiveData<Task> = withContext(ioDispatcher) {
-        taskDao.readTaskById(id)
+    override suspend fun readById(id: String): LiveData<Task> = withContext(ioDispatcher) {
+        taskDao.readById(id)
     }
 
-    override suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
-        taskDao.updateTask(task)
+    override suspend fun update(task: Task) = withContext(ioDispatcher) {
+        taskDao.update(task)
     }
 
     override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
         taskDao.deleteById(id)
     }
 
-    override suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
-        taskDao.updateTaskCompletionById(id)
+    override suspend fun updateCompletionById(id: String) = withContext(ioDispatcher) {
+        taskDao.updateCompletionById(id)
     }
 
-    override suspend fun updateTaskTimerFinishById(id: String, finishAt: Long) =
+    override suspend fun updateTimerFinishById(id: String, finishAt: Long) =
         withContext(ioDispatcher) {
-            taskDao.updateTaskTimerFinishById(id, finishAt)
+            taskDao.updateTimerFinishById(id, finishAt)
         }
 
-    override suspend fun updateTaskTimerAlarmById(id: String) = withContext(ioDispatcher) {
-        taskDao.updateTaskTimerAlarmById(id)
+    override suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
+        taskDao.updateTimerAlarmById(id)
     }
 
-    override suspend fun updateTaskPositionById(id: String, positionAt: Long) = withContext(ioDispatcher) {
-        taskDao.updateTaskPositionAById(id, positionAt)
+    override suspend fun updatePositionById(id: String, positionAt: Long) = withContext(ioDispatcher) {
+        taskDao.updatePositionAById(id, positionAt)
     }
 
     override suspend fun getTasksCategory(): LiveData<List<TaskCategory>> =

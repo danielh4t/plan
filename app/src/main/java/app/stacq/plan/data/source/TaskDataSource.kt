@@ -8,21 +8,21 @@ interface TaskDataSource {
 
     suspend fun getTasks(): LiveData<List<Task>>
 
-    suspend fun createTask(task: Task)
+    suspend fun create(task: Task)
 
-    suspend fun readTaskById(id: String): LiveData<Task>
+    suspend fun readById(id: String): LiveData<Task>
 
-    suspend fun updateTask(task: Task)
+    suspend fun update(task: Task)
 
     suspend fun deleteById(id: String)
 
-    suspend fun updateTaskCompletionById(id: String)
+    suspend fun updateCompletionById(id: String)
 
-    suspend fun updateTaskTimerFinishById(id: String, finishAt: Long)
+    suspend fun updateTimerFinishById(id: String, finishAt: Long)
 
-    suspend fun updateTaskTimerAlarmById(id: String)
+    suspend fun updateTimerAlarmById(id: String)
 
-    suspend fun updateTaskPositionById(id: String, positionAt: Long)
+    suspend fun updatePositionById(id: String, positionAt: Long)
 
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>>
 

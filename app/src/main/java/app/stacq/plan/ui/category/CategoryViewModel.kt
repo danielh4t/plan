@@ -21,7 +21,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
         viewModelScope.launch {
             try {
                 val category = Category(categoryName, categoryColor)
-                categoryRepository.insert(category)
+                categoryRepository.create(category)
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)

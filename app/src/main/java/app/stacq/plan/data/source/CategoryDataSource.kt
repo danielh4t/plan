@@ -9,7 +9,7 @@ interface CategoryDataSource {
 
     suspend fun getCategoryIdByName(name: String): Int?
     
-    suspend fun insert(category: Category)
+    suspend fun create(category: Category)
 
     suspend fun delete(category: Category)
     
