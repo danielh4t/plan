@@ -3,7 +3,7 @@ package app.stacq.plan.data.source.local.task
 import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
-import app.stacq.plan.data.source.TasksDataSource
+import app.stacq.plan.data.source.TaskDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 class TasksLocalDataSource(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : TasksDataSource {
+) : TaskDataSource {
 
     override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
         taskDao.getTasks()

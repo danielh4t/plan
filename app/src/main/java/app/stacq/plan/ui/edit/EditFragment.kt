@@ -13,7 +13,7 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
+import app.stacq.plan.data.source.remote.task.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
@@ -50,7 +50,7 @@ class EditFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val localDataSource = TasksLocalDataSource(database.taskDao())
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
+        val remoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
 
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 

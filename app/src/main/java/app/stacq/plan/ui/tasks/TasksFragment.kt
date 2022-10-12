@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.task.TasksRemoteDataSource
+import app.stacq.plan.data.source.remote.task.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
@@ -45,7 +45,7 @@ class TasksFragment : Fragment() {
         val database = getDatabase(application)
         val localDataSource = TasksLocalDataSource(database.taskDao())
 
-        val remoteDataSource = TasksRemoteDataSource(Firebase.firestore)
+        val remoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
 

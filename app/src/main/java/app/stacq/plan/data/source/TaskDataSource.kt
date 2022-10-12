@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 
-interface TasksDataSource {
+interface TaskDataSource {
 
     suspend fun getTasks(): LiveData<List<Task>>
 
