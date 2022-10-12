@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="code">#FF7F50</color>
-    <color name="hack">#2ED573</color>
-    <color name="life">#FDCD21</color>
-    <color name="work">#1E90FF</color>
+    <color name="code">#FFFF7F50</color>
+    <color name="hack">#FF2ED573</color>
+    <color name="life">#FFFDCD21</color>
+    <color name="work">#FF1E90FF</color>
 </resources>
