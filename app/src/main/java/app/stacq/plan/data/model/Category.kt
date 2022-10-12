@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 
 @Keep
 @Entity(tableName = "category")
-data class Category (var name: String) {
+data class Category (var name: String, var color: String) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0
