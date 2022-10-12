@@ -22,6 +22,8 @@ interface TasksDataSource {
 
     suspend fun updateTaskTimerAlarmById(id: String)
 
+    suspend fun updateTaskPositionById(id: String, positionAt: Long)
+
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>>
 
     suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory>

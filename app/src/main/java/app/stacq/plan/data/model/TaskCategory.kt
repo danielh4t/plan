@@ -16,4 +16,5 @@ data class TaskCategory(
     var categoryName: String,
     var timerFinishAt: Long,
     var timerAlarm: Boolean,
+    var positionAt: Long
 ): Parcelable

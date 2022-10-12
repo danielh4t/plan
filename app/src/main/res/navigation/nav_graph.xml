@@ -67,7 +67,7 @@
         android:id="@+id/nav_timer"
         android:name="app.stacq.plan.ui.timer.TimerFragment"
         android:label="@string/timer"
-        tools:layout="@layout/fragment_timer" >
+        tools:layout="@layout/fragment_timer">
         <argument
             android:name="taskCategory"
             app:argType="app.stacq.plan.data.model.TaskCategory" />
@@ -86,6 +86,16 @@
         <argument
             android:name="taskCategory"
             app:argType="app.stacq.plan.data.model.TaskCategory" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_categories"
+        android:name="app.stacq.plan.ui.category.CategoryFragment"
+        android:label="@string/category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_nav_category_to_nav_tasks"
+            app:destination="@id/nav_tasks" />
     </fragment>
 
 </navigation>
