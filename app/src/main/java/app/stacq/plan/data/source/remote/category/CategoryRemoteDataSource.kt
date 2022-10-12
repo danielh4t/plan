@@ -17,7 +17,7 @@ class CategoryRemoteDataSource(
             "name" to category.name,
             "color" to category.color
         )
-        firestore.collection("categories").document(category.id.toString()).set(category)
+        firestore.collection("categories").document(category.id.toString()).set(categoryMap)
     }
 
 

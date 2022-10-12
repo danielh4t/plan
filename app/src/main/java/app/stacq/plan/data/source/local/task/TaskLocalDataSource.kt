@@ -1,5 +1,6 @@
 package app.stacq.plan.data.source.local.task
 
+
 import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
@@ -9,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class TasksLocalDataSource(
+class TaskLocalDataSource(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskDataSource {

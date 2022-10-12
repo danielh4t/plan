@@ -3,16 +3,16 @@ package app.stacq.plan.data.source.repository
 import androidx.lifecycle.LiveData
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
-import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.task.CategoryRemoteDataSource
+import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
 class TasksRepository(
-    private val tasksLocalDataSource: TasksLocalDataSource,
-    private val tasksRemoteDataSource: CategoryRemoteDataSource,
+    private val tasksLocalDataSource: TaskLocalDataSource,
+    private val tasksRemoteDataSource: TaskRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 

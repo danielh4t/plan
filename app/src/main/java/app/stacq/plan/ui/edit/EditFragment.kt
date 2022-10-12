@@ -12,12 +12,14 @@ import app.stacq.plan.R
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
-import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.task.CategoryRemoteDataSource
+import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -49,13 +51,14 @@ class EditFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TasksLocalDataSource(database.taskDao())
-        val remoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
+        val localDataSource = TaskLocalDataSource(database.taskDao())
+        val remoteDataSource = TaskRemoteDataSource(Firebase.firestore)
 
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
-        val categoryRepository = CategoryRepository(categoryLocalDataSource)
+        val categoryRemoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
+        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]

@@ -10,9 +10,12 @@ import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.databinding.FragmentCategoryBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CategoryFragment : Fragment() {
 
@@ -40,7 +43,9 @@ class CategoryFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
-        val categoryRepository = CategoryRepository(categoryLocalDataSource)
+        val categoryRemoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = CategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoryViewModel::class.java]

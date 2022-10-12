@@ -42,8 +42,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         FirebaseApp.initializeApp(this)
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        installCheckProviderFactory(firebaseAppCheck)
+        FirebaseAppCheck.getInstance().installCheckProviderFactory()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         firebaseAuth = Firebase.auth
@@ -137,9 +136,11 @@ class MainActivity : AppCompatActivity() {
                 try {
                     AuthUI.getInstance().signOut(this@MainActivity)
                     invalidateOptionsMenu()
-                    Toast.makeText(this@MainActivity, R.string.sign_out_success, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, R.string.sign_out_success, Toast.LENGTH_SHORT)
+                        .show()
                 } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, R.string.sign_out_failure, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, R.string.sign_out_failure, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

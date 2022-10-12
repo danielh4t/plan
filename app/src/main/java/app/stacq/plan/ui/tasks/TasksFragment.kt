@@ -10,8 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
-import app.stacq.plan.data.source.local.task.TasksLocalDataSource
-import app.stacq.plan.data.source.remote.task.CategoryRemoteDataSource
+import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
+
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
@@ -43,11 +44,9 @@ class TasksFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
-        val localDataSource = TasksLocalDataSource(database.taskDao())
-
-        val remoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
+        val localDataSource = TaskLocalDataSource(database.taskDao())
+        val remoteDataSource = TaskRemoteDataSource(Firebase.firestore)
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
-
 
         viewModelFactory = TasksViewModelFactory(tasksRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
