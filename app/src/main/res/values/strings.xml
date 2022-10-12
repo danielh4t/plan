@@ -53,6 +53,7 @@
     <string name="get_notified">Get notified!</string>
     <string name="content_notification_bell">Notification Bell</string>
     <string name="content_agree">Agree to notification image</string>
+    <string name="notification">Notification</string>
 
 
 </resources>
