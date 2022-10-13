@@ -4,8 +4,8 @@ import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 
 
-fun installCheckProviderFactory(firebaseAppCheck: FirebaseAppCheck) {
-    firebaseAppCheck.installAppCheckProviderFactory(
+fun FirebaseAppCheck.installCheckProviderFactory() {
+    installAppCheckProviderFactory(
         DebugAppCheckProviderFactory.getInstance()
     )
 }

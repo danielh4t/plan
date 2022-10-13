@@ -1,5 +1,6 @@
 package app.stacq.plan.ui.category
 
+
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,15 +17,26 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
     fun create(categoryName: String) {
+        val categoryColor: String = defaultColors(categoryName)
         viewModelScope.launch {
             try {
-                val category = Category(categoryName)
-                categoryRepository.insert(category)
+                val category = Category(categoryName, categoryColor)
+                categoryRepository.create(category)
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)
                 firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_CATEGORY, params)
             }
+        }
+    }
+
+    private fun defaultColors(color: String): String {
+        return when (color) {
+            "Code" -> "#FFFF7F50"
+            "Hack" -> "#FF2ED573"
+            "Life" -> "#FFFDCD21"
+            "Work" -> "#FF1E90FF"
+            else -> "#FFBB86FC"
         }
     }
 

@@ -8,7 +8,6 @@ import app.stacq.plan.data.model.TaskCategory
 @Dao
 interface TaskDao {
 
-
     /**
      * Select all tasks from the task.
      *
@@ -27,7 +26,7 @@ interface TaskDao {
      * @param task the task to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun createTask(task: Task)
+    suspend fun create(task: Task)
 
     /**
      * Select all tasks from the task.
@@ -36,7 +35,7 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query("SELECT * FROM task WHERE id = :id")
-    fun readTaskById(id: String): LiveData<Task>
+    fun readById(id: String): LiveData<Task>
 
 
     /**
@@ -48,7 +47,7 @@ interface TaskDao {
      * @param categoryId new task category id
      */
     @Query("UPDATE task SET title = :title, category_id = :categoryId WHERE id = :id")
-    suspend fun updateTaskTitleAndCategoryById(id: String, title: String, categoryId: Int)
+    suspend fun updateTitleAndCategoryById(id: String, title: String, categoryId: Int)
 
     /**
      * Update a task
@@ -56,7 +55,7 @@ interface TaskDao {
      * @param task id of the task
      */
     @Update
-    suspend fun updateTask(task: Task)
+    suspend fun update(task: Task)
 
     /**
      * Update the completed and completed_at of a task
@@ -64,7 +63,7 @@ interface TaskDao {
      * @param id of the task
      */
     @Query("UPDATE task SET completed = NOT completed, completed_at = strftime('%s','now') WHERE id = :id")
-    suspend fun updateTaskCompletionById(id: String)
+    suspend fun updateCompletionById(id: String)
 
     /**
      * Update task timer finish at time
@@ -73,7 +72,7 @@ interface TaskDao {
      * @param finishAt timer timer
      */
     @Query("UPDATE task SET timer_finish_at = :finishAt WHERE id = :id")
-    suspend fun updateTaskTimerFinishById(id: String, finishAt: Long)
+    suspend fun updateTimerFinishById(id: String, finishAt: Long)
 
     /**
      * Update the timer alarm of a task
@@ -81,7 +80,7 @@ interface TaskDao {
      * @param id of the task
      */
     @Query("UPDATE task SET timer_alarm = NOT timer_alarm WHERE id = :id")
-    suspend fun updateTaskTimerAlarmById(id: String)
+    suspend fun updateTimerAlarmById(id: String)
 
     /**
      * Update the position_at of a task
@@ -90,7 +89,7 @@ interface TaskDao {
      * @param positionAt position of task
      */
     @Query("UPDATE task SET position_at = :positionAt WHERE id = :id")
-    suspend fun updateTaskPositionAById(id: String, positionAt: Long)
+    suspend fun updatePositionAById(id: String, positionAt: Long)
 
     /**
      * Delete a task. by id

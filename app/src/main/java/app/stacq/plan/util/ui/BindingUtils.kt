@@ -36,7 +36,7 @@ fun CheckBox.setColor(taskCategory: TaskCategory) {
         "Hack" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
         "Life" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
         "Work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
-        else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.black))
+        else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.purple_200))
     }
 }
 
