@@ -43,7 +43,7 @@ class CategoryFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource(Firebase.firestore)
+        val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
