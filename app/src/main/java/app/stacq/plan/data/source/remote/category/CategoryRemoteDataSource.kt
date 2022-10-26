@@ -29,6 +29,7 @@ class CategoryRemoteDataSource(
             val fields = hashMapOf(
                 "name" to category.name,
                 "color" to category.color,
+                "count" to 0
             )
 
             firestore.collection(uid).document(document).set(fields)
