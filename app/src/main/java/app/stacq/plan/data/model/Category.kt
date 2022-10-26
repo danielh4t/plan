@@ -4,12 +4,17 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 
 @Keep
 @Entity(tableName = "category")
-data class Category (var name: String, var color: String) {
-    @PrimaryKey(autoGenerate = true)
+data class Category(
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: Int = 0
-}
+    var id: String = UUID.randomUUID().toString(),
+
+    var name: String,
+
+    var color: String
+)
