@@ -52,7 +52,7 @@ class EditFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource(Firebase.firestore)
+        val remoteDataSource = TaskRemoteDataSource()
 
         val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
