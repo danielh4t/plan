@@ -19,9 +19,6 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class EditFragment : Fragment() {
 
@@ -58,7 +55,8 @@ class EditFragment : Fragment() {
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]

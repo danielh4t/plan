@@ -20,13 +20,10 @@ import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.createNotificationChannel
 import app.stacq.plan.util.millisInFuture
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import java.time.Instant
 
 

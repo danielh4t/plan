@@ -20,8 +20,6 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.util.isFinishAtInFuture
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 class TaskFragment : Fragment() {
@@ -58,7 +56,8 @@ class TaskFragment : Fragment() {
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = TaskViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]

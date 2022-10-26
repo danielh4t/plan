@@ -20,9 +20,6 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class CreateFragment : Fragment() {
 
@@ -55,7 +52,8 @@ class CreateFragment : Fragment() {
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
         viewModel =
