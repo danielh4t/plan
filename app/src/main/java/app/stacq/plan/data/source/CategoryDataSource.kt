@@ -7,7 +7,7 @@ interface CategoryDataSource {
 
     suspend fun getCategories(): LiveData<List<Category>>
 
-    suspend fun getCategoryIdByName(name: String): Int?
+    suspend fun getCategoryIdByName(name: String): String?
     
     suspend fun create(category: Category)
 

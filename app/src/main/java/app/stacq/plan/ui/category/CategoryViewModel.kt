@@ -20,7 +20,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
         val categoryColor: String = defaultColors(categoryName)
         viewModelScope.launch {
             try {
-                val category = Category(categoryName, categoryColor)
+                val category = Category(name = categoryName, color = categoryColor)
                 categoryRepository.create(category)
             } catch (e: Error) {
                 val params = Bundle()

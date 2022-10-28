@@ -22,7 +22,7 @@ class CategoryRepository(
         return categoryLocalDataSource.getCategories()
     }
 
-    override suspend fun getCategoryIdByName(name: String): Int? = withContext(ioDispatcher) {
+    override suspend fun getCategoryIdByName(name: String): String? = withContext(ioDispatcher) {
         categoryLocalDataSource.getCategoryIdByName(name)
     }
 

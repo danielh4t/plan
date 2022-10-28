@@ -25,7 +25,7 @@ interface CategoryDao {
     @Query(
         "SELECT id FROM category WHERE name=:name"
     )
-    fun getCategoryIdByName(name: String): Int?
+    fun getCategoryIdByName(name: String): String?
 
     /**
      * Insert a category.

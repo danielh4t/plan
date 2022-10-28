@@ -25,7 +25,7 @@ class EditViewModel(
         emitSource(categoryRepository.getCategories())
     }
 
-    fun editTask(title: String, categoryId: Int) {
+    fun editTask(title: String, categoryId: String) {
         viewModelScope.launch {
             task.value?.let { it ->
                 val updateTask =

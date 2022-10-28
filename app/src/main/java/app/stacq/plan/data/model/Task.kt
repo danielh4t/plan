@@ -22,7 +22,7 @@ data class Task(
     var title: String = "",
 
     @ColumnInfo(name = "category_id")
-    var categoryId: Int,
+    var categoryId: String,
 
     var completed: Boolean = false,
 
