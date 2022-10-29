@@ -43,7 +43,7 @@
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
-    <string name="sign_in">sign in</string>
+    <string name="sign_in">Sign in</string>
     <string name="timer_complete">Timer complete</string>
     <string name="task_created">Task created</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
@@ -56,6 +56,8 @@
     <string name="notification">Notification</string>
     <string name="category_name">Category name</string>
     <string name="categories">Categories</string>
+    <string name="metrics">Metrics</string>
+    <string name="sign_out">Sign out</string>
 
 
 </resources>

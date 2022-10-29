@@ -11,4 +11,6 @@
     <color name="hack">#FF2ED573</color>
     <color name="life">#FFFDCD21</color>
     <color name="work">#FF1E90FF</color>
+    <color name="green_check">#FF3DDB85</color>
+    <color name="green_check_mid">#7F3DDB85</color>
 </resources>
