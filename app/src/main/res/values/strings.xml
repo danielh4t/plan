@@ -37,7 +37,7 @@
     <string name="content_delete_task">Delete Task</string>
     <string name="content_task_creation">Task creation date and time</string>
     <!-- Menu -->
-    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
     <!-- Notifications -->
     <string name="timer_channel_id" translatable="false">timer_channel</string>
     <string name="timer_channel_name" translatable="true">Timer</string>

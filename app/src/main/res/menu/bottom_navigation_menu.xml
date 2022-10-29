@@ -12,5 +12,9 @@
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_color_palette_outline"
             android:title="@string/categories" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_outline"
+            android:title="@string/profile" />
     </group>
 </menu>
