@@ -1,13 +1,14 @@
 package app.stacq.plan.ui
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
 import app.stacq.plan.util.installCheckProviderFactory
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -43,6 +45,16 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
 
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        val navController = navController()
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_tasks, R.id.nav_categories
+            )
+        )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
     }
 
