@@ -9,12 +9,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
 import app.stacq.plan.util.installCheckProviderFactory
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -39,22 +41,26 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
         firebaseAuth = Firebase.auth
         firebaseAnalytics = Firebase.analytics
 
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
-        val navController = navController()
+        binding = ActivityMainBinding.inflate(layoutInflater)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_tasks, R.id.nav_categories
+                R.id.nav_tasks, R.id.nav_categories, R.id.nav_profile
             )
         )
 
+        val navController = navController()
+
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // reference bottom navigation view
+        val navView: BottomNavigationView = binding.bottomNavigation
+        // navigation controller to bottom navigation view
+        navView.setupWithNavController(navController)
 
     }
 

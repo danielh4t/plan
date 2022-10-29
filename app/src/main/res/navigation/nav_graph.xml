@@ -98,4 +98,13 @@
             app:destination="@id/nav_tasks" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="app.stacq.plan.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" >
+
+    </fragment>
+
 </navigation>

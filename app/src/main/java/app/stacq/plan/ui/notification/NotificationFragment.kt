@@ -43,6 +43,7 @@ class NotificationFragment : Fragment() {
         val viewModel: NotificationViewModel by viewModels()
         binding.lifecycleOwner = viewLifecycleOwner
 
+
         requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
