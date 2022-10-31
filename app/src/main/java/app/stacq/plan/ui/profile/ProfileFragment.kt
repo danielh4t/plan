@@ -99,6 +99,7 @@ class ProfileFragment : Fragment() {
         val response = result.idpResponse
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             // Successfully signed in
+
             Snackbar.make(binding.authButton, R.string.sign_in_success, Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.authButton)
                 .show()
