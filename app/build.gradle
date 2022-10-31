@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-appcheck-debug:16.1.0'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.10'
+    implementation 'io.coil-kt:coil:2.2.2'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
