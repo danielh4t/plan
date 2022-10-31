@@ -91,7 +91,7 @@
     <fragment
         android:id="@+id/nav_categories"
         android:name="app.stacq.plan.ui.category.CategoryFragment"
-        android:label="@string/category"
+        android:label="@string/categories"
         tools:layout="@layout/fragment_category" >
         <action
             android:id="@+id/action_nav_category_to_nav_tasks"
