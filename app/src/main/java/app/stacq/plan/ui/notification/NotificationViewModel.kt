@@ -9,7 +9,7 @@ import com.google.firebase.ktx.Firebase
 
 class NotificationViewModel : ViewModel() {
 
-    private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+    private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
     fun logPermission(isGranted: Boolean) {
         val access = if (isGranted) "granted" else "denied"

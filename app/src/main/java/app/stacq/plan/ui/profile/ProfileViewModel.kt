@@ -1,19 +1,20 @@
 package app.stacq.plan.ui.profile
 
-import androidx.lifecycle.MutableLiveData
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 
 class ProfileViewModel : ViewModel() {
 
-    private val firebaseAuth = Firebase.auth
+    private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    val user = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
 
-    fun updateUser() {
-        user.value = firebaseAuth.currentUser
+    fun logAuthentication(errorCode: Int) {
+        val params = Bundle()
+        params.putInt("login_error_code", errorCode)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, params)
     }
 
 }
