@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
 import com.firebase.ui.auth.AuthUI
@@ -19,12 +18,13 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: ProfileViewModel
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -44,35 +44,40 @@ class ProfileFragment : Fragment() {
         firebaseAuth = Firebase.auth
         firebaseAnalytics = Firebase.analytics
 
-        val viewModel: ProfileViewModel by viewModels()
+        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.user.observe(viewLifecycleOwner) { currentUser ->
+            if (currentUser == null) {
+                binding.authButton.setText(R.string.sign_in)
+            } else {
+                binding.authButton.setText(R.string.sign_out)
+            }
+        }
+
         binding.authButton.setOnClickListener {
             if (firebaseAuth.currentUser != null) {
-                lifecycleScope.launch {
-                    try {
-                        this@ProfileFragment.context?.let { context ->
-                            AuthUI.getInstance().signOut(context)
-                        }
-                        Snackbar.make(
-                            binding.authButton,
-                            R.string.sign_out_success,
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .setAnchorView(binding.authButton)
-                            .show()
-                    } catch (e: Exception) {
-                        Snackbar.make(
-                            binding.authButton,
-                            R.string.sign_out_failure,
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .setAnchorView(binding.authButton)
-                            .show()
+                try {
+                    this@ProfileFragment.context?.let { context ->
+                        AuthUI.getInstance().signOut(context)
                     }
+                    Snackbar.make(
+                        binding.authButton,
+                        R.string.sign_out_success,
+                        Snackbar.LENGTH_SHORT
+                    )
+                        .setAnchorView(binding.authButton)
+                        .show()
+                } catch (e: Exception) {
+                    Snackbar.make(
+                        binding.authButton,
+                        R.string.sign_out_failure,
+                        Snackbar.LENGTH_SHORT
+                    )
+                        .setAnchorView(binding.authButton)
+                        .show()
                 }
-
             } else {
                 val providers = arrayListOf(
                     AuthUI.IdpConfig.GoogleBuilder().build(),
@@ -87,6 +92,7 @@ class ProfileFragment : Fragment() {
                 signInLauncher.launch(signInIntent)
             }
 
+
         }
     }
 
@@ -99,7 +105,7 @@ class ProfileFragment : Fragment() {
         val response = result.idpResponse
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             // Successfully signed in
-
+            viewModel.updateUser()
             Snackbar.make(binding.authButton, R.string.sign_in_success, Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.authButton)
                 .show()
@@ -120,8 +126,8 @@ class ProfileFragment : Fragment() {
                     .setAnchorView(binding.authButton)
                     .show()
             }
-
         }
+
     }
 
 }

@@ -9,12 +9,11 @@ import com.google.firebase.ktx.Firebase
 class ProfileViewModel : ViewModel() {
 
     private val firebaseAuth = Firebase.auth
-    private val user: FirebaseUser? = firebaseAuth.currentUser
 
-    private val hasUser = MutableLiveData(false)
+    val user = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
 
-    init {
-        if (user != null) hasUser.value = true
+    fun updateUser() {
+        user.value = firebaseAuth.currentUser
     }
 
 }
