@@ -41,16 +41,16 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
 
     private fun colorPalette(): String {
         val palette = listOf(
-            "FF74B1",
-            "FFB200",
-            "B2A4FF",
+            "#FF74B1",
+            "#FFB200",
+            "#B2A4FF",
             "FF00E4",
-            "FF4848",
-            "00EAD3",
-            "FC5404",
-            "F637EC",
-            "4D77FF",
-            "93FFD8"
+            "#FF4848",
+            "#00EAD3",
+            "#FC5404",
+            "#F637EC",
+            "#4D77FF",
+            "#93FFD8"
         )
 
         return palette.random()
