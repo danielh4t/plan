@@ -1,13 +1,12 @@
-package app.stacq.plan.util.ui
+package app.stacq.plan.ui.tasks
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import app.stacq.plan.R
 import app.stacq.plan.data.model.TaskCategory
 import java.time.Instant
 import java.time.ZoneId
@@ -31,13 +30,7 @@ fun TextView.getTaskCategoryTitle(epoch: Long) {
 
 @BindingAdapter("taskCategoryColor")
 fun CheckBox.setColor(taskCategory: TaskCategory) {
-    buttonTintList = when (taskCategory.categoryName) {
-        "Code" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.code))
-        "Hack" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.hack))
-        "Life" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.life))
-        "Work" -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.work))
-        else -> ColorStateList.valueOf(ContextCompat.getColor(this.context, R.color.purple_200))
-    }
+    buttonTintList = ColorStateList.valueOf(Color.parseColor(taskCategory.categoryColor))
 }
 
 @BindingAdapter("timerTextVisibility")

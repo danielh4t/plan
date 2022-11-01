@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.bottomNavigation
         // navigation controller to bottom navigation view
         navView.setupWithNavController(navController)
+        navView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
     }
 

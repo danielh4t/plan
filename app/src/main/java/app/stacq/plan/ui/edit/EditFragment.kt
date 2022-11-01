@@ -82,7 +82,7 @@ class EditFragment : Fragment() {
             val categoryName: String = binding.editCategory.text.toString()
 
             if (title.isEmpty() or categoryName.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_details, Snackbar.LENGTH_LONG)
+                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener

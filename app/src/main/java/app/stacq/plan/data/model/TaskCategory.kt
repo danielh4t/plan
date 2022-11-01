@@ -14,6 +14,7 @@ data class TaskCategory(
     var completed: Boolean,
     var completedAt: Long,
     var categoryName: String,
+    var categoryColor: String,
     var timerFinishAt: Long,
     var timerAlarm: Boolean,
     var positionAt: Long

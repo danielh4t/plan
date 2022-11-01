@@ -10,7 +10,9 @@
     <string name="create">Create</string>
     <string name="title">Title</string>
     <string name="create_fab">create action</string>
-    <string name="empty_details">Empty details</string>
+    <string name="empty_task_details">Empty tasks details</string>
+    <!-- Category fragment -->
+    <string name="empty_category_details">Empty category details</string>
     <!-- Task fragment -->
     <string name="complete">Complete</string>
     <string name="complete_fab">complete action</string>
@@ -59,7 +61,6 @@
     <string name="category_name">Category name</string>
     <string name="categories">Categories</string>
     <string name="metrics">Metrics</string>
-
-
+    <string name="content_category_color">category color</string>
 
 </resources>

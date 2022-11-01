@@ -13,7 +13,7 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query(
-        "SELECT * FROM category"
+        "SELECT * FROM category WHERE enabled"
     )
     fun getCategories(): LiveData<List<Category>>
 
