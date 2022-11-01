@@ -38,28 +38,32 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_category_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/edit_chip_group_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/category"
+            android:fontFamily="@font/roboto"
+            android:text="@string/categories"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_title_layout" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/edit_category_chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_title_layout">
+            app:layout_constraintTop_toBottomOf="@+id/edit_chip_group_text"
+            app:singleSelection="true">
 
-            <AutoCompleteTextView
-                android:id="@+id/edit_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:labelFor="@id/edit_category"
-                tools:ignore="TextContrastCheck" />
+            <!-- added dynamically. -->
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/edit_fab"

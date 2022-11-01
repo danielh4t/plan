@@ -60,24 +60,24 @@ class CreateFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            binding.categoryChipGroup.removeAllViews()
+            binding.createCategoryChipGroup.removeAllViews()
             categories.map { category ->
                 val chip = layoutInflater.inflate(
                     R.layout.chip_layout,
-                    binding.categoryChipGroup,
+                    binding.createCategoryChipGroup,
                     false
                 ) as Chip
                 chip.text = category.name
                 chip.tag = category.id
-                binding.categoryChipGroup.addView(chip)
+                binding.createCategoryChipGroup.addView(chip)
             }
         }
 
         binding.createFab.setOnClickListener { clickedView ->
             val title: String = binding.title.text.toString()
 
-            val checkedId: Int = binding.categoryChipGroup.checkedChipId
-            val checkedChip = binding.categoryChipGroup.findViewById<Chip>(checkedId)
+            val checkedId: Int = binding.createCategoryChipGroup.checkedChipId
+            val checkedChip = binding.createCategoryChipGroup.findViewById<Chip>(checkedId)
             val categoryId = checkedChip.tag as String
 
             if (title.isEmpty()) {
