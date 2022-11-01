@@ -84,7 +84,6 @@ class CreateFragment : Fragment() {
                 Snackbar.make(clickedView, R.string.empty_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(clickedView)
                     .show()
-                return@setOnClickListener
             }
 
             viewModel.createTask(title, categoryName)

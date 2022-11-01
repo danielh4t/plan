@@ -1,4 +1,4 @@
-package app.stacq.plan.util.ui
+package app.stacq.plan.ui.tasks
 
 import android.content.res.ColorStateList
 import android.view.View

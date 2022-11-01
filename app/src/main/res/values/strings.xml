@@ -59,7 +59,7 @@
     <string name="category_name">Category name</string>
     <string name="categories">Categories</string>
     <string name="metrics">Metrics</string>
-
+    <string name="content_category_color">category color</string>
 
 
 </resources>

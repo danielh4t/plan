@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_nav_create_to_nav_tasks"
             app:destination="@id/nav_tasks" />
+        <action
+            android:id="@+id/action_nav_create_to_nav_category"
+            app:destination="@id/nav_category" />
     </fragment>
 
     <fragment
@@ -89,13 +92,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_categories"
+        android:id="@+id/nav_category"
         android:name="app.stacq.plan.ui.category.CategoryFragment"
-        android:label="@string/categories"
-        tools:layout="@layout/fragment_category" >
+        android:label="@string/category"
+        tools:layout="@layout/fragment_category">
         <action
-            android:id="@+id/action_nav_category_to_nav_tasks"
-            app:destination="@id/nav_tasks" />
+            android:id="@+id/action_nav_category_to_nav_categories"
+            app:destination="@id/nav_categories" />
     </fragment>
 
 
@@ -103,8 +106,18 @@
         android:id="@+id/nav_profile"
         android:name="app.stacq.plan.ui.profile.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
     </fragment>
+    <fragment
+        android:id="@+id/nav_categories"
+        android:name="app.stacq.plan.ui.categories.CategoriesFragment"
+        android:label="@string/categories"
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_nav_categories_to_nav_category"
+            app:destination="@id/nav_category" />
+    </fragment>
+
 
 </navigation>

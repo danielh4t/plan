@@ -11,6 +11,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class CategoryViewModel(private val categoryRepository: CategoryRepository) : ViewModel() {
 
@@ -32,11 +33,11 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
 
     private fun defaultColors(color: String): String {
         return when (color) {
-            "Code" -> "#FFFF7F50"
-            "Hack" -> "#FF2ED573"
-            "Life" -> "#FFFDCD21"
-            "Work" -> "#FF1E90FF"
-            else -> "#FFBB86FC"
+            "Code" -> "#ffff7f50"
+            "Hack" -> "#ff2ed573"
+            "Life" -> "#fffdcd21"
+            "Work" -> "#ff1e90ff"
+            else ->  String.format("#ff%06x", Random.nextInt(0xffffff + 1))
         }
     }
 

@@ -55,7 +55,7 @@ class TasksFragment : Fragment() {
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
         ItemTouchHelper(taskItemTouchHelperCallback).attachToRecyclerView(binding.tasksList)
 
-        binding.createFab.setOnClickListener {
+        binding.createTaskFab.setOnClickListener {
             val action = TasksFragmentDirections.actionNavTasksToNavCreate()
             this.findNavController().navigate(action)
         }
