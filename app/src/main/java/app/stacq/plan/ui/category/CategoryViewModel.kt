@@ -54,7 +54,6 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
         )
 
         return palette.random()
-
     }
 
 }
