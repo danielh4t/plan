@@ -14,8 +14,6 @@ data class Category(
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String = UUID.randomUUID().toString(),
-
     var name: String,
-
     var color: String
 )

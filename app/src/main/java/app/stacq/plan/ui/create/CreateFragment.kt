@@ -1,12 +1,9 @@
 package app.stacq.plan.ui.create
 
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,6 +16,7 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentCreateBinding
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
 class CreateFragment : Fragment() {
@@ -62,36 +60,35 @@ class CreateFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.categories.observe(viewLifecycleOwner) {
-            it?.let {
-                val categories = it.map { category -> category.name }
-                val arrayAdapter =
-                    ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
-                binding.category.setAdapter(arrayAdapter)
-                binding.category.setSelection(arrayAdapter.getPosition(categories[0]))
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            binding.categoryChipGroup.removeAllViews()
+            categories.map { category ->
+                val chip = layoutInflater.inflate(
+                    R.layout.chip_layout,
+                    binding.categoryChipGroup,
+                    false
+                ) as Chip
+                chip.text = category.name
+                binding.categoryChipGroup.addView(chip)
             }
-        }
-
-        binding.category.setOnFocusChangeListener { focusedView, _ ->
-            val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
         }
 
         binding.createFab.setOnClickListener { clickedView ->
             val title: String = binding.title.text.toString()
-            val categoryName: String = binding.category.text.toString()
+            val checkedId: Int = binding.categoryChipGroup.checkedChipId
 
-            if (title.isEmpty() or categoryName.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_details, Snackbar.LENGTH_LONG)
+            if (title.isEmpty()) {
+                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(clickedView)
                     .show()
+                return@setOnClickListener
             }
 
-            viewModel.createTask(title, categoryName)
+            viewModel.createTask(title, checkedId)
+
             val action = CreateFragmentDirections.actionNavCreateToNavTasks()
             this.findNavController().navigate(action)
         }
-
     }
 
     override fun onDestroyView() {
