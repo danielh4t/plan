@@ -22,7 +22,7 @@ class EditViewModel(
     }
 
     val categories: LiveData<List<Category>> = liveData {
-        emitSource(categoryRepository.getCategories())
+        emitSource(categoryRepository.getEnabledCategories())
     }
 
     fun editTask(title: String, categoryId: String) {

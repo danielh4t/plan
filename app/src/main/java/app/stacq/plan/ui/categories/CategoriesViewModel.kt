@@ -17,6 +17,9 @@ class CategoriesViewModel(
         emitSource(categoryRepository.getCategories())
     }
 
+    /**
+     * On long click of category list item flip enabled
+     */
     fun updateEnabled(categoryId: String) {
         viewModelScope.launch {
             categoryRepository.updateEnabledById(categoryId)

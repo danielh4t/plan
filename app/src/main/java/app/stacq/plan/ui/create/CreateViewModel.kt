@@ -23,7 +23,7 @@ class CreateViewModel(
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
     val categories: LiveData<List<Category>> = liveData {
-        emitSource(categoryRepository.getCategories())
+        emitSource(categoryRepository.getEnabledCategories())
     }
 
     fun createTask(title: String, categoryId: String) {

@@ -48,10 +48,9 @@ class CategoriesFragment : Fragment() {
 
         viewModelFactory = CategoriesViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoriesViewModel::class.java]
-        binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = CategoriesAdapter()
+        val adapter = CategoriesAdapter(viewModel)
         binding.categoriesList.adapter = adapter
         binding.categoriesList.addItemDecoration(
             MarginItemDecoration(

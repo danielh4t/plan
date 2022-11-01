@@ -17,6 +17,10 @@ class CategoryLocalDataSource(
         categoryDao.getCategories()
     }
 
+    override suspend fun getEnabledCategories(): LiveData<List<Category>> = withContext(ioDispatcher) {
+        categoryDao.getEnabledCategories()
+    }
+
     override suspend fun getCategoryIdByName(name: String): String? = withContext(ioDispatcher) {
         categoryDao.getCategoryIdByName(name)
     }

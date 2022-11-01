@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green_check">#FF3DDB85</color>
     <color name="green_check_mid">#7F3DDB85</color>
+    <color name="neutral_70">#FFE6E1E6</color>
 </resources>

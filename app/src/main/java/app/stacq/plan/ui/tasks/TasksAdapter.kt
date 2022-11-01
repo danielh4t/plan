@@ -38,7 +38,7 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
 
         fun bind(item: TaskCategory, viewModel: TasksViewModel) {
             binding.task = item
-            binding.viewmodel = viewModel
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
     }

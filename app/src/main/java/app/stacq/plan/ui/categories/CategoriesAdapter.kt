@@ -2,7 +2,6 @@ package app.stacq.plan.ui.categories
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,8 +10,8 @@ import app.stacq.plan.data.model.Category
 import app.stacq.plan.databinding.CategoryListItemBinding
 
 
-class CategoriesAdapter :
-    ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()), View.OnLongClickListener {
+class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
+    ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,7 +20,7 @@ class CategoriesAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, viewModel)
     }
 
     class ViewHolder private constructor(private val binding: CategoryListItemBinding) :
@@ -35,14 +34,11 @@ class CategoriesAdapter :
             }
         }
 
-        fun bind(item: Category) {
+        fun bind(item: Category, viewModel: CategoriesViewModel) {
             binding.category = item
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
-    }
-
-    override fun onLongClick(view: View): Boolean {
-        TODO("Not yet implemented")
     }
 
 }

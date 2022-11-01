@@ -17,9 +17,12 @@ class CategoryRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CategoryDataSource {
 
-
     override suspend fun getCategories(): LiveData<List<Category>> {
         return categoryLocalDataSource.getCategories()
+    }
+
+    override suspend fun getEnabledCategories(): LiveData<List<Category>> {
+        return categoryLocalDataSource.getEnabledCategories()
     }
 
     override suspend fun getCategoryIdByName(name: String): String? = withContext(ioDispatcher) {
@@ -29,6 +32,10 @@ class CategoryRepository(
     override suspend fun create(category: Category): Unit = withContext(ioDispatcher) {
         categoryLocalDataSource.create(category)
         categoryRemoteDataSource.createCategory(category)
+    }
+
+    override suspend fun updateEnabledById(id: String) {
+        categoryLocalDataSource.updateEnabledById(id)
     }
 
     override suspend fun delete(category: Category) = withContext(ioDispatcher) {

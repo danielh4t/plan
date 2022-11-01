@@ -13,9 +13,19 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query(
-        "SELECT * FROM category WHERE enabled"
+        "SELECT * FROM category"
     )
     fun getCategories(): LiveData<List<Category>>
+
+    /**
+     * Select enabled categories.
+     *
+     * @return enabled categories.
+     */
+    @Query(
+        "SELECT * FROM category WHERE enabled"
+    )
+    fun getEnabledCategories(): LiveData<List<Category>>
 
     /**
      * Select category id from the category.
