@@ -38,6 +38,14 @@ interface CategoryDao {
 
 
     /**
+     * Update the category enabled
+     *
+     * @param id of the category
+     */
+    @Query("UPDATE category SET enabled = NOT enabled WHERE id = :id")
+    suspend fun updateEnabledById(id: String)
+
+    /**
      * Delete a category.
      *
      * @param category to be delete

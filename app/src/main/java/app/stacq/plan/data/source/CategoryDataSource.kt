@@ -11,6 +11,8 @@ interface CategoryDataSource {
     
     suspend fun create(category: Category)
 
+    suspend fun updateEnabledById(id: String)
+
     suspend fun delete(category: Category)
     
 }

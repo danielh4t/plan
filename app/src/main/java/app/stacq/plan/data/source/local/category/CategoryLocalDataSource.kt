@@ -25,6 +25,10 @@ class CategoryLocalDataSource(
         categoryDao.insert(category)
     }
 
+    override suspend fun updateEnabledById(id: String) {
+        categoryDao.updateEnabledById(id)
+    }
+
     override suspend fun delete(category: Category) = withContext(ioDispatcher) {
         categoryDao.delete(category)
     }

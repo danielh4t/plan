@@ -2,6 +2,7 @@ package app.stacq.plan.ui.categories
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,7 +12,7 @@ import app.stacq.plan.databinding.CategoryListItemBinding
 
 
 class CategoriesAdapter :
-    ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
+    ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()), View.OnLongClickListener {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +39,10 @@ class CategoriesAdapter :
             binding.category = item
             binding.executePendingBindings()
         }
+    }
+
+    override fun onLongClick(view: View): Boolean {
+        TODO("Not yet implemented")
     }
 
 }
