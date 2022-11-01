@@ -35,7 +35,6 @@ class CreateFragment : Fragment() {
 
         _binding = FragmentCreateBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,13 +68,17 @@ class CreateFragment : Fragment() {
                     false
                 ) as Chip
                 chip.text = category.name
+                chip.tag = category.id
                 binding.categoryChipGroup.addView(chip)
             }
         }
 
         binding.createFab.setOnClickListener { clickedView ->
             val title: String = binding.title.text.toString()
+
             val checkedId: Int = binding.categoryChipGroup.checkedChipId
+            val checkedChip = binding.categoryChipGroup.findViewById<Chip>(checkedId)
+            val categoryId = checkedChip.tag as String
 
             if (title.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_LONG)
@@ -84,7 +87,7 @@ class CreateFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            viewModel.createTask(title, checkedId)
+            viewModel.createTask(title, categoryId)
 
             val action = CreateFragmentDirections.actionNavCreateToNavTasks()
             this.findNavController().navigate(action)

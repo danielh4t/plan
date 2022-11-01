@@ -26,20 +26,10 @@ class CreateViewModel(
         emitSource(categoryRepository.getCategories())
     }
 
-    fun createTask(title: String, checkedId: Int) {
-        var categoryId: String? = null
-        val categories = categories.value
-        if (categories != null) {
-            val index = checkedId - 1
-            if (index <= categories.size) {
-                categoryId = categories[index].id
-            }
-        }
+    fun createTask(title: String, categoryId: String) {
         viewModelScope.launch {
             try {
-                if (categoryId != null) {
-                    tasksRepository.createTask(Task(title = title, categoryId = categoryId))
-                }
+                tasksRepository.createTask(Task(title = title, categoryId = categoryId))
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)
