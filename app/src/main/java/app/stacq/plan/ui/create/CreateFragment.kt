@@ -68,6 +68,7 @@ class CreateFragment : Fragment() {
                 val arrayAdapter =
                     ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, categories)
                 binding.category.setAdapter(arrayAdapter)
+                binding.category.setSelection(arrayAdapter.getPosition(categories[0]))
             }
         }
 

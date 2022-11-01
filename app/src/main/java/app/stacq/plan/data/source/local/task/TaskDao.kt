@@ -107,6 +107,7 @@ interface TaskDao {
     @Query(
         "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
                 "task.completed_at AS completedAt, category.name AS categoryName, " +
+                "category.color AS categoryColor, " +
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
                 "task.position_at AS positionAt " +
                 "FROM task " +
@@ -122,7 +123,8 @@ interface TaskDao {
      */
     @Query(
         "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
-                "task.completed_at AS completedAt,  category.name AS categoryName, " +
+                "task.completed_at AS completedAt, category.name AS categoryName, " +
+                "category.color AS categoryColor, " +
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
                 "task.position_at AS positionAt " +
                 "FROM task " +

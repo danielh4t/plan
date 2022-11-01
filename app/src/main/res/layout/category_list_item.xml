@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
             android:layout_margin="8dp"
-            android:button="@drawable/task_complete_checkbox"
             android:contentDescription="@string/content_category_color"
             android:src="@drawable/ic_circle_outline"
             app:categoryColor="@{category}"
