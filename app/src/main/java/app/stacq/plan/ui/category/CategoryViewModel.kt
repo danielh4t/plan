@@ -44,7 +44,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
             "#FF74B1",
             "#FFB200",
             "#B2A4FF",
-            "FF00E4",
+            "#FF00E4",
             "#FF4848",
             "#00EAD3",
             "#FC5404",

@@ -1,7 +1,10 @@
 package app.stacq.plan.ui.create
 
 import android.os.Bundle
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.repository.CategoryRepository
@@ -24,16 +27,18 @@ class CreateViewModel(
     }
 
     fun createTask(title: String, checkedId: Int) {
+        var categoryId: String? = null
+        val categories = categories.value
+        if (categories != null) {
+            val index = checkedId - 1
+            if (index <= categories.size) {
+                categoryId = categories[index].id
+            }
+        }
         viewModelScope.launch {
             try {
-                val categories = categories.value
-                if (categories != null) {
-                    val index = checkedId - 1
-                    if(index <= categories.size) {
-                        val categoryId: String = categories[checkedId - 1].id
-                        val task = Task(title = title, categoryId = categoryId)
-                        tasksRepository.createTask(task)
-                    }
+                if (categoryId != null) {
+                    tasksRepository.createTask(Task(title = title, categoryId = categoryId))
                 }
             } catch (e: Error) {
                 val params = Bundle()
