@@ -1,6 +1,5 @@
 package app.stacq.plan.ui.category
 
-
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class CategoryViewModel(private val categoryRepository: CategoryRepository) : ViewModel() {
 
