@@ -77,7 +77,7 @@ class CreateFragment : Fragment() {
 
             val title: String = binding.title.text.toString()
             if (title.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_LONG)
+                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
@@ -85,12 +85,8 @@ class CreateFragment : Fragment() {
 
             val checkedId: Int = binding.createCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_LONG)
+                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
-                    .setAction(R.string.add_category) {
-                        val action = CreateFragmentDirections.actionNavCreateToNavCategory()
-                        this.findNavController().navigate(action)
-                    }
                     .show()
                 return@setOnClickListener
             }

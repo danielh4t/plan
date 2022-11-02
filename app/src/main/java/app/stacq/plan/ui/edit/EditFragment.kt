@@ -16,7 +16,6 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import app.stacq.plan.databinding.FragmentEditBinding
-import app.stacq.plan.ui.create.CreateFragmentDirections
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
@@ -83,7 +82,7 @@ class EditFragment : Fragment() {
         binding.editFab.setOnClickListener { clickedView ->
             val title: String = binding.editTitle.text.toString()
             if (title.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_LONG)
+                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
@@ -91,12 +90,8 @@ class EditFragment : Fragment() {
 
             val checkedId: Int = binding.editCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_LONG)
+                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
-                    .setAction(R.string.add_category) {
-                        val action = CreateFragmentDirections.actionNavCreateToNavCategory()
-                        this.findNavController().navigate(action)
-                    }
                     .show()
                 return@setOnClickListener
             }
