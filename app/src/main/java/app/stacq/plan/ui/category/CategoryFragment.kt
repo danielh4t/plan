@@ -31,7 +31,6 @@ class CategoryFragment : Fragment() {
 
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,8 +60,17 @@ class CategoryFragment : Fragment() {
             }
 
             viewModel.create(categoryName)
-            val action = CategoryFragmentDirections.actionNavCategoryToNavCategories()
-            this.findNavController().navigate(action)
+
+
+            val previous = this.findNavController().previousBackStackEntry?.destination?.id
+            if (previous == R.id.nav_categories) {
+                val action = CategoryFragmentDirections.actionNavCategoryToNavCategories()
+                this.findNavController().navigate(action)
+            } else {
+                val action = CategoryFragmentDirections.actionNavCategoryToNavCreate()
+                this.findNavController().navigate(action)
+            }
+
         }
 
     }
