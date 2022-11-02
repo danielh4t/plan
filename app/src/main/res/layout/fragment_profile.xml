@@ -22,6 +22,7 @@
             android:minHeight="96dp"
             android:minWidth="96dp"
             android:layout_marginTop="16dp"
+            android:padding="8dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
