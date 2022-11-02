@@ -99,6 +99,9 @@
         <action
             android:id="@+id/action_nav_category_to_nav_categories"
             app:destination="@id/nav_categories" />
+        <action
+            android:id="@+id/action_nav_category_to_nav_create"
+            app:destination="@id/nav_create" />
     </fragment>
 
 

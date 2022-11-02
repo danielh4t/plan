@@ -10,9 +10,11 @@
     <string name="create">Create</string>
     <string name="title">Title</string>
     <string name="create_fab">create action</string>
-    <string name="empty_task_details">Empty tasks details</string>
+    <string name="empty_task_details">Empty tasks title</string>
+    <string name="create_category">Create or enable a category to create task</string>
+    <string name="add_category">ADD</string>
     <!-- Category fragment -->
-    <string name="empty_category_details">Empty category details</string>
+    <string name="empty_category_details">Empty category title</string>
     <!-- Task fragment -->
     <string name="complete">Complete</string>
     <string name="complete_fab">complete action</string>
@@ -64,5 +66,8 @@
     <string name="content_category_color">category color</string>
     <string name="content_task_list">list of tasks</string>
     <string name="content_category_list">list of categories</string>
+    <string name="content_profile_tab">profile tab</string>
+    <string name="content_categories_tab">categories tab</string>
+    <string name="content_tasks_tab">tasks tab</string>
 
 </resources>
