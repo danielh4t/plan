@@ -63,5 +63,6 @@
     <string name="metrics">Metrics</string>
     <string name="content_category_color">category color</string>
     <string name="content_task_list">list of tasks</string>
+    <string name="content_category_list">list of categories</string>
 
 </resources>
