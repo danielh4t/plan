@@ -46,7 +46,6 @@ class TaskRemoteDataSource(
                 .document(categoryId)
                 .update("count", FieldValue.increment(1))
         }
-
     }
 
     suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
