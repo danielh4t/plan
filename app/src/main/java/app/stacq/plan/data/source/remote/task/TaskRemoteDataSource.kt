@@ -23,7 +23,7 @@ class TaskRemoteDataSource(
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
 
-            val categoryId = task.categoryId.toString()
+            val categoryId = task.categoryId
 
             val data = hashMapOf(
                 "createdAt" to task.createdAt,
@@ -34,7 +34,6 @@ class TaskRemoteDataSource(
                 "timerFinishAt" to task.timerFinishAt,
                 "timerAlarm" to task.timerAlarm
             )
-
 
             firestore.collection(uid)
                 .document(categoryId)

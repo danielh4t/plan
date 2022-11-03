@@ -24,7 +24,7 @@ class CategoryRemoteDataSource(
 
         if(uid != null) {
 
-            val document = category.id.toString()
+            val document = category.id
 
             val fields = hashMapOf(
                 "name" to category.name,

@@ -48,7 +48,6 @@
 
     <string name="sign_in">Sign in</string>
     <string name="sign_out">Sign out</string>
-
     <string name="timer_complete">Timer complete</string>
     <string name="task_created">Task created</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
