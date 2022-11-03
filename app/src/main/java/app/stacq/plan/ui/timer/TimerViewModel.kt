@@ -58,7 +58,7 @@ class TimerViewModel(
         val finishAt = Instant.now().plusSeconds(TimerConstants.TIMER_TIME_IN_SECONDS).epochSecond
         task.timerFinishAt = finishAt
         viewModelScope.launch {
-            tasksRepository.updateTaskTimerFinishById(task.id, finishAt)
+            tasksRepository.updateTaskTimerFinish(task)
         }
     }
 

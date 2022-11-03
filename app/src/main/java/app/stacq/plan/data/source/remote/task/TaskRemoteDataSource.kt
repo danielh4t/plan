@@ -98,4 +98,24 @@ class TaskRemoteDataSource(
                 .update(data)
         }
     }
+
+    suspend fun updateTaskFinish(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        if (uid != null) {
+
+            val taskId = taskCategory.id
+            val categoryId = taskCategory.categoryId
+
+            val data = mapOf(
+                "timerFinishAt" to taskCategory.timerFinishAt,
+            )
+
+            firestore.collection(uid)
+                .document(categoryId)
+                .collection("tasks")
+                .document(taskId)
+                .update(data)
+        }
+    }
 }

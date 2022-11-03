@@ -43,8 +43,9 @@ class TasksRepository(
         tasksRemoteDataSource.updateTaskCompletion(taskCategory)
     }
 
-    suspend fun updateTaskTimerFinishById(id: String, finishAt: Long) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTimerFinishById(id, finishAt)
+    suspend fun updateTaskTimerFinish(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateTimerFinishById(taskCategory.id, taskCategory.timerFinishAt)
+        tasksRemoteDataSource.updateTaskFinish(taskCategory)
     }
 
     suspend fun updateTaskTimerAlarmById(id: String) = withContext(ioDispatcher) {
