@@ -39,7 +39,7 @@ class TasksRepository(
     }
 
     suspend fun updateTaskCompletion(taskCategory: TaskCategory) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateCompletionById(taskCategory.id)
+        tasksLocalDataSource.updateCompletionById(taskCategory.id, taskCategory.completed, taskCategory.timerFinishAt)
         tasksRemoteDataSource.updateTaskCompletion(taskCategory)
     }
 

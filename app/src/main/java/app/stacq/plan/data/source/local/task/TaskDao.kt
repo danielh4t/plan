@@ -62,8 +62,8 @@ interface TaskDao {
      *
      * @param id of the task
      */
-    @Query("UPDATE task SET completed = NOT completed, completed_at = strftime('%s','now') WHERE id = :id")
-    suspend fun updateCompletionById(id: String)
+    @Query("UPDATE task SET completed = :completed, completed_at = :completedAt WHERE id = :id")
+    suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long)
 
     /**
      * Update task timer finish at time

@@ -16,7 +16,7 @@ interface TaskDataSource {
 
     suspend fun deleteById(id: String)
 
-    suspend fun updateCompletionById(id: String)
+    suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long)
 
     suspend fun updateTimerFinishById(id: String, finishAt: Long)
 

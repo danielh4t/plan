@@ -50,7 +50,6 @@ class TimerViewModel(
             // set alarm when timer not finished
             _timerAlarm.value = task.timerAlarm
         }
-
     }
 
 

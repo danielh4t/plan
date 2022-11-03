@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 class TasksViewModel(
     private val tasksRepository: TasksRepository
@@ -18,6 +19,8 @@ class TasksViewModel(
     }
 
     fun complete(taskCategory: TaskCategory) {
+        taskCategory.completed = !taskCategory.completed
+        taskCategory.completedAt = Instant.now().epochSecond
         viewModelScope.launch {
             tasksRepository.updateTaskCompletion(taskCategory)
         }

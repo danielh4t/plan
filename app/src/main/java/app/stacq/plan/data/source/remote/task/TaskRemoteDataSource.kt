@@ -81,13 +81,8 @@ class TaskRemoteDataSource(
             val taskId = taskCategory.id
             val categoryId = taskCategory.categoryId
 
-            // flip completed
-            val completed = !taskCategory.completed
-
             val data = mapOf(
-                "title" to taskCategory.title,
-                "categoryId" to taskCategory.categoryId,
-                "completed" to completed,
+                "completed" to taskCategory.completed,
                 "completedAt" to taskCategory.completedAt,
             )
 
