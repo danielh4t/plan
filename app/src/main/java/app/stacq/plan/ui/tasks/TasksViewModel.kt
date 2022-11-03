@@ -17,9 +17,9 @@ class TasksViewModel(
         emitSource(tasksRepository.getTasksCategory())
     }
 
-    fun complete(taskId: String) {
+    fun complete(taskCategory: TaskCategory) {
         viewModelScope.launch {
-            tasksRepository.updateTaskCompletionById(taskId)
+            tasksRepository.updateTaskCompletion(taskCategory)
         }
     }
 

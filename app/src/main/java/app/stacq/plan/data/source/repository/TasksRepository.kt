@@ -38,8 +38,9 @@ class TasksRepository(
         tasksLocalDataSource.deleteById(id)
     }
 
-    suspend fun updateTaskCompletionById(id: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateCompletionById(id)
+    suspend fun updateTaskCompletion(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updateCompletionById(taskCategory.id)
+        tasksRemoteDataSource.updateTaskCompletion(taskCategory)
     }
 
     suspend fun updateTaskTimerFinishById(id: String, finishAt: Long) = withContext(ioDispatcher) {

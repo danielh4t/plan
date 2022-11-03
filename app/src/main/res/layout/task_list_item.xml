@@ -25,7 +25,7 @@
             android:layout_gravity="center|end"
             android:button="@drawable/task_complete_checkbox"
             android:checked="@{task.completed}"
-            android:onClick="@{() -> viewModel.complete(task.id)}"
+            android:onClick="@{() -> viewModel.complete(task)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

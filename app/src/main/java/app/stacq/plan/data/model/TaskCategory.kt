@@ -13,6 +13,7 @@ data class TaskCategory(
     var title: String,
     var completed: Boolean,
     var completedAt: Long,
+    var categoryId: String,
     var categoryName: String,
     var categoryColor: String,
     var timerFinishAt: Long,

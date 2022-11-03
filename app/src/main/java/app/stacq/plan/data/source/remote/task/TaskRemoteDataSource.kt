@@ -1,6 +1,7 @@
 package app.stacq.plan.data.source.remote.task
 
 import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.model.TaskCategory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -73,4 +74,29 @@ class TaskRemoteDataSource(
         }
     }
 
+    suspend fun updateTaskCompletion(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        if (uid != null) {
+
+            val taskId = taskCategory.id
+            val categoryId = taskCategory.categoryId
+
+            // flip completed
+            val completed = !taskCategory.completed
+
+            val data = mapOf(
+                "title" to taskCategory.title,
+                "categoryId" to taskCategory.categoryId,
+                "completed" to completed,
+                "completedAt" to taskCategory.completedAt,
+            )
+
+            firestore.collection(uid)
+                .document(categoryId)
+                .collection("tasks")
+                .document(taskId)
+                .update(data)
+        }
+    }
 }
