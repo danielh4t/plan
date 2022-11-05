@@ -104,7 +104,7 @@ class TimerFragment : Fragment() {
         notificationPendingIntent =
             PendingIntent.getBroadcast(
                 applicationContext,
-                0,
+                finishAt.toInt(),
                 notificationIntent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
