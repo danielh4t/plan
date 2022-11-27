@@ -20,6 +20,11 @@ data class Bite(
     var name: String,
 
     @ColumnInfo(name = "task_id")
-    var taskId: String
+    var taskId: String,
+
+    var completed: Boolean = false,
+
+    @ColumnInfo(name = "completed_at")
+    var completedAt: Long = 0,
 )
 
