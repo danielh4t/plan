@@ -70,5 +70,6 @@
     <string name="content_tasks_tab">tasks tab</string>
     <string name="task_creation_icon">task creation icon</string>
     <string name="task_timer_icon">task timer time icon</string>
+    <string name="sub_tasks">Sub Tasks</string>
 
 </resources>
