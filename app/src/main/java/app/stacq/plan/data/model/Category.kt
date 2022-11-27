@@ -10,7 +10,6 @@ import java.util.*
 @Keep
 @Entity(tableName = "category")
 data class Category(
-
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String = UUID.randomUUID().toString(),

@@ -111,7 +111,7 @@ interface TaskDao {
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
                 "task.position_at AS positionAt " +
                 "FROM task " +
-                "JOIN category ON category.id = task.category_id "+
+                "JOIN category ON category.id = task.category_id " +
                 "ORDER BY position_at"
     )
     fun getTasksCategory(): LiveData<List<TaskCategory>>
@@ -131,7 +131,5 @@ interface TaskDao {
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"
     )
-    fun readTaskCategoryById(id: String): LiveData<TaskCategory>
-
-
+    fun getTaskCategoryById(id: String): LiveData<TaskCategory>
 }

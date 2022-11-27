@@ -38,7 +38,6 @@ class TaskFragment : Fragment() {
 
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,18 +49,17 @@ class TaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource()
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
+        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSource()
+        val tasksRepository = TasksRepository(taskLocalDataSource, taskRemoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = TaskViewModelFactory(tasksRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
-        binding.viewmodel = viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.editTaskButton.setOnClickListener {

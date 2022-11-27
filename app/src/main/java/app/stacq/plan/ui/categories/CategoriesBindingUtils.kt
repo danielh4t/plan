@@ -14,7 +14,6 @@ fun ImageView.setColor(category: Category) {
     } else {
         setColorFilter(R.color.neutral_70)
     }
-
 }
 
 @BindingAdapter("categoryEnabled")

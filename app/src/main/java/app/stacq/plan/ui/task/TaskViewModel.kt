@@ -9,6 +9,7 @@ import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TasksRepository
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 
 class TaskViewModel(
@@ -18,7 +19,7 @@ class TaskViewModel(
 ) : ViewModel() {
 
     val task: LiveData<TaskCategory> = liveData {
-        emitSource(tasksRepository.readTaskCategoryById(taskId))
+        emitSource(tasksRepository.getTaskCategoryById(taskId))
     }
 
     fun clone() {
@@ -40,6 +41,14 @@ class TaskViewModel(
         }
     }
 
-
+    fun complete() {
+        task.value?.let {
+            it.completed = !it.completed
+            it.completedAt = Instant.now().epochSecond
+            viewModelScope.launch {
+                tasksRepository.updateTaskCompletion(it)
+            }
+        }
+    }
 
 }

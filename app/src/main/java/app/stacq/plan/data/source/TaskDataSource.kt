@@ -26,6 +26,6 @@ interface TaskDataSource {
 
     suspend fun getTasksCategory(): LiveData<List<TaskCategory>>
 
-    suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory>
+    suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory>
 
 }

@@ -6,6 +6,7 @@
     <string name="task">Task</string>
     <string name="category">Category</string>
     <string name="time">01 January 1970 00:00</string>
+    <string name="task_time">90 minutes</string>
     <!-- Create fragment -->
     <string name="create">Create</string>
     <string name="title">Title</string>
@@ -67,5 +68,7 @@
     <string name="content_profile_tab">profile tab</string>
     <string name="content_categories_tab">categories tab</string>
     <string name="content_tasks_tab">tasks tab</string>
+    <string name="task_creation_icon">task creation icon</string>
+    <string name="task_timer_icon">task timer time icon</string>
 
 </resources>

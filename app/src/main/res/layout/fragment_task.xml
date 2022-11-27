@@ -6,10 +6,8 @@
 
     <data>
 
-        <import type="com.google.android.material.textfield.TextInputEditText" />
-
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="app.stacq.plan.ui.task.TaskViewModel" />
     </data>
 
@@ -23,12 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/roboto"
-            android:text="@{viewmodel.task.title}"
-            android:textSize="34sp"
+            android:text="@{viewModel.task.title}"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -36,34 +33,89 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/task" />
 
+        <ImageView
+            android:id="@+id/task_category_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/category"
+            android:src="@drawable/ic_circle_outline"
+            app:tint="?attr/colorPrimary"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_title_text" />
 
         <TextView
             android:id="@+id/task_category_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
-            android:text="@{viewmodel.task.categoryName}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{viewModel.task.categoryName}"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/task_category_image"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
             tools:text="@string/category" />
 
-        <TextView
-            android:id="@+id/task_time_text"
+        <ImageView
+            android:id="@+id/task_creation_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/roboto"
-            android:textSize="18sp"
+            android:contentDescription="@string/task_creation_icon"
+            android:src="@drawable/ic_compass"
+            app:tint="?attr/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/task_creation_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
-            app:taskTime="@{viewmodel.task.createdAt}"
+            app:layout_constraintTop_toBottomOf="@+id/task_category_text" />
+
+        <TextView
+            android:id="@+id/task_creation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/content_task_creation"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/task_creation_image"
+            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
+            app:taskTime="@{viewModel.task.createdAt}"
             tools:text="@string/time" />
 
+        <ImageView
+            android:id="@+id/task_timer_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/task_timer_icon"
+            android:src="@drawable/ic_clock_outline"
+            app:tint="?attr/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/task_timer_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_creation_image" />
+
+        <TextView
+            android:id="@+id/task_timer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/content_task_creation"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/task_timer_image"
+            app:layout_constraintTop_toBottomOf="@+id/task_creation_text"
+            app:taskTimer="@{viewModel.task.timerFinishAt}"
+            tools:text="@string/time" />
 
         <Button
             android:id="@+id/edit_task_button"
@@ -72,14 +124,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:text="@string/edit"
             android:contentDescription="@string/content_edit_task"
+            android:text="@string/edit"
             app:icon="@drawable/ic_edit_outline"
+
             app:layout_constraintEnd_toStartOf="@+id/clone_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/task_timer_text" />
+
 
         <Button
             android:id="@+id/clone_task_button"
@@ -93,7 +147,7 @@
             app:layout_constraintEnd_toStartOf="@+id/delete_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/edit_task_button"
-            app:layout_constraintTop_toBottomOf="@+id/task_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/task_timer_text" />
 
         <Button
             android:id="@+id/delete_task_button"
@@ -102,13 +156,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/delete"
             android:contentDescription="@string/content_delete_task"
+            android:text="@string/delete"
             app:icon="@drawable/ic_trash_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/clone_task_button"
-            app:layout_constraintTop_toBottomOf="@+id/task_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/task_timer_text" />
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

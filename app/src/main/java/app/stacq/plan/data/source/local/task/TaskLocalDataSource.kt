@@ -35,9 +35,10 @@ class TaskLocalDataSource(
         taskDao.deleteById(id)
     }
 
-    override suspend fun updateCompletionById(id: String,completed: Boolean, completedAt: Long) = withContext(ioDispatcher) {
-        taskDao.updateCompletionById(id, completed, completedAt)
-    }
+    override suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long) =
+        withContext(ioDispatcher) {
+            taskDao.updateCompletionById(id, completed, completedAt)
+        }
 
     override suspend fun updateTimerFinishById(id: String, finishAt: Long) =
         withContext(ioDispatcher) {
@@ -48,18 +49,18 @@ class TaskLocalDataSource(
         taskDao.updateTimerAlarmById(id)
     }
 
-    override suspend fun updatePositionById(id: String, positionAt: Long) = withContext(ioDispatcher) {
-        taskDao.updatePositionAById(id, positionAt)
-    }
+    override suspend fun updatePositionById(id: String, positionAt: Long) =
+        withContext(ioDispatcher) {
+            taskDao.updatePositionAById(id, positionAt)
+        }
 
     override suspend fun getTasksCategory(): LiveData<List<TaskCategory>> =
         withContext(ioDispatcher) {
             taskDao.getTasksCategory()
         }
 
-    override suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory> =
+    override suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> =
         withContext(ioDispatcher) {
-            taskDao.readTaskCategoryById(id)
+            taskDao.getTaskCategoryById(id)
         }
-
 }

@@ -25,7 +25,7 @@ class TasksRepository(
         tasksRemoteDataSource.createTask(task)
     }
 
-    suspend fun readTaskById(id: String): LiveData<Task> {
+    suspend fun getTaskById(id: String): LiveData<Task> {
         return tasksLocalDataSource.readById(id)
     }
 
@@ -60,8 +60,8 @@ class TasksRepository(
         return tasksLocalDataSource.getTasksCategory()
     }
 
-    suspend fun readTaskCategoryById(id: String): LiveData<TaskCategory> {
-        return tasksLocalDataSource.readTaskCategoryById(id)
+    suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> {
+        return tasksLocalDataSource.getTaskCategoryById(id)
     }
 
 }

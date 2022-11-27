@@ -18,7 +18,7 @@ class EditViewModel(
 ) : ViewModel() {
 
     val task: LiveData<TaskCategory> = liveData {
-        emitSource(tasksRepository.readTaskCategoryById(taskId))
+        emitSource(tasksRepository.getTaskCategoryById(taskId))
     }
 
     val categories: LiveData<List<Category>> = liveData {
