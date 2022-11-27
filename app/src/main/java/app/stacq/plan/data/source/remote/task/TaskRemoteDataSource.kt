@@ -1,6 +1,6 @@
 package app.stacq.plan.data.source.remote.task
 
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.local.task.Task
 import app.stacq.plan.data.model.TaskCategory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

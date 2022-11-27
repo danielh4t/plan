@@ -1,7 +1,6 @@
 package app.stacq.plan.data.source.local.category
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.model.Category
 import app.stacq.plan.data.source.CategoryDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

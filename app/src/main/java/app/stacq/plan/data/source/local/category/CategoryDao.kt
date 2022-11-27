@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.local.category
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import app.stacq.plan.data.model.Category
 
 @Dao
 interface CategoryDao {

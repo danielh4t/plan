@@ -1,7 +1,7 @@
 package app.stacq.plan.data.source
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.model.Category
+import app.stacq.plan.data.source.local.category.Category
 
 interface CategoryDataSource {
 

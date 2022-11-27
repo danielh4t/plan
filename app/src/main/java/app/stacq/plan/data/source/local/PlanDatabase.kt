@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import app.stacq.plan.data.model.Category
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.local.category.Category
+import app.stacq.plan.data.source.local.task.Task
 import app.stacq.plan.data.source.local.category.CategoryDao
 import app.stacq.plan.data.source.local.task.TaskDao
 

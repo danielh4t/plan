@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.local.task
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.model.TaskCategory
 
 @Dao

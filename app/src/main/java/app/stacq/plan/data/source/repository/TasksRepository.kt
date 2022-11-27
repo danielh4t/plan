@@ -1,7 +1,7 @@
 package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.local.task.Task
 import app.stacq.plan.data.model.TaskCategory
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource

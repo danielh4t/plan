@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.model.Category
+import app.stacq.plan.data.source.local.category.Category
 import app.stacq.plan.data.source.repository.CategoryRepository
 import kotlinx.coroutines.launch
 

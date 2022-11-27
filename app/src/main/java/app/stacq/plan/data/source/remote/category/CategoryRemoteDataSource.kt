@@ -1,6 +1,6 @@
 package app.stacq.plan.data.source.remote.category
 
-import app.stacq.plan.data.model.Category
+import app.stacq.plan.data.source.local.category.Category
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore

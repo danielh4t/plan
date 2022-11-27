@@ -11,7 +11,7 @@
 
         <variable
             name="category"
-            type="app.stacq.plan.data.model.Category" />
+            type="app.stacq.plan.data.source.local.category.Category" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

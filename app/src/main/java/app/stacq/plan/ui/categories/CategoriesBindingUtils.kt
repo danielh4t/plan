@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
-import app.stacq.plan.data.model.Category
+import app.stacq.plan.data.source.local.category.Category
 
 
 @BindingAdapter("categoryColor")

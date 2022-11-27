@@ -1,4 +1,4 @@
-package app.stacq.plan.data.model
+package app.stacq.plan.data.source.local.category
 
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
