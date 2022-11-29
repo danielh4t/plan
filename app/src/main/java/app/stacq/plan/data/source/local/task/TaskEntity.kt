@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Keep
 @Entity(tableName = "task")
-data class Task(
+data class TaskEntity(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -19,7 +19,7 @@ data class Task(
     @ColumnInfo(name = "created_at")
     val createdAt: Long = Instant.now().epochSecond,
 
-    var title: String = "",
+    var name: String,
 
     @ColumnInfo(name = "category_id")
     var categoryId: String,

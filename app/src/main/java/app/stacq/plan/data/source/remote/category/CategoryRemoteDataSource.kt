@@ -1,6 +1,6 @@
 package app.stacq.plan.data.source.remote.category
 
-import app.stacq.plan.data.source.local.category.Category
+import app.stacq.plan.data.source.local.category.CategoryEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,18 +17,18 @@ class CategoryRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun createCategory(category: Category) = withContext(ioDispatcher) {
+    suspend fun createCategory(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
 
         // root collection
         val uid = firebaseAuth.currentUser?.uid
 
         if(uid != null) {
 
-            val document = category.id
+            val document = categoryEntity.id
 
             val fields = hashMapOf(
-                "name" to category.name,
-                "color" to category.color,
+                "name" to categoryEntity.name,
+                "color" to categoryEntity.color,
                 "count" to 0
             )
 

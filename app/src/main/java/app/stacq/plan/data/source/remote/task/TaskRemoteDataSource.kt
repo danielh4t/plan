@@ -1,7 +1,5 @@
 package app.stacq.plan.data.source.remote.task
 
-import app.stacq.plan.data.source.local.task.Task
-import app.stacq.plan.data.model.TaskCategory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -19,27 +17,30 @@ class TaskRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun createTask(task: Task) = withContext(ioDispatcher) {
+    suspend fun create(taskDocument: TaskDocument) = withContext(ioDispatcher) {
         // root collection
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
 
-            val categoryId = task.categoryId
+            val taskId = taskDocument.id
+            val categoryId = taskDocument.categoryId
+
+            if (taskId == null || categoryId == null) return@withContext
 
             val data = hashMapOf(
-                "createdAt" to task.createdAt,
-                "title" to task.title,
-                "categoryId" to task.categoryId,
-                "completed" to task.completed,
-                "completedAt" to task.completedAt,
-                "timerFinishAt" to task.timerFinishAt,
-                "timerAlarm" to task.timerAlarm
+                "createdAt" to taskDocument.createdAt,
+                "name" to taskDocument.name,
+                "categoryId" to taskDocument.categoryId,
+                "completed" to taskDocument.completed,
+                "completedAt" to taskDocument.completedAt,
+                "timerFinishAt" to taskDocument.timerFinishAt,
+                "timerAlarm" to taskDocument.timerAlarm
             )
 
             firestore.collection(uid)
                 .document(categoryId)
                 .collection("tasks")
-                .document(task.id)
+                .document(taskId)
                 .set(data)
 
             firestore.collection(uid)
@@ -48,42 +49,47 @@ class TaskRemoteDataSource(
         }
     }
 
-    suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
+    suspend fun update(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
 
-            val categoryId = task.categoryId
+            val taskId = taskDocument.id
+            val categoryId = taskDocument.categoryId
+
+            if (taskId == null || categoryId == null) return@withContext
 
             val data = hashMapOf(
-                "createdAt" to task.createdAt,
-                "title" to task.title,
-                "categoryId" to task.categoryId,
-                "completed" to task.completed,
-                "completedAt" to task.completedAt,
-                "timerFinishAt" to task.timerFinishAt,
-                "timerAlarm" to task.timerAlarm
+                "createdAt" to taskDocument.createdAt,
+                "name" to taskDocument.name,
+                "categoryId" to taskDocument.categoryId,
+                "completed" to taskDocument.completed,
+                "completedAt" to taskDocument.completedAt,
+                "timerFinishAt" to taskDocument.timerFinishAt,
+                "timerAlarm" to taskDocument.timerAlarm
             )
 
             firestore.collection(uid)
                 .document(categoryId)
                 .collection("tasks")
-                .document(task.id)
+                .document(taskId)
                 .set(data)
         }
     }
 
-    suspend fun updateTaskCompletion(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+    suspend fun updateTaskCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
 
-            val taskId = taskCategory.id
-            val categoryId = taskCategory.categoryId
+            val taskId = taskDocument.id
+            val categoryId = taskDocument.categoryId
+
+            if (taskId == null || categoryId == null) return@withContext
 
             val data = mapOf(
-                "completed" to taskCategory.completed,
-                "completedAt" to taskCategory.completedAt,
+                "completed" to taskDocument.completed,
+                "completedAt" to taskDocument.completedAt,
             )
 
             firestore.collection(uid)
@@ -94,16 +100,18 @@ class TaskRemoteDataSource(
         }
     }
 
-    suspend fun updateTaskFinish(taskCategory: TaskCategory) = withContext(ioDispatcher) {
+    suspend fun updateTimerFinish(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
 
-            val taskId = taskCategory.id
-            val categoryId = taskCategory.categoryId
+            val taskId = taskDocument.id
+            val categoryId = taskDocument.categoryId
+
+            if (taskId == null || categoryId == null) return@withContext
 
             val data = mapOf(
-                "timerFinishAt" to taskCategory.timerFinishAt,
+                "timerFinishAt" to taskDocument.timerFinishAt,
             )
 
             firestore.collection(uid)

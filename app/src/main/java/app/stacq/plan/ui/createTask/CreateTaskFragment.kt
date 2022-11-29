@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.create
+package app.stacq.plan.ui.createTask
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,24 +8,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
-import app.stacq.plan.data.source.local.PlanDatabase
+import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TasksRepository
-import app.stacq.plan.databinding.FragmentCreateBinding
+import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.databinding.FragmentCreateTaskBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
-class CreateFragment : Fragment() {
+class CreateTaskFragment : Fragment() {
 
-    private var _binding: FragmentCreateBinding? = null
+    private var _binding: FragmentCreateTaskBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModelFactory: CreateViewModelFactory
-    private lateinit var viewModel: CreateViewModel
+    private lateinit var viewModelFactory: CreateTaskViewModelFactory
+    private lateinit var viewModel: CreateTaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +33,7 @@ class CreateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCreateBinding.inflate(inflater, container, false)
+        _binding = FragmentCreateTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,20 +41,19 @@ class CreateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val application = requireNotNull(this.activity).application
-        val database = PlanDatabase.getDatabase(application)
+        val database = getDatabase(application)
 
-        val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource()
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
+        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSource()
+        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = CreateViewModelFactory(tasksRepository, categoryRepository)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[CreateViewModel::class.java]
+        viewModelFactory = CreateTaskViewModelFactory(taskRepository, categoryRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[CreateTaskViewModel::class.java]
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -74,9 +73,8 @@ class CreateFragment : Fragment() {
         }
 
         binding.createFab.setOnClickListener { clickedView ->
-
-            val title: String = binding.title.text.toString()
-            if (title.isEmpty()) {
+            val name: String = binding.title.text.toString()
+            if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
@@ -94,9 +92,9 @@ class CreateFragment : Fragment() {
             val checkedChip = binding.createCategoryChipGroup.findViewById<Chip>(checkedId)
             val categoryId = checkedChip.tag as String
 
-            viewModel.createTask(title, categoryId)
+            viewModel.createTask(name, categoryId)
 
-            val action = CreateFragmentDirections.actionNavCreateToNavTasks()
+            val action = CreateTaskFragmentDirections.actionNavCreateTaskToNavTasks()
             this.findNavController().navigate(action)
         }
     }

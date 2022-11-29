@@ -12,28 +12,25 @@ class CategoryLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CategoryDataSource {
 
-    override suspend fun getCategories(): LiveData<List<Category>> = withContext(ioDispatcher) {
-        categoryDao.getCategories()
+
+    override suspend fun create(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
+        categoryDao.insert(categoryEntity)
     }
 
-    override suspend fun getEnabledCategories(): LiveData<List<Category>> = withContext(ioDispatcher) {
-        categoryDao.getEnabledCategories()
-    }
-
-    override suspend fun getCategoryIdByName(name: String): String? = withContext(ioDispatcher) {
-        categoryDao.getCategoryIdByName(name)
-    }
-
-    override suspend fun create(category: Category) = withContext(ioDispatcher) {
-        categoryDao.insert(category)
-    }
+    override suspend fun getCategories(): LiveData<List<CategoryEntity>> =
+        withContext(ioDispatcher) {
+            categoryDao.getCategories()
+        }
 
     override suspend fun updateEnabledById(id: String) {
         categoryDao.updateEnabledById(id)
     }
 
-    override suspend fun delete(category: Category) = withContext(ioDispatcher) {
-        categoryDao.delete(category)
+    override suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
+        categoryDao.delete(categoryEntity)
     }
 
+    override suspend fun getCategoriesCount():Int = withContext(ioDispatcher) {
+       return@withContext categoryDao.getCategoriesCount()
+    }
 }

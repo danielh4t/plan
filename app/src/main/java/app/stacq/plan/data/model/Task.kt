@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 
 @Keep
 @Parcelize
-data class TaskCategory(
+data class Task(
     var id: String,
     var createdAt: Long,
-    var title: String,
+    var name: String,
     var completed: Boolean,
     var completedAt: Long,
     var categoryId: String,

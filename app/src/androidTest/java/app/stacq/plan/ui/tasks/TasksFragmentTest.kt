@@ -31,7 +31,7 @@ class TasksFragmentTest {
         }
 
         onView(ViewMatchers.withId(R.id.create_fab)).perform(ViewActions.click())
-        assertEquals(navController.currentDestination?.id , R.id.nav_create)
+        assertEquals(navController.currentDestination?.id , R.id.nav_create_task)
     }
 
 

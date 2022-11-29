@@ -16,11 +16,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.R
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.createNotificationChannel
 import app.stacq.plan.util.millisInFuture
@@ -52,7 +52,7 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args = TimerFragmentArgs.fromBundle(requireArguments())
-        val task: TaskCategory = args.taskCategory
+        val task: Task = args.task
         val notify: Boolean = args.notify
 
         val application = requireNotNull(this.activity).application
@@ -60,16 +60,16 @@ class TimerFragment : Fragment() {
 
         val localDataSource = TaskLocalDataSource(database.taskDao())
         val remoteDataSource = TaskRemoteDataSource()
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
+        val taskRepository = TaskRepository(localDataSource, remoteDataSource)
 
-        viewModelFactory = TimerViewModelFactory(tasksRepository, task, notify)
+        viewModelFactory = TimerViewModelFactory(taskRepository, task, notify)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.timerAlarm.observe(viewLifecycleOwner) {
             if (it && notify) {
-                setAlarm(application, task.timerFinishAt, task.title)
+                setAlarm(application, task.timerFinishAt, task.name)
             } else {
                 cancelAlarm()
             }

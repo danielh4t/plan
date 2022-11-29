@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.data.source.local.category.Category
+import app.stacq.plan.data.model.Category
 import app.stacq.plan.databinding.CategoryListItemBinding
 
 
@@ -34,8 +34,8 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
             }
         }
 
-        fun bind(item: Category, viewModel: CategoriesViewModel) {
-            binding.category = item
+        fun bind(category: Category, viewModel: CategoriesViewModel) {
+            binding.category = category
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }

@@ -12,38 +12,19 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query(
-        "SELECT * FROM category"
+        "SELECT * FROM category  WHERE enabled"
     )
-    fun getCategories(): LiveData<List<Category>>
+    fun getCategories(): LiveData<List<CategoryEntity>>
 
-    /**
-     * Select enabled categories.
-     *
-     * @return enabled categories.
-     */
-    @Query(
-        "SELECT * FROM category WHERE enabled"
-    )
-    fun getEnabledCategories(): LiveData<List<Category>>
-
-    /**
-     * Select category id from the category.
-     *
-     * @return category id.
-     */
-    @Query(
-        "SELECT id FROM category WHERE name=:name"
-    )
-    fun getCategoryIdByName(name: String): String?
 
     /**
      * Insert a category.
      * If the category already exists.
      *
-     * @param category the task to be inserted.
+     * @param categoryEntity the task to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(category: Category)
+    suspend fun insert(categoryEntity: CategoryEntity)
 
 
     /**
@@ -57,10 +38,19 @@ interface CategoryDao {
     /**
      * Delete a category.
      *
-     * @param category to be delete
+     * @param categoryEntity to be delete
      */
     @Delete
-    suspend fun delete(category: Category)
+    suspend fun delete(categoryEntity: CategoryEntity)
 
+    /**
+     * Count categories.
+     *
+     * @return number of enabled categories.
+     */
+    @Query(
+        "SELECT COUNT(*) FROM category WHERE enabled"
+    )
+    fun getCategoriesCount(): Int
 
 }

@@ -10,14 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.util.isFinishAtInFuture
 
@@ -51,13 +51,13 @@ class TaskFragment : Fragment() {
 
         val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
         val taskRemoteDataSource = TaskRemoteDataSource()
-        val tasksRepository = TasksRepository(taskLocalDataSource, taskRemoteDataSource)
+        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = TaskViewModelFactory(tasksRepository, categoryRepository, taskId)
+        viewModelFactory = TaskViewModelFactory(taskRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -80,7 +80,7 @@ class TaskFragment : Fragment() {
         }
 
         binding.taskTimerFab.setOnClickListener {
-            val task: TaskCategory = viewModel.task.value!!
+            val task: Task = viewModel.task.value!!
             val notify: Boolean = hasPostNotificationsPermission()
             val isFinishAtInFuture: Boolean = isFinishAtInFuture(task.timerFinishAt)
             if (!notify and isFinishAtInFuture) {

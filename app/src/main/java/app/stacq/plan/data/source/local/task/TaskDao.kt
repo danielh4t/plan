@@ -2,7 +2,7 @@ package app.stacq.plan.data.source.local.task
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 
 @Dao
 interface TaskDao {
@@ -15,17 +15,17 @@ interface TaskDao {
     @Query(
         "SELECT * FROM task"
     )
-    fun getTasks(): LiveData<List<Task>>
+    fun getTasks(): LiveData<List<TaskEntity>>
 
 
     /**
      * Insert a task.
      * If the task already exists, ignore it.
      *
-     * @param task the task to be inserted.
+     * @param taskEntity the task to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun create(task: Task)
+    suspend fun create(taskEntity: TaskEntity)
 
     /**
      * Select all tasks from the task.
@@ -34,7 +34,7 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query("SELECT * FROM task WHERE id = :id")
-    fun readById(id: String): LiveData<Task>
+    fun readById(id: String): LiveData<TaskEntity>
 
 
     /**
@@ -42,19 +42,19 @@ interface TaskDao {
      * replaces the old value with the new one.
      *
      * @param id task id
-     * @param title new task title
+     * @param name new task name
      * @param categoryId new task category id
      */
-    @Query("UPDATE task SET title = :title, category_id = :categoryId WHERE id = :id")
-    suspend fun updateTitleAndCategoryById(id: String, title: String, categoryId: Int)
+    @Query("UPDATE task SET name = :name, category_id = :categoryId WHERE id = :id")
+    suspend fun updateNameAndCategoryById(id: String, name: String, categoryId: Int)
 
     /**
      * Update a task
      *
-     * @param task id of the task
+     * @param taskEntity id of the task
      */
     @Update
-    suspend fun update(task: Task)
+    suspend fun update(taskEntity: TaskEntity)
 
     /**
      * Update the completed and completed_at of a task
@@ -91,7 +91,7 @@ interface TaskDao {
     suspend fun updatePositionAById(id: String, positionAt: Long)
 
     /**
-     * Delete a task. by id
+     * Delete a task by id
      *
      * @param id task to be delete
      */
@@ -104,7 +104,7 @@ interface TaskDao {
      * @return all tasks with category name.
      */
     @Query(
-        "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
+        "SELECT task.id, task.created_at AS createdAt, task.name, task.completed AS completed, " +
                 "task.completed_at AS completedAt, task.category_id AS categoryId, " +
                 "category.name AS categoryName, category.color AS categoryColor, " +
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
@@ -113,7 +113,7 @@ interface TaskDao {
                 "JOIN category ON category.id = task.category_id " +
                 "ORDER BY position_at"
     )
-    fun getTasksCategory(): LiveData<List<TaskCategory>>
+    fun getTasksCategory(): LiveData<List<Task>>
 
     /**
      * Select all tasks from the task.
@@ -121,7 +121,7 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query(
-        "SELECT task.id, task.created_at AS createdAt, task.title, task.completed AS completed, " +
+        "SELECT task.id, task.created_at AS createdAt, task.name, task.completed AS completed, " +
                 "task.completed_at AS completedAt, task.category_id AS categoryId, " +
                 "category.name AS categoryName, category.color AS categoryColor, " +
                 "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
@@ -130,5 +130,5 @@ interface TaskDao {
                 "JOIN category ON category.id = task.category_id " +
                 "WHERE task.id = :id"
     )
-    fun getTaskCategoryById(id: String): LiveData<TaskCategory>
+    fun getTaskCategoryById(id: String): LiveData<Task>
 }

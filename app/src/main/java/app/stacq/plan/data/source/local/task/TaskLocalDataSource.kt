@@ -2,7 +2,7 @@ package app.stacq.plan.data.source.local.task
 
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.TaskDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -14,34 +14,38 @@ class TaskLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskDataSource {
 
-    override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
-        taskDao.getTasks()
+    override suspend fun create(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        taskDao.create(taskEntity)
     }
 
-    override suspend fun create(task: Task) = withContext(ioDispatcher) {
-        taskDao.create(task)
-    }
-
-    override suspend fun readById(id: String): LiveData<Task> = withContext(ioDispatcher) {
+    override suspend fun getById(id: String): LiveData<TaskEntity> = withContext(ioDispatcher) {
         taskDao.readById(id)
     }
 
-    override suspend fun update(task: Task) = withContext(ioDispatcher) {
-        taskDao.update(task)
+    override suspend fun update(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        taskDao.update(taskEntity)
     }
 
     override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
         taskDao.deleteById(id)
     }
 
-    override suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long) =
+    override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
+        taskDao.getTasksCategory()
+    }
+
+    override suspend fun updateCompletion(taskEntity: TaskEntity) =
         withContext(ioDispatcher) {
-            taskDao.updateCompletionById(id, completed, completedAt)
+            taskDao.updateCompletionById(
+                taskEntity.id,
+                taskEntity.completed,
+                taskEntity.completedAt
+            )
         }
 
-    override suspend fun updateTimerFinishById(id: String, finishAt: Long) =
+    override suspend fun updateTimerFinish(taskEntity: TaskEntity) =
         withContext(ioDispatcher) {
-            taskDao.updateTimerFinishById(id, finishAt)
+            taskDao.updateTimerFinishById(taskEntity.id, taskEntity.timerFinishAt)
         }
 
     override suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
@@ -53,12 +57,7 @@ class TaskLocalDataSource(
             taskDao.updatePositionAById(id, positionAt)
         }
 
-    override suspend fun getTasksCategory(): LiveData<List<TaskCategory>> =
-        withContext(ioDispatcher) {
-            taskDao.getTasksCategory()
-        }
-
-    override suspend fun getTaskCategoryById(id: String): LiveData<TaskCategory> =
+    override suspend fun getTaskCategoryById(id: String): LiveData<Task> =
         withContext(ioDispatcher) {
             taskDao.getTaskCategoryById(id)
         }

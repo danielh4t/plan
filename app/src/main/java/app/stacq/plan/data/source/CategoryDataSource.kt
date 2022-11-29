@@ -1,20 +1,18 @@
 package app.stacq.plan.data.source
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.source.local.category.Category
+import app.stacq.plan.data.source.local.category.CategoryEntity
 
 interface CategoryDataSource {
 
-    suspend fun getCategories(): LiveData<List<Category>>
+    suspend fun create(categoryEntity: CategoryEntity)
 
-    suspend fun getEnabledCategories(): LiveData<List<Category>>
-
-    suspend fun getCategoryIdByName(name: String): String?
-    
-    suspend fun create(category: Category)
+    suspend fun getCategories(): LiveData<List<CategoryEntity>>
 
     suspend fun updateEnabledById(id: String)
 
-    suspend fun delete(category: Category)
-    
+    suspend fun delete(categoryEntity: CategoryEntity)
+
+    suspend fun getCategoriesCount(): Int
+
 }

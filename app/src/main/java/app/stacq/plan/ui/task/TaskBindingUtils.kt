@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -36,6 +36,6 @@ fun TextView.setTaskTimer(timerFinishAt: Long) {
 }
 
 @BindingAdapter("taskColorTint")
-fun ImageView.setTaskColor(taskCategory: TaskCategory) {
-    setColorFilter(Color.parseColor(taskCategory.categoryColor), PorterDuff.Mode.MULTIPLY)
+fun ImageView.setTaskColor(task: Task) {
+    setColorFilter(Color.parseColor(task.categoryColor), PorterDuff.Mode.MULTIPLY)
 }

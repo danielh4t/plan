@@ -4,17 +4,25 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import app.stacq.plan.data.source.local.category.Category
-import app.stacq.plan.data.source.local.task.Task
+import app.stacq.plan.data.source.local.bite.BiteDao
+import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.category.CategoryDao
+import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.task.TaskDao
+import app.stacq.plan.data.source.local.task.TaskEntity
 
-@Database(entities = [Task::class, Category::class], version = 1, exportSchema = false)
+@Database(
+    entities = [TaskEntity::class, CategoryEntity::class, BiteEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class PlanDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
     abstract fun categoryDao(): CategoryDao
+
+    abstract fun biteDao(): BiteDao
 
     companion object {
         @Volatile
@@ -28,9 +36,7 @@ abstract class PlanDatabase : RoomDatabase() {
                         context.applicationContext,
                         PlanDatabase::class.java,
                         PLAN_DATABASE
-                    )
-                        .createFromAsset("plan_database.db")
-                        .build()
+                    ).build()
 
                     INSTANCE = instance
                 }

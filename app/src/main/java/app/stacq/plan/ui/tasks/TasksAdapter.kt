@@ -3,17 +3,18 @@ package app.stacq.plan.ui.tasks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 import app.stacq.plan.databinding.TaskListItemBinding
 import java.util.*
 
 
 class TasksAdapter(private val viewModel: TasksViewModel) :
-    ListAdapter<TaskCategory, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
+    ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,8 +22,12 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, viewModel)
+        val task = getItem(position)
+        holder.bind(task, viewModel)
+        holder.itemView.setOnClickListener { view ->
+            val action = TasksFragmentDirections.actionNavTasksToNavTask(task.id)
+            view.findNavController().navigate(action)
+        }
     }
 
     class ViewHolder private constructor(private val binding: TaskListItemBinding) :
@@ -36,7 +41,7 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
             }
         }
 
-        fun bind(item: TaskCategory, viewModel: TasksViewModel) {
+        fun bind(item: Task, viewModel: TasksViewModel) {
             binding.task = item
             binding.viewModel = viewModel
             binding.executePendingBindings()
@@ -45,13 +50,13 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
 
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<TaskCategory>() {
+class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
 
-    override fun areItemsTheSame(oldItem: TaskCategory, newItem: TaskCategory): Boolean {
+    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: TaskCategory, newItem: TaskCategory): Boolean {
+    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem == newItem
     }
 

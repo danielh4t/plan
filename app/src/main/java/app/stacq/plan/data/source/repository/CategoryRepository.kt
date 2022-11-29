@@ -1,8 +1,8 @@
 package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.source.local.category.Category
-import app.stacq.plan.data.source.CategoryDataSource
+import app.stacq.plan.data.source.local.category.CategoryEntity
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -12,34 +12,30 @@ import kotlinx.coroutines.withContext
  * Interface to the data layer.
  */
 class CategoryRepository(
-    private val categoryLocalDataSource: CategoryDataSource,
+    private val categoryLocalDataSource: CategoryLocalDataSource,
     private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CategoryDataSource {
+) {
 
-    override suspend fun getCategories(): LiveData<List<Category>> {
+    suspend fun create(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
+        categoryLocalDataSource.create(categoryEntity)
+        categoryRemoteDataSource.createCategory(categoryEntity)
+    }
+
+    suspend fun getCategories(): LiveData<List<CategoryEntity>> {
         return categoryLocalDataSource.getCategories()
     }
 
-    override suspend fun getEnabledCategories(): LiveData<List<Category>> {
-        return categoryLocalDataSource.getEnabledCategories()
-    }
-
-    override suspend fun getCategoryIdByName(name: String): String? = withContext(ioDispatcher) {
-        categoryLocalDataSource.getCategoryIdByName(name)
-    }
-
-    override suspend fun create(category: Category): Unit = withContext(ioDispatcher) {
-        categoryLocalDataSource.create(category)
-        categoryRemoteDataSource.createCategory(category)
-    }
-
-    override suspend fun updateEnabledById(id: String) {
+    suspend fun updateEnabledById(id: String) = withContext(ioDispatcher) {
         categoryLocalDataSource.updateEnabledById(id)
     }
 
-    override suspend fun delete(category: Category) = withContext(ioDispatcher) {
-        categoryLocalDataSource.delete(category)
+    suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
+        categoryLocalDataSource.delete(categoryEntity)
+    }
+
+    suspend fun getCategoriesCount(): Int = withContext(ioDispatcher) {
+        return@withContext categoryLocalDataSource.getCategoriesCount()
     }
 
 }

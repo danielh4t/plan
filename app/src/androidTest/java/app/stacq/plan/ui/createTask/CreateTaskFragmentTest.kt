@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.create
+package app.stacq.plan.ui.createTask
 
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class CreateFragmentTest {
+class CreateTaskFragmentTest {
 
 
 }

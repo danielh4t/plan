@@ -14,7 +14,7 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
@@ -49,20 +49,20 @@ class EditFragment : Fragment() {
         val localDataSource = TaskLocalDataSource(database.taskDao())
         val remoteDataSource = TaskRemoteDataSource()
 
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
+        val taskRepository = TaskRepository(localDataSource, remoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = EditViewModelFactory(tasksRepository, categoryRepository, taskId)
+        viewModelFactory = EditViewModelFactory(taskRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.task.observe(viewLifecycleOwner) { task ->
-            binding.editTitle.setText(task.title)
+            binding.editTitle.setText(task.name)
         }
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->

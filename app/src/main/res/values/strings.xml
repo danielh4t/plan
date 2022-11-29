@@ -9,11 +9,12 @@
     <string name="task_time">90 minutes</string>
     <!-- Create fragment -->
     <string name="create">Create</string>
+    <string name="create_task">Create Task</string>
     <string name="title">Title</string>
     <string name="create_fab">create action</string>
     <string name="empty_task_details">Empty tasks title</string>
-    <string name="create_category">Create or enable a category to create task</string>
     <!-- Category fragment -->
+    <string name="create_category">Create Category</string>
     <string name="empty_category_details">Empty category title</string>
     <!-- Task fragment -->
     <string name="complete">Complete</string>

@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="app.stacq.plan.ui.create.CreateViewModel" />
+            type="app.stacq.plan.ui.createCategory.CreateCategoryViewModel" />
     </data>
 
 
@@ -16,41 +16,28 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_layout"
+            android:id="@+id/name_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/title"
+            android:inputType="textCapSentences"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/title"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences"
+                android:inputType="text"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/create_category_chip_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:singleSelection="true">
-
-            <!-- added dynamically. -->
-
-        </com.google.android.material.chip.ChipGroup>
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -60,10 +47,10 @@
             android:layout_margin="@dimen/fab_margin"
             android:contentDescription="@string/create_fab"
             android:text="@string/create"
-            app:icon="@drawable/ic_flash"
+            app:icon="@drawable/ic_edit_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

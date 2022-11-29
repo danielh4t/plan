@@ -14,7 +14,12 @@
             app:destination="@id/nav_task" />
         <action
             android:id="@+id/action_nav_tasks_to_nav_create"
-            app:destination="@id/nav_create" />
+            app:destination="@id/nav_create_task" />
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_create_category"
+            app:destination="@id/nav_create_category"
+            app:popUpTo="@id/nav_tasks"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -41,16 +46,13 @@
 
 
     <fragment
-        android:id="@+id/nav_create"
-        android:name="app.stacq.plan.ui.create.CreateFragment"
-        android:label="@string/create"
-        tools:layout="@layout/fragment_create">
+        android:id="@+id/nav_create_task"
+        android:name="app.stacq.plan.ui.createTask.CreateTaskFragment"
+        android:label="@string/create_task"
+        tools:layout="@layout/fragment_create_task">
         <action
-            android:id="@+id/action_nav_create_to_nav_tasks"
+            android:id="@+id/action_nav_create_task_to_nav_tasks"
             app:destination="@id/nav_tasks" />
-        <action
-            android:id="@+id/action_nav_create_to_nav_category"
-            app:destination="@id/nav_category" />
     </fragment>
 
     <fragment
@@ -72,8 +74,8 @@
         android:label="@string/timer"
         tools:layout="@layout/fragment_timer">
         <argument
-            android:name="taskCategory"
-            app:argType="app.stacq.plan.data.model.TaskCategory" />
+            android:name="task"
+            app:argType="app.stacq.plan.data.model.Task" />
         <argument
             android:name="notify"
             app:argType="boolean" />
@@ -87,21 +89,18 @@
             android:id="@+id/action_nav_notification_to_nav_timer"
             app:destination="@id/nav_timer" />
         <argument
-            android:name="taskCategory"
-            app:argType="app.stacq.plan.data.model.TaskCategory" />
+            android:name="task"
+            app:argType="app.stacq.plan.data.model.Task" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_category"
-        android:name="app.stacq.plan.ui.category.CategoryFragment"
-        android:label="@string/category"
-        tools:layout="@layout/fragment_category">
+        android:id="@+id/nav_create_category"
+        android:name="app.stacq.plan.ui.createCategory.CreateCategoryFragment"
+        android:label="@string/create_category"
+        tools:layout="@layout/fragment_create_category">
         <action
             android:id="@+id/action_nav_category_to_nav_categories"
             app:destination="@id/nav_categories" />
-        <action
-            android:id="@+id/action_nav_category_to_nav_create"
-            app:destination="@id/nav_create" />
     </fragment>
 
 
@@ -119,7 +118,7 @@
         tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_nav_categories_to_nav_category"
-            app:destination="@id/nav_category" />
+            app:destination="@id/nav_create_category" />
     </fragment>
 
 

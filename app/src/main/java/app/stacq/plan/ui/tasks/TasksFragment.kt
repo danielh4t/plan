@@ -10,9 +10,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.TasksRepository
+import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 
@@ -40,11 +43,17 @@ class TasksFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
-        val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource()
-        val tasksRepository = TasksRepository(localDataSource, remoteDataSource)
 
-        viewModelFactory = TasksViewModelFactory(tasksRepository)
+        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSource()
+        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
+
+        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryRemoteDataSource = CategoryRemoteDataSource()
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+
+        viewModelFactory = TasksViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -55,21 +64,19 @@ class TasksFragment : Fragment() {
         ItemTouchHelper(taskItemTouchHelperCallback).attachToRecyclerView(binding.tasksList)
 
         binding.createTaskFab.setOnClickListener {
-            val action = TasksFragmentDirections.actionNavTasksToNavCreate()
-            this.findNavController().navigate(action)
+            if (viewModel.categories > 0) {
+                val action = TasksFragmentDirections.actionNavTasksToNavCreate()
+                this.findNavController().navigate(action)
+            } else {
+                // empty categories navigate to create category first
+                val action = TasksFragmentDirections.actionNavTasksToNavCreateCategory()
+                this.findNavController().navigate(action)
+            }
         }
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
                 tasksAdapter.submitList(it)
-            }
-        }
-
-        viewModel.navigateTask.observe(viewLifecycleOwner) { taskId ->
-            taskId?.let {
-                val action = TasksFragmentDirections.actionNavTasksToNavTask(taskId)
-                this.findNavController().navigate(action)
-                viewModel.closeTask()
             }
         }
 

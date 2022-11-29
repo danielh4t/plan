@@ -1,37 +1,39 @@
 package app.stacq.plan.ui.tasks
 
 
-import androidx.lifecycle.*
-import app.stacq.plan.data.model.TaskCategory
-import app.stacq.plan.data.source.repository.TasksRepository
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.model.toTaskEntity
+import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch
 import java.time.Instant
 
 class TasksViewModel(
-    private val tasksRepository: TasksRepository
+    private val taskRepository: TaskRepository,
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    private val _navigateToTask = MutableLiveData<String?>()
-    val navigateTask: LiveData<String?> = _navigateToTask
-
-    val tasks: LiveData<List<TaskCategory>> = liveData {
-        emitSource(tasksRepository.getTasksCategory())
+    val tasks: LiveData<List<Task>> = liveData {
+        emitSource(taskRepository.getTasks())
     }
 
-    fun complete(taskCategory: TaskCategory) {
-        taskCategory.completed = !taskCategory.completed
-        taskCategory.completedAt = Instant.now().epochSecond
+    var categories: Int = 0
+
+    init {
         viewModelScope.launch {
-            tasksRepository.updateTaskCompletion(taskCategory)
+            categories = categoryRepository.getCategoriesCount()
         }
     }
 
-    fun openTask(id: String) {
-        _navigateToTask.value = id
+    fun complete(task: Task) {
+        task.completed = !task.completed
+        task.completedAt = Instant.now().epochSecond
+        viewModelScope.launch {
+            taskRepository.updateCompletion(task.toTaskEntity())
+        }
     }
-
-    fun closeTask() {
-        _navigateToTask.value = null
-    }
-
 }

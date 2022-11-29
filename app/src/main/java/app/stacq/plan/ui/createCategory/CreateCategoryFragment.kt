@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.category
+package app.stacq.plan.ui.createCategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,24 +12,23 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.databinding.FragmentCategoryBinding
+import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import com.google.android.material.snackbar.Snackbar
 
-class CategoryFragment : Fragment() {
+class CreateCategoryFragment : Fragment() {
 
-    private var _binding: FragmentCategoryBinding? = null
+    private var _binding: FragmentCreateCategoryBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModelFactory: CategoryViewModelFactory
-    private lateinit var viewModel: CategoryViewModel
+    private lateinit var viewModelFactory: CreateCategoryViewModelFactory
+    private lateinit var viewModel: CreateCategoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        _binding = FragmentCreateCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,11 +40,10 @@ class CategoryFragment : Fragment() {
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = CategoryViewModelFactory(categoryRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[CategoryViewModel::class.java]
+        viewModelFactory = CreateCategoryViewModelFactory(categoryRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[CreateCategoryViewModel::class.java]
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -61,16 +59,8 @@ class CategoryFragment : Fragment() {
 
             viewModel.create(categoryName)
 
-
-            val previous = this.findNavController().previousBackStackEntry?.destination?.id
-            if (previous == R.id.nav_categories) {
-                val action = CategoryFragmentDirections.actionNavCategoryToNavCategories()
-                this.findNavController().navigate(action)
-            } else {
-                val action = CategoryFragmentDirections.actionNavCategoryToNavCreate()
-                this.findNavController().navigate(action)
-            }
-
+            val action = CreateCategoryFragmentDirections.actionNavCategoryToNavCategories()
+            this.findNavController().navigate(action)
         }
 
     }

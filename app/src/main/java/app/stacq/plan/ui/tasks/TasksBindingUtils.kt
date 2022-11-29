@@ -5,12 +5,12 @@ import android.graphics.Color
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import app.stacq.plan.data.model.TaskCategory
+import app.stacq.plan.data.model.Task
 
 
 @BindingAdapter("taskCategory")
-fun TextView.getTaskCategoryTitle(taskCategory: TaskCategory) {
-    val category = taskCategory.categoryName
+fun TextView.getTaskCategoryTitle(task: Task) {
+    val category = task.categoryName
     text = category
 }
 
