@@ -27,10 +27,11 @@ class CreateTaskViewModel(
                     categoryEntities.map { categoryEntity -> categoryEntity.toCategory() } })
     }
 
-    fun createTask(name: String, categoryId: String) {
+    fun create(name: String, categoryId: String) {
         viewModelScope.launch {
             try {
-                taskRepository.create(TaskEntity(name = name, categoryId = categoryId))
+                val taskEntity = TaskEntity(name = name, categoryId = categoryId)
+                taskRepository.create(taskEntity)
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)

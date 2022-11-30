@@ -92,7 +92,7 @@ class CreateTaskFragment : Fragment() {
             val checkedChip = binding.createCategoryChipGroup.findViewById<Chip>(checkedId)
             val categoryId = checkedChip.tag as String
 
-            viewModel.createTask(name, categoryId)
+            viewModel.create(name, categoryId)
 
             val action = CreateTaskFragmentDirections.actionNavCreateTaskToNavTasks()
             this.findNavController().navigate(action)
