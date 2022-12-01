@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
@@ -18,6 +19,7 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
+import java.util.*
 
 
 class TasksFragment : Fragment() {
@@ -61,6 +63,39 @@ class TasksFragment : Fragment() {
         val tasksAdapter = TasksAdapter(viewModel)
         binding.tasksList.adapter = tasksAdapter
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
+
+        val taskItemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT,
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+
+                val adapter = recyclerView.adapter as TasksAdapter
+                val fromPos = viewHolder.adapterPosition
+                val toPos = target.adapterPosition
+
+                val tasks = adapter.currentList.toMutableList()
+                Collections.swap(tasks, fromPos, toPos)
+                adapter.submitList(tasks)
+
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val task = viewModel.tasks.value?.get(position)
+                if (task != null) {
+                    viewModel.complete(task)
+                }
+            }
+
+        }
+
         ItemTouchHelper(taskItemTouchHelperCallback).attachToRecyclerView(binding.tasksList)
 
         binding.createTaskFab.setOnClickListener {

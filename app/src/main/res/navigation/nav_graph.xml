@@ -57,7 +57,7 @@
 
     <fragment
         android:id="@+id/nav_edit"
-        android:name="app.stacq.plan.ui.edit.EditFragment"
+        android:name="app.stacq.plan.ui.editTask.EditTaskFragment"
         android:label="@string/edit"
         tools:layout="@layout/fragment_edit">
         <argument

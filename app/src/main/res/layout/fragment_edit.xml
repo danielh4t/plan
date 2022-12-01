@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="app.stacq.plan.ui.edit.EditViewModel" />
+            type="app.stacq.plan.ui.editTask.EditTaskViewModel" />
     </data>
 
 

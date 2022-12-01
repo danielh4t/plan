@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.edit
+package app.stacq.plan.ui.editTask
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,13 +19,13 @@ import app.stacq.plan.databinding.FragmentEditBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
-class EditFragment : Fragment() {
+class EditTaskFragment : Fragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModelFactory: EditViewModelFactory
-    private lateinit var viewModel: EditViewModel
+    private lateinit var viewModelFactory: EditTaskViewModelFactory
+    private lateinit var viewModel: EditTaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,8 +56,8 @@ class EditFragment : Fragment() {
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = EditViewModelFactory(taskRepository, categoryRepository, taskId)
-        viewModel = ViewModelProvider(this, viewModelFactory)[EditViewModel::class.java]
+        viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository, taskId)
+        viewModel = ViewModelProvider(this, viewModelFactory)[EditTaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package app.stacq.plan.ui.edit
+package app.stacq.plan.ui.editTask
 
 
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 
-class EditViewModelFactory(
+class EditTaskViewModelFactory(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository,
     private val taskId: String
@@ -16,8 +16,8 @@ class EditViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {
-                isAssignableFrom(EditViewModel::class.java) ->
-                    return EditViewModel(taskRepository, categoryRepository, taskId) as T
+                isAssignableFrom(EditTaskViewModel::class.java) ->
+                    return EditTaskViewModel(taskRepository, categoryRepository, taskId) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }

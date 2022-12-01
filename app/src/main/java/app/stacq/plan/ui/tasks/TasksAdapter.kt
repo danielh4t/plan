@@ -1,21 +1,17 @@
 package app.stacq.plan.ui.tasks
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.data.model.Task
 import app.stacq.plan.databinding.TaskListItemBinding
-import java.util.*
 
 
 class TasksAdapter(private val viewModel: TasksViewModel) :
     ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -62,29 +58,3 @@ class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
 
 }
 
-val taskItemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-    ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-    0
-) {
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ): Boolean {
-
-        val adapter = recyclerView.adapter as TasksAdapter
-        val fromPos = viewHolder.adapterPosition
-        val toPos = target.adapterPosition
-
-        val tasks = adapter.currentList.toMutableList()
-        Collections.swap(tasks, fromPos, toPos)
-        adapter.submitList(tasks)
-
-        return true
-    }
-
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-    }
-
-
-}

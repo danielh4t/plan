@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.edit
+package app.stacq.plan.ui.editTask
 
 import androidx.lifecycle.*
 import app.stacq.plan.data.model.Category
@@ -8,7 +8,7 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch
 
-class EditViewModel(
+class EditTaskViewModel(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository,
     private val taskId: String
