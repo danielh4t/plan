@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_nav_task_to_nav_notification"
             app:destination="@id/nav_notification" />
+        <action
+            android:id="@+id/action_nav_task_to_createBiteFragment"
+            app:destination="@id/nav_create_bite" />
     </fragment>
 
 
@@ -62,7 +65,7 @@
         tools:layout="@layout/fragment_edit_task">
         <argument
             android:name="task"
-            app:argType="app.stacq.plan.data.model.Task" />
+            app:argType="app.stacq.plan.data.source.model.Task" />
         <action
             android:id="@+id/action_nav_edit_to_nav_tasks"
             app:destination="@id/nav_tasks" />
@@ -75,7 +78,7 @@
         tools:layout="@layout/fragment_timer">
         <argument
             android:name="task"
-            app:argType="app.stacq.plan.data.model.Task" />
+            app:argType="app.stacq.plan.data.source.model.Task" />
         <argument
             android:name="notify"
             app:argType="boolean" />
@@ -90,7 +93,7 @@
             app:destination="@id/nav_timer" />
         <argument
             android:name="task"
-            app:argType="app.stacq.plan.data.model.Task" />
+            app:argType="app.stacq.plan.data.source.model.Task" />
     </fragment>
 
     <fragment
@@ -119,6 +122,18 @@
         <action
             android:id="@+id/action_nav_categories_to_nav_category"
             app:destination="@id/nav_create_category" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_create_bite"
+        android:name="app.stacq.plan.ui.createBite.CreateBiteFragment"
+        android:label="@string/create_bite_label"
+        tools:layout="@layout/fragment_create_bite">
+        <action
+            android:id="@+id/action_nav_create_bite_to_nav_task"
+            app:destination="@id/nav_task" />
+        <argument
+            android:name="taskId"
+            app:argType="string" />
     </fragment>
 
 

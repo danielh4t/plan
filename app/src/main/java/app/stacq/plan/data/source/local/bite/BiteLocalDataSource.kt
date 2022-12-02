@@ -30,7 +30,4 @@ class BiteLocalDataSource(
         biteDao.delete(biteEntity)
     }
 
-    override suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long) {
-        biteDao.updateCompletionById(id, completed, completedAt)
-    }
 }

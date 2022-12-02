@@ -82,7 +82,7 @@ class CreateTaskFragment : Fragment() {
 
             val checkedId: Int = binding.createCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_SHORT)
+                Snackbar.make(clickedView, R.string.select_category, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener

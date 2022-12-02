@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.local.task
 
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.TaskDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -30,10 +29,6 @@ class TaskLocalDataSource(
         taskDao.deleteById(id)
     }
 
-    override suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
-        taskDao.getTasksCategory()
-    }
-
     override suspend fun updateCompletion(taskEntity: TaskEntity) =
         withContext(ioDispatcher) {
             taskDao.updateCompletionById(
@@ -57,8 +52,14 @@ class TaskLocalDataSource(
             taskDao.updatePositionAById(id, positionAt)
         }
 
-    override suspend fun getTaskCategoryById(id: String): LiveData<Task> =
+    override suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> =
         withContext(ioDispatcher) {
-            taskDao.getTaskCategoryById(id)
+            taskDao.getTasksAndCategory()
         }
+
+    override suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> =
+        withContext(ioDispatcher) {
+            taskDao.getTaskAndCategory(id)
+        }
+
 }

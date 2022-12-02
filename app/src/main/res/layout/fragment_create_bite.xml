@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="app.stacq.plan.ui.createTask.CreateTaskViewModel" />
+            name="viewModel"
+            type="app.stacq.plan.ui.createBite.CreateBiteViewModel" />
     </data>
 
 

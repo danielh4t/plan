@@ -1,10 +1,13 @@
 package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.source.BiteDataSource
+import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
-import app.stacq.plan.data.source.local.bite.toBiteDocument
+import app.stacq.plan.data.source.model.Bite
+import app.stacq.plan.data.source.model.asBite
+import app.stacq.plan.data.source.model.asBiteDocument
+import app.stacq.plan.data.source.model.asBiteEntity
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,27 +18,24 @@ class BiteRepository(
     private val localDataSource: BiteLocalDataSource,
     private val remoteDataSource: BiteRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : BiteDataSource {
+) {
 
-    override suspend fun getBites(taskId: String): LiveData<List<BiteEntity>> {
-        return localDataSource.getBites(taskId)
+    suspend fun getBites(taskId: String): LiveData<List<Bite>> = withContext(ioDispatcher) {
+        localDataSource.getBites(taskId)
+            .map { biteEntities: List<BiteEntity> -> biteEntities.map { biteEntity -> biteEntity.asBite() } }
     }
 
-    override suspend fun create(biteEntity: BiteEntity) = withContext(ioDispatcher) {
-        localDataSource.create(biteEntity)
-        remoteDataSource.createBite(biteEntity.toBiteDocument())
+    suspend fun create(bite: Bite) = withContext(ioDispatcher) {
+        localDataSource.create(bite.asBiteEntity())
+        remoteDataSource.createBite(bite.asBiteDocument())
     }
 
-    override suspend fun update(biteEntity: BiteEntity) = withContext(ioDispatcher) {
-        localDataSource.update(biteEntity)
+    suspend fun update(bite: Bite) = withContext(ioDispatcher) {
+        localDataSource.update(bite.asBiteEntity())
     }
 
-    override suspend fun delete(biteEntity: BiteEntity) = withContext(ioDispatcher) {
-        localDataSource.delete(biteEntity)
+    suspend fun delete(bite: Bite) = withContext(ioDispatcher) {
+        localDataSource.delete(bite.asBiteEntity())
     }
 
-    override suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long) =
-        withContext(ioDispatcher) {
-            localDataSource.updateCompletionById(id, completed, completedAt)
-        }
 }

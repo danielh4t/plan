@@ -13,6 +13,4 @@ interface BiteDataSource {
 
     suspend fun delete(biteEntity: BiteEntity)
 
-    suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long)
-
 }

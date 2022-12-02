@@ -1,9 +1,11 @@
 package app.stacq.plan.ui.editTask
 
-import androidx.lifecycle.*
-import app.stacq.plan.data.model.Category
-import app.stacq.plan.data.model.Task
-import app.stacq.plan.data.source.local.category.toCategory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.source.model.Category
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch
@@ -14,9 +16,7 @@ class EditTaskViewModel(
 ) : ViewModel() {
 
     val categories: LiveData<List<Category>> = liveData {
-        emitSource(
-            categoryRepository.getCategories()
-                .map { categoryEntities -> categoryEntities.map { categoryEntity -> categoryEntity.toCategory() } })
+        emitSource(categoryRepository.getCategories())
     }
 
     fun editTask(task: Task, name: String, categoryId: String) {

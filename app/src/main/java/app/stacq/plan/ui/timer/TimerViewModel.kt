@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.model.Task
-import app.stacq.plan.data.model.toTaskEntity
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.util.isFinishAtInFuture
 import app.stacq.plan.util.millisInFuture
@@ -57,7 +56,7 @@ class TimerViewModel(
         val finishAt = Instant.now().plusSeconds(TimerConstants.TIMER_TIME_IN_SECONDS).epochSecond
         task.timerFinishAt = finishAt
         viewModelScope.launch {
-            taskRepository.updateTimerFinish(task.toTaskEntity())
+            taskRepository.updateTimerFinish(task)
         }
     }
 

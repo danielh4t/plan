@@ -32,7 +32,6 @@ class CategoriesFragment : Fragment() {
 
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,13 +51,9 @@ class CategoriesFragment : Fragment() {
 
         val adapter = CategoriesAdapter(viewModel)
         binding.categoriesList.adapter = adapter
-        binding.categoriesList.addItemDecoration(
-            MarginItemDecoration(
-                resources.getDimensionPixelSize(
+        binding.categoriesList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(
                     R.dimen.list_margin
-                )
-            )
-        )
+                )))
 
         binding.createCategoryFab.setOnClickListener {
             val action = CategoriesFragmentDirections.actionNavCategoriesToNavCategory()

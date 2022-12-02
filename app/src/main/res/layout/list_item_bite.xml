@@ -7,48 +7,41 @@
 
         <variable
             name="viewModel"
-            type="app.stacq.plan.ui.categories.CategoriesViewModel" />
-
+            type="app.stacq.plan.ui.task.TaskViewModel" />
         <variable
-            name="category"
-            type="app.stacq.plan.data.source.model.Category" />
+            name="bite"
+            type="app.stacq.plan.data.source.model.Bite" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.updateEnabled(category.id)}">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/category_color"
+        <CheckBox
+            android:id="@+id/task_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/content_category_color"
-            android:src="@drawable/ic_circle_outline"
-            app:categoryColor="@{category.color}"
+            android:button="@drawable/task_complete_checkbox"
+            android:checked="@{bite.completed}"
+            app:buttonTint="@color/purple_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/task_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:fontFamily="@font/roboto"
-            android:text="@{category.name}"
-            android:textSize="18sp"
+            android:text="@{bite.name}"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/category_color"
+            app:layout_constraintStart_toEndOf="@id/task_completed"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/category" />
-
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@string/bite" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

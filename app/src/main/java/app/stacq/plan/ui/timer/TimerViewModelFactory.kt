@@ -5,7 +5,7 @@ package app.stacq.plan.ui.timer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.repository.TaskRepository
 
 

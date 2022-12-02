@@ -57,7 +57,7 @@ class TasksFragment : Fragment() {
 
         viewModelFactory = TasksViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
-        binding.viewmodel = viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         val tasksAdapter = TasksAdapter(viewModel)
@@ -88,7 +88,7 @@ class TasksFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val task = viewModel.tasks.value?.get(position)
+                val task = viewModel.tasksCategory.value?.get(position)
                 if (task != null) {
                     viewModel.complete(task)
                 }
@@ -109,7 +109,7 @@ class TasksFragment : Fragment() {
             }
         }
 
-        viewModel.tasks.observe(viewLifecycleOwner) {
+        viewModel.tasksCategory.observe(viewLifecycleOwner) {
             it?.let {
                 tasksAdapter.submitList(it)
             }

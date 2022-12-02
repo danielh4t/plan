@@ -1,8 +1,11 @@
 package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.model.Category
+import app.stacq.plan.data.source.model.toCategory
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +25,10 @@ class CategoryRepository(
         categoryRemoteDataSource.createCategory(categoryEntity)
     }
 
-    suspend fun getCategories(): LiveData<List<CategoryEntity>> {
-        return categoryLocalDataSource.getCategories()
+    suspend fun getCategories(): LiveData<List<Category>> {
+        return categoryLocalDataSource.getCategories().map { categoryEntities ->
+            categoryEntities.map { categoryEntity -> categoryEntity.toCategory() }
+        }
     }
 
     suspend fun updateEnabledById(id: String) = withContext(ioDispatcher) {

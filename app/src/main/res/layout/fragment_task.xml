@@ -44,7 +44,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            app:tint="?attr/colorPrimary" />
+            app:tint="@color/purple_200" />
 
         <TextView
             android:id="@+id/task_category_text"
@@ -72,7 +72,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
-            app:tint="?attr/colorPrimary" />
+            app:tint="@color/purple_200" />
 
         <TextView
             android:id="@+id/task_creation_text"
@@ -101,7 +101,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_creation_image"
-            app:tint="?attr/colorPrimary" />
+            app:tint="@color/purple_200" />
 
         <TextView
             android:id="@+id/task_timer_text"
@@ -127,7 +127,6 @@
             android:contentDescription="@string/content_edit_task"
             android:text="@string/edit"
             app:icon="@drawable/ic_edit_outline"
-
             app:layout_constraintEnd_toStartOf="@+id/clone_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -143,7 +142,7 @@
             android:layout_marginTop="24dp"
             android:contentDescription="@string/content_task_clone"
             android:text="@string/clone"
-            app:icon="@drawable/copy_outline"
+            app:icon="@drawable/ic_copy"
             app:layout_constraintEnd_toStartOf="@+id/delete_task_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/edit_task_button"
@@ -166,28 +165,53 @@
 
 
         <TextView
-            android:id="@+id/sub_tasks_text"
+            android:id="@+id/bites_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/sub_tasks"
+            android:text="@string/bites"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_task_button"
-            tools:text="@string/category" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_task_button" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/task_timer_fab"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bites_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/create_bite_fab"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bites_text" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/timer_fab"
+            style="?attr/floatingActionButtonSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
             android:contentDescription="@string/content_timer"
-            android:text="@string/timer"
-            app:icon="@drawable/ic_clock_outline"
+            app:layout_constraintBottom_toTopOf="@+id/create_bite_fab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_clock_outline" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/create_bite_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:contentDescription="@string/content_create_bite"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

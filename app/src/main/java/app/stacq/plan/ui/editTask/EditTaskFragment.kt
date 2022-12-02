@@ -11,6 +11,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
@@ -41,7 +42,7 @@ class EditTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args = EditTaskFragmentArgs.fromBundle(requireArguments())
-        val task = args.task
+        val task: Task = args.task
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)

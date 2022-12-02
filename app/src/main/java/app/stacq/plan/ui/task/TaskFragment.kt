@@ -10,13 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
+import app.stacq.plan.data.source.model.Task
+import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.util.isFinishAtInFuture
@@ -53,14 +53,23 @@ class TaskFragment : Fragment() {
         val taskRemoteDataSource = TaskRemoteDataSource()
         val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
-        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val biteLocalDataSource = BiteLocalDataSource(database.biteDao())
+        val biteRemoteDataSource = BiteRemoteDataSource()
+        val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
 
-        viewModelFactory = TaskViewModelFactory(taskRepository, categoryRepository, taskId)
+        viewModelFactory = TaskViewModelFactory(taskRepository, biteRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        val bitesAdapter = BitesAdapter(viewModel)
+        binding.bitesList.adapter = bitesAdapter
+
+        viewModel.bites.observe(viewLifecycleOwner) {
+            it?.let {
+                bitesAdapter.submitList(it)
+            }
+        }
 
         binding.editTaskButton.setOnClickListener {
             val task: Task = viewModel.task.value!!
@@ -80,7 +89,7 @@ class TaskFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-        binding.taskTimerFab.setOnClickListener {
+        binding.timerFab.setOnClickListener {
             val task: Task = viewModel.task.value!!
             val notify: Boolean = hasPostNotificationsPermission()
             val isFinishAtInFuture: Boolean = isFinishAtInFuture(task.timerFinishAt)
@@ -91,6 +100,11 @@ class TaskFragment : Fragment() {
                 val action = TaskFragmentDirections.actionNavTaskToNavTimer(task, notify)
                 this.findNavController().navigate(action)
             }
+        }
+
+        binding.createBiteFab.setOnClickListener {
+            val action = TaskFragmentDirections.actionNavTaskToCreateBiteFragment(taskId)
+            this.findNavController().navigate(action)
         }
 
     }

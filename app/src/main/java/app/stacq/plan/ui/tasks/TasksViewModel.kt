@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.model.Task
-import app.stacq.plan.data.model.toTaskEntity
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch
@@ -17,7 +16,7 @@ class TasksViewModel(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val tasks: LiveData<List<Task>> = liveData {
+    val tasksCategory: LiveData<List<Task>> = liveData {
         emitSource(taskRepository.getTasks())
     }
 
@@ -33,7 +32,7 @@ class TasksViewModel(
         task.completed = !task.completed
         task.completedAt = Instant.now().epochSecond
         viewModelScope.launch {
-            taskRepository.updateCompletion(task.toTaskEntity())
+            taskRepository.updateCompletion(task)
         }
     }
 }

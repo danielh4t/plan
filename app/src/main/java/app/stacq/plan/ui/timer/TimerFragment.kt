@@ -16,9 +16,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.R
-import app.stacq.plan.data.model.Task
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding

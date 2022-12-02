@@ -16,7 +16,7 @@ android {
         minSdk 28
         targetSdk 33
         versionCode 7
-        versionName "1.6"
+        versionName "1.7"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles 'proguard-rules.pro'

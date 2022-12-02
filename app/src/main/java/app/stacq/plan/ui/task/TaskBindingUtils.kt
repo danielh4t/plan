@@ -4,6 +4,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TIME_IN_SECONDS
+import app.stacq.plan.ui.timer.TimerConstants.TIME_MINUTE_TO_SECONDS
+import app.stacq.plan.ui.timer.TimerConstants.TIME_SECOND_TO_MILLIS
 import app.stacq.plan.util.millisInFuture
 import java.time.Instant
 import java.time.ZoneId
@@ -21,18 +23,17 @@ fun TextView.setTaskTime(epoch: Long) {
 
 @BindingAdapter("taskTimer")
 fun TextView.setTaskTimer(timerFinishAt: Long) {
-    val minutes = if (timerFinishAt > 0) {
-        // timer started
-        millisInFuture(timerFinishAt) / 60 / 1000L
-    } else {
+    text = if (timerFinishAt == 0L) {
         // timer not started
-        TIMER_TIME_IN_SECONDS / 60
+        val minutes = TIMER_TIME_IN_SECONDS / TIME_MINUTE_TO_SECONDS
+        resources.getQuantityString(R.plurals.numberOfMinutes, minutes.toInt(), minutes)
+    } else if (millisInFuture(timerFinishAt) > 0L) {
+        // timer progress
+        val minutes = millisInFuture(timerFinishAt) / TIME_MINUTE_TO_SECONDS / TIME_SECOND_TO_MILLIS
+        resources.getQuantityString(R.plurals.numberOfMinutes, minutes.toInt(), minutes)
+    } else {
+        // timer finished
+        resources.getString(R.string.timer_complete)
     }
 
-    text = if (minutes == 0L) {
-        // timer finished
-        setText(R.string.timer_complete).toString()
-    }else {
-        String.format("%d minutes", minutes)
-    }
 }

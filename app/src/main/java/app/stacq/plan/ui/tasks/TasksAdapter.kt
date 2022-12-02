@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.databinding.ListItemTaskBinding
 
 
@@ -37,8 +37,8 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
             }
         }
 
-        fun bind(item: Task, viewModel: TasksViewModel) {
-            binding.task = item
+        fun bind(task: Task, viewModel: TasksViewModel) {
+            binding.task = task
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }

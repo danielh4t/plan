@@ -41,12 +41,4 @@ interface BiteDao {
     @Delete
     suspend fun delete(biteEntity: BiteEntity)
 
-    /**
-     * Update the completed and completed_at of a bite
-     *
-     * @param id of the bite
-     */
-    @Query("UPDATE bite SET completed = :completed, completed_at = :completedAt WHERE id = :id")
-    suspend fun updateCompletionById(id: String, completed: Boolean, completedAt: Long)
-
 }

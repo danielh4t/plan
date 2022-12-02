@@ -8,12 +8,12 @@
     <!-- Create fragment -->
     <string name="create">Create</string>
     <string name="create_task">Create Task</string>
-    <string name="title">Title</string>
+    <string name="name">Name</string>
     <string name="create_fab">create action</string>
-    <string name="empty_task_details">Empty tasks title</string>
+    <string name="empty_task_details">Empty tasks name</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
-    <string name="empty_category_details">Empty category title</string>
+    <string name="empty_category_details">Empty category name</string>
     <!-- Task fragment -->
     <string name="complete">Complete</string>
     <string name="complete_fab">complete action</string>
@@ -71,6 +71,16 @@
     <string name="content_tasks_tab">tasks tab</string>
     <string name="task_creation_icon">task creation icon</string>
     <string name="task_timer_icon">task timer time icon</string>
-    <string name="sub_tasks">Sub Tasks</string>
-
+    <string name="bites">Bites</string>
+    <string name="content_create_bite">Create Bite</string>
+    <string name="content_create_task">Create task</string>
+    <string name="bite">Bite</string>
+    <string name="empty_bite_details">Empty bite name</string>
+    <string name="create_bite_label">Create Bite</string>
+    <string name="select_category">Select Category</string>
+    <plurals name="numberOfMinutes">
+        <item quantity="zero">%d minute</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 </resources>

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.databinding.FragmentNotificationBinding
 import com.google.android.material.snackbar.Snackbar
 

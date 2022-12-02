@@ -10,7 +10,6 @@ class ProfileViewModel : ViewModel() {
 
     private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-
     fun logAuthentication(errorCode: Int) {
         val params = Bundle()
         params.putInt("login_error_code", errorCode)

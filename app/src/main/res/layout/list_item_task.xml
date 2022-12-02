@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="app.stacq.plan.ui.tasks.TasksViewModel" />
 
         <variable
             name="task"
-            type="app.stacq.plan.data.model.Task" />
+            type="app.stacq.plan.data.source.model.Task" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,26 +32,26 @@
             app:taskCategoryColor="@{task.categoryColor}" />
 
         <TextView
-            android:id="@+id/task_title"
+            android:id="@+id/task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{task.name}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/task_category"
+            app:layout_constraintBottom_toTopOf="@id/task_category_name"
             app:layout_constraintStart_toEndOf="@id/task_completed"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/task" />
 
         <TextView
-            android:id="@+id/task_category"
+            android:id="@+id/task_category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{task.categoryName}"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/task_completed"
-            app:layout_constraintTop_toBottomOf="@id/task_title"
-            app:taskCategory="@{task}"
+            app:layout_constraintTop_toBottomOf="@id/task_name"
             tools:text="@string/category" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

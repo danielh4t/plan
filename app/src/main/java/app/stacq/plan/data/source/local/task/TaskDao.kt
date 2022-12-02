@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.local.task
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import app.stacq.plan.data.model.Task
 
 @Dao
 interface TaskDao {
@@ -16,7 +15,6 @@ interface TaskDao {
         "SELECT * FROM task"
     )
     fun getTasks(): LiveData<List<TaskEntity>>
-
 
     /**
      * Insert a task.
@@ -98,37 +96,12 @@ interface TaskDao {
     @Query("DELETE FROM task WHERE id = :id")
     suspend fun deleteById(id: String)
 
-    /**
-     * Select all tasks with category name from the task.
-     *
-     * @return all tasks with category name.
-     */
-    @Query(
-        "SELECT task.id, task.created_at AS createdAt, task.name, task.completed AS completed, " +
-                "task.completed_at AS completedAt, task.category_id AS categoryId, " +
-                "category.name AS categoryName, category.color AS categoryColor, " +
-                "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
-                "task.position_at AS positionAt " +
-                "FROM task " +
-                "JOIN category ON category.id = task.category_id " +
-                "ORDER BY position_at"
-    )
-    fun getTasksCategory(): LiveData<List<Task>>
+    @Transaction
+    @Query("SELECT * FROM task")
+    fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 
-    /**
-     * Select all tasks from the task.
-     *
-     * @return all tasks.
-     */
-    @Query(
-        "SELECT task.id, task.created_at AS createdAt, task.name, task.completed AS completed, " +
-                "task.completed_at AS completedAt, task.category_id AS categoryId, " +
-                "category.name AS categoryName, category.color AS categoryColor, " +
-                "task.timer_finish_at AS timerFinishAt, task.timer_alarm AS timerAlarm, " +
-                "task.position_at AS positionAt " +
-                "FROM task " +
-                "JOIN category ON category.id = task.category_id " +
-                "WHERE task.id = :id"
-    )
-    fun getTaskCategoryById(id: String): LiveData<Task>
+    @Transaction
+    @Query("SELECT * FROM task WHERE id = :id")
+    fun getTaskAndCategory(id: String): LiveData<TaskEntityAndCategoryEntity>
+
 }

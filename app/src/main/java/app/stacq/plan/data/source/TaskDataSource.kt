@@ -2,7 +2,7 @@ package app.stacq.plan.data.source
 
 import androidx.lifecycle.LiveData
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.data.source.local.task.TaskEntityAndCategoryEntity
 
 interface TaskDataSource {
 
@@ -22,8 +22,8 @@ interface TaskDataSource {
 
     suspend fun updatePositionById(id: String, positionAt: Long)
 
-    suspend fun getTasks(): LiveData<List<Task>>
+    suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 
-    suspend fun getTaskCategoryById(id: String): LiveData<Task>
+    suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity>
 
 }
