@@ -1,12 +1,9 @@
 package app.stacq.plan.ui.task
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import app.stacq.plan.R
-import app.stacq.plan.data.model.Task
+import app.stacq.plan.ui.timer.TimerConstants.TIMER_TIME_IN_SECONDS
+import app.stacq.plan.util.millisInFuture
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -23,19 +20,11 @@ fun TextView.setTaskTime(epoch: Long) {
 
 @BindingAdapter("taskTimer")
 fun TextView.setTaskTimer(timerFinishAt: Long) {
-    if (timerFinishAt > 0) {
-        val pattern = "EEEE, dd MMMM , yyyy HH:mm a"
-        val dateTime = DateTimeFormatter.ofPattern(pattern)
-            .withZone(ZoneId.systemDefault())
-            .format(Instant.ofEpochSecond(timerFinishAt))
-        text = dateTime
+    val minutes = if (timerFinishAt > 0) {
+        millisInFuture(timerFinishAt) / 60 / 1000L
     } else {
         // timer not started
-        setText(R.string.task_time)
+        TIMER_TIME_IN_SECONDS / 60
     }
-}
-
-@BindingAdapter("taskColorTint")
-fun ImageView.setTaskColor(task: Task) {
-    setColorFilter(Color.parseColor(task.categoryColor), PorterDuff.Mode.MULTIPLY)
+    text = String.format("%d minutes", minutes)
 }

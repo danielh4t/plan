@@ -24,7 +24,6 @@ import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.createNotificationChannel
 import app.stacq.plan.util.millisInFuture
-import java.time.Instant
 
 
 class TimerFragment : Fragment() {
@@ -109,8 +108,7 @@ class TimerFragment : Fragment() {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-        val now: Long = Instant.now().epochSecond
-        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture(finishAt, now)
+        val triggerTime = SystemClock.elapsedRealtime() + millisInFuture(finishAt)
         alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

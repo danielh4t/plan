@@ -12,7 +12,8 @@ fun isFinishAtInFuture(finishAt: Long): Boolean {
     return now > finishAt
 }
 
-fun millisInFuture(finishAt: Long, now: Long): Long {
+fun millisInFuture(finishAt: Long): Long {
+    val now: Long = Instant.now().epochSecond
     return (finishAt - now) * 1000L
 }
 
