@@ -17,7 +17,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:onClick="@{() -> viewModel.updateEnabled(category.id)}">
 
         <ImageView
@@ -25,7 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/content_category_color"
             android:src="@drawable/ic_circle_outline"
             app:categoryColor="@{category.color}"
@@ -37,10 +38,11 @@
             android:id="@+id/category_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/roboto"
             android:text="@{category.name}"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/category_color"

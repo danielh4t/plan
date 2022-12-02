@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.data.model.Category
-import app.stacq.plan.databinding.CategoryListItemBinding
+import app.stacq.plan.databinding.ListItemCategoryBinding
 
 
 class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
@@ -23,13 +23,13 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
         holder.bind(item, viewModel)
     }
 
-    class ViewHolder private constructor(private val binding: CategoryListItemBinding) :
+    class ViewHolder private constructor(private val binding: ListItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = CategoryListItemBinding.inflate(layoutInflater, parent, false)
+                val binding = ListItemCategoryBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
