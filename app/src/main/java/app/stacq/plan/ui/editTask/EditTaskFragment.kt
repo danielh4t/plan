@@ -15,13 +15,13 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
-import app.stacq.plan.databinding.FragmentEditBinding
+import app.stacq.plan.databinding.FragmentEditTaskBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
 class EditTaskFragment : Fragment() {
 
-    private var _binding: FragmentEditBinding? = null
+    private var _binding: FragmentEditTaskBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModelFactory: EditTaskViewModelFactory
@@ -33,15 +33,15 @@ class EditTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
+        _binding = FragmentEditTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args = EditFragmentArgs.fromBundle(requireArguments())
-        val taskId = args.taskId
+        val args = EditTaskFragmentArgs.fromBundle(requireArguments())
+        val task = args.task
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
@@ -56,17 +56,14 @@ class EditTaskFragment : Fragment() {
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository, taskId)
+        viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditTaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.task.observe(viewLifecycleOwner) { task ->
-            binding.editTitle.setText(task.name)
-        }
+        binding.editName.setText(task.name)
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            binding.editCategoryChipGroup.removeAllViews()
             categories.map { category ->
                 val chip = layoutInflater.inflate(
                     R.layout.chip_layout,
@@ -75,34 +72,31 @@ class EditTaskFragment : Fragment() {
                 ) as Chip
                 chip.text = category.name
                 chip.tag = category.id
+                if (category.id == task.categoryId) {
+                    chip.isChecked = true
+                }
                 binding.editCategoryChipGroup.addView(chip)
             }
         }
 
         binding.editFab.setOnClickListener { clickedView ->
-            val title: String = binding.editTitle.text.toString()
-            if (title.isEmpty()) {
+            val name: String = binding.editName.text.toString()
+            if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
             }
 
+            // get checked chip
             val checkedId: Int = binding.editCategoryChipGroup.checkedChipId
-            if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.create_category, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-
             val checkedChip = binding.editCategoryChipGroup.findViewById<Chip>(checkedId)
+            // get category id from chip tag
             val categoryId = checkedChip.tag as String
 
-            viewModel.editTask(title, categoryId)
+            viewModel.editTask(task, name, categoryId)
 
-            val action = EditFragmentDirections.actionNavEditToNavTasks()
+            val action = EditTaskFragmentDirections.actionNavEditToNavTasks()
             this.findNavController().navigate(action)
         }
     }

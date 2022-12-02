@@ -35,7 +35,7 @@
             app:destination="@id/nav_tasks" />
         <action
             android:id="@+id/action_nav_task_to_nav_edit"
-            app:destination="@id/nav_edit" />
+            app:destination="@id/nav_edit_task" />
         <action
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
@@ -56,13 +56,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_edit"
+        android:id="@+id/nav_edit_task"
         android:name="app.stacq.plan.ui.editTask.EditTaskFragment"
         android:label="@string/edit"
-        tools:layout="@layout/fragment_edit">
+        tools:layout="@layout/fragment_edit_task">
         <argument
-            android:name="taskId"
-            app:argType="string" />
+            android:name="task"
+            app:argType="app.stacq.plan.data.model.Task" />
         <action
             android:id="@+id/action_nav_edit_to_nav_tasks"
             app:destination="@id/nav_tasks" />
