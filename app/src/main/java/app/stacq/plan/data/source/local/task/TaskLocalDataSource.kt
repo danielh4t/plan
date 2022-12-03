@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class TaskLocalDataSource(
+class  TaskLocalDataSource(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskDataSource {
@@ -25,8 +25,8 @@ class TaskLocalDataSource(
         taskDao.update(taskEntity)
     }
 
-    override suspend fun deleteById(id: String) = withContext(ioDispatcher) {
-        taskDao.deleteById(id)
+    override suspend fun delete(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        taskDao.delete(taskEntity)
     }
 
     override suspend fun updateCompletion(taskEntity: TaskEntity) =
@@ -47,9 +47,9 @@ class TaskLocalDataSource(
         taskDao.updateTimerAlarmById(id)
     }
 
-    override suspend fun updatePositionById(id: String, positionAt: Long) =
+    override suspend fun updatePriorityById(id: String, priority: Int) =
         withContext(ioDispatcher) {
-            taskDao.updatePositionAById(id, positionAt)
+            taskDao.updatePriorityById(id, priority)
         }
 
     override suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> =

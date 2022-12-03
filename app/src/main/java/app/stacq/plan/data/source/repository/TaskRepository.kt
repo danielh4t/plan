@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import app.stacq.plan.data.source.local.task.TaskEntityAndCategoryEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
 import app.stacq.plan.data.source.model.Task
@@ -30,8 +29,8 @@ class TaskRepository(
         tasksRemoteDataSource.update(task.asTaskDocument())
     }
 
-    suspend fun deleteById(id: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.deleteById(id)
+    suspend fun delete(task: Task) = withContext(ioDispatcher) {
+        tasksLocalDataSource.delete(task.asTaskEntity())
     }
 
     suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
@@ -48,9 +47,13 @@ class TaskRepository(
         tasksLocalDataSource.updateTimerAlarmById(id)
     }
 
+    suspend fun updatePriorityById(id: String, priority: Int) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updatePriorityById(id, priority)
+    }
+
     suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
         tasksLocalDataSource.getTasks()
-            .map { it.map(TaskEntityAndCategoryEntity::asTask) }
+            .map { it.map { it1 -> it1.asTask() } }
     }
 
     suspend fun getTask(id: String): LiveData<Task> = withContext(ioDispatcher) {

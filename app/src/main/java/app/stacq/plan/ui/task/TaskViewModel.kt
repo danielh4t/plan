@@ -40,9 +40,9 @@ class TaskViewModel(
         }
     }
 
-    fun delete() {
+    fun delete(task: Task) {
         viewModelScope.launch {
-            task.value?.let { taskRepository.deleteById(it.id) }
+            taskRepository.delete(task)
         }
     }
 

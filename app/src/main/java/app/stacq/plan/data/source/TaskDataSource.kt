@@ -12,7 +12,7 @@ interface TaskDataSource {
 
     suspend fun update(taskEntity: TaskEntity)
 
-    suspend fun deleteById(id: String)
+    suspend fun delete(taskEntity: TaskEntity)
 
     suspend fun updateCompletion(taskEntity: TaskEntity)
 
@@ -20,7 +20,7 @@ interface TaskDataSource {
 
     suspend fun updateTimerAlarmById(id: String)
 
-    suspend fun updatePositionById(id: String, positionAt: Long)
+    suspend fun updatePriorityById(id: String, priority: Int)
 
     suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 

@@ -17,6 +17,7 @@ data class Task(
     var completedAt: Long,
     var timerFinishAt: Long,
     var timerAlarm: Boolean,
+    var priority: Int,
     var categoryId: String,
     var categoryName: String,
     var categoryColor: String,
@@ -31,6 +32,7 @@ fun Task.asTaskEntity() = TaskEntity(
     completedAt = completedAt,
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
+    priority = priority
 )
 
 fun Task.asTaskDocument() = TaskDocument(
@@ -42,6 +44,7 @@ fun Task.asTaskDocument() = TaskDocument(
     completedAt = completedAt,
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
+    priority = priority
 )
 
 fun TaskEntity.asTask() = Task(
@@ -54,7 +57,8 @@ fun TaskEntity.asTask() = Task(
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
     categoryName = "",
-    categoryColor = ""
+    categoryColor = "",
+    priority = priority
 )
 
 

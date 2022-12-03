@@ -1,5 +1,8 @@
 package app.stacq.plan.ui.tasks
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,8 +68,7 @@ class TasksFragment : Fragment() {
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
 
         val taskItemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT,
+            ItemTouchHelper.UP, ItemTouchHelper.LEFT,
         ) {
 
             override fun onMove(
@@ -76,11 +78,20 @@ class TasksFragment : Fragment() {
             ): Boolean {
 
                 val adapter = recyclerView.adapter as TasksAdapter
-                val fromPos = viewHolder.adapterPosition
-                val toPos = target.adapterPosition
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
 
                 val tasks = adapter.currentList.toMutableList()
-                Collections.swap(tasks, fromPos, toPos)
+                Collections.swap(tasks, fromPosition, toPosition)
+
+                val higherTask = tasks[fromPosition]!!
+                val lowerTask = tasks[toPosition]!!
+                // if equal or lower than low priority increment
+                if (higherTask.priority <= lowerTask.priority) {
+                    higherTask.priority = lowerTask.priority++
+                    viewModel.updatePriority(higherTask)
+                }
+
                 adapter.submitList(tasks)
 
                 return true
@@ -90,10 +101,32 @@ class TasksFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 val task = viewModel.tasksCategory.value?.get(position)
                 if (task != null) {
-                    viewModel.complete(task)
+                    viewModel.delete(task)
                 }
             }
 
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+
+
+                val background = ColorDrawable(Color.RED)
+
+                background.setBounds(
+                    itemView.right + dX.toInt(),
+                    itemView.top,
+                    itemView.right,
+                    itemView.bottom
+                )
+                background.draw(c)
+            }
         }
 
         ItemTouchHelper(taskItemTouchHelperCallback).attachToRecyclerView(binding.tasksList)

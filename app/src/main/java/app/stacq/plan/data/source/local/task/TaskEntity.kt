@@ -35,7 +35,7 @@ data class TaskEntity(
     @ColumnInfo(name = "timer_alarm")
     var timerAlarm: Boolean = true,
 
-    @ColumnInfo(name= "position_at")
-    val positionAt: Long = createdAt
+    @ColumnInfo(name= "priority")
+    val priority: Int = 0
 
 )

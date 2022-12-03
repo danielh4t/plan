@@ -12,4 +12,5 @@ data class TaskDocument(
     var completedAt: Long? = null,
     var timerAlarm: Boolean = false,
     var timerFinishAt: Long? = null,
+    var priority: Int? = null
 )

@@ -80,24 +80,24 @@ interface TaskDao {
     suspend fun updateTimerAlarmById(id: String)
 
     /**
-     * Update the position_at of a task
+     * Update the priority of a task
      *
      * @param id of the task
-     * @param positionAt position of task
+     * @param priority position of task
      */
-    @Query("UPDATE task SET position_at = :positionAt WHERE id = :id")
-    suspend fun updatePositionAById(id: String, positionAt: Long)
+    @Query("UPDATE task SET priority = :priority WHERE id = :id")
+    suspend fun updatePriorityById(id: String, priority: Int)
 
     /**
-     * Delete a task by id
+     * Delete a task
      *
-     * @param id task to be delete
+     * @param taskEntity to be delete
      */
-    @Query("DELETE FROM task WHERE id = :id")
-    suspend fun deleteById(id: String)
+    @Delete
+    suspend fun delete(taskEntity: TaskEntity)
 
     @Transaction
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY priority DESC")
     fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 
     @Transaction

@@ -84,7 +84,8 @@ class TaskFragment : Fragment() {
         }
 
         binding.deleteTaskButton.setOnClickListener {
-            viewModel.delete()
+            val task: Task = viewModel.task.value!!
+            viewModel.delete(task)
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }
