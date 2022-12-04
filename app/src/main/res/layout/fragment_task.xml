@@ -44,7 +44,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title_text"
-            app:tint="@color/purple_200" />
+            app:tint="@color/primary" />
 
         <TextView
             android:id="@+id/task_category_text"
@@ -72,7 +72,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
-            app:tint="@color/purple_200" />
+            app:tint="@color/primary" />
 
         <TextView
             android:id="@+id/task_creation_text"
@@ -101,7 +101,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_creation_image"
-            app:tint="@color/purple_200" />
+            app:tint="@color/primary" />
 
         <TextView
             android:id="@+id/task_timer_text"
@@ -165,16 +165,45 @@
 
 
         <TextView
-            android:id="@+id/bites_text"
-            android:layout_width="wrap_content"
+            android:id="@+id/priority_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/priority"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/delete_task_button" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/priority_slider"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_priority_slider"
+            android:stepSize="1.0"
+            android:value="@{viewModel.task.priority}"
+            android:valueFrom="0.0"
+            android:valueTo="10.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priority_text" />
+
+        <TextView
+            android:id="@+id/bites_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/bites"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_task_button" />
+            app:layout_constraintTop_toBottomOf="@+id/priority_slider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bites_list"

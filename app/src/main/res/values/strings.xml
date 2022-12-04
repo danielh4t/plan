@@ -78,6 +78,8 @@
     <string name="empty_bite_details">Empty bite name</string>
     <string name="create_bite_label">Create Bite</string>
     <string name="select_category">Select Category</string>
+    <string name="priority">Priority</string>
+    <string name="content_priority_slider">Priority slider</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>

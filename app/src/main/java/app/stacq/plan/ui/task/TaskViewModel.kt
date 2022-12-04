@@ -40,9 +40,17 @@ class TaskViewModel(
         }
     }
 
-    fun delete(task: Task) {
+    fun delete() {
+        val task: Task = task.value!!
         viewModelScope.launch {
             taskRepository.delete(task)
+        }
+    }
+
+    fun updatePriority(priority: Float) {
+        val task: Task = task.value!!
+        viewModelScope.launch {
+            taskRepository.updatePriorityById(task.id, priority.toInt())
         }
     }
 

@@ -24,7 +24,7 @@
             android:layout_gravity="center|end"
             android:button="@drawable/task_complete_checkbox"
             android:checked="@{bite.completed}"
-            app:buttonTint="@color/purple_200"
+            app:buttonTint="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

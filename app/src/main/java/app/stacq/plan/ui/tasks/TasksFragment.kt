@@ -60,7 +60,7 @@ class TasksFragment : Fragment() {
         val tasksAdapter = TasksAdapter(viewModel)
         binding.tasksList.adapter = tasksAdapter
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
-        
+
         binding.createTaskFab.setOnClickListener {
             if (viewModel.categories > 0) {
                 val action = TasksFragmentDirections.actionNavTasksToNavCreate()

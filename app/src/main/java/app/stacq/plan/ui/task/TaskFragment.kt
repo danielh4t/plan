@@ -84,10 +84,14 @@ class TaskFragment : Fragment() {
         }
 
         binding.deleteTaskButton.setOnClickListener {
-            val task: Task = viewModel.task.value!!
-            viewModel.delete(task)
+            viewModel.delete()
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
+        }
+
+        binding.prioritySlider.addOnChangeListener { _, value, _ ->
+            // Responds to when slider's value is changed
+            viewModel.updatePriority(value)
         }
 
         binding.timerFab.setOnClickListener {
