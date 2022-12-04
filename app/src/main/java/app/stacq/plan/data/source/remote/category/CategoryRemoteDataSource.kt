@@ -20,22 +20,16 @@ class CategoryRemoteDataSource(
 
         // root collection
         val uid = firebaseAuth.currentUser?.uid
+        val categoryId = categoryDocument.id
 
-        if (uid != null) {
+        if (uid == null || categoryId == null) return@withContext
 
-            val categoryId = categoryDocument.id
+        val fields = hashMapOf(
+            "name" to categoryDocument.name,
+            "color" to categoryDocument.color
+        )
 
-            if (categoryId != null) {
-                val fields = hashMapOf(
-                    "name" to categoryDocument.name,
-                    "color" to categoryDocument.color,
-                    "count" to 0
-                )
-
-                firestore.collection(uid).document(categoryId).set(fields)
-            }
-        }
-
+        firestore.collection(uid).document(categoryId).set(fields)
 
     }
 
