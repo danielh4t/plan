@@ -108,7 +108,9 @@ class TaskFragment : Fragment() {
         }
 
         binding.createBiteFab.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToCreateBiteFragment(taskId)
+            val task: Task = viewModel.task.value!!
+            val action =
+                TaskFragmentDirections.actionNavTaskToCreateBiteFragment(task.id, task.categoryId)
             this.findNavController().navigate(action)
         }
 

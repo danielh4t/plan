@@ -47,9 +47,9 @@ class  TaskLocalDataSource(
         taskDao.updateTimerAlarmById(id)
     }
 
-    override suspend fun updatePriorityById(id: String, priority: Int) =
+    override suspend fun updatePriority(taskEntity: TaskEntity) =
         withContext(ioDispatcher) {
-            taskDao.updatePriorityById(id, priority)
+            taskDao.updatePriority(taskEntity.id, taskEntity.priority)
         }
 
     override suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> =

@@ -36,12 +36,6 @@ class TasksViewModel(
         }
     }
 
-    fun updatePriority(task: Task) {
-        viewModelScope.launch {
-            taskRepository.updatePriorityById(task.id, task.priority)
-        }
-    }
-
     fun delete(task: Task) {
         viewModelScope.launch {
             taskRepository.delete(task)

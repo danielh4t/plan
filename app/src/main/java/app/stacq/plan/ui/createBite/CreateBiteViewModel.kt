@@ -1,7 +1,8 @@
 package app.stacq.plan.ui.createBite
 
 import android.os.Bundle
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.model.asBite
 import app.stacq.plan.data.source.repository.BiteRepository
@@ -17,16 +18,16 @@ class CreateBiteViewModel(
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    fun createBite(name: String, taskId: String) {
+    fun create(name: String, taskId: String, categoryId: String) {
         viewModelScope.launch {
             try {
-                val biteEntity = BiteEntity(name = name, taskId = taskId)
+                val biteEntity = BiteEntity(name = name, taskId = taskId, categoryId = categoryId)
                 val bite = biteEntity.asBite()
                 biteRepository.create(bite)
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)
-                firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_TASK, params)
+                firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_BITE, params)
             }
         }
     }

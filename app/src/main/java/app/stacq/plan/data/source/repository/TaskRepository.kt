@@ -52,8 +52,9 @@ class TaskRepository(
         tasksLocalDataSource.updateTimerAlarmById(id)
     }
 
-    suspend fun updatePriorityById(id: String, priority: Int) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updatePriorityById(id, priority)
+    suspend fun updatePriority(task: Task) = withContext(ioDispatcher) {
+        tasksLocalDataSource.updatePriority(task.asTaskEntity())
+        tasksRemoteDataSource.updatePriority(task.asTaskDocument())
     }
 
     suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {

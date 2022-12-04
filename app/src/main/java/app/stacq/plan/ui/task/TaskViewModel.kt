@@ -49,8 +49,9 @@ class TaskViewModel(
 
     fun updatePriority(priority: Float) {
         val task: Task = task.value!!
+        task.priority = priority.toInt()
         viewModelScope.launch {
-            taskRepository.updatePriorityById(task.id, priority.toInt())
+            taskRepository.updatePriority(task)
         }
     }
 

@@ -20,7 +20,7 @@ interface TaskDataSource {
 
     suspend fun updateTimerAlarmById(id: String)
 
-    suspend fun updatePriorityById(id: String, priority: Int)
+    suspend fun updatePriority(taskEntity: TaskEntity)
 
     suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 

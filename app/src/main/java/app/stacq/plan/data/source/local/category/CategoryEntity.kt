@@ -13,7 +13,7 @@ import java.util.*
 data class CategoryEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "created_at")
     val createdAt: Long = Instant.now().epochSecond,
     var name: String,

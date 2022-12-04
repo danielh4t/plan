@@ -134,6 +134,9 @@
         <argument
             android:name="taskId"
             app:argType="string" />
+        <argument
+            android:name="categoryId"
+            app:argType="string" />
     </fragment>
 
 

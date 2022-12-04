@@ -27,11 +27,12 @@ class BiteRepository(
 
     suspend fun create(bite: Bite) = withContext(ioDispatcher) {
         localDataSource.create(bite.asBiteEntity())
-        remoteDataSource.createBite(bite.asBiteDocument())
+        remoteDataSource.create(bite.asBiteDocument())
     }
 
     suspend fun update(bite: Bite) = withContext(ioDispatcher) {
         localDataSource.update(bite.asBiteEntity())
+        remoteDataSource.update(bite.asBiteDocument())
     }
 
     suspend fun delete(bite: Bite) = withContext(ioDispatcher) {

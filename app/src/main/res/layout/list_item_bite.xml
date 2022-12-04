@@ -24,6 +24,7 @@
             android:layout_gravity="center|end"
             android:button="@drawable/task_complete_checkbox"
             android:checked="@{bite.completed}"
+            android:onClick="@{() -> viewModel.completeBite(bite)}"
             app:buttonTint="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

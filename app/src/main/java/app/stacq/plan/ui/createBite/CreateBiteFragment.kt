@@ -38,6 +38,7 @@ class CreateBiteFragment : Fragment() {
 
         val args = CreateBiteFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
+        val categoryId = args.categoryId
 
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
@@ -61,7 +62,7 @@ class CreateBiteFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            viewModel.createBite(name, taskId)
+            viewModel.create(name, taskId, categoryId)
 
             val action = CreateBiteFragmentDirections.actionNavCreateBiteToNavTask(taskId)
             this.findNavController().navigate(action)

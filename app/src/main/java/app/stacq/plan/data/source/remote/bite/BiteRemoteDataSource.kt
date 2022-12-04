@@ -16,32 +16,58 @@ class BiteRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun createBite(biteDocument: BiteDocument) = withContext(ioDispatcher) {
-        // root collection
+    suspend fun create(biteDocument: BiteDocument) = withContext(ioDispatcher) {
+
         val uid = firebaseAuth.currentUser?.uid
-        if (uid != null) {
+        val taskId = biteDocument.taskId
+        val categoryId = biteDocument.categoryId
+        val id = biteDocument.id
 
-            val id = biteDocument.id
-            val taskId = biteDocument.taskId
-            val categoryId = biteDocument.categoryId
+        if (uid == null || taskId == null || categoryId == null || id == null) return@withContext
 
-            if (id == null || taskId == null || categoryId == null) return@withContext
+        val fields = hashMapOf(
+            "name" to biteDocument.name,
+            "taskId" to biteDocument.taskId,
+            "categoryId" to biteDocument.categoryId,
+            "completed" to biteDocument.completed,
+            "completedAt" to biteDocument.completedAt,
+        )
 
-            val data = hashMapOf(
-                "name" to biteDocument.createdAt,
-                "completed" to biteDocument.completed,
-                "completedAt" to biteDocument.completedAt,
-            )
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection("tasks")
+            .document(taskId)
+            .collection("bites")
+            .document(id)
+            .set(fields)
 
-            firestore.collection(uid)
-                .document(categoryId)
-                .collection("tasks")
-                .document(taskId)
-                .collection("bites")
-                .document(id)
-                .set(data)
-
-        }
     }
+
+    suspend fun update(biteDocument: BiteDocument) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        val taskId = biteDocument.taskId
+        val categoryId = biteDocument.categoryId
+        val id = biteDocument.id
+
+        if (uid == null || taskId == null || categoryId == null || id == null) return@withContext
+
+        val fields = hashMapOf(
+            "name" to biteDocument.name,
+            "taskId" to biteDocument.taskId,
+            "categoryId" to biteDocument.categoryId,
+            "completed" to biteDocument.completed,
+            "completedAt" to biteDocument.completedAt,
+        )
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection("tasks")
+            .document(taskId)
+            .collection("bites")
+            .document(id)
+            .set(fields)
+    }
+
 
 }

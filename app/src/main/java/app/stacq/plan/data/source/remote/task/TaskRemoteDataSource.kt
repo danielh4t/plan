@@ -103,6 +103,27 @@ class TaskRemoteDataSource(
         }
 
 
+    suspend fun updatePriority(taskDocument: TaskDocument) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        val taskId = taskDocument.id
+        val categoryId = taskDocument.categoryId
+
+        if (uid == null || taskId == null || categoryId == null) return@withContext
+
+        val fields = mapOf(
+            "priority" to taskDocument.priority,
+        )
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection("tasks")
+            .document(taskId)
+            .update(fields)
+
+    }
+
+
     suspend fun updateTaskCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
 

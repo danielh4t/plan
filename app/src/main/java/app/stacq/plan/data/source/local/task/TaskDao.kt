@@ -86,7 +86,7 @@ interface TaskDao {
      * @param priority position of task
      */
     @Query("UPDATE task SET priority = :priority WHERE id = :id")
-    suspend fun updatePriorityById(id: String, priority: Int)
+    suspend fun updatePriority(id: String, priority: Int)
 
     /**
      * Delete a task

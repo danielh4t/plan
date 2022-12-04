@@ -12,7 +12,7 @@ import java.util.*
 data class BiteEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_at")
     val createdAt: Long = Instant.now().epochSecond,
@@ -21,6 +21,9 @@ data class BiteEntity(
 
     @ColumnInfo(name = "task_id")
     var taskId: String,
+
+    @ColumnInfo(name = "category_id")
+    var categoryId: String,
 
     var completed: Boolean = false,
 

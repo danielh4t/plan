@@ -14,7 +14,7 @@ data class TaskEntity(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_at")
     val createdAt: Long = Instant.now().epochSecond,
@@ -36,6 +36,6 @@ data class TaskEntity(
     var timerAlarm: Boolean = true,
 
     @ColumnInfo(name= "priority")
-    val priority: Int = 0
+    var priority: Int = 0
 
 )

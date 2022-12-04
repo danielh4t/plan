@@ -12,7 +12,8 @@ import kotlinx.parcelize.Parcelize
 data class Bite(
     var id: String,
     var name: String,
-    val taskId: String,
+    var taskId: String,
+    var categoryId: String,
     var completed: Boolean,
     var completedAt: Long,
 ) : Parcelable
@@ -22,6 +23,7 @@ fun Bite.asBiteEntity() = BiteEntity(
     id = id,
     name = name,
     taskId = taskId,
+    categoryId = categoryId,
     completed = completed,
     completedAt = completedAt
 )
@@ -30,6 +32,7 @@ fun Bite.asBiteDocument() = BiteDocument(
     id = id,
     name = name,
     taskId = taskId,
+    categoryId = categoryId,
     completed = completed,
     completedAt = completedAt
 )
@@ -38,6 +41,7 @@ fun BiteEntity.asBite() = Bite(
     id = id,
     name = name,
     taskId = taskId,
+    categoryId = categoryId,
     completed = completed,
     completedAt = completedAt
 )
