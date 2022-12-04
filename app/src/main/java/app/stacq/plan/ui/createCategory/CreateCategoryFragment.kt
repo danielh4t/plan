@@ -40,7 +40,8 @@ class CreateCategoryFragment : Fragment() {
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository = CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory = CreateCategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateCategoryViewModel::class.java]
@@ -49,15 +50,15 @@ class CreateCategoryFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.createFab.setOnClickListener { clickedView ->
-            val categoryName: String = binding.name.text.toString()
-            if (categoryName.isEmpty()) {
+            val name: String = binding.name.text.toString()
+            if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
             }
 
-            viewModel.create(categoryName)
+            viewModel.create(name)
 
             val action = CreateCategoryFragmentDirections.actionNavCategoryToNavCategories()
             this.findNavController().navigate(action)

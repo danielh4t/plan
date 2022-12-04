@@ -3,6 +3,7 @@ package app.stacq.plan.data.source.model
 import android.os.Parcelable
 import androidx.annotation.Keep
 import app.stacq.plan.data.source.local.category.CategoryEntity
+import app.stacq.plan.data.source.remote.category.CategoryDocument
 import kotlinx.parcelize.Parcelize
 
 
@@ -15,8 +16,21 @@ data class Category(
     var enabled: Boolean
 ) : Parcelable
 
+fun Category.asCategoryEntity() = CategoryEntity(
+    id = id,
+    name = name,
+    color = color,
+    enabled = enabled
+)
 
-fun CategoryEntity.toCategory() = Category(
+fun Category.asCategoryDocument() = CategoryDocument(
+    id = id,
+    name = name,
+    color = color,
+    enabled = enabled
+)
+
+fun CategoryEntity.asCategory() = Category(
     id = id,
     name = name,
     color = color,
