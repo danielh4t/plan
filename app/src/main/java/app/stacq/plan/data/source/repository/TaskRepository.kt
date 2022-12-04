@@ -33,6 +33,11 @@ class TaskRepository(
         tasksLocalDataSource.delete(task.asTaskEntity())
     }
 
+    suspend fun updateCategory(task: Task, previousCategoryId: String) = withContext(ioDispatcher) {
+        tasksLocalDataSource.update(task.asTaskEntity())
+        tasksRemoteDataSource.updateCategory(task.asTaskDocument(), previousCategoryId)
+    }
+
     suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
         tasksLocalDataSource.updateCompletion(task.asTaskEntity())
         tasksRemoteDataSource.updateTaskCompletion(task.asTaskDocument())

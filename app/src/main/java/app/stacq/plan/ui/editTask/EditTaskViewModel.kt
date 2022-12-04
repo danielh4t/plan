@@ -22,8 +22,14 @@ class EditTaskViewModel(
     fun editTask(task: Task, name: String, categoryId: String) {
         viewModelScope.launch {
             task.name = name
-            task.categoryId = categoryId
-            taskRepository.update(task)
+            if (task.categoryId == categoryId) {
+                taskRepository.update(task)
+            } else {
+                // update category
+                val previousCategoryId = task.categoryId
+                task.categoryId = categoryId
+                taskRepository.updateCategory(task, previousCategoryId)
+            }
         }
     }
 

@@ -66,8 +66,42 @@ class TaskRemoteDataSource(
             .collection("tasks")
             .document(taskId)
             .set(fields)
-
     }
+
+    suspend fun updateCategory(taskDocument: TaskDocument, previousCategoryId: String) =
+        withContext(ioDispatcher) {
+            val uid = firebaseAuth.currentUser?.uid
+            val taskId = taskDocument.id
+            val categoryId = taskDocument.categoryId
+
+
+            if (uid == null || taskId == null || categoryId == null) return@withContext
+
+            // delete old document
+            firestore.collection(uid)
+                .document(previousCategoryId)
+                .collection("tasks")
+                .document(taskId)
+                .delete()
+
+            val fields = hashMapOf(
+                "createdAt" to taskDocument.createdAt,
+                "name" to taskDocument.name,
+                "categoryId" to taskDocument.categoryId,
+                "completed" to taskDocument.completed,
+                "completedAt" to taskDocument.completedAt,
+                "timerFinishAt" to taskDocument.timerFinishAt,
+                "timerAlarm" to taskDocument.timerAlarm,
+                "priority" to taskDocument.priority
+            )
+
+            firestore.collection(uid)
+                .document(categoryId)
+                .collection("tasks")
+                .document(taskId)
+                .set(fields)
+        }
+
 
     suspend fun updateTaskCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
@@ -90,6 +124,7 @@ class TaskRemoteDataSource(
             .update(fields)
 
     }
+
 
     suspend fun updateTimerFinish(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
