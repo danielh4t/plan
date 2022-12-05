@@ -61,5 +61,16 @@ fun TaskEntity.asTask() = Task(
     priority = priority
 )
 
+fun TaskEntity.asTaskDocument() = TaskDocument(
+    id = id,
+    createdAt = createdAt,
+    name = name,
+    categoryId = categoryId,
+    completed = completed,
+    completedAt = completedAt,
+    timerAlarm = timerAlarm,
+    timerFinishAt = timerFinishAt,
+    priority = priority
+)
 
 

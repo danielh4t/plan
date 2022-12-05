@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class  TaskLocalDataSource(
+class TaskLocalDataSource(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskDataSource {
@@ -60,6 +60,11 @@ class  TaskLocalDataSource(
     override suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> =
         withContext(ioDispatcher) {
             taskDao.getTaskAndCategory(id)
+        }
+
+    override suspend fun geTasksList(): List<TaskEntity> =
+        withContext(ioDispatcher) {
+            taskDao.geTasksList()
         }
 
 }

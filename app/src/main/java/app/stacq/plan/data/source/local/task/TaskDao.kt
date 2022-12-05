@@ -16,6 +16,11 @@ interface TaskDao {
     )
     fun getTasks(): LiveData<List<TaskEntity>>
 
+    @Query(
+        "SELECT * FROM task"
+    )
+    fun geTasksList(): List<TaskEntity>
+
     /**
      * Insert a task.
      * If the task already exists, ignore it.

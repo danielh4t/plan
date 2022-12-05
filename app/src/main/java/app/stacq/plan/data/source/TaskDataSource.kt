@@ -26,4 +26,6 @@ interface TaskDataSource {
 
     suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity>
 
+    suspend fun geTasksList(): List<TaskEntity>
+
 }

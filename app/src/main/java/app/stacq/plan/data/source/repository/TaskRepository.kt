@@ -2,9 +2,11 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
 import app.stacq.plan.data.source.model.Task
+import app.stacq.plan.data.source.model.asTask
 import app.stacq.plan.data.source.model.asTaskDocument
 import app.stacq.plan.data.source.model.asTaskEntity
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
@@ -64,6 +66,14 @@ class TaskRepository(
 
     suspend fun getTask(id: String): LiveData<Task> = withContext(ioDispatcher) {
         tasksLocalDataSource.getTask(id).map { it.asTask() }
+    }
+
+    suspend fun geTasksList(): List<TaskEntity> = withContext(ioDispatcher) {
+        tasksLocalDataSource.geTasksList()
+    }
+
+    suspend fun syncTaskEntity(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        tasksRemoteDataSource.update(taskEntity.asTaskDocument())
     }
 
 }
