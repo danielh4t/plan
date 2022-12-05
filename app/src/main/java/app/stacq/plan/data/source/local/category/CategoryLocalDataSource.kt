@@ -33,4 +33,8 @@ class CategoryLocalDataSource(
     override suspend fun getCategoriesCount():Int = withContext(ioDispatcher) {
        return@withContext categoryDao.getCategoriesCount()
     }
+
+    override suspend fun getCategoriesList(): List<CategoryEntity> = withContext(ioDispatcher) {
+        categoryDao.getCategoriesList()
+    }
 }

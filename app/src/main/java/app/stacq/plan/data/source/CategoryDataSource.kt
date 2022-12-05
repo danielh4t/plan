@@ -15,4 +15,6 @@ interface CategoryDataSource {
 
     suspend fun getCategoriesCount(): Int
 
+    suspend fun getCategoriesList(): List<CategoryEntity>
+
 }

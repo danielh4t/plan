@@ -1,13 +1,16 @@
 package app.stacq.plan.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
 import coil.load
@@ -46,6 +49,8 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.outputWorkInfo.observe(viewLifecycleOwner, workInfoObserver())
 
         firebaseAuth.addAuthStateListener { auth ->
             if (auth.currentUser == null) {
@@ -90,6 +95,11 @@ class ProfileFragment : Fragment() {
                 signInLauncher.launch(signInIntent)
             }
         }
+
+        binding.syncButton.setOnClickListener {
+            viewModel.sync()
+        }
+
     }
 
     private val signInLauncher =
@@ -114,7 +124,23 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(context, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    private fun workInfoObserver(): Observer<List<WorkInfo>> {
+        return Observer { listOfWorkInfo ->
+
+            // If there are no matching work info, do nothing
+            if (listOfWorkInfo.isNullOrEmpty()) {
+                return@Observer
+            }
+
+            val workInfo = listOfWorkInfo[0]
+            if (workInfo.state.isFinished) {
+                Toast.makeText(context, R.string.sync_complete, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, R.string.sync_progress, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

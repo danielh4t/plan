@@ -5,16 +5,16 @@ import android.os.Bundle
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.task.TaskLocalDataSource
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
+import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
+import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.util.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 
 
-class SyncTaskWorker(context: Context, params: WorkerParameters) :
+class SyncBiteWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 
     private val appContext = applicationContext
@@ -23,19 +23,19 @@ class SyncTaskWorker(context: Context, params: WorkerParameters) :
     override suspend fun doWork(): Result {
         val database = PlanDatabase.getDatabase(appContext)
 
-        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
-        val taskRemoteDataSource = TaskRemoteDataSource()
-        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
+        val biteLocalDataSource = BiteLocalDataSource(database.biteDao())
+        val biteRemoteDataSource = BiteRemoteDataSource()
+        val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
 
         return try {
-            for (taskEntity in taskRepository.getTasksList()) {
-                taskRepository.sync(taskEntity)
+            for (biteEntity in biteRepository.getBitesList()) {
+                biteRepository.sync(biteEntity)
             }
             Result.success()
         } catch (throwable: Throwable) {
             val params = Bundle()
             params.putString("exception", throwable.message)
-            firebaseAnalytics.logEvent(AnalyticsConstants.Event.SYNC_TASK, params)
+            firebaseAnalytics.logEvent(AnalyticsConstants.Event.SYNC_BITE, params)
             Result.failure()
         }
 

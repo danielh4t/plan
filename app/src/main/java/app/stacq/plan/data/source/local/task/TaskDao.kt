@@ -19,7 +19,7 @@ interface TaskDao {
     @Query(
         "SELECT * FROM task"
     )
-    fun geTasksList(): List<TaskEntity>
+    fun getTasksList(): List<TaskEntity>
 
     /**
      * Insert a task.

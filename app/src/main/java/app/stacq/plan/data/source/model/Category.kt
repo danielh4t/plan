@@ -16,14 +16,14 @@ data class Category(
     var enabled: Boolean
 ) : Parcelable
 
-fun Category.asCategoryEntity() = CategoryEntity(
+fun Category.asEntity() = CategoryEntity(
     id = id,
     name = name,
     color = color,
     enabled = enabled
 )
 
-fun Category.asCategoryDocument() = CategoryDocument(
+fun Category.asDocument() = CategoryDocument(
     id = id,
     name = name,
     color = color,
@@ -31,6 +31,14 @@ fun Category.asCategoryDocument() = CategoryDocument(
 )
 
 fun CategoryEntity.asCategory() = Category(
+    id = id,
+    name = name,
+    color = color,
+    enabled = enabled
+)
+
+
+fun CategoryEntity.asDocument() = CategoryDocument(
     id = id,
     name = name,
     color = color,

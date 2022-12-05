@@ -62,9 +62,9 @@ class TaskLocalDataSource(
             taskDao.getTaskAndCategory(id)
         }
 
-    override suspend fun geTasksList(): List<TaskEntity> =
+    override suspend fun getTasksList(): List<TaskEntity> =
         withContext(ioDispatcher) {
-            taskDao.geTasksList()
+            taskDao.getTasksList()
         }
 
 }

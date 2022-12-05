@@ -48,9 +48,16 @@ interface CategoryDao {
      *
      * @return number of enabled categories.
      */
-    @Query(
-        "SELECT COUNT(*) FROM category WHERE enabled"
-    )
+    @Query("SELECT COUNT(*) FROM category WHERE enabled")
     fun getCategoriesCount(): Int
+
+
+    /**
+     * Select all categories from the category.
+     *
+     * @return all categories.
+     */
+    @Query("SELECT * FROM category")
+    fun getCategoriesList(): List<CategoryEntity>
 
 }

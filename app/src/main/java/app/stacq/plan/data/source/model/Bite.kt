@@ -19,7 +19,7 @@ data class Bite(
 ) : Parcelable
 
 
-fun Bite.asBiteEntity() = BiteEntity(
+fun Bite.asEntity() = BiteEntity(
     id = id,
     name = name,
     taskId = taskId,
@@ -28,7 +28,7 @@ fun Bite.asBiteEntity() = BiteEntity(
     completedAt = completedAt
 )
 
-fun Bite.asBiteDocument() = BiteDocument(
+fun Bite.asDocument() = BiteDocument(
     id = id,
     name = name,
     taskId = taskId,
@@ -38,6 +38,15 @@ fun Bite.asBiteDocument() = BiteDocument(
 )
 
 fun BiteEntity.asBite() = Bite(
+    id = id,
+    name = name,
+    taskId = taskId,
+    categoryId = categoryId,
+    completed = completed,
+    completedAt = completedAt
+)
+
+fun BiteEntity.asDocument() = BiteDocument(
     id = id,
     name = name,
     taskId = taskId,

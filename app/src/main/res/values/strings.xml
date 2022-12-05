@@ -80,6 +80,9 @@
     <string name="select_category">Select Category</string>
     <string name="priority">Priority</string>
     <string name="content_priority_slider">Priority slider</string>
+    <string name="backup">Backup</string>
+    <string name="sync_progress">syncing</string>
+    <string name="sync_complete">sync complete</string>r
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
