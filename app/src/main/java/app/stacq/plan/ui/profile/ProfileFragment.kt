@@ -1,6 +1,5 @@
 package app.stacq.plan.ui.profile
 
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -149,9 +148,6 @@ class ProfileFragment : Fragment() {
         binding.syncButton.setOnClickListener {
             viewModel.sync()
         }
-
-        (binding.profileImageView.drawable as Animatable).start()
-
     }
 
     private val signInLauncher =

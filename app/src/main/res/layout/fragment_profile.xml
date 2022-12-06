@@ -25,7 +25,7 @@
             android:minWidth="96dp"
             android:minHeight="96dp"
             android:padding="8dp"
-            android:src="@drawable/avd_checkmark"
+            android:src="@drawable/ic_checkmark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
