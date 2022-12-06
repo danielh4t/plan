@@ -77,7 +77,6 @@ dependencies {
     implementation 'androidx.databinding:databinding-common:7.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'com.google.android.material:material:1.7.0'
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
@@ -86,6 +85,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-appcheck-debug:16.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'

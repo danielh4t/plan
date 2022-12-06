@@ -21,7 +21,6 @@
     <string name="sign_in_success">Sign In Success</string>
     <string name="sign_in_dismiss">Sign In Dismiss</string>
     <string name="sign_in_failure">Sign In Failure</string>
-    <string name="content_sign_in_out">Sign In / Sign Out </string>
     <string name="sign_out_success">Sign Out Success</string>
     <string name="sign_out_failure">Sign Out Failure</string>
     <!-- Task fragment -->
@@ -41,8 +40,8 @@
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
-    <string name="sign_in">Sign In</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign out</string>
     <string name="timer_complete">Timer complete</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
     <string name="notify">Notify me</string>
@@ -73,9 +72,11 @@
     <string name="content_sync">Cloud Sync</string>
     <string name="sync_complete">sync complete</string>
     <string name="analysis">Analysis</string>
-    <string name="sign_in_sync">Sign in to sync on cloud</string>
+    <string name="sign_in_sync">Sign in to backup and sync to cloud</string>
     <string name="category_removed">Category removed</string>
     <string name="action_undo_text">UNDO</string>
+    <string name="content_sign_in">Sign in with Google</string>
+    <string name="content_sign_out">Sign out</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
