@@ -1,4 +1,4 @@
-package app.stacq.plan.worker
+package app.stacq.plan.util.constants
 
 
 object WorkerConstants {

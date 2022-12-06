@@ -8,7 +8,7 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.TaskRepository
-import app.stacq.plan.util.AnalyticsConstants
+import app.stacq.plan.util.constants.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase

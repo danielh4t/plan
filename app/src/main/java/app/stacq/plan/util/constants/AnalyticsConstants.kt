@@ -1,4 +1,4 @@
-package app.stacq.plan.util
+package app.stacq.plan.util.constants
 
 
 object AnalyticsConstants {

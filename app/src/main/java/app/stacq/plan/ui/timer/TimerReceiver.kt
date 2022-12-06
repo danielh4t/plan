@@ -1,7 +1,7 @@
 package app.stacq.plan.ui.timer
 
-import android.content.BroadcastReceiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
@@ -13,12 +13,12 @@ class TimerReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         with(NotificationManagerCompat.from(context)) {
-            val notificationId: Int =
+            val requestCode: Int =
                 intent.getLongExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, 0).toInt()
-            val contextText: String =
+            val content: String =
                 intent.getStringExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY).toString()
-            if(areNotificationsEnabled()) {
-                sendNotification(notificationId, contextText, context)
+            if (areNotificationsEnabled()) {
+                sendNotification(context, requestCode, content)
             }
         }
     }

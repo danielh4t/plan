@@ -1,6 +1,7 @@
 package app.stacq.plan.ui.timer
 
 import android.os.CountDownTimer
+import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +16,7 @@ import java.time.Instant
 
 class TimerViewModel(
     private val taskRepository: TaskRepository,
-    private val task: Task,
-    notify: Boolean
+    private val task: Task
 ) : ViewModel() {
 
     private val _timerTime = MutableLiveData<String>()
@@ -28,13 +28,7 @@ class TimerViewModel(
     private val _timerAlarm = MutableLiveData<Boolean>()
     val timerAlarm: LiveData<Boolean> = _timerAlarm
 
-    private val _postNotifications = MutableLiveData<Boolean>()
-    val postNotifications: LiveData<Boolean> = _postNotifications
-
     init {
-
-        _postNotifications.value = notify
-
         // finish at is not set
         if (task.timerFinishAt == 0L) {
             setFinishAt()
@@ -50,7 +44,6 @@ class TimerViewModel(
             _timerAlarm.value = task.timerAlarm
         }
     }
-
 
     private fun setFinishAt() {
         val finishAt = Instant.now().plusSeconds(TimerConstants.TIMER_TIME_IN_SECONDS).epochSecond
@@ -76,6 +69,10 @@ class TimerViewModel(
                 _timerFinished.value = true
             }
         }.start()
+    }
+
+    fun getAlarmTriggerTime(): Long {
+        return SystemClock.elapsedRealtime() + millisInFuture(task.timerFinishAt)
     }
 
     fun updateTaskTimerAlarm() {

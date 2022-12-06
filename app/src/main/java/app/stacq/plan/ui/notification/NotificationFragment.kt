@@ -43,7 +43,6 @@ class NotificationFragment : Fragment() {
         val viewModel: NotificationViewModel by viewModels()
         binding.lifecycleOwner = viewLifecycleOwner
 
-
         requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -62,7 +61,7 @@ class NotificationFragment : Fragment() {
                     viewModel.logPermission(false)
                 }
                 val action =
-                    NotificationFragmentDirections.actionNavNotificationToNavTimer(task, isGranted)
+                    NotificationFragmentDirections.actionNavNotificationToNavTimer(task)
                 this.findNavController().navigate(action)
             }
 
@@ -78,7 +77,7 @@ class NotificationFragment : Fragment() {
                 R.string.no_notification,
                 Snackbar.LENGTH_SHORT
             ).show()
-            val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(task, false)
+            val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(task)
             this.findNavController().navigate(action)
         }
 

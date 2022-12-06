@@ -79,9 +79,6 @@
         <argument
             android:name="task"
             app:argType="app.stacq.plan.data.source.model.Task" />
-        <argument
-            android:name="notify"
-            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/nav_notification"
@@ -90,7 +87,8 @@
         tools:layout="@layout/fragment_notification">
         <action
             android:id="@+id/action_nav_notification_to_nav_timer"
-            app:destination="@id/nav_timer" />
+            app:destination="@id/nav_timer"
+            app:popUpTo="@id/nav_task" />
         <argument
             android:name="task"
             app:argType="app.stacq.plan.data.source.model.Task" />

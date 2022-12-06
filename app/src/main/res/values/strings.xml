@@ -2,7 +2,6 @@
     <string name="app_name">Plan</string>
     <!-- Main -->
     <string name="tasks">Tasks</string>
-    <string name="add">add</string>
     <string name="task">Task</string>
     <string name="category">Category</string>
     <!-- Create fragment -->
@@ -15,12 +14,8 @@
     <string name="create_category">Create Category</string>
     <string name="empty_category_details">Empty category name</string>
     <!-- Task fragment -->
-    <string name="complete">Complete</string>
-    <string name="complete_fab">complete action</string>
-    <string name="created">Created On</string>
     <!-- Timer fragment  -->
     <string name="time">01 January 1970 00:00</string>
-    <string name="task_time">52 minutes</string>
     <string name="blank_time">52</string>
     <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
@@ -29,10 +24,8 @@
     <string name="content_sign_in_out">Sign In / Sign Out </string>
     <string name="sign_out_success">Sign Out Success</string>
     <string name="sign_out_failure">Sign Out Failure</string>
-    <string name="content_nav_header_image">app icon or profile image</string>
     <!-- Task fragment -->
     <string name="timer">Timer</string>
-    <string name="content_task_time">Task created time calendar icon</string>
     <string name="content_timer">Open Timer</string>
     <string name="edit">Edit</string>
     <string name="content_edit_task">Edit Task </string>
@@ -48,10 +41,9 @@
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
-    <string name="sign_in">Sign in</string>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>
     <string name="timer_complete">Timer complete</string>
-    <string name="task_created">Task created</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
     <string name="notify">Notify me</string>
     <string name="no_thanks">No thanks</string>
@@ -60,9 +52,7 @@
     <string name="content_notification_bell">Notification Bell</string>
     <string name="content_agree">Agree to notification image</string>
     <string name="notification">Notification</string>
-    <string name="category_name">Category name</string>
     <string name="categories">Categories</string>
-    <string name="metrics">Metrics</string>
     <string name="content_category_color">category color</string>
     <string name="content_task_list">list of tasks</string>
     <string name="content_category_list">list of categories</string>
@@ -73,19 +63,15 @@
     <string name="task_timer_icon">task timer time icon</string>
     <string name="bites">Bites</string>
     <string name="content_create_bite">Create Bite</string>
-    <string name="content_create_task">Create task</string>
+    <string name="content_create_task">Create Task</string>
     <string name="bite">Bite</string>
-    <string name="empty_bite_details">Empty bite name</string>
     <string name="create_bite_label">Create Bite</string>
     <string name="select_category">Select Category</string>
     <string name="priority">Priority</string>
     <string name="content_priority_slider">Priority slider</string>
     <string name="sync">Sync</string>
     <string name="content_sync">Cloud Sync</string>
-    <string name="sync_progress">syncing</string>
     <string name="sync_complete">sync complete</string>
-    <string name="clear_completed">Clear completed tasks daily</string>
-    <string name="settings">Settings</string>
     <string name="analysis">Analysis</string>
     <string name="sign_in_sync">Sign in to sync on cloud</string>
     <string name="category_removed">Category removed</string>

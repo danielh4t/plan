@@ -25,7 +25,7 @@
             android:minWidth="96dp"
             android:minHeight="96dp"
             android:padding="8dp"
-            android:src="@drawable/ic_checkmark"
+            android:src="@drawable/avd_checkmark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -63,12 +63,10 @@
             android:layout_margin="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:columnCount="7"
             android:minHeight="200dp"
-            app:layout_constraintBottom_toTopOf="@+id/settings_text"
+            app:layout_constraintBottom_toTopOf="@+id/sync_text"
             app:layout_constraintEnd_toStartOf="@+id/percentage_text"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/analysis_text" />
 
@@ -77,14 +75,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="64dp"
             android:fontFamily="@font/roboto"
             android:text="@string/sign_in_sync"
             android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/sync_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/month_grid" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sync_button"
@@ -106,13 +104,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto"
             android:textAlignment="center"
             android:textSize="32sp"
-            app:layout_constraintBottom_toTopOf="@+id/settings_text"
+            app:layout_constraintBottom_toTopOf="@+id/sync_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/month_grid"
             app:layout_constraintTop_toBottomOf="@+id/analysis_text"
             tools:text="100%" />
 

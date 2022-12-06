@@ -1,5 +1,6 @@
 package app.stacq.plan.ui.profile
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -149,6 +150,8 @@ class ProfileFragment : Fragment() {
             viewModel.sync()
         }
 
+        (binding.profileImageView.drawable as Animatable).start()
+
     }
 
     private val signInLauncher =
@@ -161,6 +164,7 @@ class ProfileFragment : Fragment() {
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             // Successfully signed in
             Toast.makeText(context, R.string.sign_in_success, Toast.LENGTH_SHORT).show()
+            binding.syncButton.visibility = View.VISIBLE
         } else {
             // Sign in failed
             // If response is null the user canceled the sign-in flow using the back button.

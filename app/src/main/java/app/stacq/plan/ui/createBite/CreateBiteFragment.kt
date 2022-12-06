@@ -54,7 +54,7 @@ class CreateBiteFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.createFab.setOnClickListener { clickedView ->
-            val name: String = binding.title.text.toString()
+            val name: String = binding.biteName.text.toString()
             if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)

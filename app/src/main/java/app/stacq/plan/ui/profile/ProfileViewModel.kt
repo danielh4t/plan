@@ -16,7 +16,7 @@ import app.stacq.plan.util.startOfDay
 import app.stacq.plan.worker.SyncBiteWorker
 import app.stacq.plan.worker.SyncCategoryWorker
 import app.stacq.plan.worker.SyncTaskWorker
-import app.stacq.plan.worker.WorkerConstants
+import app.stacq.plan.util.constants.WorkerConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase

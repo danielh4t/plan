@@ -18,7 +18,7 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/task_completed"
+            android:id="@+id/bite_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/task_title"
+            android:id="@+id/bite_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -39,7 +39,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_completed"
+            app:layout_constraintStart_toEndOf="@id/bite_completed"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/bite" />

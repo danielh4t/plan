@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.model.asBite
 import app.stacq.plan.data.source.repository.BiteRepository
-import app.stacq.plan.util.AnalyticsConstants
+import app.stacq.plan.util.constants.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase

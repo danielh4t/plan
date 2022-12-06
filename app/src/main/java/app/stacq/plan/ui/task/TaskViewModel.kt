@@ -63,4 +63,20 @@ class TaskViewModel(
         }
     }
 
+    fun hasAlarm(): Boolean {
+        val task: Task = task.value!!
+        if(task.timerAlarm && task.timerFinishAt > Instant.now().epochSecond) return true
+        return false
+    }
+
+    fun taskName(): String {
+        val task: Task = task.value!!
+        return task.name
+    }
+
+    fun taskFinishAt(): Int {
+        val task: Task = task.value!!
+        return task.timerFinishAt.toInt()
+    }
+
 }

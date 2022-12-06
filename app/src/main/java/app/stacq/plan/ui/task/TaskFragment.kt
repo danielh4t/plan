@@ -1,6 +1,7 @@
 package app.stacq.plan.ui.task
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
+import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.isFinishAtInFuture
 
 
@@ -85,6 +87,14 @@ class TaskFragment : Fragment() {
 
         binding.deleteTaskButton.setOnClickListener {
             viewModel.delete()
+            // cancel alarm
+            val hasAlarm = viewModel.hasAlarm()
+            if (hasAlarm) {
+                // finish_at
+                val requestCode: Int = viewModel.taskFinishAt()
+                val name = viewModel.taskName()
+                cancelAlarm(application, requestCode, name)
+            }
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }
@@ -96,13 +106,14 @@ class TaskFragment : Fragment() {
 
         binding.timerFab.setOnClickListener {
             val task: Task = viewModel.task.value!!
-            val notify: Boolean = hasPostNotificationsPermission()
+            val canPostNotifications: Boolean = hasPostNotificationsPermission(application)
             val isFinishAtInFuture: Boolean = isFinishAtInFuture(task.timerFinishAt)
-            if (!notify and isFinishAtInFuture) {
+            if (!canPostNotifications and isFinishAtInFuture) {
+                // request permission
                 val action = TaskFragmentDirections.actionNavTaskToNavNotification(task)
                 this.findNavController().navigate(action)
             } else {
-                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task, notify)
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
                 this.findNavController().navigate(action)
             }
         }
@@ -125,21 +136,17 @@ class TaskFragment : Fragment() {
     /**
      * Handles request for app post notification permission
      */
-    private fun hasPostNotificationsPermission(): Boolean {
+    private fun hasPostNotificationsPermission(applicationContext: Context): Boolean {
         when {
-            context?.let {
-                ContextCompat.checkSelfPermission(
-                    it.applicationContext,
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
-            } == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
                 return true
             }
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected.
-
+                // Explain to the user why your app requires this permission
                 return false
             }
             else -> {
