@@ -2,6 +2,8 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import app.stacq.plan.data.source.local.task.TaskAnalysis
+import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
 import app.stacq.plan.data.source.model.Task
@@ -14,56 +16,68 @@ import kotlinx.coroutines.withContext
 
 
 class TaskRepository(
-    private val tasksLocalDataSource: TaskLocalDataSource,
-    private val tasksRemoteDataSource: TaskRemoteDataSource,
+    private val localDataSource: TaskLocalDataSource,
+    private val remoteDataSource: TaskRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun create(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.create(task.asTaskEntity())
-        tasksRemoteDataSource.create(task.asTaskDocument())
+        localDataSource.create(task.asTaskEntity())
+        remoteDataSource.create(task.asTaskDocument())
     }
 
     suspend fun update(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.update(task.asTaskEntity())
-        tasksRemoteDataSource.update(task.asTaskDocument())
+        localDataSource.update(task.asTaskEntity())
+        remoteDataSource.update(task.asTaskDocument())
     }
 
     suspend fun delete(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.delete(task.asTaskEntity())
+        localDataSource.delete(task.asTaskEntity())
     }
 
     suspend fun updateCategory(task: Task, previousCategoryId: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.update(task.asTaskEntity())
-        tasksRemoteDataSource.updateCategory(task.asTaskDocument(), previousCategoryId)
+        localDataSource.update(task.asTaskEntity())
+        remoteDataSource.updateCategory(task.asTaskDocument(), previousCategoryId)
     }
 
     suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateCompletion(task.asTaskEntity())
-        tasksRemoteDataSource.updateTaskCompletion(task.asTaskDocument())
+        localDataSource.updateCompletion(task.asTaskEntity())
+        remoteDataSource.updateTaskCompletion(task.asTaskDocument())
     }
 
     suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTimerFinish(task.asTaskEntity())
-        tasksRemoteDataSource.updateTimerFinish(task.asTaskDocument())
+        localDataSource.updateTimerFinish(task.asTaskEntity())
+        remoteDataSource.updateTimerFinish(task.asTaskDocument())
     }
 
     suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updateTimerAlarmById(id)
+        localDataSource.updateTimerAlarmById(id)
     }
 
     suspend fun updatePriority(task: Task) = withContext(ioDispatcher) {
-        tasksLocalDataSource.updatePriority(task.asTaskEntity())
-        tasksRemoteDataSource.updatePriority(task.asTaskDocument())
+        localDataSource.updatePriority(task.asTaskEntity())
+        remoteDataSource.updatePriority(task.asTaskDocument())
     }
 
     suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
-        tasksLocalDataSource.getTasks()
+        localDataSource.getTasks()
             .map { it.map { it1 -> it1.asTask() } }
     }
 
     suspend fun getTask(id: String): LiveData<Task> = withContext(ioDispatcher) {
-        tasksLocalDataSource.getTask(id).map { it.asTask() }
+        localDataSource.getTask(id).map { it.asTask() }
+    }
+
+    suspend fun getTasksList(): List<TaskEntity> = withContext(ioDispatcher) {
+        localDataSource.getTasksList()
+    }
+
+    suspend fun sync(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        remoteDataSource.update(taskEntity.asTaskDocument())
+    }
+
+    suspend fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>> = withContext(ioDispatcher) {
+        return@withContext localDataSource.countCompletedInMonth(startAt)
     }
 
 }

@@ -41,4 +41,8 @@ interface BiteDao {
     @Delete
     suspend fun delete(biteEntity: BiteEntity)
 
+
+    @Query("SELECT * FROM bite")
+    fun getBitesList(): List<BiteEntity>
+
 }

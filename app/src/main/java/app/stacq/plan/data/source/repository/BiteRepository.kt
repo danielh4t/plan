@@ -6,8 +6,8 @@ import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.model.Bite
 import app.stacq.plan.data.source.model.asBite
-import app.stacq.plan.data.source.model.asBiteDocument
-import app.stacq.plan.data.source.model.asBiteEntity
+import app.stacq.plan.data.source.model.asDocument
+import app.stacq.plan.data.source.model.asEntity
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -26,17 +26,25 @@ class BiteRepository(
     }
 
     suspend fun create(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.create(bite.asBiteEntity())
-        remoteDataSource.create(bite.asBiteDocument())
+        localDataSource.create(bite.asEntity())
+        remoteDataSource.create(bite.asDocument())
     }
 
     suspend fun update(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.update(bite.asBiteEntity())
-        remoteDataSource.update(bite.asBiteDocument())
+        localDataSource.update(bite.asEntity())
+        remoteDataSource.update(bite.asDocument())
     }
 
     suspend fun delete(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.delete(bite.asBiteEntity())
+        localDataSource.delete(bite.asEntity())
+    }
+
+    suspend fun getBitesList(): List<BiteEntity> = withContext(ioDispatcher) {
+        localDataSource.getBitesList()
+    }
+
+    suspend fun sync(biteEntity: BiteEntity) = withContext(ioDispatcher) {
+        remoteDataSource.update(biteEntity.asDocument())
     }
 
 }

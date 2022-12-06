@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
 import coil.load
@@ -19,6 +24,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class ProfileFragment : Fragment() {
 
@@ -46,6 +52,8 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.outputWorkInfo.observe(viewLifecycleOwner, workInfoObserver())
 
         firebaseAuth.addAuthStateListener { auth ->
             if (auth.currentUser == null) {
@@ -90,6 +98,57 @@ class ProfileFragment : Fragment() {
                 signInLauncher.launch(signInIntent)
             }
         }
+
+        if (firebaseAuth.currentUser == null) {
+            binding.syncButton.visibility = View.GONE
+        }
+
+        viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
+            binding.monthGrid.removeAllViews()
+            if (tasks != null) {
+                val daysMap = tasks.associate { it.day to it.completed }
+                for (day in 0..viewModel.days) {
+
+                    val params = GridLayout.LayoutParams()
+                    params.height = GridLayout.LayoutParams.WRAP_CONTENT
+                    params.width = GridLayout.LayoutParams.WRAP_CONTENT
+                    params.marginStart = 16
+                    params.marginEnd = 16
+                    params.topMargin = 8
+                    params.bottomMargin = 8
+                    val imageView = ImageView(context)
+                    imageView.layoutParams = params
+                    imageView.setImageResource(R.drawable.ic_circle)
+                    imageView.setColorFilter(
+                        ContextCompat.getColor(requireContext(), R.color.green_20),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
+                    // check if in list
+                    if (daysMap.containsKey(day)) {
+                        val completed = daysMap[day]
+                        if (completed != null) {
+                            val color = when (completed) {
+                                in 1..4 -> R.color.green_60
+                                in 5..9 -> R.color.green_80
+                                else -> R.color.green
+                            }
+                            imageView.setColorFilter(
+                                ContextCompat.getColor(requireContext(), color),
+                                android.graphics.PorterDuff.Mode.SRC_IN
+                            )
+                        }
+                    }
+                    binding.monthGrid.addView(imageView)
+
+                    binding.percentageText.text = viewModel.calculatePercentage(daysMap.size)
+                }
+            }
+        }
+
+        binding.syncButton.setOnClickListener {
+            viewModel.sync()
+        }
+
     }
 
     private val signInLauncher =
@@ -114,7 +173,21 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(context, R.string.sign_in_failure, Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    private fun workInfoObserver(): Observer<List<WorkInfo>> {
+        return Observer { listOfWorkInfo ->
+
+            // If there are no matching work info, do nothing
+            if (listOfWorkInfo.isNullOrEmpty()) {
+                return@Observer
+            }
+
+            val workInfo = listOfWorkInfo[0]
+            if (workInfo.state.isFinished) {
+                Toast.makeText(context, R.string.sync_complete, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

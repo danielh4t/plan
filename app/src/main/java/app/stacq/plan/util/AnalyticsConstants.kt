@@ -8,6 +8,9 @@ object AnalyticsConstants {
         const val CREATE_CATEGORY = "create_category"
         const val CREATE_BITE = "create_bite"
         const val APP_PERMISSION = "app_permission"
+        const val SYNC_TASK = "sync_task"
+        const val SYNC_CATEGORY = "sync_category"
+        const val SYNC_BITE = "sync_bite"
     }
 
     object Param {

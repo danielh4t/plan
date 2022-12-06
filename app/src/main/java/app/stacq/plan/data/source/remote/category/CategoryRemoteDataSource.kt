@@ -26,11 +26,31 @@ class CategoryRemoteDataSource(
 
         val fields = hashMapOf(
             "name" to categoryDocument.name,
-            "color" to categoryDocument.color
+            "color" to categoryDocument.color,
+            "enabled" to categoryDocument.enabled
         )
 
         firestore.collection(uid).document(categoryId).set(fields)
 
+    }
+
+
+    suspend fun update(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        val categoryId = categoryDocument.id
+
+        if (uid == null || categoryId == null) return@withContext
+
+        val fields = hashMapOf(
+            "name" to categoryDocument.name,
+            "color" to categoryDocument.color,
+            "enabled" to categoryDocument.enabled
+        )
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .set(fields)
     }
 
 

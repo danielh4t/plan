@@ -13,4 +13,6 @@ interface BiteDataSource {
 
     suspend fun delete(biteEntity: BiteEntity)
 
+    suspend fun getBitesList(): List<BiteEntity>
+
 }

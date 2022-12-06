@@ -71,6 +71,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
     implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
     kapt 'androidx.room:room-compiler:2.4.3'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.databinding:databinding-common:7.3.1'

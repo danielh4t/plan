@@ -30,4 +30,8 @@ class BiteLocalDataSource(
         biteDao.delete(biteEntity)
     }
 
+    override suspend fun getBitesList(): List<BiteEntity> = withContext(ioDispatcher) {
+        biteDao.getBitesList()
+    }
+
 }

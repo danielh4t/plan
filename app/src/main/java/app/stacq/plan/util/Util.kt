@@ -2,6 +2,8 @@ package app.stacq.plan.util
 
 
 import java.time.Instant
+import java.time.YearMonth
+import java.util.*
 
 fun String.sentenceCase(): String {
     return this.lowercase().replaceFirstChar { it.uppercase() }
@@ -38,4 +40,37 @@ fun defaultColors(color: String): String {
         "Work" -> "#1E90FF"
         else -> palette.random()
     }
+}
+
+fun numberOfDays(): Int {
+    val calendar = Calendar.getInstance()
+    val year: Int = calendar.get(Calendar.YEAR)
+    val month: Int = calendar.get(Calendar.MONTH)
+    val ym = YearMonth.of(year, month)
+    return ym.lengthOfMonth()
+}
+
+
+fun startOfDay(day: Int): Long {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+    calendar.set(Calendar.DAY_OF_MONTH, day + 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    return calendar.timeInMillis / 1000L
+}
+
+fun endOfDay(day: Int): Long {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+    calendar.set(Calendar.DAY_OF_MONTH, day + 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 23)
+    calendar.set(Calendar.MINUTE, 59)
+    calendar.set(Calendar.SECOND, 59)
+    calendar.set(Calendar.MILLISECOND, 999)
+    return calendar.timeInMillis / 1000L
 }

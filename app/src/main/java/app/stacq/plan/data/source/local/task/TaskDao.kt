@@ -16,6 +16,11 @@ interface TaskDao {
     )
     fun getTasks(): LiveData<List<TaskEntity>>
 
+    @Query(
+        "SELECT * FROM task"
+    )
+    fun getTasksList(): List<TaskEntity>
+
     /**
      * Insert a task.
      * If the task already exists, ignore it.
@@ -103,5 +108,11 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM task WHERE id = :id")
     fun getTaskAndCategory(id: String): LiveData<TaskEntityAndCategoryEntity>
+
+    @Query("SELECT COUNT(*) as completed, strftime('%d',DATE(completed_at, 'unixepoch')) as day " +
+            "FROM task " +
+            "WHERE completed and completed_at >= :startAt " +
+            "GROUP BY day")
+    fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>>
 
 }

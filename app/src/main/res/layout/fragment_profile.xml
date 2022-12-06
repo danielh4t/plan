@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,12 +20,12 @@
             android:id="@+id/profile_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="96dp"
-            android:minWidth="96dp"
             android:layout_marginTop="16dp"
+            android:backgroundTint="@color/green"
+            android:minWidth="96dp"
+            android:minHeight="96dp"
             android:padding="8dp"
             android:src="@drawable/ic_checkmark"
-            android:backgroundTint="@color/green_check"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +41,80 @@
             app:icon="@drawable/ic_person_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image_view" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_view"
+            tools:text="@string/sign_in" />
 
+        <TextView
+            android:id="@+id/analysis_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/analysis"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/auth_button" />
+
+        <GridLayout
+            android:id="@+id/month_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:columnCount="7"
+            android:minHeight="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/settings_text"
+            app:layout_constraintEnd_toStartOf="@+id/percentage_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/analysis_text" />
+
+        <TextView
+            android:id="@+id/sync_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/sign_in_sync"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/month_grid" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sync_button"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/content_sync"
+            android:text="@string/sync"
+            app:icon="@drawable/ic_sync"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/percentage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/settings_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/month_grid"
+            app:layout_constraintTop_toBottomOf="@+id/analysis_text"
+            tools:text="100%" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
