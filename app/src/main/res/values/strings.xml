@@ -88,6 +88,8 @@
     <string name="settings">Settings</string>
     <string name="analysis">Analysis</string>
     <string name="sign_in_sync">Sign in to sync on cloud</string>
+    <string name="category_removed">Category removed</string>
+    <string name="action_undo_text">UNDO</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>

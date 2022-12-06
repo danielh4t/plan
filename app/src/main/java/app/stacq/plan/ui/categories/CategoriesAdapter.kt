@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.stacq.plan.R
 import app.stacq.plan.data.source.model.Category
-
 import app.stacq.plan.databinding.ListItemCategoryBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
@@ -20,8 +21,11 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, viewModel)
+        val category = getItem(position)
+        holder.bind(category, viewModel)
+        holder.itemView.setOnClickListener { _ ->
+            viewModel.updateEnabled(category.id)
+        }
     }
 
     class ViewHolder private constructor(private val binding: ListItemCategoryBinding) :
