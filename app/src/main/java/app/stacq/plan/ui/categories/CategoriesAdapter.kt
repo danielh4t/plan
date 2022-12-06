@@ -23,8 +23,12 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
         holder.bind(category, viewModel)
-        holder.itemView.setOnClickListener { _ ->
+        holder.itemView.setOnClickListener { view ->
             viewModel.updateEnabled(category.id)
+            Snackbar.make(view, R.string.category_removed, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_undo_text) {
+                    viewModel.updateEnabled(category.id)
+                }.show()
         }
     }
 
