@@ -2,6 +2,7 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import app.stacq.plan.data.source.local.task.TaskAnalysis
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
@@ -73,6 +74,10 @@ class TaskRepository(
 
     suspend fun sync(taskEntity: TaskEntity) = withContext(ioDispatcher) {
         remoteDataSource.update(taskEntity.asTaskDocument())
+    }
+
+    suspend fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>> = withContext(ioDispatcher) {
+        return@withContext localDataSource.countCompletedInMonth(startAt)
     }
 
 }

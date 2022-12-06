@@ -67,4 +67,8 @@ class TaskLocalDataSource(
             taskDao.getTasksList()
         }
 
+    override suspend fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>> = withContext(ioDispatcher) {
+          return@withContext taskDao.countCompletedInMonth(startAt)
+    }
+
 }

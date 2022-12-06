@@ -1,12 +1,14 @@
 package app.stacq.plan.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +24,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class ProfileFragment : Fragment() {
 
@@ -96,6 +99,52 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        if (firebaseAuth.currentUser == null) {
+            binding.syncButton.visibility = View.GONE
+        }
+
+        viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
+            binding.monthGrid.removeAllViews()
+            if (tasks != null) {
+                val daysMap = tasks.associate { it.day to it.completed }
+                for (day in 0..viewModel.days) {
+
+                    val params = GridLayout.LayoutParams()
+                    params.height = GridLayout.LayoutParams.WRAP_CONTENT
+                    params.width = GridLayout.LayoutParams.WRAP_CONTENT
+                    params.marginStart = 16
+                    params.marginEnd = 16
+                    params.topMargin = 8
+                    params.bottomMargin = 8
+                    val imageView = ImageView(context)
+                    imageView.layoutParams = params
+                    imageView.setImageResource(R.drawable.ic_circle)
+                    imageView.setColorFilter(
+                        ContextCompat.getColor(requireContext(), R.color.green_20),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
+                    // check if in list
+                    if (daysMap.containsKey(day)) {
+                        val completed = daysMap[day]
+                        if (completed != null) {
+                            val color = when (completed) {
+                                in 1..4 -> R.color.green_60
+                                in 5..9 -> R.color.green_80
+                                else -> R.color.green
+                            }
+                            imageView.setColorFilter(
+                                ContextCompat.getColor(requireContext(), color),
+                                android.graphics.PorterDuff.Mode.SRC_IN
+                            )
+                        }
+                    }
+                    binding.monthGrid.addView(imageView)
+
+                    binding.percentageText.text = viewModel.calculatePercentage(daysMap.size)
+                }
+            }
+        }
+
         binding.syncButton.setOnClickListener {
             viewModel.sync()
         }
@@ -137,8 +186,6 @@ class ProfileFragment : Fragment() {
             val workInfo = listOfWorkInfo[0]
             if (workInfo.state.isFinished) {
                 Toast.makeText(context, R.string.sync_complete, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, R.string.sync_progress, Toast.LENGTH_SHORT).show()
             }
         }
     }
