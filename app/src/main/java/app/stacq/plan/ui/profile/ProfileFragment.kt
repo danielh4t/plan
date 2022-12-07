@@ -1,6 +1,6 @@
 package app.stacq.plan.ui.profile
 
-import android.content.Intent
+import android.app.Activity
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,17 +19,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
-import app.stacq.plan.util.REQ_ONE_TAP
-import app.stacq.plan.util.beginSignIn
+import app.stacq.plan.util.handleSignInWithFirebase
+import app.stacq.plan.util.launchSignIn
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -83,13 +82,13 @@ class ProfileFragment : Fragment() {
         }
 
         binding.signInButton.setOnClickListener {
-            beginSignIn(requireActivity(), oneTapClient)
+            val clientId = getString(R.string.default_web_client_id)
+            oneTapClient.launchSignIn(clientId)
                 .addOnSuccessListener { result ->
                     try {
-                        startIntentSenderForResult(
-                            result.pendingIntent.intentSender, REQ_ONE_TAP,
-                            null, 0, 0, 0, null
-                        )
+                        val intentSenderRequest =
+                            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                        signInLauncher.launch(intentSenderRequest)
                     } catch (e: IntentSender.SendIntentException) {
                         Log.e(logTag, "Couldn't start One Tap UI: ${e.localizedMessage}")
                     }
@@ -99,6 +98,7 @@ class ProfileFragment : Fragment() {
                     // do nothing and continue presenting the signed-out UI.
                     Log.d(logTag, "Failure: ${e.localizedMessage}")
                 }
+
         }
 
         binding.signOutButton.setOnClickListener {
@@ -173,67 +173,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // The user's response to the One Tap sign-in prompt will be reported here
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            REQ_ONE_TAP -> {
-                try {
-                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
-                    val idToken = credential.googleIdToken
-                    when {
-                        idToken != null -> {
-                            // Got an ID token from Google.
-                            Log.d(logTag, "Got ID token.")
-                            // Use it to authenticate with your backend.
-                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                            firebaseAuth.signInWithCredential(firebaseCredential)
-                                .addOnCompleteListener(requireActivity()) { task ->
-                                    if (task.isSuccessful) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(logTag, "signInWithCredential:success")
-                                        val user = firebaseAuth.currentUser
-                                        viewModel.currentUser.postValue(user)
-                                        //updateUI(user)
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(
-                                            logTag,
-                                            "signInWithCredential:failure",
-                                            task.exception
-                                        )
-                                        //updateUI(null)
-                                    }
-                                }
-                        }
-                        else -> {
-                            // Shouldn't happen.
-                            Log.d(logTag, "No ID token!")
-                        }
-                    }
-                } catch (e: ApiException) {
-                    when (e.statusCode) {
-                        CommonStatusCodes.CANCELED -> {
-                            Log.d(logTag, "One-tap dialog was closed.")
-                            // Don't re-prompt the user.
-                            // showOneTapUI = false
-                        }
-                        CommonStatusCodes.NETWORK_ERROR -> {
-                            Log.d(logTag, "One-tap encountered a network error.")
-                            // Try again or just ignore.
-                        }
-                        else -> {
-                            Log.d(
-                                logTag, "Couldn't get credential from result." +
-                                        " (${e.localizedMessage})"
-                            )
-                        }
-                    }
-                }
+    private val signInLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                oneTapClient.handleSignInWithFirebase(it.data, firebaseAuth)
             }
         }
-    }
-
 }
