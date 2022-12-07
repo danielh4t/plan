@@ -9,7 +9,7 @@
     <string name="create_task">Create Task</string>
     <string name="name">Name</string>
     <string name="create_fab">create action</string>
-    <string name="empty_task_details">Empty tasks name</string>
+    <string name="empty_task_details">Empty task name</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
     <string name="empty_category_details">Empty category name</string>
@@ -77,6 +77,17 @@
     <string name="action_undo_text">UNDO</string>
     <string name="content_sign_in">Sign in with Google</string>
     <string name="content_sign_out">Sign out</string>
+    <string name="content_list_bites">List of task bites</string>
+    <string name="content_list_of_categories">List of categories</string>
+    <string name="content_list_tasks">List of tasks</string>
+    <string name="content_category_name">Category name</string>
+    <string name="category_chip">category chip</string>
+    <string name="categories_navigation">Categories Navigation</string>
+    <string name="profile_navigation">Profile Navigation</string>
+    <string name="tasks_navigation">Tasks Navigation</string>
+    <string name="content_task_checkbox">Task complete</string>
+    <string name="content_task_category">Task category name</string>
+    <string name="content_task_name">Task name</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>

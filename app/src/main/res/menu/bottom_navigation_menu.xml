@@ -8,16 +8,16 @@
             android:id="@+id/nav_tasks"
             android:contentDescription="@string/content_tasks_tab"
             android:icon="@drawable/ic_circle_check"
-            android:title="@string/tasks" />
+            android:title="@string/tasks_navigation" />
         <item
             android:id="@+id/nav_categories"
             android:contentDescription="@string/content_categories_tab"
             android:icon="@drawable/ic_color_palette_outline"
-            android:title="@string/categories" />
+            android:title="@string/categories_navigation" />
         <item
             android:id="@+id/nav_profile"
             android:contentDescription="@string/content_profile_tab"
             android:icon="@drawable/ic_person_outline"
-            android:title="@string/profile" />
+            android:title="@string/profile_navigation" />
     </group>
 </menu>

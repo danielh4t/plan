@@ -66,6 +66,7 @@ class CreateTaskFragment : Fragment() {
                     false
                 ) as Chip
                 chip.text = category.name
+                chip.contentDescription = category.name + getText(R.string.category_chip)
                 chip.tag = category.id
                 binding.createCategoryChipGroup.addView(chip)
             }

@@ -154,6 +154,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private fun workInfoObserver(): Observer<List<WorkInfo>> {
         return Observer { listOfWorkInfo ->

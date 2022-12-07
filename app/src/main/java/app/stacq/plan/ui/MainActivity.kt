@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         firebaseAuth = Firebase.auth
         oneTapClient = Identity.getSignInClient(this)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_tasks, R.id.nav_categories, R.id.nav_profile
@@ -59,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         val navController = navController()
-
-        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 

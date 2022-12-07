@@ -22,8 +22,9 @@ fun TaskEntityAndCategoryEntity.asTask() = Task(
     completedAt = taskEntity.completedAt,
     timerFinishAt = taskEntity.timerFinishAt,
     timerAlarm = taskEntity.timerAlarm,
-    categoryId = taskEntity.categoryId,
     priority = taskEntity.priority,
-    categoryColor = categoryEntity.color,
-    categoryName = categoryEntity.name
+    categoryId = taskEntity.categoryId,
+    categoryName = categoryEntity.name,
+    categoryColor = categoryEntity.color
+
 )

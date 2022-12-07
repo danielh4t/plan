@@ -17,6 +17,7 @@
             android:id="@+id/categories_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/content_list_of_categories"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
