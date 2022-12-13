@@ -55,9 +55,9 @@
     <string name="content_category_color">category color</string>
     <string name="content_task_list">list of tasks</string>
     <string name="content_category_list">list of categories</string>
-    <string name="content_profile_tab">profile tab</string>
-    <string name="content_categories_tab">categories tab</string>
-    <string name="content_tasks_tab">tasks tab</string>
+    <string name="content_tasks_menu">Tasks navigation</string>
+    <string name="content_categories_menu">Categories tab</string>
+    <string name="content_profile_menu">Profile tab</string>
     <string name="task_creation_icon">task creation icon</string>
     <string name="task_timer_icon">task timer time icon</string>
     <string name="bites">Bites</string>
@@ -82,9 +82,6 @@
     <string name="content_list_tasks">List of tasks</string>
     <string name="content_category_name">Category name</string>
     <string name="category_chip">category chip</string>
-    <string name="categories_navigation">Categories Navigation</string>
-    <string name="profile_navigation">Profile Navigation</string>
-    <string name="tasks_navigation">Tasks Navigation</string>
     <string name="content_task_checkbox">Task complete</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>

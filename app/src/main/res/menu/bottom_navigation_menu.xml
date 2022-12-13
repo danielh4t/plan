@@ -6,18 +6,18 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tasks"
-            android:contentDescription="@string/content_tasks_tab"
+            android:contentDescription="@string/content_tasks_menu"
             android:icon="@drawable/ic_circle_check"
-            android:title="@string/tasks_navigation" />
+            android:title="@string/tasks" />
         <item
             android:id="@+id/nav_categories"
-            android:contentDescription="@string/content_categories_tab"
+            android:contentDescription="@string/content_categories_menu"
             android:icon="@drawable/ic_color_palette_outline"
-            android:title="@string/categories_navigation" />
+            android:title="@string/categories" />
         <item
             android:id="@+id/nav_profile"
-            android:contentDescription="@string/content_profile_tab"
+            android:contentDescription="@string/content_profile_menu"
             android:icon="@drawable/ic_person_outline"
-            android:title="@string/profile_navigation" />
+            android:title="@string/profile" />
     </group>
 </menu>
