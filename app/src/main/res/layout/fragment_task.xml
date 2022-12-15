@@ -66,7 +66,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/task_creation_icon"
-            android:src="@drawable/ic_compass"
+            android:src="@drawable/ic_calendar"
             app:layout_constraintEnd_toStartOf="@+id/task_creation_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
