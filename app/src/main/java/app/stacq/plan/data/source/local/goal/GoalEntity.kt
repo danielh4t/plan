@@ -26,9 +26,9 @@ data class GoalEntity(
 
     var achieved: Boolean = false,
 
-    @ColumnInfo(name = "achieved_by")
-    var achievedBy: Long,
-
     @ColumnInfo(name = "achieved_at")
     var achievedAt: Long = 0,
+
+    @ColumnInfo(name = "achieved_by")
+    var achievedBy: Long,
 )
