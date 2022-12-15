@@ -12,7 +12,6 @@ class GoalLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : GoalDataSource {
 
-
     override suspend fun create(goalEntity: GoalEntity) = withContext(ioDispatcher) {
         goalDao.insert(goalEntity)
     }
@@ -29,4 +28,8 @@ class GoalLocalDataSource(
         goalDao.delete(goalEntity)
     }
 
+    override suspend fun getGoalsAndCategory(): LiveData<List<GoalEntityAndCategoryEntity>> =
+        withContext(ioDispatcher) {
+            goalDao.getGoalsAndCategory()
+        }
 }
