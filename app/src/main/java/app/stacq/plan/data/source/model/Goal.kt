@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.model
 
 import android.os.Parcelable
 import androidx.annotation.Keep
-import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.goal.GoalEntity
 import app.stacq.plan.data.source.remote.goal.GoalDocument
 import kotlinx.parcelize.Parcelize

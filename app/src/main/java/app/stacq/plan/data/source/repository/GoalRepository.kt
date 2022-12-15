@@ -5,6 +5,7 @@ import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSource
+import app.stacq.plan.data.source.local.goal.asGoal
 import app.stacq.plan.data.source.model.*
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSource
@@ -25,8 +26,8 @@ class GoalRepository(
     }
 
     suspend fun getGoals(): LiveData<List<Goal>> {
-        return localDataSource.getGoals().map {
-            it.map { goalEntity -> goalEntity.asGoal() }
+        return localDataSource.getGoalsAndCategory().map {
+            it.map { it1 -> it1.asGoal() }
         }
     }
 
@@ -38,5 +39,6 @@ class GoalRepository(
     suspend fun delete(goal: Goal) = withContext(ioDispatcher) {
         localDataSource.delete(goal.asEntity())
     }
+
 
 }

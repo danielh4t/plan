@@ -4,7 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.model.Goal
-import app.stacq.plan.data.source.model.Task
 
 data class GoalEntityAndCategoryEntity(
     @Embedded val goalEntity: GoalEntity,
