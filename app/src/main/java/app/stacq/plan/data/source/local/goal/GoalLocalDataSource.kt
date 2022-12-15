@@ -21,7 +21,7 @@ class GoalLocalDataSource(
         goalDao.getGoals()
     }
 
-    override suspend fun update(goalEntity: GoalEntity) {
+    override suspend fun update(goalEntity: GoalEntity) = withContext(ioDispatcher) {
         goalDao.update(goalEntity)
     }
 
