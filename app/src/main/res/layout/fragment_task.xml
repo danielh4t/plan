@@ -86,7 +86,7 @@
             app:layout_constraintStart_toEndOf="@+id/task_creation_image"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
             app:taskTime="@{viewModel.task.createdAt}"
-            tools:text="@string/time" />
+            tools:text="@string/date" />
 
         <ImageView
             android:id="@+id/task_timer_image"

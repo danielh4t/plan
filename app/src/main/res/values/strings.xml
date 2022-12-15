@@ -14,8 +14,9 @@
     <string name="create_category">Create Category</string>
     <string name="empty_category_details">Empty category name</string>
     <!-- Task fragment -->
+    <string name="date">01 January 1970 00:00</string>
     <!-- Timer fragment  -->
-    <string name="time">01 January 1970 00:00</string>
+    <string name="time">52 minutes</string>
     <string name="blank_time">52</string>
     <!-- Sign In Status -->
     <string name="sign_in_success">Sign In Success</string>
@@ -53,7 +54,7 @@
     <string name="notification">Notification</string>
     <string name="categories">Categories</string>
     <string name="content_category_color">category color</string>
-    <string name="content_task_list">list of tasks</string>
+    <string name="content_tasks">Tasks list and create task</string>
     <string name="content_category_list">list of categories</string>
     <string name="content_tasks_menu">Tasks navigation</string>
     <string name="content_categories_menu">Categories tab</string>
@@ -85,6 +86,9 @@
     <string name="content_task_checkbox">Task complete</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>
+    <string name="content_create_goal">Create Goal</string>
+    <string name="content_list_goals">List of Goals</string>
+    <string name="content_goals">Goals list and create goal</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
