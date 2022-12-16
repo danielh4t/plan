@@ -1,0 +1,62 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="visibilitystrike"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:name="strike_thru_path"
+                android:pathData="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
+                android:fillColor="#ff000000"
+                android:strokeWidth="1"/>
+            <clip-path
+                android:name="strike_thru_mask"
+                android:pathData="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 3.27 3 L 4.54 1.73 Z"/>
+            <path
+                android:name="path"
+                android:pathData="M 20.52 15.21 L 18.72 13.4 L 18.72 8.94 C 18.744 7.284 18.168 5.675 17.098 4.41 C 16.029 3.146 14.537 2.311 12.9 2.06 C 11.629 1.893 10.337 2.091 9.175 2.632 C 8.014 3.173 7.03 4.034 6.34 5.114 C 5.65 6.194 5.282 7.449 5.28 8.73 L 5.28 13.4 L 3.48 15.21 C 3.177 15.518 3.008 15.934 3.009 16.366 C 3.011 16.798 3.183 17.213 3.488 17.519 C 3.794 17.824 4.208 17.998 4.64 18 L 8 18 L 8 18.34 C 8.047 19.355 8.494 20.311 9.244 20.997 C 9.993 21.682 10.985 22.043 12 22 C 13.015 22.043 14.007 21.682 14.756 20.997 C 15.506 20.311 15.953 19.355 16 18.34 L 16 18 L 19.36 18 C 19.792 17.998 20.206 17.824 20.512 17.519 C 20.817 17.213 20.989 16.798 20.991 16.366 C 20.992 15.934 20.823 15.518 20.52 15.21 Z M 14 18.34 C 13.945 18.821 13.706 19.262 13.333 19.571 C 12.961 19.88 12.483 20.034 12 20 C 11.517 20.034 11.039 19.88 10.667 19.571 C 10.294 19.262 10.055 18.821 10 18.34 L 10 18 L 14 18 Z M 5.51 16 L 6.69 14.82 C 6.877 14.634 7.026 14.413 7.127 14.169 C 7.228 13.925 7.28 13.664 7.28 13.4 L 7.28 8.73 C 7.281 8.055 7.425 7.389 7.705 6.775 C 7.984 6.161 8.392 5.614 8.9 5.17 C 9.401 4.716 9.996 4.376 10.641 4.174 C 11.287 3.972 11.969 3.912 12.64 4 C 13.796 4.188 14.846 4.787 15.596 5.687 C 16.345 6.588 16.745 7.729 16.72 8.9 L 16.72 13.4 C 16.718 13.663 16.769 13.924 16.868 14.168 C 16.968 14.411 17.115 14.633 17.3 14.82 L 18.49 16 Z"
+                android:fillColor="#000"
+                android:strokeWidth="1"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="strike_thru_path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:startOffset="268"
+                android:duration="1271"
+                android:valueFrom="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
+                android:valueTo="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="strike_thru_mask">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:startOffset="268"
+                android:duration="1271"
+                android:valueFrom="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 3.27 3 L 4.54 1.73 Z"
+                android:valueTo="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 21 20.73 L 22.27 19.46 Z"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="visibilitystrike">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="alpha"
+                android:startOffset="268"
+                android:duration="1271"
+                android:valueFrom="1"
+                android:valueTo="0.333"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
