@@ -48,10 +48,6 @@ android {
     }
 
     namespace 'app.stacq.plan'
-
-    applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", variant.versionName
-    }
 }
 
 dependencies {
