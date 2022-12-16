@@ -36,7 +36,6 @@
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
-    <string name="sign_out">Sign out</string>
     <string name="timer_complete">Timer complete</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
     <string name="notify">Notify me</string>
@@ -63,6 +62,8 @@
     <string name="select_category">Select Category</string>
     <string name="priority">Priority</string>
     <string name="content_priority_slider">Priority slider</string>
+    <!-- Profile -->
+    <string name="sign_out">Sign out</string>
     <string name="sync">Sync</string>
     <string name="content_sync">Cloud Sync</string>
     <string name="sync_complete">sync complete</string>

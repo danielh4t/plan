@@ -73,7 +73,7 @@ dependencies {
     implementation 'androidx.databinding:databinding-common:7.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'com.google.android.material:material:1.7.0'
-    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
@@ -95,7 +95,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.0'
     androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.4'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
 
