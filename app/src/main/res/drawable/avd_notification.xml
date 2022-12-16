@@ -27,36 +27,42 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="pathData"
-                android:startOffset="268"
-                android:duration="1271"
+                android:startOffset="250"
+                android:duration="1750"
                 android:valueFrom="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
                 android:valueTo="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
                 android:valueType="pathType"
-                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:repeatMode="restart"
+                android:repeatCount="infinite"/>
         </aapt:attr>
     </target>
     <target android:name="strike_thru_mask">
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="pathData"
-                android:startOffset="268"
-                android:duration="1271"
+                android:startOffset="250"
+                android:duration="1750"
                 android:valueFrom="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 3.27 3 L 4.54 1.73 Z"
                 android:valueTo="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 21 20.73 L 22.27 19.46 Z"
                 android:valueType="pathType"
-                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:repeatMode="restart"
+                android:repeatCount="infinite"/>
         </aapt:attr>
     </target>
     <target android:name="visibilitystrike">
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="alpha"
-                android:startOffset="268"
-                android:duration="1271"
+                android:startOffset="250"
+                android:duration="1750"
                 android:valueFrom="1"
                 android:valueTo="0.333"
                 android:valueType="floatType"
-                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:repeatMode="restart"
+                android:repeatCount="infinite"/>
         </aapt:attr>
     </target>
 </animated-vector>
