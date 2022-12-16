@@ -19,11 +19,6 @@
     <string name="time">52 minutes</string>
     <string name="blank_time">52</string>
     <!-- Sign In Status -->
-    <string name="sign_in_success">Sign In Success</string>
-    <string name="sign_in_dismiss">Sign In Dismiss</string>
-    <string name="sign_in_failure">Sign In Failure</string>
-    <string name="sign_out_success">Sign Out Success</string>
-    <string name="sign_out_failure">Sign Out Failure</string>
     <!-- Task fragment -->
     <string name="timer">Timer</string>
     <string name="content_timer">Open Timer</string>
@@ -41,7 +36,6 @@
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
 
-    <string name="sign_in">Sign in</string>
     <string name="sign_out">Sign out</string>
     <string name="timer_complete">Timer complete</string>
     <string name="post_notifications">Stay on top of your tasks with notifications when the timer is completed</string>
@@ -86,9 +80,6 @@
     <string name="content_task_checkbox">Task complete</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>
-    <string name="content_create_goal">Create Goal</string>
-    <string name="content_list_goals">List of Goals</string>
-    <string name="content_goals">Goals list and create goal</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
