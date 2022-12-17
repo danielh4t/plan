@@ -32,6 +32,11 @@ android {
             applicationIdSuffix ".debug"
             debuggable true
         }
+        benchmark {
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
+            debuggable false
+        }
     }
 
     compileOptions {
