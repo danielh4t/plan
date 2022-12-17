@@ -29,7 +29,7 @@ class StartupBenchmark {
     fun startup() = benchmarkRule.measureRepeated(
         packageName = "app.stacq.plan",
         metrics = listOf(StartupTimingMetric()),
-        iterations = 10,
+        iterations = 5,
         startupMode = StartupMode.COLD,
         setupBlock = {
             // Press home button before each run to ensure the starting activity isn't visible.

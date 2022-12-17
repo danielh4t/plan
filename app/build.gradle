@@ -33,9 +33,11 @@ android {
             debuggable true
         }
         benchmark {
+            initWith buildTypes.release
             signingConfig signingConfigs.debug
             matchingFallbacks = ['release']
             debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'benchmark-rules.pro'
         }
     }
 
