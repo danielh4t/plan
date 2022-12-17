@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * This is an example startup benchmark.
+ * Startup benchmark.
  *
  * It navigates to the device's home screen, and launches the default activity.
  *
@@ -30,9 +30,12 @@ class StartupBenchmark {
         packageName = "app.stacq.plan",
         metrics = listOf(StartupTimingMetric()),
         iterations = 10,
-        startupMode = StartupMode.COLD
+        startupMode = StartupMode.COLD,
+        setupBlock = {
+            // Press home button before each run to ensure the starting activity isn't visible.
+            pressHome()
+        }
     ) {
-        pressHome()
         startActivityAndWait()
     }
 }
