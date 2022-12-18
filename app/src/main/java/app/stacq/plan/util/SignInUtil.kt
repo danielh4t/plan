@@ -10,6 +10,8 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 fun SignInClient.launchSignIn(clientId: String): Task<BeginSignInResult> {
     val signInRequest: BeginSignInRequest = BeginSignInRequest.builder()
@@ -27,7 +29,7 @@ fun SignInClient.launchSignIn(clientId: String): Task<BeginSignInResult> {
 }
 
 // The user's response to the One Tap sign-in prompt will be reported here
-fun SignInClient.handleSignInWithFirebase(data: Intent?, firebaseAuth: FirebaseAuth) {
+fun SignInClient.handleSignInWithFirebase(data: Intent?) {
     val logTag = "SignIn"
     try {
         val credential = getSignInCredentialFromIntent(data)
@@ -38,7 +40,7 @@ fun SignInClient.handleSignInWithFirebase(data: Intent?, firebaseAuth: FirebaseA
                 Log.d(logTag, "Got ID token.")
                 // Use it to authenticate with your backend.
                 val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                firebaseAuth.signInWithCredential(firebaseCredential)
+                Firebase.auth.signInWithCredential(firebaseCredential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information

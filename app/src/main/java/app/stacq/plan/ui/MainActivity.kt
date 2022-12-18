@@ -19,12 +19,14 @@ import app.stacq.plan.databinding.ActivityMainBinding
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.installCheckProviderFactory
 import app.stacq.plan.util.launchSignIn
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.CircleCropTransformation
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -35,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var oneTapClient: SignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
     private var showOneTapUI = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +46,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
 
-        firebaseAuth = Firebase.auth
         oneTapClient = Identity.getSignInClient(this)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         val navController = navController()
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.topAppBar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // reference bottom navigation view
@@ -65,8 +64,47 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         navView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
+        binding.accountImageView.setOnClickListener {
+            handleAuthentication()
+        }
+
+        Firebase.auth.addAuthStateListener {
+            val user = it.currentUser
+            if (user != null) {
+                // signed in
+                if (user.photoUrl !== null) {
+                    binding.accountImageView.load(user.photoUrl) {
+                        crossfade(true)
+                        size(ViewSizeResolver(binding.accountImageView))
+                        transformations(CircleCropTransformation())
+                    }
+                }
+            } else {
+                // signed out
+                binding.accountImageView.setImageResource(R.drawable.ic_account_circle)
+            }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val user = Firebase.auth.currentUser
+        if (user !== null) showOneTapUI = false
+    }
+
+    override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
+
+    private fun navController(): NavController {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        return navHostFragment.navController
+    }
+
+    private fun handleAuthentication() {
         // if user isn't signed in and hasn't already declined to use One Tap sign-in
-        if (showOneTapUI && firebaseAuth.currentUser == null) {
+        if (showOneTapUI && Firebase.auth.currentUser == null) {
             val clientId = getString(R.string.default_web_client_id)
             oneTapClient.launchSignIn(clientId)
                 .addOnSuccessListener { result ->
@@ -85,28 +123,17 @@ class MainActivity : AppCompatActivity() {
                 }
             // don't
             showOneTapUI = false
+        } else {
+            // sign out
+            Firebase.auth.signOut()
+            oneTapClient.signOut()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = firebaseAuth.currentUser
-        if (currentUser !== null) showOneTapUI = false
-    }
-
-    override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
-
-    private fun navController(): NavController {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        return navHostFragment.navController
     }
 
     private val signInLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                oneTapClient.handleSignInWithFirebase(it.data, firebaseAuth)
+                oneTapClient.handleSignInWithFirebase(it.data)
             }
         }
 }

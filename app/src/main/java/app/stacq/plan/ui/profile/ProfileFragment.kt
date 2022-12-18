@@ -1,17 +1,12 @@
 package app.stacq.plan.ui.profile
 
-import android.app.Activity
-import android.content.IntentSender
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,16 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
-import app.stacq.plan.util.handleSignInWithFirebase
-import app.stacq.plan.util.launchSignIn
-import coil.load
-import coil.size.ViewSizeResolver
-import coil.transform.CircleCropTransformation
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class ProfileFragment : Fragment() {
@@ -38,9 +23,6 @@ class ProfileFragment : Fragment() {
 
     private lateinit var viewModel: ProfileViewModel
 
-    private lateinit var oneTapClient: SignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
-    private val logTag = "Profile"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,58 +36,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        oneTapClient = Identity.getSignInClient(requireActivity())
-        firebaseAuth = Firebase.auth
-
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.outputWorkInfo.observe(viewLifecycleOwner, workInfoObserver())
-
-        firebaseAuth.addAuthStateListener { auth ->
-            if (auth.currentUser == null) {
-                binding.profileImageView.setImageResource(R.mipmap.ic_launcher)
-            } else {
-                auth.currentUser.let { user ->
-                    if (user != null) {
-                        if (user.photoUrl !== null) {
-                            binding.profileImageView.load(user.photoUrl) {
-                                crossfade(true)
-                                size(ViewSizeResolver(binding.profileImageView))
-                                transformations(CircleCropTransformation())
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        binding.signInButton.setOnClickListener {
-            val clientId = getString(R.string.default_web_client_id)
-            oneTapClient.launchSignIn(clientId)
-                .addOnSuccessListener { result ->
-                    try {
-                        val intentSenderRequest =
-                            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
-                        signInLauncher.launch(intentSenderRequest)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e(logTag, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d(logTag, "Failure: ${e.localizedMessage}")
-                }
-
-        }
-
-        binding.signOutButton.setOnClickListener {
-            oneTapClient.signOut()
-            firebaseAuth.signOut()
-            viewModel.currentUser.postValue(null)
-        }
 
         viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
             binding.monthGrid.removeAllViews()
@@ -143,7 +78,6 @@ class ProfileFragment : Fragment() {
                         }
                     }
                     binding.monthGrid.addView(imageView)
-
                     binding.percentageText.text = viewModel.calculatePercentage(daysMap.size)
                 }
             }
@@ -173,10 +107,4 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private val signInLauncher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                oneTapClient.handleSignInWithFirebase(it.data, firebaseAuth)
-            }
-        }
 }
