@@ -1,4 +1,4 @@
-package app.stacq.macrobenchmark
+package app.stacq.plan.macrobenchmark
 
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
@@ -30,12 +30,9 @@ class StartupBenchmark {
         packageName = "app.stacq.plan",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
-        startupMode = StartupMode.COLD,
-        setupBlock = {
-            // Press home button before each run to ensure the starting activity isn't visible.
-            pressHome()
-        }
+        startupMode = StartupMode.COLD
     ) {
+        pressHome()
         startActivityAndWait()
     }
 }

@@ -2,6 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <queries>
-        <package android:name="app.stacq.plan.debug" />
+        <package android:name="app.stacq.plan" />
     </queries>
 </manifest>
