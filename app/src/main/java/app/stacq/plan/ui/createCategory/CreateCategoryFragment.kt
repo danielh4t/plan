@@ -13,6 +13,7 @@ import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
+import app.stacq.plan.util.defaultColors
 import com.google.android.material.snackbar.Snackbar
 
 class CreateCategoryFragment : Fragment() {
@@ -58,7 +59,8 @@ class CreateCategoryFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            viewModel.create(name)
+            val color = getString(defaultColors(name))
+            viewModel.create(name, color)
 
             val action = CreateCategoryFragmentDirections.actionNavCategoryToNavCategories()
             this.findNavController().navigate(action)

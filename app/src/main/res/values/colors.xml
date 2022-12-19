@@ -2,4 +2,8 @@
 <resources>
     <color name="plan_primary">#FF6750A4</color>
     <color name="plan_green">#FF3DDB85</color>
+    <color name="plan_red">#FFFF1744</color>
+    <color name="plan_orange">#FFFF9100</color>
+    <color name="plan_yellow">#FFFFEA00</color>
+    <color name="plan_blue">#FF3D5AFE</color>
 </resources>

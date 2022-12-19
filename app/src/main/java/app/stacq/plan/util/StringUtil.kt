@@ -1,28 +1,24 @@
 package app.stacq.plan.util
 
+import app.stacq.plan.R
+
 fun String.sentenceCase(): String {
     return this.lowercase().replaceFirstChar { it.uppercase() }
 }
 
-fun defaultColors(color: String): String {
+fun defaultColors(color: String): Int {
     val palette = listOf(
-        "#FF74B1",
-        "#FFB200",
-        "#B2A4FF",
-        "#FF00E4",
-        "#FF4848",
-        "#00EAD3",
-        "#FC5404",
-        "#F637EC",
-        "#4D77FF",
-        "#93FFD8"
+        R.color.plan_red,
+        R.color.plan_orange,
+        R.color.plan_yellow,
+        R.color.plan_blue,
     )
 
     return when (color) {
-        "Code" -> "#FF7F50"
-        "Hack" -> "#2ED573"
-        "Life" -> "#FDCD21"
-        "Work" -> "#1E90FF"
+        "Code" -> R.color.plan_orange
+        "Hack" -> R.color.plan_green
+        "Life" -> R.color.plan_yellow
+        "Work" -> R.color.plan_blue
         else -> palette.random()
     }
 }

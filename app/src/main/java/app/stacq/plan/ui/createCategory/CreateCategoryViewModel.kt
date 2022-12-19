@@ -17,10 +17,9 @@ class CreateCategoryViewModel(private val categoryRepository: CategoryRepository
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    fun create(name: String) {
+    fun create(name: String, color: String) {
         viewModelScope.launch {
             try {
-                val color: String = defaultColors(name)
                 val categoryEntity = CategoryEntity(name = name, color = color)
                 val category = categoryEntity.asCategory()
                 categoryRepository.create(category)
