@@ -14,11 +14,16 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
+import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.installCheckProviderFactory
 import app.stacq.plan.util.launchSignIn
+import app.stacq.plan.worker.SyncBiteWorker
+import app.stacq.plan.worker.SyncCategoryWorker
+import app.stacq.plan.worker.SyncTaskWorker
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
@@ -94,7 +99,15 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val user = Firebase.auth.currentUser
-        if (user !== null) showOneTapUI = false
+        if (user !== null) {
+            showOneTapUI = false
+            handleSync()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Firebase.auth.removeAuthStateListener(authStateListener)
     }
 
     override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
@@ -130,12 +143,42 @@ class MainActivity : AppCompatActivity() {
             // sign out
             Firebase.auth.signOut()
             oneTapClient.signOut()
+            showOneTapUI = true
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Firebase.auth.removeAuthStateListener(authStateListener)
+    private fun handleSync() {
+
+        val workManager = WorkManager.getInstance(application)
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val syncCategory = OneTimeWorkRequestBuilder<SyncCategoryWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAGS.CATEGORIES)
+            .build()
+
+        val syncTask = OneTimeWorkRequestBuilder<SyncTaskWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAGS.TASKS)
+            .build()
+
+        val syncBite = OneTimeWorkRequestBuilder<SyncBiteWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAGS.BITES)
+            .build()
+
+        workManager.beginUniqueWork(
+            WorkerConstants.UNIQUE.TASKS,
+            ExistingWorkPolicy.KEEP,
+            syncCategory
+        )
+            .then(syncTask)
+            .then(syncBite)
+            .enqueue()
+
     }
 
     private val signInLauncher =

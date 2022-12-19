@@ -64,11 +64,7 @@
     <string name="content_priority_slider">Priority slider</string>
     <!-- Profile -->
     <string name="sign_out">Sign out</string>
-    <string name="sync">Cloud Sync</string>
-    <string name="content_sync">Sync cloud backup</string>
     <string name="sync_complete">sync complete</string>
-    <string name="analysis">Analysis</string>
-    <string name="sign_in_sync">Sign in to backup and sync to cloud</string>
     <string name="category_removed">Category removed</string>
     <string name="action_undo_text">UNDO</string>
     <string name="content_sign_in">Sign in with Google</string>

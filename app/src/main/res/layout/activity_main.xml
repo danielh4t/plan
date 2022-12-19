@@ -31,6 +31,7 @@
                     android:src="@drawable/ic_account_circle"
                     android:contentDescription="@string/content_account_image"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>

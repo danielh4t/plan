@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.WorkInfo
 import app.stacq.plan.R
+import app.stacq.plan.data.source.local.PlanDatabase
+import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentProfileBinding
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class ProfileFragment : Fragment() {
@@ -24,8 +22,8 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModelFactory: ProfileViewModelFactory
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var authStateListener: AuthStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +37,15 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        val application = requireNotNull(this.activity).application
+        val database = PlanDatabase.getDatabase(application)
 
-        viewModel.outputWorkInfo.observe(viewLifecycleOwner, workInfoObserver())
+        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSource()
+        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
+
+        viewModelFactory = ProfileViewModelFactory(taskRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
 
         viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
             binding.yearGrid.removeAllViews()
@@ -51,7 +53,8 @@ class ProfileFragment : Fragment() {
                 for (day in 1..viewModel.days) {
                     val params = GridLayout.LayoutParams(
                         GridLayout.spec(GridLayout.UNDEFINED, 1f),
-                        GridLayout.spec(GridLayout.UNDEFINED, 1f))
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                    )
                     params.height = 8
                     params.width = 8
                     val imageView = ImageView(context)
@@ -81,41 +84,10 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
-        binding.syncButton.setOnClickListener {
-            viewModel.sync()
-        }
-
-        authStateListener = AuthStateListener {
-            it.currentUser.let { user ->
-                if (user == null) {
-                    binding.syncButton.visibility = View.GONE
-                } else {
-                    binding.syncButton.visibility = View.VISIBLE
-                }
-            }
-        }
-        Firebase.auth.addAuthStateListener(authStateListener)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Firebase.auth.removeAuthStateListener(authStateListener)
         _binding = null
     }
-
-    private fun workInfoObserver(): Observer<List<WorkInfo>> {
-        return Observer { listOfWorkInfo ->
-            // If there are no matching work info, do nothing
-            if (listOfWorkInfo.isNullOrEmpty()) {
-                return@Observer
-            }
-
-            val workInfo = listOfWorkInfo[0]
-            if (workInfo.state.isFinished) {
-                Toast.makeText(context, R.string.sync_complete, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
 }
