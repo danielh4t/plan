@@ -44,7 +44,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_name_text"
-            app:tint="@color/primary" />
+            app:tint="@color/plan_primary" />
 
         <TextView
             android:id="@+id/task_category_text"
@@ -72,7 +72,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_category_text"
-            app:tint="@color/primary" />
+            app:tint="@color/plan_primary" />
 
         <TextView
             android:id="@+id/task_creation_text"
@@ -101,7 +101,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_creation_image"
-            app:tint="@color/primary" />
+            app:tint="@color/plan_primary" />
 
         <TextView
             android:id="@+id/task_timer_text"

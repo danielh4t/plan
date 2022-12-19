@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FF6750A4</color>
-    <color name="green">#FF3DDB85</color>
-    <color name="green_80">#CC3DDB85</color>
-    <color name="green_60">#993DDB85</color>
-    <color name="green_20">#333DDB85</color>
+    <color name="plan_primary">#FF6750A4</color>
+    <color name="plan_green">#FF3DDB85</color>
 </resources>

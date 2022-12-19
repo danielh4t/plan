@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class ProfileFragment : Fragment() {
@@ -59,7 +61,7 @@ class ProfileFragment : Fragment() {
                     imageView.layoutParams = params
                     imageView.setImageResource(R.drawable.ic_circle)
                     imageView.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.green_20),
+                        ContextCompat.getColor(requireContext(), R.color.color_plan_green_75),
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
                     // check if in list
@@ -67,9 +69,9 @@ class ProfileFragment : Fragment() {
                         val completed = daysMap[day]
                         if (completed != null) {
                             val color = when (completed) {
-                                in 1..4 -> R.color.green_60
-                                in 5..9 -> R.color.green_80
-                                else -> R.color.green
+                                in 1..4 -> R.color.color_plan_green_75
+                                in 5..9 -> R.color.color_plan_green_75
+                                else -> R.color.plan_green
                             }
                             imageView.setColorFilter(
                                 ContextCompat.getColor(requireContext(), color),
@@ -85,6 +87,16 @@ class ProfileFragment : Fragment() {
 
         binding.syncButton.setOnClickListener {
             viewModel.sync()
+        }
+
+        Firebase.auth.addAuthStateListener {
+            it.currentUser.let { user ->
+                if (user == null) {
+                    binding.syncButton.visibility = View.GONE
+                } else {
+                    binding.syncButton.visibility = View.VISIBLE
+                }
+            }
         }
     }
 

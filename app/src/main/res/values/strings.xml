@@ -81,6 +81,7 @@
     <string name="content_task_checkbox">Task complete</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>
+    <string name="content_account_image">Account image</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
