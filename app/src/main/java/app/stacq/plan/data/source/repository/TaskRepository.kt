@@ -76,8 +76,9 @@ class TaskRepository(
         remoteDataSource.update(taskEntity.asTaskDocument())
     }
 
-    suspend fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>> = withContext(ioDispatcher) {
-        return@withContext localDataSource.countCompletedInMonth(startAt)
-    }
+    suspend fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> =
+        withContext(ioDispatcher) {
+            return@withContext localDataSource.getTaskAnalysis(yearStartAt)
+        }
 
 }

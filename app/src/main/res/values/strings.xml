@@ -64,8 +64,8 @@
     <string name="content_priority_slider">Priority slider</string>
     <!-- Profile -->
     <string name="sign_out">Sign out</string>
-    <string name="sync">Sync</string>
-    <string name="content_sync">Cloud Sync</string>
+    <string name="sync">Cloud Sync</string>
+    <string name="content_sync">Sync cloud backup</string>
     <string name="sync_complete">sync complete</string>
     <string name="analysis">Analysis</string>
     <string name="sign_in_sync">Sign in to backup and sync to cloud</string>
@@ -82,6 +82,7 @@
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>
     <string name="content_account_image">Account image</string>
+    <string name="this_year">This Year</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>

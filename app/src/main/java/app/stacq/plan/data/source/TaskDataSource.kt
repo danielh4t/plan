@@ -29,5 +29,5 @@ interface TaskDataSource {
 
     suspend fun getTasksList(): List<TaskEntity>
 
-    suspend fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>>
+    suspend fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>>
 }

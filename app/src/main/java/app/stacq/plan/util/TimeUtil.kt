@@ -15,19 +15,19 @@ fun millisInFuture(finishAt: Long): Long {
     return (finishAt - now) * 1000L
 }
 
-fun numberOfDays(): Int {
+fun yearDays(): Int {
     val calendar = Calendar.getInstance()
     val year: Int = calendar.get(Calendar.YEAR)
     val month: Int = calendar.get(Calendar.MONTH)
     val ym = YearMonth.of(year, month)
-    return ym.lengthOfMonth()
+    return ym.lengthOfYear()
 }
 
-fun startDay(day: Int): Long {
+fun yearStartAt(): Long {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
     calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
-    calendar.set(Calendar.DAY_OF_MONTH, day + 1)
+    calendar.set(Calendar.MONTH, 0)
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
     calendar.set(Calendar.HOUR_OF_DAY, 0)
     calendar.set(Calendar.MINUTE, 0)
     calendar.set(Calendar.SECOND, 0)

@@ -11,11 +11,12 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.util.constants.WorkerConstants
-import app.stacq.plan.util.numberOfDays
-import app.stacq.plan.util.startDay
+import app.stacq.plan.util.yearDays
+import app.stacq.plan.util.yearStartAt
 import app.stacq.plan.worker.SyncBiteWorker
 import app.stacq.plan.worker.SyncCategoryWorker
 import app.stacq.plan.worker.SyncTaskWorker
+
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -29,10 +30,10 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val taskRemoteDataSource = TaskRemoteDataSource()
     private val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
-    val days: Int = numberOfDays()
+    val days: Int = yearDays()
 
     val taskAnalysis: LiveData<List<TaskAnalysis>> = liveData {
-        emitSource(taskRepository.countCompletedInMonth(startDay(0)))
+        emitSource(taskRepository.getTaskAnalysis(yearStartAt()))
     }
 
     fun sync() {
@@ -64,11 +65,4 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             .then(syncBite)
             .enqueue()
     }
-
-    fun calculatePercentage(daysComplete: Int): String {
-        val rate = daysComplete.toFloat() / days
-        val percent = rate * 100L
-        return String.format("%.1f", percent).plus("%")
-    }
-
 }

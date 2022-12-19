@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -15,16 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <GridLayout
-            android:id="@+id/month_grid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="451dp"
-            android:columnCount="7"
-            android:minHeight="200dp"
+            android:id="@+id/year_grid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:columnCount="12"
             app:layout_constraintBottom_toTopOf="@+id/sync_button"
-            app:layout_constraintEnd_toStartOf="@+id/percentage_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,17 +44,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/percentage_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:textAlignment="center"
-            android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="@+id/month_grid"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/month_grid"
-            tools:text="100%" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

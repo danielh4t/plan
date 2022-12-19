@@ -46,42 +46,38 @@ class ProfileFragment : Fragment() {
         viewModel.outputWorkInfo.observe(viewLifecycleOwner, workInfoObserver())
 
         viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
-            binding.monthGrid.removeAllViews()
+            binding.yearGrid.removeAllViews()
             if (tasks != null) {
-                val daysMap = tasks.associate { it.day to it.completed }
-                for (day in 0..viewModel.days) {
-
-                    val params = GridLayout.LayoutParams()
-                    params.height = GridLayout.LayoutParams.WRAP_CONTENT
-                    params.width = GridLayout.LayoutParams.WRAP_CONTENT
-                    params.marginStart = 16
-                    params.marginEnd = 16
-                    params.topMargin = 8
-                    params.bottomMargin = 8
+                for (day in 1..viewModel.days) {
+                    val params = GridLayout.LayoutParams(
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f))
+                    params.height = 8
+                    params.width = 8
                     val imageView = ImageView(context)
-                    imageView.layoutParams = params
-                    imageView.setImageResource(R.drawable.ic_circle)
+                    imageView.setImageResource(R.drawable.ic_circle_outline)
                     imageView.setColorFilter(
                         ContextCompat.getColor(requireContext(), R.color.color_plan_green_50),
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
                     // check if in list
+                    val daysMap = tasks.associate { it.day to it.completed }
                     if (daysMap.containsKey(day)) {
                         val completed = daysMap[day]
                         if (completed != null) {
                             val color = when (completed) {
-                                in 0..4 -> R.color.color_plan_green_50
-                                in 5..9 -> R.color.color_plan_green_75
+                                in 1..5 -> R.color.color_plan_green_50
+                                in 6..10 -> R.color.color_plan_green_75
                                 else -> R.color.plan_green
                             }
+                            imageView.setImageResource(R.drawable.ic_circle)
                             imageView.setColorFilter(
                                 ContextCompat.getColor(requireContext(), color),
                                 android.graphics.PorterDuff.Mode.SRC_IN
                             )
                         }
                     }
-                    binding.monthGrid.addView(imageView)
-                    binding.percentageText.text = viewModel.calculatePercentage(daysMap.size)
+                    binding.yearGrid.addView(imageView, params)
                 }
             }
         }

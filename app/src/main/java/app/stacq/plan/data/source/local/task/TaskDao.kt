@@ -109,10 +109,10 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :id")
     fun getTaskAndCategory(id: String): LiveData<TaskEntityAndCategoryEntity>
 
-    @Query("SELECT COUNT(*) as completed, strftime('%d',DATE(completed_at, 'unixepoch')) as day " +
+    @Query("SELECT COUNT(*) as completed, strftime('%j',DATE(completed_at, 'unixepoch')) as day " +
             "FROM task " +
-            "WHERE completed and completed_at >= :startAt " +
+            "WHERE completed and completed_at >= :yearStartAt " +
             "GROUP BY day")
-    fun countCompletedInMonth(startAt: Long): LiveData<List<TaskAnalysis>>
+    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>>
 
 }
