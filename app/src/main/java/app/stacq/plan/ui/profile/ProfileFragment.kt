@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkInfo
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentProfileBinding
+import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -24,7 +25,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ProfileViewModel
-
+    private lateinit var authStateListener: AuthStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +62,7 @@ class ProfileFragment : Fragment() {
                     imageView.layoutParams = params
                     imageView.setImageResource(R.drawable.ic_circle)
                     imageView.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.color_plan_green_75),
+                        ContextCompat.getColor(requireContext(), R.color.color_plan_green_50),
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
                     // check if in list
@@ -69,7 +70,7 @@ class ProfileFragment : Fragment() {
                         val completed = daysMap[day]
                         if (completed != null) {
                             val color = when (completed) {
-                                in 1..4 -> R.color.color_plan_green_75
+                                in 0..4 -> R.color.color_plan_green_50
                                 in 5..9 -> R.color.color_plan_green_75
                                 else -> R.color.plan_green
                             }
@@ -89,7 +90,7 @@ class ProfileFragment : Fragment() {
             viewModel.sync()
         }
 
-        Firebase.auth.addAuthStateListener {
+        authStateListener = AuthStateListener {
             it.currentUser.let { user ->
                 if (user == null) {
                     binding.syncButton.visibility = View.GONE
@@ -98,10 +99,12 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+        Firebase.auth.addAuthStateListener(authStateListener)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Firebase.auth.removeAuthStateListener(authStateListener)
         _binding = null
     }
 

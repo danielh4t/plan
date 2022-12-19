@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var oneTapClient: SignInClient
     private var showOneTapUI = true
 
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             handleAuthentication()
         }
 
-        Firebase.auth.addAuthStateListener {
+        authStateListener = FirebaseAuth.AuthStateListener {
             val user = it.currentUser
             if (user != null) {
                 // signed in
@@ -84,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 binding.accountImageView.setImageResource(R.drawable.ic_account_circle)
             }
         }
+        Firebase.auth.addAuthStateListener(authStateListener)
 
     }
 
@@ -128,6 +131,11 @@ class MainActivity : AppCompatActivity() {
             Firebase.auth.signOut()
             oneTapClient.signOut()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Firebase.auth.removeAuthStateListener(authStateListener)
     }
 
     private val signInLauncher =

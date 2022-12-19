@@ -12,15 +12,10 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.numberOfDays
-import app.stacq.plan.util.startOfDay
+import app.stacq.plan.util.startDay
 import app.stacq.plan.worker.SyncBiteWorker
 import app.stacq.plan.worker.SyncCategoryWorker
 import app.stacq.plan.worker.SyncTaskWorker
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -37,7 +32,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     val days: Int = numberOfDays()
 
     val taskAnalysis: LiveData<List<TaskAnalysis>> = liveData {
-        emitSource(taskRepository.countCompletedInMonth(startOfDay(0)))
+        emitSource(taskRepository.countCompletedInMonth(startDay(0)))
     }
 
     fun sync() {
