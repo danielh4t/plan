@@ -4,7 +4,6 @@ package app.stacq.plan.util
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import java.time.Instant
 
 class UtilUnitTest {
 
@@ -24,7 +23,7 @@ class UtilUnitTest {
         val finishAt: Long = 1600000000
 
         val expected = true
-        val actual: Boolean = isFinishAtInFuture(finishAt)
+        val actual: Boolean = isTimeInFuture(finishAt)
 
         assertThat(expected, `is`(actual))
     }

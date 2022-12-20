@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
-import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.databinding.FragmentNotificationBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -38,7 +37,7 @@ class NotificationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args = NotificationFragmentArgs.fromBundle(requireArguments())
-        val task: Task = args.task
+        val taskId: String = args.taskId
 
         val viewModel: NotificationViewModel by viewModels()
         binding.lifecycleOwner = viewLifecycleOwner
@@ -61,7 +60,7 @@ class NotificationFragment : Fragment() {
                     viewModel.logPermission(false)
                 }
                 val action =
-                    NotificationFragmentDirections.actionNavNotificationToNavTimer(task)
+                    NotificationFragmentDirections.actionNavNotificationToNavTimer(taskId)
                 this.findNavController().navigate(action)
             }
 
@@ -79,7 +78,7 @@ class NotificationFragment : Fragment() {
                 R.string.no_notification,
                 Snackbar.LENGTH_SHORT
             ).show()
-            val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(task)
+            val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(taskId)
             this.findNavController().navigate(action)
         }
 

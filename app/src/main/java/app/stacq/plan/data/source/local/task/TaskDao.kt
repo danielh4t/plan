@@ -6,20 +6,7 @@ import androidx.room.*
 @Dao
 interface TaskDao {
 
-    /**
-     * Select all tasks from the task.
-     *
-     * @return all tasks.
-     */
-    @Query(
-        "SELECT * FROM task"
-    )
-    fun getTasks(): LiveData<List<TaskEntity>>
 
-    @Query(
-        "SELECT * FROM task"
-    )
-    fun getTasksList(): List<TaskEntity>
 
     /**
      * Insert a task.
@@ -100,6 +87,12 @@ interface TaskDao {
      */
     @Delete
     suspend fun delete(taskEntity: TaskEntity)
+
+    @Query(
+        "SELECT * FROM task"
+    )
+    fun getTasksList(): List<TaskEntity>
+
 
     @Transaction
     @Query("SELECT * FROM task ORDER BY priority DESC")

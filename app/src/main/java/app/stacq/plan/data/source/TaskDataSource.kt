@@ -9,7 +9,7 @@ interface TaskDataSource {
 
     suspend fun create(taskEntity: TaskEntity)
 
-    suspend fun getById(id: String): LiveData<TaskEntity>
+    fun getById(id: String): LiveData<TaskEntity>
 
     suspend fun update(taskEntity: TaskEntity)
 
@@ -23,11 +23,11 @@ interface TaskDataSource {
 
     suspend fun updatePriority(taskEntity: TaskEntity)
 
-    suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
-
-    suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity>
-
     suspend fun getTasksList(): List<TaskEntity>
 
-    suspend fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>>
+    fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
+
+    fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity>
+
+    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>>
 }

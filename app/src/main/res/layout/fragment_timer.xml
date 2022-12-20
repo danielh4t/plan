@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="app.stacq.plan.ui.timer.TimerViewModel" />
     </data>
 
@@ -20,22 +20,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:text="@{viewmodel.timerTime}"
             android:textSize="180sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:timerTextVisibility="@{viewmodel.timerFinished}"
             tools:text="@string/blank_time" />
 
         <CheckBox
             android:id="@+id/timer_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:button="@drawable/timer_alarm_checkbox"
-            android:checked="@{viewmodel.timerAlarm}"
-            android:onCheckedChanged="@{()->viewmodel.updateTaskTimerAlarm()}"
+            android:checked="@{viewModel.task.timerAlarm}"
+            android:onCheckedChanged="@{()->viewModel.updateTaskTimerAlarm()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,11 +45,11 @@
             android:layout_height="240dp"
             android:contentDescription="@string/timer_complete"
             android:src="@drawable/avd_checkmark"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:timerImageVisibility="@{viewmodel.timerFinished}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

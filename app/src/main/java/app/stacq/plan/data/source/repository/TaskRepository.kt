@@ -1,7 +1,7 @@
 package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.Transformations
 import app.stacq.plan.data.source.local.task.TaskAnalysis
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
@@ -47,7 +47,6 @@ class TaskRepository(
 
     suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {
         localDataSource.updateTimerFinish(task.asTaskEntity())
-        remoteDataSource.updateTimerFinish(task.asTaskDocument())
     }
 
     suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
@@ -59,15 +58,6 @@ class TaskRepository(
         remoteDataSource.updatePriority(task.asTaskDocument())
     }
 
-    suspend fun getTasks(): LiveData<List<Task>> = withContext(ioDispatcher) {
-        localDataSource.getTasks()
-            .map { it.map { it1 -> it1.asTask() } }
-    }
-
-    suspend fun getTask(id: String): LiveData<Task> = withContext(ioDispatcher) {
-        localDataSource.getTask(id).map { it.asTask() }
-    }
-
     suspend fun getTasksList(): List<TaskEntity> = withContext(ioDispatcher) {
         localDataSource.getTasksList()
     }
@@ -76,9 +66,16 @@ class TaskRepository(
         remoteDataSource.update(taskEntity.asTaskDocument())
     }
 
-    suspend fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> =
-        withContext(ioDispatcher) {
-            return@withContext localDataSource.getTaskAnalysis(yearStartAt)
+    fun getTasksAndCategory(): LiveData<List<Task>> =
+        Transformations.map(localDataSource.getTasksAndCategory()) {
+            it.map { it1 -> it1.asTask() }
         }
 
+    fun getTask(id: String): LiveData<Task> = Transformations.map(localDataSource.getTask(id)) {
+        it.asTask()
+    }
+
+    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {
+        return localDataSource.getTaskAnalysis(yearStartAt)
+    }
 }

@@ -18,10 +18,10 @@ class CreateBiteViewModel(
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    fun create(name: String, taskId: String, categoryId: String) {
+    fun create(name: String, taskId: String) {
         viewModelScope.launch {
             try {
-                val biteEntity = BiteEntity(name = name, taskId = taskId, categoryId = categoryId)
+                val biteEntity = BiteEntity(name = name, taskId = taskId)
                 val bite = biteEntity.asBite()
                 biteRepository.create(bite)
             } catch (e: Error) {

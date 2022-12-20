@@ -1,11 +1,12 @@
 package app.stacq.plan.util
 
 
+import android.os.SystemClock
 import java.time.Instant
 import java.time.YearMonth
 import java.util.*
 
-fun isFinishAtInFuture(finishAt: Long): Boolean {
+fun isTimeInFuture(finishAt: Long): Boolean {
     val now: Long = Instant.now().epochSecond
     return now > finishAt
 }
@@ -13,6 +14,14 @@ fun isFinishAtInFuture(finishAt: Long): Boolean {
 fun millisInFuture(finishAt: Long): Long {
     val now: Long = Instant.now().epochSecond
     return (finishAt - now) * 1000L
+}
+
+fun alarmTriggerTimer(finishAt: Long): Long {
+    return SystemClock.elapsedRealtime() + millisInFuture(finishAt)
+}
+
+fun plusSecondsEpoch(seconds: Long): Long {
+    return Instant.now().plusSeconds(seconds).epochSecond
 }
 
 fun yearDays(): Int {

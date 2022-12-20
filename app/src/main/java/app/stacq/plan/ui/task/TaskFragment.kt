@@ -21,7 +21,7 @@ import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
-import app.stacq.plan.util.isFinishAtInFuture
+import app.stacq.plan.util.isTimeInFuture
 
 
 class TaskFragment : Fragment() {
@@ -107,21 +107,19 @@ class TaskFragment : Fragment() {
         binding.timerFab.setOnClickListener {
             val task: Task = viewModel.task.value!!
             val canPostNotifications: Boolean = hasPostNotificationsPermission(application)
-            val isFinishAtInFuture: Boolean = isFinishAtInFuture(task.timerFinishAt)
+            val isFinishAtInFuture: Boolean = isTimeInFuture(task.timerFinishAt)
             if (!canPostNotifications and isFinishAtInFuture) {
                 // request permission
-                val action = TaskFragmentDirections.actionNavTaskToNavNotification(task)
+                val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
                 this.findNavController().navigate(action)
             } else {
-                val action = TaskFragmentDirections.actionNavTaskToNavTimer(task)
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
                 this.findNavController().navigate(action)
             }
         }
 
         binding.createBiteFab.setOnClickListener {
-            val task: Task = viewModel.task.value!!
-            val action =
-                TaskFragmentDirections.actionNavTaskToCreateBiteFragment(task.id, task.categoryId)
+            val action = TaskFragmentDirections.actionNavTaskToCreateBiteFragment(taskId)
             this.findNavController().navigate(action)
         }
 

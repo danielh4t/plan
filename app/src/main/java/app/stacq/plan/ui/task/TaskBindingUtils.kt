@@ -35,5 +35,4 @@ fun TextView.setTaskTimer(timerFinishAt: Long) {
         // timer finished
         resources.getString(R.string.timer_complete)
     }
-
 }

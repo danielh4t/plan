@@ -3,7 +3,6 @@ package app.stacq.plan.ui.tasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.repository.CategoryRepository
@@ -16,9 +15,7 @@ class TasksViewModel(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val tasksCategory: LiveData<List<Task>> = liveData {
-        emitSource(taskRepository.getTasks())
-    }
+    val tasksCategory: LiveData<List<Task>> = taskRepository.getTasksAndCategory()
 
     var categories: Int = 0
 

@@ -17,8 +17,8 @@ class TaskLocalDataSource(
         taskDao.create(taskEntity)
     }
 
-    override suspend fun getById(id: String): LiveData<TaskEntity> = withContext(ioDispatcher) {
-        taskDao.readById(id)
+    override fun getById(id: String): LiveData<TaskEntity> {
+        return taskDao.readById(id)
     }
 
     override suspend fun update(taskEntity: TaskEntity) = withContext(ioDispatcher) {
@@ -52,23 +52,21 @@ class TaskLocalDataSource(
             taskDao.updatePriority(taskEntity.id, taskEntity.priority)
         }
 
-    override suspend fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> =
-        withContext(ioDispatcher) {
-            taskDao.getTasksAndCategory()
-        }
-
-    override suspend fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> =
-        withContext(ioDispatcher) {
-            taskDao.getTaskAndCategory(id)
-        }
-
     override suspend fun getTasksList(): List<TaskEntity> =
         withContext(ioDispatcher) {
             taskDao.getTasksList()
         }
 
-    override suspend fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> = withContext(ioDispatcher) {
-          return@withContext taskDao.getTaskAnalysis(yearStartAt)
+    override fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>> {
+        return taskDao.getTasksAndCategory()
+    }
+
+    override fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> {
+        return taskDao.getTaskAndCategory(id)
+    }
+
+    override fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {
+        return taskDao.getTaskAnalysis(yearStartAt)
     }
 
 }

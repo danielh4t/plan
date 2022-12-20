@@ -20,9 +20,7 @@ class TaskViewModel(
     private val taskId: String
 ) : ViewModel() {
 
-    val task: LiveData<Task> = liveData {
-        emitSource(taskRepository.getTask(taskId))
-    }
+    val task: LiveData<Task> = taskRepository.getTask(taskId)
 
     val bites: LiveData<List<Bite>> = liveData {
         emitSource(bitesRepository.getBites(taskId))

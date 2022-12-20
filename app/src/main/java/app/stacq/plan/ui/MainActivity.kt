@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // reference bottom navigation view
-        val navView: BottomNavigationView = binding.bottomNavigation
+        val bottomNavView: BottomNavigationView = binding.bottomNavigation
         // navigation controller to bottom navigation view
-        navView.setupWithNavController(navController)
-        navView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
+        bottomNavView.setupWithNavController(navController)
+        bottomNavView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
         binding.accountImageView.setOnClickListener {
             handleAuthentication()
@@ -178,7 +178,6 @@ class MainActivity : AppCompatActivity() {
             .then(syncTask)
             .then(syncBite)
             .enqueue()
-
     }
 
     private val signInLauncher =

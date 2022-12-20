@@ -77,8 +77,8 @@
         android:label="@string/timer"
         tools:layout="@layout/fragment_timer">
         <argument
-            android:name="task"
-            app:argType="app.stacq.plan.data.source.model.Task" />
+            android:name="taskId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/nav_notification"
@@ -90,8 +90,8 @@
             app:destination="@id/nav_timer"
             app:popUpTo="@id/nav_task" />
         <argument
-            android:name="task"
-            app:argType="app.stacq.plan.data.source.model.Task" />
+            android:name="taskId"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -131,9 +131,6 @@
             app:destination="@id/nav_task" />
         <argument
             android:name="taskId"
-            app:argType="string" />
-        <argument
-            android:name="categoryId"
             app:argType="string" />
     </fragment>
 
