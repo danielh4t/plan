@@ -6,11 +6,6 @@ import java.time.Instant
 import java.time.YearMonth
 import java.util.*
 
-fun isTimeInFuture(finishAt: Long): Boolean {
-    val now: Long = Instant.now().epochSecond
-    return now > finishAt
-}
-
 fun millisInFuture(finishAt: Long): Long {
     val now: Long = Instant.now().epochSecond
     return (finishAt - now) * 1000L

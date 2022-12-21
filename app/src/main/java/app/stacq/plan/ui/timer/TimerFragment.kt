@@ -19,7 +19,6 @@ import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.alarmTriggerTimer
 import app.stacq.plan.util.createTimerChannel
-import app.stacq.plan.util.isTimeInFuture
 import app.stacq.plan.util.millisInFuture
 
 
@@ -31,6 +30,7 @@ class TimerFragment : Fragment() {
     private lateinit var viewModelFactory: TimerViewModelFactory
     private lateinit var viewModel: TimerViewModel
 
+    private var countDownTimer: CountDownTimer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,57 +65,59 @@ class TimerFragment : Fragment() {
 
         viewModel.task.observe(viewLifecycleOwner) {
             if (it != null) {
-                // timer finished show animation
-                if (!isTimeInFuture(it.timerFinishAt)) {
-                    binding.timerImage.visibility = View.VISIBLE
-                    (binding.timerImage.drawable as Animatable).start()
-                }
-            }
-        }
-
-        val task = viewModel.task.value
-        task?.let {
-            if (isTimeInFuture(it.timerFinishAt)) {
-                startTimer(it.timerFinishAt)
-
-                val requestCode: Int = it.timerFinishAt.toInt()
-                val triggerTime = alarmTriggerTimer(it.timerFinishAt)
-
-                if (canNotify) {
-                    setAlarm(application, requestCode, task.name, triggerTime)
+                if (it.timerFinishAt == 0L) {
+                    // timer not started
+                    viewModel.updateTaskTimerFinish()
                 } else {
-                    cancelAlarm(application, requestCode, task.name)
+                    if (millisInFuture(it.timerFinishAt) > 0L) {
+
+                        startTimer(it.timerFinishAt)
+                        val requestCode: Int = it.timerFinishAt.toInt()
+                        val triggerTime = alarmTriggerTimer(it.timerFinishAt)
+
+                        if (canNotify) {
+                            setAlarm(application, requestCode, it.name, triggerTime)
+                        } else {
+                            cancelAlarm(application, requestCode, it.name)
+                        }
+                    } else {
+                        showTimerImage()
+                    }
                 }
-            } else {
-                // timer not started
-                viewModel.updateTaskTimerFinish()
             }
+
+            createTimerChannel(application)
         }
-
-        createTimerChannel(application)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        countDownTimer?.cancel()
     }
 
     private fun startTimer(timerFinishAt: Long) {
         val millisInFuture: Long = millisInFuture(timerFinishAt)
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
-        object : CountDownTimer(millisInFuture, millisInterval) {
+        countDownTimer = object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.timerText.text = "${millisUntilFinished / millisInterval}"
             }
 
             override fun onFinish() {
-                binding.timerText.visibility = View.INVISIBLE
+                showTimerImage()
             }
-        }.start()
+        }
+        (countDownTimer as CountDownTimer).start()
     }
 
+    private fun showTimerImage(){
+        binding.timerAlarm.visibility = View.GONE
+        binding.timerText.visibility = View.GONE
+        binding.timerImage.visibility = View.VISIBLE
+        (binding.timerImage.drawable as Animatable).start()
+    }
     private fun hasPostNotificationsPermission(applicationContext: Context): Boolean {
         return when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
@@ -129,5 +131,4 @@ class TimerFragment : Fragment() {
             }
         }
     }
-
 }

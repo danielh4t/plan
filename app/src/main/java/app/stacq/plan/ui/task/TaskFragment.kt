@@ -21,7 +21,7 @@ import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
-import app.stacq.plan.util.isTimeInFuture
+import app.stacq.plan.util.millisInFuture
 
 
 class TaskFragment : Fragment() {
@@ -107,7 +107,7 @@ class TaskFragment : Fragment() {
         binding.timerFab.setOnClickListener {
             val task: Task = viewModel.task.value!!
             val canPostNotifications: Boolean = hasPostNotificationsPermission(application)
-            val isFinishAtInFuture: Boolean = isTimeInFuture(task.timerFinishAt)
+            val isFinishAtInFuture: Boolean = millisInFuture(task.timerFinishAt) > 0L
             if (!canPostNotifications and isFinishAtInFuture) {
                 // request permission
                 val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
