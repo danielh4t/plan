@@ -61,12 +61,13 @@ class CreateTaskFragment : Fragment() {
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             binding.createCategoryChipGroup.removeAllViews()
             categories.map { category ->
-                val chip = layoutInflater.inflate(R.layout.chip_layout,
+                val chip = layoutInflater.inflate(
+                    R.layout.chip_layout,
                     binding.createCategoryChipGroup,
                     false
                 ) as Chip
                 chip.text = category.name
-                chip.contentDescription = category.name + getText(R.string.category_chip)
+                chip.contentDescription = getString(R.string.content_category_chip, category.name)
                 chip.tag = category.id
                 binding.createCategoryChipGroup.addView(chip)
             }

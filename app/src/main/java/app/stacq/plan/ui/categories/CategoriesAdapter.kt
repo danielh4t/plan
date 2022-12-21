@@ -46,6 +46,8 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
         fun bind(category: Category, viewModel: CategoriesViewModel) {
             binding.category = category
             binding.viewModel = viewModel
+            binding.categoryColor.contentDescription = "${category.name} color"
+            binding.categoryName.contentDescription = "${category.name} name"
             binding.executePendingBindings()
         }
     }

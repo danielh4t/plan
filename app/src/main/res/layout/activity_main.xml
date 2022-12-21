@@ -28,8 +28,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="16dp"
-                    android:minHeight="32dp"
-                    android:minWidth="32dp"
+                    android:minHeight="48dp"
+                    android:minWidth="48dp"
                     android:src="@drawable/ic_account_circle"
                     android:contentDescription="@string/content_account_image"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />

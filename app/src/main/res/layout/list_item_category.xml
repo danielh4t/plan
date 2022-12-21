@@ -24,12 +24,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
             android:layout_margin="16dp"
-            android:contentDescription="@string/content_category_color"
             android:src="@drawable/ic_circle_outline"
             app:categoryColor="@{category.color}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/category_name"
@@ -39,12 +39,12 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="@{category.name}"
-            android:contentDescription="@string/content_category_name"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/category_color"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
             tools:text="@string/category" />
 
 

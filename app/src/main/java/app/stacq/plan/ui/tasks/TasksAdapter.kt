@@ -40,6 +40,7 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
         fun bind(task: Task, viewModel: TasksViewModel) {
             binding.task = task
             binding.viewModel = viewModel
+            binding.taskName.contentDescription =  "${task.name} name"
             binding.executePendingBindings()
         }
     }
