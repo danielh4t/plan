@@ -28,7 +28,6 @@ fun setAlarm(applicationContext: Context, requestCode: Int, name: String, trigge
             val permissionIntent = Intent().apply {
                 action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
             }
-
             applicationContext.startActivity(permissionIntent)
         }
 

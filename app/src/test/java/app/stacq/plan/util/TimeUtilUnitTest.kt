@@ -5,7 +5,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
-class UtilUnitTest {
+class TimeUtilUnitTest {
 
 
     @Test
@@ -21,7 +21,6 @@ class UtilUnitTest {
     @Test
     fun test_MillisInFuture() {
         val finishAt: Long = 1600016000
-
 
         val expected: Long = 1440016000000
         val actual: Long = millisInFuture(finishAt)

@@ -118,6 +118,7 @@ class TimerFragment : Fragment() {
         binding.timerImage.visibility = View.VISIBLE
         (binding.timerImage.drawable as Animatable).start()
     }
+
     private fun hasPostNotificationsPermission(applicationContext: Context): Boolean {
         return when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(

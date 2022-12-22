@@ -59,8 +59,8 @@ class NotificationFragment : Fragment() {
                     ).show()
                     viewModel.logPermission(false)
                 }
-                val action =
-                    NotificationFragmentDirections.actionNavNotificationToNavTimer(taskId)
+
+                val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(taskId)
                 this.findNavController().navigate(action)
             }
 
@@ -81,8 +81,10 @@ class NotificationFragment : Fragment() {
             val action = NotificationFragmentDirections.actionNavNotificationToNavTimer(taskId)
             this.findNavController().navigate(action)
         }
-
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
