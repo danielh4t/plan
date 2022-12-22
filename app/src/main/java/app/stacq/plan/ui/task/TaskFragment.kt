@@ -74,8 +74,7 @@ class TaskFragment : Fragment() {
         }
 
         binding.editTaskButton.setOnClickListener {
-            val task: Task = viewModel.task.value!!
-            val action = TaskFragmentDirections.actionNavTaskToNavEdit(task)
+            val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
             this.findNavController().navigate(action)
         }
 

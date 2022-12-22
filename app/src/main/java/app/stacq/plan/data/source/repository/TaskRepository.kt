@@ -68,11 +68,11 @@ class TaskRepository(
 
     fun getTasksAndCategory(): LiveData<List<Task>> =
         Transformations.map(localDataSource.getTasksAndCategory()) {
-            it.map { it1 -> it1.asTask() }
+            it?.map { it1 -> it1.asTask() }
         }
 
     fun getTask(id: String): LiveData<Task> = Transformations.map(localDataSource.getTask(id)) {
-        it.asTask()
+        it?.asTask()
     }
 
     fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {

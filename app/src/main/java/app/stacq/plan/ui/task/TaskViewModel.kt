@@ -39,17 +39,21 @@ class TaskViewModel(
     }
 
     fun delete() {
-        val task: Task = task.value!!
-        viewModelScope.launch {
-            taskRepository.delete(task)
+        val task: Task? = task.value
+        task?.let {
+            viewModelScope.launch {
+                taskRepository.delete(it)
+            }
         }
     }
 
     fun updatePriority(priority: Float) {
-        val task: Task = task.value!!
-        task.priority = priority.toInt()
-        viewModelScope.launch {
-            taskRepository.updatePriority(task)
+        val task: Task? = task.value
+        task?.let {
+            it.priority = priority.toInt()
+            viewModelScope.launch {
+                taskRepository.updatePriority(it)
+            }
         }
     }
 
@@ -61,9 +65,15 @@ class TaskViewModel(
         }
     }
 
+    fun deleteBite(bite: Bite) {
+        viewModelScope.launch {
+            bitesRepository.delete(bite)
+        }
+    }
+
     fun hasAlarm(): Boolean {
         val task: Task = task.value!!
-        if(task.timerAlarm && task.timerFinishAt > Instant.now().epochSecond) return true
+        if (task.timerAlarm && task.timerFinishAt > Instant.now().epochSecond) return true
         return false
     }
 
@@ -76,5 +86,4 @@ class TaskViewModel(
         val task: Task = task.value!!
         return task.timerFinishAt.toInt()
     }
-
 }

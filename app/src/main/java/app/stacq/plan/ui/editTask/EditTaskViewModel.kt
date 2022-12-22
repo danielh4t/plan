@@ -13,24 +13,29 @@ import kotlinx.coroutines.launch
 class EditTaskViewModel(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository,
+    taskId: String
 ) : ViewModel() {
+
+    val task: LiveData<Task> = taskRepository.getTask(taskId)
 
     val categories: LiveData<List<Category>> = liveData {
         emitSource(categoryRepository.getCategories())
     }
 
-    fun editTask(task: Task, name: String, categoryId: String) {
+    fun edit(name: String, categoryId: String) {
         viewModelScope.launch {
-            task.name = name
-            if (task.categoryId == categoryId) {
-                taskRepository.update(task)
-            } else {
-                // update category
-                val previousCategoryId = task.categoryId
-                task.categoryId = categoryId
-                taskRepository.updateCategory(task, previousCategoryId)
+            val task = task.value
+            task?.let {
+                if (task.categoryId == categoryId) {
+                    task.name = name
+                    taskRepository.update(task)
+                } else {
+                    // update category
+                    val previousCategoryId = task.categoryId
+                    task.categoryId = categoryId
+                    taskRepository.updateCategory(task, previousCategoryId)
+                }
             }
         }
     }
-
 }

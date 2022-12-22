@@ -17,8 +17,12 @@ class BitesAdapter(private val viewModel: TaskViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val task = getItem(position)
-        holder.bind(task, viewModel)
+        val bite = getItem(position)
+        holder.bind(bite, viewModel)
+        holder.itemView.setOnLongClickListener {
+            viewModel.deleteBite(bite)
+            true
+        }
     }
 
     class ViewHolder private constructor(private val binding: ListItemBiteBinding) :

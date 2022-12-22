@@ -11,7 +11,6 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
-import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
@@ -42,7 +41,7 @@ class EditTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args = EditTaskFragmentArgs.fromBundle(requireArguments())
-        val task: Task = args.task
+        val taskId: String = args.taskId
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
@@ -57,12 +56,14 @@ class EditTaskFragment : Fragment() {
         val categoryRepository =
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository)
+        viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditTaskViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.editName.setText(task.name)
+        viewModel.task.observe(viewLifecycleOwner) { task ->
+            binding.editName.setText(task.name)
+        }
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.map { category ->
@@ -73,9 +74,6 @@ class EditTaskFragment : Fragment() {
                 ) as Chip
                 chip.text = category.name
                 chip.tag = category.id
-                if (category.id == task.categoryId) {
-                    chip.isChecked = true
-                }
                 binding.editCategoryChipGroup.addView(chip)
             }
         }
@@ -95,9 +93,9 @@ class EditTaskFragment : Fragment() {
             // get category id from chip tag
             val categoryId = checkedChip.tag as String
 
-            viewModel.editTask(task, name, categoryId)
+            viewModel.edit(name, categoryId)
 
-            val action = EditTaskFragmentDirections.actionNavEditToNavTasks()
+            val action = EditTaskFragmentDirections.actionNavEditToNavTask(taskId)
             this.findNavController().navigate(action)
         }
     }

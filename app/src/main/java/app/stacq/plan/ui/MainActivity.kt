@@ -8,6 +8,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -67,10 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         // reference bottom navigation view
         val bottomNavView: BottomNavigationView = binding.bottomNavigation
-        // navigation controller to bottom navigation view
         bottomNavView.setupWithNavController(navController)
         bottomNavView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
+        navController.addOnDestinationChangedListener { _, _, arguments ->
+            bottomNavView.isVisible = arguments?.getBoolean("ShowBottomNav", false) == true
+        }
         binding.accountImageView.setOnClickListener {
             handleAuthentication()
         }
