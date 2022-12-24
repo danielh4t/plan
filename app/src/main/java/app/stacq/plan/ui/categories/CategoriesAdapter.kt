@@ -6,15 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.R
 import app.stacq.plan.data.source.model.Category
 import app.stacq.plan.databinding.ListItemCategoryBinding
-import com.google.android.material.snackbar.Snackbar
 
 
 class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
     ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -23,7 +20,7 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
         holder.bind(category, viewModel)
-        holder.itemView.setOnClickListener { _ ->
+        holder.itemView.setOnClickListener {
             viewModel.updateEnabled(category.id)
         }
     }
@@ -47,7 +44,6 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
             binding.executePendingBindings()
         }
     }
-
 }
 
 class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
@@ -59,5 +55,4 @@ class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
     override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
         return oldItem == newItem
     }
-
 }

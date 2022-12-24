@@ -28,4 +28,12 @@ class TimeUtilUnitTest {
         assertThat(expected, `is`(actual))
     }
 
+    @Test
+    fun test_YearStartAt() {
+        // 2022
+        val expected: Long = 1640908800
+        val actual: Long = yearStartAt()
+
+        assertThat(expected, `is`(actual))
+    }
 }

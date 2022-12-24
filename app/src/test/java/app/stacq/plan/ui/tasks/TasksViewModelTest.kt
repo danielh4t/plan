@@ -24,7 +24,7 @@ class TasksViewModelTest {
     @Before
     fun before() {
         repository = mock()
-        viewModel = TasksViewModel(repository)
+
     }
 
 
