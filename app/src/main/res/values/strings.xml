@@ -9,10 +9,10 @@
     <string name="create_task">Create Task</string>
     <string name="name">Name</string>
     <string name="create_fab">create action</string>
-    <string name="empty_task_details">Empty task name</string>
+    <string name="empty_task_details">Task name is empty</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
-    <string name="empty_category_details">Empty category name</string>
+    <string name="empty_category_details">Category is not selected</string>
     <!-- Task fragment -->
     <string name="date">01 January 1970 00:00</string>
     <!-- Timer fragment  -->

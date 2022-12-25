@@ -89,12 +89,18 @@ class EditTaskFragment : Fragment() {
 
             // get checked chip
             val checkedId: Int = binding.editCategoryChipGroup.checkedChipId
+            if (checkedId == View.NO_ID) {
+                Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(clickedView)
+                    .show()
+                return@setOnClickListener
+            }
             val checkedChip = binding.editCategoryChipGroup.findViewById<Chip>(checkedId)
             // get category id from chip tag
             val categoryId = checkedChip.tag as String
 
-            viewModel.edit(name, categoryId)
 
+            viewModel.edit(name, categoryId)
             val action = EditTaskFragmentDirections.actionNavEditToNavTask(taskId)
             this.findNavController().navigate(action)
         }
