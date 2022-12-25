@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
                     val imageView = ImageView(context)
                     imageView.setImageResource(R.drawable.ic_circle_outline)
                     imageView.setColorFilter(
-                        ContextCompat.getColor(requireContext(), R.color.plan_green),
+                        ContextCompat.getColor(requireContext(), R.color.plan_empty),
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
                     // check if in list

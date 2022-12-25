@@ -6,4 +6,5 @@
     <color name="plan_orange">#FFFF3D00</color>
     <color name="plan_indigo">#FF651FFF</color>
     <color name="plan_blue">#FF3D5AFE</color>
+    <color name="plan_empty">#FF009624</color>
 </resources>
