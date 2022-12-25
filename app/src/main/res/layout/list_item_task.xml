@@ -7,7 +7,7 @@
 
         <variable
             name="task"
-            type="app.stacq.plan.data.source.model.Task" />
+            type="app.stacq.plan.domain.Task" />
 
         <variable
             name="taskNavigateListener"

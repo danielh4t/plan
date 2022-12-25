@@ -8,14 +8,14 @@ import android.provider.Settings
 import app.stacq.plan.util.createBroadcastPendingIntent
 
 
-fun setAlarm(applicationContext: Context, requestCode: Int, name: String, triggerTime: Long) {
-    val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+fun setAlarm(context: Context, requestCode: Int, name: String, triggerTime: Long) {
+    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    val intent: Intent = Intent(applicationContext, TimerReceiver::class.java)
+    val intent: Intent = Intent(context, TimerReceiver::class.java)
         .putExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY, name)
         .putExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, requestCode)
 
-    val pendingIntent = createBroadcastPendingIntent(applicationContext, requestCode, intent)
+    val pendingIntent = createBroadcastPendingIntent(context, requestCode, intent)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         if (alarmManager.canScheduleExactAlarms()) {
@@ -28,7 +28,7 @@ fun setAlarm(applicationContext: Context, requestCode: Int, name: String, trigge
             val permissionIntent = Intent().apply {
                 action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
             }
-            applicationContext.startActivity(permissionIntent)
+            context.startActivity(permissionIntent)
         }
 
     } else {
@@ -40,14 +40,14 @@ fun setAlarm(applicationContext: Context, requestCode: Int, name: String, trigge
     }
 }
 
-fun cancelAlarm(applicationContext: Context, requestCode: Int, name: String) {
-    val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+fun cancelAlarm(context: Context, requestCode: Int, name: String) {
+    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    val intent: Intent = Intent(applicationContext, TimerReceiver::class.java)
+    val intent: Intent = Intent(context, TimerReceiver::class.java)
         .putExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, requestCode)
         .putExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY, name)
 
-    val pendingIntent = createBroadcastPendingIntent(applicationContext, requestCode, intent)
+    val pendingIntent = createBroadcastPendingIntent(context, requestCode, intent)
 
     alarmManager.cancel(pendingIntent)
 }

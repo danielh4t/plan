@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.source.model.Bite
-import app.stacq.plan.data.source.model.Task
-import app.stacq.plan.data.source.model.asTask
+import app.stacq.plan.domain.Bite
+import app.stacq.plan.domain.Task
+import app.stacq.plan.domain.asTask
 import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch

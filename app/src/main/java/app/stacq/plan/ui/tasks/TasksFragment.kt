@@ -27,6 +27,8 @@ class TasksFragment : Fragment() {
     private lateinit var viewModelFactory: TasksViewModelFactory
     private lateinit var viewModel: TasksViewModel
 
+    private var hasCategories: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,11 +72,12 @@ class TasksFragment : Fragment() {
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
 
         binding.createTaskFab.setOnClickListener {
-            if (viewModel.categories > 0) {
+            if (hasCategories) {
+                // Navigate to create task
                 val action = TasksFragmentDirections.actionNavTasksToNavCreate()
                 this.findNavController().navigate(action)
             } else {
-                // empty categories navigate to create category first
+                // Navigate to create category first
                 val action = TasksFragmentDirections.actionNavTasksToNavCreateCategory()
                 this.findNavController().navigate(action)
             }
@@ -86,6 +89,11 @@ class TasksFragment : Fragment() {
             }
         }
 
+        viewModel.categories.observe(viewLifecycleOwner) {
+            it?.let {
+                hasCategories = it.isNotEmpty()
+            }
+        }
     }
 
     override fun onDestroyView() {

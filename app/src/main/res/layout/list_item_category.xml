@@ -7,7 +7,7 @@
 
         <variable
             name="category"
-            type="app.stacq.plan.data.source.model.Category" />
+            type="app.stacq.plan.domain.Category" />
 
         <variable
             name="categoryEnableListener"

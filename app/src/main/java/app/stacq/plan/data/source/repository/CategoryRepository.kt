@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
-import app.stacq.plan.data.source.model.Category
-import app.stacq.plan.data.source.model.asCategory
-import app.stacq.plan.data.source.model.asDocument
-import app.stacq.plan.data.source.model.asEntity
+import app.stacq.plan.domain.Category
+import app.stacq.plan.domain.asCategory
+import app.stacq.plan.domain.asDocument
+import app.stacq.plan.domain.asEntity
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -27,22 +27,12 @@ class CategoryRepository(
         remoteDataSource.create(category.asDocument())
     }
 
-    suspend fun getCategories(): LiveData<List<Category>> {
-        return localDataSource.getCategories().map { categoryEntities ->
-            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
-        }
-    }
-
     suspend fun updateEnabledById(id: String) = withContext(ioDispatcher) {
         localDataSource.updateEnabledById(id)
     }
 
     suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
         localDataSource.delete(categoryEntity)
-    }
-
-    suspend fun getCategoriesCount(): Int = withContext(ioDispatcher) {
-        return@withContext localDataSource.getCategoriesCount()
     }
 
     suspend fun getCategoriesList() = withContext(ioDispatcher) {
@@ -53,4 +43,9 @@ class CategoryRepository(
         remoteDataSource.update(categoryEntity.asDocument())
     }
 
+    fun getCategories(): LiveData<List<Category>> {
+        return localDataSource.getCategories().map { categoryEntities ->
+            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
+        }
+    }
 }

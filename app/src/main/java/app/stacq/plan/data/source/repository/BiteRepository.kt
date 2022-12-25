@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
-import app.stacq.plan.data.source.model.Bite
-import app.stacq.plan.data.source.model.asBite
-import app.stacq.plan.data.source.model.asDocument
-import app.stacq.plan.data.source.model.asEntity
+import app.stacq.plan.domain.Bite
+import app.stacq.plan.domain.asBite
+import app.stacq.plan.domain.asDocument
+import app.stacq.plan.domain.asEntity
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

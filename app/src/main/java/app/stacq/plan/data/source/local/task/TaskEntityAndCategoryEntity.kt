@@ -3,7 +3,7 @@ package app.stacq.plan.data.source.local.task
 import androidx.room.Embedded
 import androidx.room.Relation
 import app.stacq.plan.data.source.local.category.CategoryEntity
-import app.stacq.plan.data.source.model.Task
+import app.stacq.plan.domain.Task
 
 data class TaskEntityAndCategoryEntity(
     @Embedded val taskEntity: TaskEntity,

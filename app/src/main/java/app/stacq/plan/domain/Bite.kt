@@ -1,4 +1,4 @@
-package app.stacq.plan.data.source.model
+package app.stacq.plan.domain
 
 import android.os.Parcelable
 import androidx.annotation.Keep

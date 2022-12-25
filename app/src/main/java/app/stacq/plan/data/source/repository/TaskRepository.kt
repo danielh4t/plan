@@ -6,9 +6,9 @@ import app.stacq.plan.data.source.local.task.TaskAnalysis
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
-import app.stacq.plan.data.source.model.Task
-import app.stacq.plan.data.source.model.asTaskDocument
-import app.stacq.plan.data.source.model.asTaskEntity
+import app.stacq.plan.domain.Task
+import app.stacq.plan.domain.asTaskDocument
+import app.stacq.plan.domain.asTaskEntity
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

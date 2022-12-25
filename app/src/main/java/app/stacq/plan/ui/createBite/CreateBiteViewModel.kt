@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
-import app.stacq.plan.data.source.model.asBite
+import app.stacq.plan.domain.asBite
 import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.util.constants.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics

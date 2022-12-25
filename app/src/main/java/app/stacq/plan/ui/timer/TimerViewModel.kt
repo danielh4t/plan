@@ -4,7 +4,7 @@ package app.stacq.plan.ui.timer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.source.model.Task
+import app.stacq.plan.domain.Task
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.util.plusSecondsEpoch
 import kotlinx.coroutines.launch

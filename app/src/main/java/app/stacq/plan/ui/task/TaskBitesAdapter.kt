@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.data.source.model.Bite
+import app.stacq.plan.domain.Bite
 import app.stacq.plan.databinding.ListItemBiteBinding
 
 
@@ -65,6 +65,6 @@ class BiteCompleteListener(val biteCompleteListener: (bite: Bite) -> Unit) {
     fun onClick(bite: Bite) = biteCompleteListener(bite)
 }
 
-class BiteDeleteListener(val biteDeleteListener: (bite: Bite) -> Unit) {
-    fun onClick(bite: Bite) = biteDeleteListener(bite)
+class BiteDeleteListener(val biteDeleteListener: (bite: Bite) -> Boolean) {
+    fun onLongClick(bite: Bite) = biteDeleteListener(bite)
 }

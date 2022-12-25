@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.data.source.model.Task
+import app.stacq.plan.domain.Task
 import app.stacq.plan.databinding.ListItemTaskBinding
 
 

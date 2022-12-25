@@ -68,5 +68,4 @@ class TaskLocalDataSource(
     override fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {
         return taskDao.getTaskAnalysis(yearStartAt)
     }
-
 }

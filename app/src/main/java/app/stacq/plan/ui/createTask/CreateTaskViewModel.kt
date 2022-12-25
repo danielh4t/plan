@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.source.model.Category
-import app.stacq.plan.data.source.model.asTask
+import app.stacq.plan.domain.Category
+import app.stacq.plan.domain.asTask
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.util.constants.AnalyticsConstants

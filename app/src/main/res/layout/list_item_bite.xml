@@ -7,7 +7,7 @@
 
         <variable
             name="bite"
-            type="app.stacq.plan.data.source.model.Bite" />
+            type="app.stacq.plan.domain.Bite" />
 
         <variable
             name="biteCompleteListener"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> biteCompleteListener.onClick(bite)}"
-        android:onLongClick="@{()-> biteDeleteListener.onClick(bite)}">
+        android:onLongClick="@{()-> biteDeleteListener.onLongClick(bite)}">
 
         <CheckBox
             android:id="@+id/bite_completed"

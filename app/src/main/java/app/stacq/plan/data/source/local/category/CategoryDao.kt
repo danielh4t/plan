@@ -16,7 +16,6 @@ interface CategoryDao {
     )
     fun getCategories(): LiveData<List<CategoryEntity>>
 
-
     /**
      * Insert a category.
      * If the category already exists.

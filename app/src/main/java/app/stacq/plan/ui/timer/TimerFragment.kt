@@ -76,9 +76,9 @@ class TimerFragment : Fragment() {
                         val triggerTime = alarmTriggerTimer(it.timerFinishAt)
 
                         if (canNotify) {
-                            setAlarm(application, requestCode, it.name, triggerTime)
+                            setAlarm(requireActivity(), requestCode, it.name, triggerTime)
                         } else {
-                            cancelAlarm(application, requestCode, it.name)
+                            cancelAlarm(requireActivity(), requestCode, it.name)
                         }
                     } else {
                         showTimerImage()
