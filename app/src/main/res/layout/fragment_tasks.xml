@@ -8,6 +8,8 @@
         <variable
             name="viewModel"
             type="app.stacq.plan.ui.tasks.TasksViewModel"/>
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

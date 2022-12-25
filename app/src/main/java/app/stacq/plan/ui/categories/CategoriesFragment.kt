@@ -49,10 +49,10 @@ class CategoriesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoriesViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
 
+        val categoryEnableListener = CategoryEnableListener { viewModel.updateEnabled(it) }
 
-        val adapter = CategoriesAdapter {
-            viewModel.updateEnabled(it)
-        }
+        val adapter = CategoriesAdapter(categoryEnableListener)
+
         binding.categoriesList.adapter = adapter
         binding.categoriesList.addItemDecoration(
             MarginItemDecoration(

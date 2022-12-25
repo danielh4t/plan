@@ -8,11 +8,16 @@
         <variable
             name="category"
             type="app.stacq.plan.data.source.model.Category" />
+
+        <variable
+            name="categoryEnableListener"
+            type="app.stacq.plan.ui.categories.CategoryEnableListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> categoryEnableListener.onClick(category.id)}">
 
         <ImageView
             android:id="@+id/category_color"

@@ -64,7 +64,11 @@ class TaskFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val bitesAdapter = BitesAdapter(viewModel)
+
+        val biteCompleteListener = BiteCompleteListener { viewModel.completeBite(it) }
+        val biteDeleteListener = BiteDeleteListener { viewModel.deleteBite(it) }
+
+        val bitesAdapter = BitesAdapter(biteCompleteListener, biteDeleteListener)
         binding.bitesList.adapter = bitesAdapter
 
         viewModel.bites.observe(viewLifecycleOwner) {

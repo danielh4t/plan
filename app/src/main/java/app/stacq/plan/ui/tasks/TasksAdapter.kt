@@ -2,7 +2,6 @@ package app.stacq.plan.ui.tasks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,10 @@ import app.stacq.plan.data.source.model.Task
 import app.stacq.plan.databinding.ListItemTaskBinding
 
 
-class TasksAdapter(private val viewModel: TasksViewModel) :
+class TasksAdapter(
+    private val taskNavigateListener: TaskNavigateListener,
+    private val taskCompleteListener: TaskCompleteListener
+) :
     ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,14 +21,10 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, viewModel)
-        holder.itemView.setOnClickListener { view ->
-            val action = TasksFragmentDirections.actionNavTasksToNavTask(task.id)
-            view.findNavController().navigate(action)
-        }
+        holder.bind(task, taskNavigateListener, taskCompleteListener)
     }
 
-    class ViewHolder private constructor(private val binding: ListItemTaskBinding) :
+    class ViewHolder constructor(private val binding: ListItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         companion object {
@@ -37,14 +35,18 @@ class TasksAdapter(private val viewModel: TasksViewModel) :
             }
         }
 
-        fun bind(task: Task, viewModel: TasksViewModel) {
+        fun bind(
+            task: Task,
+            taskNavigateListener: TaskNavigateListener,
+            taskCompleteListener: TaskCompleteListener
+        ) {
             binding.task = task
-            binding.viewModel = viewModel
-            binding.taskName.contentDescription =  "${task.name} name"
+            binding.taskNavigateListener = taskNavigateListener
+            binding.taskCompleteListener = taskCompleteListener
+            binding.taskName.contentDescription = "${task.name} name"
             binding.executePendingBindings()
         }
     }
-
 }
 
 class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
@@ -58,4 +60,13 @@ class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
     }
 
 }
+
+class TaskCompleteListener(val completeListener: (task: Task) -> Unit) {
+    fun onClick(task: Task) = completeListener(task)
+}
+
+class TaskNavigateListener(val navigateListener: (taskId: String) -> Unit) {
+    fun onClick(taskId: String) = navigateListener(taskId)
+}
+
 

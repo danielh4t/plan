@@ -6,16 +6,22 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="app.stacq.plan.ui.task.TaskViewModel" />
-        <variable
             name="bite"
             type="app.stacq.plan.data.source.model.Bite" />
+
+        <variable
+            name="biteCompleteListener"
+            type="app.stacq.plan.ui.task.BiteCompleteListener" />
+        <variable
+            name="biteDeleteListener"
+            type="app.stacq.plan.ui.task.BiteDeleteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> biteCompleteListener.onClick(bite)}"
+        android:onLongClick="@{()-> biteDeleteListener.onClick(bite)}">
 
         <CheckBox
             android:id="@+id/bite_completed"
@@ -24,7 +30,6 @@
             android:layout_gravity="center|end"
             android:button="@drawable/task_complete_checkbox"
             android:checked="@{bite.completed}"
-            android:onClick="@{() -> viewModel.completeBite(bite)}"
             app:buttonTint="@color/plan_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

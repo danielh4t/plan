@@ -57,7 +57,15 @@ class TasksFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val tasksAdapter = TasksAdapter(viewModel)
+        val taskNavigateListener = TaskNavigateListener {
+            val action = TasksFragmentDirections.actionNavTasksToNavTask(it)
+            this.findNavController().navigate(action)
+        }
+
+        val taskCompleteListener = TaskCompleteListener { viewModel.complete(it) }
+
+        val tasksAdapter = TasksAdapter(taskNavigateListener, taskCompleteListener)
+
         binding.tasksList.adapter = tasksAdapter
         binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
 

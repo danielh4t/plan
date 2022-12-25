@@ -6,17 +6,22 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="app.stacq.plan.ui.tasks.TasksViewModel" />
-
-        <variable
             name="task"
             type="app.stacq.plan.data.source.model.Task" />
+
+        <variable
+            name="taskNavigateListener"
+            type="app.stacq.plan.ui.tasks.TaskNavigateListener" />
+
+        <variable
+            name="taskCompleteListener"
+            type="app.stacq.plan.ui.tasks.TaskCompleteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> taskNavigateListener.onClick(task.id)}">
 
         <CheckBox
             android:id="@+id/task_completed"
@@ -26,7 +31,7 @@
             android:button="@drawable/task_complete_checkbox"
             android:contentDescription="@string/content_task_checkbox"
             android:checked="@{task.completed}"
-            android:onClick="@{() -> viewModel.complete(task)}"
+            android:onClick="@{() -> taskCompleteListener.onClick(task)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
