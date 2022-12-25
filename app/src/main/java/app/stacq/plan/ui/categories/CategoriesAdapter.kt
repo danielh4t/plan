@@ -3,14 +3,18 @@ package app.stacq.plan.ui.categories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.data.source.model.Category
 import app.stacq.plan.databinding.ListItemCategoryBinding
+import app.stacq.plan.generated.callback.OnClickListener
 
 
-class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
+class CategoriesAdapter(
+    private val clickListener: (String) -> Unit
+) :
     ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,9 +23,9 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
-        holder.bind(category, viewModel)
+        holder.bind(category)
         holder.itemView.setOnClickListener {
-            viewModel.updateEnabled(category.id)
+            clickListener(category.id)
         }
     }
 
@@ -36,9 +40,8 @@ class CategoriesAdapter(private val viewModel: CategoriesViewModel) :
             }
         }
 
-        fun bind(category: Category, viewModel: CategoriesViewModel) {
+        fun bind(category: Category) {
             binding.category = category
-            binding.viewModel = viewModel
             binding.categoryColor.contentDescription = "${category.name} color"
             binding.categoryName.contentDescription = "${category.name} name"
             binding.executePendingBindings()

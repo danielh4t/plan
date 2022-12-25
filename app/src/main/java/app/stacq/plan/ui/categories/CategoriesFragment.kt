@@ -49,11 +49,18 @@ class CategoriesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoriesViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = CategoriesAdapter(viewModel)
+
+        val adapter = CategoriesAdapter {
+            viewModel.updateEnabled(it)
+        }
         binding.categoriesList.adapter = adapter
-        binding.categoriesList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(
+        binding.categoriesList.addItemDecoration(
+            MarginItemDecoration(
+                resources.getDimensionPixelSize(
                     R.dimen.list_margin
-                )))
+                )
+            )
+        )
 
         binding.createCategoryFab.setOnClickListener {
             val action = CategoriesFragmentDirections.actionNavCategoriesToNavCategory()

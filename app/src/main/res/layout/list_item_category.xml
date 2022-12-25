@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="app.stacq.plan.ui.categories.CategoriesViewModel" />
-
-        <variable
             name="category"
             type="app.stacq.plan.data.source.model.Category" />
     </data>
