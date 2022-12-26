@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         }
         Firebase.auth.addAuthStateListener(authStateListener)
 
+        reportFullyDrawn()
     }
 
     override fun onStart() {
