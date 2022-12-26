@@ -46,10 +46,9 @@ class EditTaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource()
-
-        val taskRepository = TaskRepository(localDataSource, remoteDataSource)
+        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSource()
+        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
@@ -62,19 +61,24 @@ class EditTaskFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.task.observe(viewLifecycleOwner) { task ->
-            binding.editName.setText(task.name)
+            task?.let {
+                binding.editName.setText(task.name)
+            }
         }
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            categories.map { category ->
-                val chip = layoutInflater.inflate(
-                    R.layout.chip_layout,
-                    binding.editCategoryChipGroup,
-                    false
-                ) as Chip
-                chip.text = category.name
-                chip.tag = category.id
-                binding.editCategoryChipGroup.addView(chip)
+            binding.editCategoryChipGroup.removeAllViews()
+            categories?.let {
+                it.map { category ->
+                    val chip = layoutInflater.inflate(
+                        R.layout.chip_layout,
+                        binding.editCategoryChipGroup,
+                        false
+                    ) as Chip
+                    chip.text = category.name
+                    chip.tag = category.id
+                    binding.editCategoryChipGroup.addView(chip)
+                }
             }
         }
 

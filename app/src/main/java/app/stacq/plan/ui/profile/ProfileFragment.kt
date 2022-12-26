@@ -49,7 +49,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.taskAnalysis.observe(viewLifecycleOwner) { tasks ->
             binding.yearGrid.removeAllViews()
-            if (tasks != null) {
+            tasks?.let { taskAnalysisList ->
                 for (day in 1..viewModel.days) {
                     val params = GridLayout.LayoutParams(
                         GridLayout.spec(GridLayout.UNDEFINED, 1f),
@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
                     // check if in list
-                    val daysMap = tasks.associate { it.day to it.completed }
+                    val daysMap = taskAnalysisList.associate { it.day to it.completed }
                     if (daysMap.containsKey(day)) {
                         val completed = daysMap[day]
                         if (completed != null) {

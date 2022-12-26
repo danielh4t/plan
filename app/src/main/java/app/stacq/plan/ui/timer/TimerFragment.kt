@@ -64,7 +64,7 @@ class TimerFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.task.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 if (it.timerFinishAt == 0L) {
                     // timer not started
                     viewModel.updateTaskTimerFinish()
