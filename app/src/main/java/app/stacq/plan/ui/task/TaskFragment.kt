@@ -1,9 +1,13 @@
 package app.stacq.plan.ui.task
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -72,7 +76,6 @@ class TaskFragment : Fragment() {
                 bitesAdapter.submitList(it)
             }
         }
-
         binding.editTaskButton.setOnClickListener {
             val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
             this.findNavController().navigate(action)
@@ -90,9 +93,11 @@ class TaskFragment : Fragment() {
             val hasAlarm = viewModel.hasAlarm()
             if (hasAlarm) {
                 // finish_at
-                val requestCode: Int = viewModel.taskFinishAt()
-                val name = viewModel.taskName()
-                cancelAlarm(application, requestCode, name)
+                viewModel.task.value?.let {
+                    val name = it.name
+                    val requestCode: Int = it.timerFinishAt.toInt()
+                    cancelAlarm(application, requestCode, name)
+                }
             }
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
@@ -102,10 +107,9 @@ class TaskFragment : Fragment() {
             viewModel.updatePriority(value)
         }
 
+
         binding.timerFab.setOnClickListener {
-            // navigate to notification fragment to check permissions
-            val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
-            this.findNavController().navigate(action)
+            requestPermission(requireActivity(), taskId)
         }
 
         binding.createBiteFab.setOnClickListener {
@@ -119,5 +123,26 @@ class TaskFragment : Fragment() {
         _binding = null
     }
 
+    private fun requestPermission(context: Context, taskId: String) {
+        when {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                this.findNavController().navigate(action)
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                // Explain to the user why your app requires this permission
+                val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
+                this.findNavController().navigate(action)
+            }
+            else -> {
+                val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
+                this.findNavController().navigate(action)
+            }
+        }
+    }
 
 }

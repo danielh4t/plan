@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, _, arguments ->
             bottomNavView.isVisible = arguments?.getBoolean("ShowBottomNav", false) == true
         }
+
         binding.accountImageView.setOnClickListener {
             handleAuthentication()
         }

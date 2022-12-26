@@ -69,8 +69,9 @@ class ProfileFragment : Fragment() {
                         val completed = daysMap[day]
                         if (completed != null) {
                             val color = when (completed) {
-                                in 1..5 -> R.color.color_plan_green_50
-                                in 6..10 -> R.color.color_plan_green_75
+                                in 1..3 -> R.color.color_plan_green_75
+                                in 4..6 -> R.color.color_plan_green_85
+                                in 7..10 -> R.color.color_plan_green_95
                                 else -> R.color.plan_green
                             }
                             imageView.setImageResource(R.drawable.ic_circle)

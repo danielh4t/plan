@@ -37,16 +37,17 @@
     <string name="timer_channel_id" translatable="false">timer_channel</string>
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
-
+    <!-- Notification fragment -->
+    <string name="notification">Notification</string>
     <string name="timer_complete">Timer complete</string>
-    <string name="get_notified">Get notified!</string>
-    <string name="post_notifications">Receive notification when timer is complete</string>
-    <string name="notify">Notify me</string>
-    <string name="no_thanks">No thanks</string>
-    <string name="no_notification">Notifications will not be sent</string>
     <string name="content_notification_bell">Notification Bell</string>
     <string name="content_agree">Agree to notification image</string>
-    <string name="notification">Notification</string>
+    <string name="timer_notification">Receive notification when the timer is complete</string>
+    <string name="yes_please">Yes, please</string>
+    <string name="no_thanks">No, thanks</string>
+    <string name="yes_notification">Timer complete notification will be sent</string>
+    <string name="no_notification">Timer complete notification will not be sent</string>
+
     <string name="categories">Categories</string>
     <string name="content_category_color">Category color</string>
     <string name="content_tasks">Tasks list and create task</string>

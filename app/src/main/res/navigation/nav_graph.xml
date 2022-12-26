@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_nav_task_to_createBiteFragment"
             app:destination="@id/nav_create_bite" />
+        <action
+            android:id="@+id/action_nav_task_to_nav_timer"
+            app:destination="@id/nav_timer" />
     </fragment>
 
     <fragment

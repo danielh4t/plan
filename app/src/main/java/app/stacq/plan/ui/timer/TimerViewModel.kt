@@ -2,6 +2,7 @@ package app.stacq.plan.ui.timer
 
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.domain.Task
@@ -16,6 +17,8 @@ class TimerViewModel(
 ) : ViewModel() {
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
+
+    val time: MutableLiveData<String> = MutableLiveData()
 
     fun updateTaskTimerFinish() {
         val finishAt = plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS)

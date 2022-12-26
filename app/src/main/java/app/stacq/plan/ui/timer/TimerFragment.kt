@@ -55,8 +55,11 @@ class TimerFragment : Fragment() {
         val remoteDataSource = TaskRemoteDataSource()
         val taskRepository = TaskRepository(localDataSource, remoteDataSource)
 
-        val canNotify = hasPostNotificationsPermission(application)
-        if (!canNotify) binding.timerAlarm.visibility = View.GONE
+        if(canPostNotifications(requireActivity())) {
+            binding.timerAlarm.visibility = View.VISIBLE
+        } else {
+            binding.timerAlarm.visibility = View.GONE
+        }
 
         viewModelFactory = TimerViewModelFactory(taskRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
@@ -69,13 +72,13 @@ class TimerFragment : Fragment() {
                     // timer not started
                     viewModel.updateTaskTimerFinish()
                 } else {
+                    // timer started
                     if (millisInFuture(it.timerFinishAt) > 0L) {
-
                         startTimer(it.timerFinishAt)
                         val requestCode: Int = it.timerFinishAt.toInt()
                         val triggerTime = alarmTriggerTimer(it.timerFinishAt)
-
-                        if (canNotify) {
+                        // set alarm
+                        if (canPostNotifications(requireActivity()) && it.timerAlarm) {
                             setAlarm(requireActivity(), requestCode, it.name, triggerTime)
                         } else {
                             cancelAlarm(requireActivity(), requestCode, it.name)
@@ -85,15 +88,17 @@ class TimerFragment : Fragment() {
                     }
                 }
             }
-
-            createTimerChannel(application)
         }
+
+        createTimerChannel(application)
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         countDownTimer?.cancel()
+        countDownTimer = null
     }
 
     private fun startTimer(timerFinishAt: Long) {
@@ -102,13 +107,15 @@ class TimerFragment : Fragment() {
 
         countDownTimer = object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.timerText.text = "${millisUntilFinished / millisInterval}"
+                val time = "${millisUntilFinished / millisInterval}"
+                viewModel.time.postValue(time)
             }
 
             override fun onFinish() {
                 showTimerImage()
             }
         }
+
         (countDownTimer as CountDownTimer).start()
     }
 
@@ -119,7 +126,7 @@ class TimerFragment : Fragment() {
         (binding.timerImage.drawable as Animatable).start()
     }
 
-    private fun hasPostNotificationsPermission(applicationContext: Context): Boolean {
+    private fun canPostNotifications(applicationContext: Context): Boolean {
         return when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 applicationContext,

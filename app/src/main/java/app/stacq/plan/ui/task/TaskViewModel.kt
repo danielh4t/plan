@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.task.TaskEntity
+import app.stacq.plan.data.source.repository.BiteRepository
+import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTask
-import app.stacq.plan.data.source.repository.BiteRepository
-import app.stacq.plan.data.source.repository.TaskRepository
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -72,18 +72,11 @@ class TaskViewModel(
     }
 
     fun hasAlarm(): Boolean {
-        val task: Task = task.value!!
-        if (task.timerAlarm && task.timerFinishAt > Instant.now().epochSecond) return true
+        val task: Task? = task.value
+        task?.let {
+            if (it.timerAlarm && it.timerFinishAt > Instant.now().epochSecond)
+                return true
+        }
         return false
-    }
-
-    fun taskName(): String {
-        val task: Task = task.value!!
-        return task.name
-    }
-
-    fun taskFinishAt(): Int {
-        val task: Task = task.value!!
-        return task.timerFinishAt.toInt()
     }
 }
