@@ -51,10 +51,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        FirebaseApp.initializeApp(this)
-        FirebaseAppCheck.getInstance().installCheckProviderFactory()
-
-        oneTapClient = Identity.getSignInClient(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.topAppBar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // reference bottom navigation view
         val bottomNavView: BottomNavigationView = binding.bottomNavigation
         bottomNavView.setupWithNavController(navController)
         bottomNavView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
@@ -95,6 +90,9 @@ class MainActivity : AppCompatActivity() {
                 binding.accountImageView.setImageResource(R.drawable.ic_account_circle)
             }
         }
+        oneTapClient = Identity.getSignInClient(this)
+        FirebaseApp.initializeApp(this)
+        FirebaseAppCheck.getInstance().installCheckProviderFactory()
         Firebase.auth.addAuthStateListener(authStateListener)
 
         reportFullyDrawn()
