@@ -79,9 +79,9 @@ class EditTaskFragment : Fragment() {
         }
 
         binding.editFab.setOnClickListener { clickedView ->
-            val name: String = binding.editName.text.toString()
+            val name: String = binding.editName.text.toString().trim()
             if (name.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
+                Snackbar.make(clickedView, R.string.task_name_required, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener

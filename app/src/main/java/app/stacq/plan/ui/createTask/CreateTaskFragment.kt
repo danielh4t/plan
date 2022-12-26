@@ -74,9 +74,9 @@ class CreateTaskFragment : Fragment() {
         }
 
         binding.createFab.setOnClickListener { clickedView ->
-            val name: String = binding.name.text.toString()
+            val name: String = binding.name.text.toString().trim()
             if (name.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_task_details, Snackbar.LENGTH_SHORT)
+                Snackbar.make(clickedView, R.string.task_name_required, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
@@ -84,7 +84,7 @@ class CreateTaskFragment : Fragment() {
 
             val checkedId: Int = binding.createCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.select_category, Snackbar.LENGTH_SHORT)
+                Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener

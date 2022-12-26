@@ -51,7 +51,7 @@ class CreateCategoryFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.createFab.setOnClickListener { clickedView ->
-            val name: String = binding.name.text.toString()
+            val name: String = binding.name.text.toString().trim()
             if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_LONG)
                     .setAnchorView(clickedView)
