@@ -143,24 +143,4 @@ class TaskRemoteDataSource(
             .update(fields)
 
     }
-
-    suspend fun updateTimerFinish(taskDocument: TaskDocument) = withContext(ioDispatcher) {
-
-        val uid = firebaseAuth.currentUser?.uid
-        val taskId = taskDocument.id
-        val categoryId = taskDocument.categoryId
-
-        if (uid == null || taskId == null || categoryId == null) return@withContext
-
-        val fields = mapOf(
-            "timerFinishAt" to taskDocument.timerFinishAt,
-        )
-
-        firestore.collection(uid)
-            .document(categoryId)
-            .collection(COLLECTION)
-            .document(taskId)
-            .update(fields)
-    }
-
 }
