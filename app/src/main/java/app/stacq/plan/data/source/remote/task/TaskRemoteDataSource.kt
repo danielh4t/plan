@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 private const val TASKS = "tasks"
@@ -151,15 +152,15 @@ class TaskRemoteDataSource(
 
     }
 
-    fun getProfileCompleted(categoryId: String): Flow<DocumentSnapshot?> {
+    suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {
 
-        val uid = firebaseAuth.currentUser?.uid ?: return emptyFlow()
+        val uid = firebaseAuth.currentUser?.uid ?: return null
 
         return firestore.collection(uid)
             .document(categoryId)
             .collection(PROFILE)
             .document(COMPLETED)
-            .snapshots()
-            .flowOn(ioDispatcher)
+            .get()
+            .await()
     }
 }

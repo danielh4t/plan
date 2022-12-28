@@ -13,4 +13,6 @@ class ProfileViewModel(
 ) : ViewModel() {
 
     val categories: LiveData<List<Category>> = categoryRepository.getCategories()
+
+
 }

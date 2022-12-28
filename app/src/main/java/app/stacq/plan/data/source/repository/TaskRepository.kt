@@ -2,19 +2,15 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import app.stacq.plan.data.source.local.task.TaskAnalysis
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTaskDocument
 import app.stacq.plan.domain.asTaskEntity
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
@@ -69,6 +65,10 @@ class TaskRepository(
         remoteDataSource.update(taskEntity.asTaskDocument())
     }
 
+    suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>? {
+        return remoteDataSource.getCategoryProfileCompleted(categoryId)?.data
+    }
+
     fun getTasksAndCategory(): LiveData<List<Task>> =
         Transformations.map(localDataSource.getTasksAndCategory()) {
             it?.map { it1 -> it1.asTask() }
@@ -76,11 +76,5 @@ class TaskRepository(
 
     fun getTask(id: String): LiveData<Task> = Transformations.map(localDataSource.getTask(id)) {
         it?.asTask()
-    }
-
-    fun getProfileCompleted(categoryId: String): Flow<MutableMap<String, Any>?> {
-        return remoteDataSource.getProfileCompleted(categoryId).map {
-            it?.data
-        }
     }
 }

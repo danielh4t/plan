@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.local.PlanDatabase
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
+import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentProfileBinding
 
@@ -40,7 +43,12 @@ class ProfileFragment : Fragment() {
         val taskRemoteDataSource = TaskRemoteDataSource()
         val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
 
-        viewModelFactory = ProfileViewModelFactory(taskRepository)
+        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryRemoteDataSource = CategoryRemoteDataSource()
+        val categoryRepository =
+            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+
+        viewModelFactory = ProfileViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
     }
 
