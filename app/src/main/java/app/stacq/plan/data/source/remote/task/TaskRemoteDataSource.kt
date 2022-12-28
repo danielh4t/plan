@@ -2,14 +2,21 @@ package app.stacq.plan.data.source.remote.task
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
-private const val COLLECTION = "tasks"
+private const val TASKS = "tasks"
+private const val PROFILE = "profile"
+private const val COMPLETED = "completed"
 
 class TaskRemoteDataSource(
     private val firebaseAuth: FirebaseAuth = Firebase.auth,
@@ -38,7 +45,7 @@ class TaskRemoteDataSource(
 
         firestore.collection(uid)
             .document(categoryId)
-            .collection(COLLECTION)
+            .collection(TASKS)
             .document(taskId)
             .set(fields)
     }
@@ -64,7 +71,7 @@ class TaskRemoteDataSource(
 
         firestore.collection(uid)
             .document(categoryId)
-            .collection(COLLECTION)
+            .collection(TASKS)
             .document(taskId)
             .set(fields)
     }
@@ -81,7 +88,7 @@ class TaskRemoteDataSource(
             // delete old document
             firestore.collection(uid)
                 .document(previousCategoryId)
-                .collection(COLLECTION)
+                .collection(TASKS)
                 .document(taskId)
                 .delete()
 
@@ -117,7 +124,7 @@ class TaskRemoteDataSource(
 
         firestore.collection(uid)
             .document(categoryId)
-            .collection(COLLECTION)
+            .collection(TASKS)
             .document(taskId)
             .update(fields)
 
@@ -138,9 +145,21 @@ class TaskRemoteDataSource(
 
         firestore.collection(uid)
             .document(categoryId)
-            .collection(COLLECTION)
+            .collection(TASKS)
             .document(taskId)
             .update(fields)
 
+    }
+
+    fun getProfileCompleted(categoryId: String): Flow<DocumentSnapshot?> {
+
+        val uid = firebaseAuth.currentUser?.uid ?: return emptyFlow()
+
+        return firestore.collection(uid)
+            .document(categoryId)
+            .collection(PROFILE)
+            .document(COMPLETED)
+            .snapshots()
+            .flowOn(ioDispatcher)
     }
 }

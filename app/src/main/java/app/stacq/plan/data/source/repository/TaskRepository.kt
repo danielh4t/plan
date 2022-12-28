@@ -10,8 +10,11 @@ import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTaskDocument
 import app.stacq.plan.domain.asTaskEntity
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
@@ -75,7 +78,9 @@ class TaskRepository(
         it?.asTask()
     }
 
-    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {
-        return localDataSource.getTaskAnalysis(yearStartAt)
+    fun getProfileCompleted(categoryId: String): Flow<MutableMap<String, Any>?> {
+        return remoteDataSource.getProfileCompleted(categoryId).map {
+            it?.data
+        }
     }
 }
