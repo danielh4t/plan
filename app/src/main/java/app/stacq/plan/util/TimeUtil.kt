@@ -19,12 +19,10 @@ fun plusSecondsEpoch(seconds: Long): Long {
     return Instant.now().plusSeconds(seconds).epochSecond
 }
 
-fun yearDays(): Int {
+fun currentYear(): String {
     val calendar = Calendar.getInstance()
     val year: Int = calendar.get(Calendar.YEAR)
-    val month: Int = calendar.get(Calendar.MONTH)
-    val ym = YearMonth.of(year, month)
-    return ym.lengthOfYear()
+    return year.toString()
 }
 
 fun yearStartAt(): Long {

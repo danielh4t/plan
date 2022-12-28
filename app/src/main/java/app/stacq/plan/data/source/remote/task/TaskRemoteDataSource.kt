@@ -5,13 +5,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
@@ -49,6 +45,7 @@ class TaskRemoteDataSource(
             .collection(TASKS)
             .document(taskId)
             .set(fields)
+
     }
 
     suspend fun update(taskDocument: TaskDocument) = withContext(ioDispatcher) {
@@ -76,6 +73,7 @@ class TaskRemoteDataSource(
             .document(taskId)
             .set(fields)
     }
+
 
     suspend fun updateCategory(taskDocument: TaskDocument, previousCategoryId: String) =
         withContext(ioDispatcher) {

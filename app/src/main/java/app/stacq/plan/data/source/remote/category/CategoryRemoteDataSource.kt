@@ -1,5 +1,6 @@
 package app.stacq.plan.data.source.remote.category
 
+import app.stacq.plan.util.currentYear
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,6 +10,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+
+private const val PROFILE = "profile"
+private const val COMPLETED = "completed"
 
 class CategoryRemoteDataSource(
     private val firebaseAuth: FirebaseAuth = Firebase.auth,
@@ -21,6 +25,7 @@ class CategoryRemoteDataSource(
         // root collection
         val uid = firebaseAuth.currentUser?.uid
         val categoryId = categoryDocument.id
+        val year = currentYear()
 
         if (uid == null || categoryId == null) return@withContext
 
@@ -32,6 +37,16 @@ class CategoryRemoteDataSource(
 
         firestore.collection(uid).document(categoryId).set(fields)
 
+        // julian calendar day year 1 - 366 is not zero-based indexed
+        val completedField = hashMapOf(
+            year to IntArray(367) { 0 }.asList()
+        )
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection(PROFILE)
+            .document(COMPLETED)
+            .set(completedField)
     }
 
 
