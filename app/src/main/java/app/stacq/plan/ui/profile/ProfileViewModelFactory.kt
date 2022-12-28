@@ -10,14 +10,15 @@ import app.stacq.plan.data.source.repository.TaskRepository
 
 
 class ProfileViewModelFactory(
-    private val taskRepository: TaskRepository
+    private val taskRepository: TaskRepository,
+    private val categoryRepository: CategoryRepository
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {
                 isAssignableFrom(ProfileViewModel::class.java) ->
-                    return ProfileViewModel(taskRepository) as T
+                    return ProfileViewModel(taskRepository, categoryRepository) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }
