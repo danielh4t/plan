@@ -40,7 +40,7 @@ class CategoryRemoteDataSource(
 
         // Get number of days in year and increment since
         // julian calendar day year 1 - 366 is not zero-based indexed
-        val days = days() + 1
+        val days = days()
         val completedField = hashMapOf(
             year to IntArray(days) { 0 }.asList()
         )

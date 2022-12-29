@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
             binding.yearGrid.removeAllViews()
             it?.let { days ->
                 if (days.isEmpty()) return@observe
-                for (day in 1 until days.size) {
+                for (day in 0..days.size) {
                     val completed = days[day].toInt()
                     val params = GridLayout.LayoutParams(
                         GridLayout.spec(GridLayout.UNDEFINED, 1f),
