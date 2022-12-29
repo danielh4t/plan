@@ -3,7 +3,6 @@ package app.stacq.plan.util
 
 import android.os.SystemClock
 import java.time.Instant
-import java.time.YearMonth
 import java.util.*
 
 fun millisInFuture(finishAt: Long): Long {
@@ -24,6 +23,12 @@ fun currentYear(): String {
     val year: Int = calendar.get(Calendar.YEAR)
     return year.toString()
 }
+
+fun day(): Int {
+    val calendar = Calendar.getInstance()
+    return calendar.get(Calendar.DAY_OF_YEAR)
+}
+
 
 fun yearStartAt(): Long {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))

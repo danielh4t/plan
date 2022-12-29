@@ -1,7 +1,6 @@
 package app.stacq.plan.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,11 +66,9 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.completed.observe(viewLifecycleOwner) {
+            binding.yearGrid.removeAllViews()
             it?.let { days ->
-
-                if(days.isEmpty()) return@observe
-
-                Log.d("days", days.toString())
+                if (days.isEmpty()) return@observe
                 for (day in 1 until days.size) {
                     val completed = days[day].toInt()
                     val params = GridLayout.LayoutParams(

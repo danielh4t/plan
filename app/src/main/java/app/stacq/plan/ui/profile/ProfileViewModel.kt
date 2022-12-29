@@ -26,9 +26,11 @@ class ProfileViewModel(
             val documentMap = taskRepository.getCategoryProfileCompleted(categoryId)
                 ?.getOrDefault(year, intArrayOf())
             try {
-                val days = documentMap as List<*>
-                val daysMapped = days.map { day -> day as Long }
-                completed.postValue(daysMapped)
+                documentMap?.let {
+                    val days = it as List<*>
+                    val daysMapped = days.map { day -> day as Long }
+                    completed.postValue(daysMapped)
+                }
             } catch (_: ClassCastException) {
                 completed.postValue(emptyList())
             }

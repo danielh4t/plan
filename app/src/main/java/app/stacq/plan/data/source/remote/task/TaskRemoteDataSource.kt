@@ -1,5 +1,7 @@
 package app.stacq.plan.data.source.remote.task
 
+import app.stacq.plan.util.currentYear
+import app.stacq.plan.util.day
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -134,6 +136,7 @@ class TaskRemoteDataSource(
         val uid = firebaseAuth.currentUser?.uid
         val taskId = taskDocument.id
         val categoryId = taskDocument.categoryId
+        val completed = taskDocument.completed
 
         if (uid == null || taskId == null || categoryId == null) return@withContext
 
@@ -148,6 +151,39 @@ class TaskRemoteDataSource(
             .document(taskId)
             .update(fields)
 
+
+        val document = firestore.collection(uid)
+            .document(categoryId)
+            .collection(PROFILE)
+            .document(COMPLETED)
+            .get()
+            .await()
+
+        var update: MutableList<Long> = mutableListOf()
+        try {
+            val data = document.data?.get(currentYear())
+            data?.let {
+                val dataList = it as List<*>
+                val days = dataList.map { item -> item as Long }
+                update = days.toMutableList()
+                // Update completed count on current day.
+                if (completed) {
+                    update[day()] = days[day()] + 1
+                } else {
+                    update[day()] = days[day()] - 1
+                }
+            }
+        } catch (e: ClassCastException) {
+            return@withContext
+        }
+
+        if (update.isEmpty()) return@withContext
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection(PROFILE)
+            .document(COMPLETED)
+            .update(currentYear(), update)
     }
 
     suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {
