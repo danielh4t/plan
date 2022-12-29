@@ -29,6 +29,11 @@ fun day(): Int {
     return calendar.get(Calendar.DAY_OF_YEAR)
 }
 
+fun days(): Int {
+    val calendar = Calendar.getInstance()
+    calendar.get(Calendar.YEAR)
+    return calendar.getActualMaximum(Calendar.DAY_OF_YEAR)
+}
 
 fun yearStartAt(): Long {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
