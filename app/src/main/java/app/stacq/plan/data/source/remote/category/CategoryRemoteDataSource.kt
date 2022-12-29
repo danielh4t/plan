@@ -1,6 +1,7 @@
 package app.stacq.plan.data.source.remote.category
 
 import app.stacq.plan.util.currentYear
+import app.stacq.plan.util.days
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,9 +38,11 @@ class CategoryRemoteDataSource(
 
         firestore.collection(uid).document(categoryId).set(fields)
 
+        // Get number of days in year and increment since
         // julian calendar day year 1 - 366 is not zero-based indexed
+        val days = days() + 1
         val completedField = hashMapOf(
-            year to IntArray(367) { 0 }.asList()
+            year to IntArray(days) { 0 }.asList()
         )
 
         firestore.collection(uid)
