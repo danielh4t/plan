@@ -167,10 +167,12 @@ class TaskRemoteDataSource(
                 val days = dataList.map { item -> item as Long }
                 update = days.toMutableList()
                 // Update completed count on current day.
+                // Decrement to handle zero-based index since first day is 1
+                val day = day() - 1
                 if (completed) {
-                    update[day()] = days[day()] + 1
+                    update[day()] = days[day] + 1
                 } else {
-                    update[day()] = days[day()] - 1
+                    update[day()] = days[day] - 1
                 }
             }
         } catch (e: ClassCastException) {
