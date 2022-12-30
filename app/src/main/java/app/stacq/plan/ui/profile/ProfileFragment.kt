@@ -1,6 +1,7 @@
 package app.stacq.plan.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,12 +66,14 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        viewModel.completed.observe(viewLifecycleOwner) {
+        viewModel.completedMap.observe(viewLifecycleOwner) {
             binding.yearGrid.removeAllViews()
-            it?.let { days ->
-                if (days.isEmpty()) return@observe
-                for (day in 0..days.size) {
-                    val completed = days[day].toInt()
+            it?.let { map ->
+                if (map.isEmpty()) return@observe
+                val completedTotal = viewModel.combine(map)
+                Log.d("ProfileFragment", completedTotal.toString())
+
+                completedTotal.forEach { completed ->
                     val params = GridLayout.LayoutParams(
                         GridLayout.spec(GridLayout.UNDEFINED, 1f),
                         GridLayout.spec(GridLayout.UNDEFINED, 1f)
@@ -97,7 +100,6 @@ class ProfileFragment : Fragment() {
                             android.graphics.PorterDuff.Mode.SRC_IN
                         )
                     }
-
                     binding.yearGrid.addView(imageView, params)
                 }
             }

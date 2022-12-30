@@ -41,7 +41,7 @@ class TaskRepository(
 
     suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
         localDataSource.updateCompletion(task.asTaskEntity())
-        remoteDataSource.updateTaskCompletion(task.asTaskDocument())
+        remoteDataSource.updateCompletion(task.asTaskDocument())
     }
 
     suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {

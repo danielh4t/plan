@@ -1,6 +1,5 @@
 package app.stacq.plan.util
 
-
 import android.os.SystemClock
 import java.time.Instant
 import java.util.*

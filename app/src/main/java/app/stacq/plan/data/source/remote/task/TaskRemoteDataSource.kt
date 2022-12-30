@@ -1,5 +1,6 @@
 package app.stacq.plan.data.source.remote.task
 
+import android.util.Log
 import app.stacq.plan.util.currentYear
 import app.stacq.plan.util.day
 import com.google.firebase.auth.FirebaseAuth
@@ -131,7 +132,7 @@ class TaskRemoteDataSource(
 
     }
 
-    suspend fun updateTaskCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
+    suspend fun updateCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         val taskId = taskDocument.id
@@ -151,7 +152,6 @@ class TaskRemoteDataSource(
             .document(taskId)
             .update(fields)
 
-
         val document = firestore.collection(uid)
             .document(categoryId)
             .collection(PROFILE)
@@ -159,33 +159,35 @@ class TaskRemoteDataSource(
             .get()
             .await()
 
-        var update: MutableList<Long> = mutableListOf()
+        Log.d("doc", document.toString())
+
+        var completedMutable: MutableList<Long> = mutableListOf()
         try {
             val data = document.data?.get(currentYear())
             data?.let {
                 val dataList = it as List<*>
-                val days = dataList.map { item -> item as Long }
-                update = days.toMutableList()
+                val completedList = dataList.map { item -> item as Long }
+                completedMutable = completedList.toMutableList()
                 // Update completed count on current day.
                 // Decrement to handle zero-based index since first day is 1
                 val day = day() - 1
                 if (completed) {
-                    update[day()] = days[day] + 1
+                    completedMutable[day] = completedMutable[day] + 1
                 } else {
-                    update[day()] = days[day] - 1
+                    completedMutable[day] = completedMutable[day] - 1
                 }
             }
         } catch (e: ClassCastException) {
             return@withContext
         }
 
-        if (update.isEmpty()) return@withContext
+        if (completedMutable.isEmpty()) return@withContext
 
         firestore.collection(uid)
             .document(categoryId)
             .collection(PROFILE)
             .document(COMPLETED)
-            .update(currentYear(), update)
+            .update(currentYear(), completedMutable)
     }
 
     suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {
