@@ -22,7 +22,7 @@ class CreateTaskViewModel(
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    val categories: LiveData<List<Category>> = categoryRepository.getCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
     fun create(name: String, categoryId: String) {
         viewModelScope.launch {

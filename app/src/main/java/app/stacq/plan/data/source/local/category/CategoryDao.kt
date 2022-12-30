@@ -7,12 +7,23 @@ import androidx.room.*
 interface CategoryDao {
 
     /**
-     * Select all categories from the category.
+     * Select enabled categories from the category.
      *
      * @return all categories.
      */
     @Query(
         "SELECT * FROM category  WHERE enabled"
+    )
+    fun getEnabledCategories(): LiveData<List<CategoryEntity>>
+
+
+    /**
+     * Select all categories from the category.
+     *
+     * @return all categories.
+     */
+    @Query(
+        "SELECT * FROM category"
     )
     fun getCategories(): LiveData<List<CategoryEntity>>
 

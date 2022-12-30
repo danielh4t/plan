@@ -43,6 +43,12 @@ class CategoryRepository(
         remoteDataSource.update(categoryEntity.asDocument())
     }
 
+    fun getEnabledCategories(): LiveData<List<Category>> {
+        return localDataSource.getEnabledCategories().map { categoryEntities ->
+            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
+        }
+    }
+
     fun getCategories(): LiveData<List<Category>> {
         return localDataSource.getCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }

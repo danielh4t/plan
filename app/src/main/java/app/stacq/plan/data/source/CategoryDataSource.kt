@@ -13,6 +13,8 @@ interface CategoryDataSource {
 
     suspend fun getCategoriesList(): List<CategoryEntity>
 
+    fun getEnabledCategories(): LiveData<List<CategoryEntity>>
+
     fun getCategories(): LiveData<List<CategoryEntity>>
 
 }

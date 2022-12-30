@@ -17,7 +17,7 @@ class EditTaskViewModel(
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
 
-    val categories: LiveData<List<Category>> = categoryRepository.getCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
     fun edit(name: String, categoryId: String) {
         viewModelScope.launch {

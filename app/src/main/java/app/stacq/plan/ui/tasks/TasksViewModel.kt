@@ -18,7 +18,7 @@ class TasksViewModel(
 
     val tasksCategory: LiveData<List<Task>> = taskRepository.getTasksAndCategory()
 
-    val categories: LiveData<List<Category>> = categoryRepository.getCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
     fun complete(task: Task) {
         task.completed = !task.completed
