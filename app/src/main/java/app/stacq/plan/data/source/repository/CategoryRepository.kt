@@ -4,13 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.remote.category.CategoryDocument
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.asCategory
 import app.stacq.plan.domain.asDocument
 import app.stacq.plan.domain.asEntity
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 /**
@@ -35,12 +38,19 @@ class CategoryRepository(
         localDataSource.delete(categoryEntity)
     }
 
-    suspend fun getCategoriesList() = withContext(ioDispatcher) {
-        localDataSource.getCategoriesList()
+    suspend fun getCategoriesEntityList() = withContext(ioDispatcher) {
+        localDataSource.getCategoriesEntityList()
     }
 
-    suspend fun sync(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
-        remoteDataSource.update(categoryEntity.asDocument())
+    fun getCategoriesDocumentList(): Flow<List<CategoryDocument?>> {
+        return remoteDataSource.getCategories().map {
+            it.documents.map { categoryDocument ->
+             categoryDocument.toObject(CategoryDocument::class.java)
+        } }
+    }
+
+    suspend fun sync(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
+        remoteDataSource.update(categoryDocument)
     }
 
     fun getEnabledCategories(): LiveData<List<Category>> {

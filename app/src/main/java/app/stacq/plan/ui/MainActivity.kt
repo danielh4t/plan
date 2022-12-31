@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
         Firebase.auth.addAuthStateListener(authStateListener)
 
+
         reportFullyDrawn()
     }
 

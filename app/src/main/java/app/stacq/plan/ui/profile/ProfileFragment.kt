@@ -1,5 +1,6 @@
 package app.stacq.plan.ui.profile
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,10 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
@@ -19,6 +23,10 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -28,6 +36,8 @@ class ProfileFragment : Fragment() {
 
     private lateinit var viewModelFactory: ProfileViewModelFactory
     private lateinit var viewModel: ProfileViewModel
+
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +50,24 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        authStateListener = FirebaseAuth.AuthStateListener {
+            val user = it.currentUser
+            if (user != null) {
+                // signed in
+                binding.yearGrid.visibility = View.VISIBLE
+                binding.syncImage.visibility = View.INVISIBLE
+                binding.syncText.visibility = View.INVISIBLE
+            } else {
+                // signed out
+                binding.yearGrid.visibility = View.INVISIBLE
+                binding.syncImage.visibility = View.VISIBLE
+                binding.syncText.visibility = View.VISIBLE
+                (binding.syncImage.drawable as Animatable).start()
+            }
+        }
+
+        Firebase.auth.addAuthStateListener(authStateListener)
 
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
@@ -56,12 +84,15 @@ class ProfileFragment : Fragment() {
         viewModelFactory = ProfileViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
 
-        viewModel.categories.observe(viewLifecycleOwner) {
-            it?.let { categories ->
-                if (categories.isNotEmpty()) {
-                    categories.map { category ->
-                        viewModel.getCategoryProfileCompleted(category.id)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.categories.collect { categories ->
+                    categories.map {
+                        it?.let {
+                            it.id?.let { it1 -> viewModel.getCategoryProfileCompleted(it1) }
+                        }
                     }
+
                 }
             }
         }
@@ -109,5 +140,6 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Firebase.auth.removeAuthStateListener(authStateListener)
     }
 }

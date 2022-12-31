@@ -72,7 +72,6 @@ class CategoriesFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
-
     }
 
     override fun onDestroyView() {

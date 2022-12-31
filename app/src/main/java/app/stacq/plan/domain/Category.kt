@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Category(
     var id: String,
+    var createdAt: Long,
     var name: String,
     var color: String,
     var enabled: Boolean
@@ -18,6 +19,7 @@ data class Category(
 
 fun Category.asEntity() = CategoryEntity(
     id = id,
+    createdAt = createdAt,
     name = name,
     color = color,
     enabled = enabled
@@ -25,6 +27,7 @@ fun Category.asEntity() = CategoryEntity(
 
 fun Category.asDocument() = CategoryDocument(
     id = id,
+    createdAt = createdAt,
     name = name,
     color = color,
     enabled = enabled
@@ -32,14 +35,15 @@ fun Category.asDocument() = CategoryDocument(
 
 fun CategoryEntity.asCategory() = Category(
     id = id,
+    createdAt = createdAt,
     name = name,
     color = color,
     enabled = enabled
 )
 
-
 fun CategoryEntity.asDocument() = CategoryDocument(
     id = id,
+    createdAt = createdAt,
     name = name,
     color = color,
     enabled = enabled

@@ -84,6 +84,10 @@
     <string name="content_task_name">Task name</string>
     <string name="content_account_image">Account image</string>
     <string name="this_year">This Year</string>
+    <string name="sign_in_sync">Not synced yet, sync is required to backup progress over the year.
+        Sign in to sync by clicking the profile icon on the top right.
+    </string>
+    <string name="content_sync">Sync heartbreak</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>

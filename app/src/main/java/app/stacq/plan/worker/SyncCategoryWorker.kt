@@ -8,6 +8,7 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.domain.asDocument
 import app.stacq.plan.util.constants.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -29,8 +30,8 @@ class SyncCategoryWorker(context: Context, params: WorkerParameters) :
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         return try {
-            for (categoryEntity in categoryRepository.getCategoriesList()) {
-                categoryRepository.sync(categoryEntity)
+            for (categoryEntity in categoryRepository.getCategoriesEntityList()) {
+                categoryRepository.sync(categoryEntity.asDocument())
             }
             Result.success()
         } catch (throwable: Throwable) {
@@ -39,6 +40,5 @@ class SyncCategoryWorker(context: Context, params: WorkerParameters) :
             firebaseAnalytics.logEvent(AnalyticsConstants.Event.SYNC_CATEGORY, params)
             Result.failure()
         }
-
     }
 }

@@ -31,10 +31,19 @@ interface CategoryDao {
      * Insert a category.
      * If the category already exists.
      *
-     * @param categoryEntity the task to be inserted.
+     * @param categoryEntity the category to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(categoryEntity: CategoryEntity)
+
+    /**
+     * Update a category.
+     * If the category already exists.
+     *
+     * @param categoryEntity the category to be inserted.
+     */
+    @Update(onConflict = OnConflictStrategy.ABORT)
+    suspend fun update(categoryEntity: CategoryEntity)
 
 
     /**
@@ -63,11 +72,11 @@ interface CategoryDao {
 
 
     /**
-     * Select all categories from the category.
+     * Select all category entities from the category table as a list.
      *
      * @return all categories.
      */
     @Query("SELECT * FROM category")
-    fun getCategoriesList(): List<CategoryEntity>
+    fun getCategoriesEntityList(): List<CategoryEntity>
 
 }

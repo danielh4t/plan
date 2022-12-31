@@ -1,14 +1,14 @@
 package app.stacq.plan.ui.profile
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
-import app.stacq.plan.domain.Category
 import app.stacq.plan.util.currentYear
 import app.stacq.plan.util.days
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
@@ -17,7 +17,7 @@ class ProfileViewModel(
     categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val categories: LiveData<List<Category>> = categoryRepository.getCategories()
+    val categories: Flow<List<CategoryDocument?>> = categoryRepository.getCategoriesDocumentList()
 
     val completedMap = MutableLiveData<MutableMap<String, List<Int>>>(mutableMapOf())
 
