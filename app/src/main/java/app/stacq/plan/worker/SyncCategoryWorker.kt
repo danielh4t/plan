@@ -31,7 +31,7 @@ class SyncCategoryWorker(context: Context, params: WorkerParameters) :
             CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
 
         return try {
-            for (categoryEntity in categoryRepository.getCategoriesEntityList()) {
+            for (categoryEntity in categoryRepository.getCategoriesEntities()) {
                 categoryRepository.sync(categoryEntity.asDocument())
             }
 

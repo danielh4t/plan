@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import okhttp3.internal.wait
 
 
 private const val PROFILE = "profile"
@@ -93,7 +92,7 @@ class CategoryRemoteDataSource(
             .flowOn(ioDispatcher)
     }
 
-    suspend fun getCategoriesList(): List<DocumentSnapshot> = withContext(ioDispatcher) {
+    suspend fun getCategoriesDocuments(): List<DocumentSnapshot> = withContext(ioDispatcher) {
         val uid = firebaseAuth.currentUser?.uid ?: return@withContext emptyList()
 
         return@withContext firestore.collection(uid)

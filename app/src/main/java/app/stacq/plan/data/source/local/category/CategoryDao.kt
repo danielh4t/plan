@@ -77,6 +77,6 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query("SELECT * FROM category")
-    fun getCategoriesEntityList(): List<CategoryEntity>
+    fun getCategoriesEntities(): List<CategoryEntity>
 
 }

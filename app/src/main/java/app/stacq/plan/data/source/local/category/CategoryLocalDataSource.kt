@@ -28,8 +28,8 @@ class CategoryLocalDataSource(
         categoryDao.delete(categoryEntity)
     }
 
-    override suspend fun getCategoriesEntityList(): List<CategoryEntity> = withContext(ioDispatcher) {
-        categoryDao.getCategoriesEntityList()
+    override suspend fun getCategoriesEntities(): List<CategoryEntity> = withContext(ioDispatcher) {
+        categoryDao.getCategoriesEntities()
     }
 
     override fun getEnabledCategories(): LiveData<List<CategoryEntity>> {

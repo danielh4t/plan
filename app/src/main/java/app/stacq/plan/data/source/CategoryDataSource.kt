@@ -13,7 +13,7 @@ interface CategoryDataSource {
 
     suspend fun delete(categoryEntity: CategoryEntity)
 
-    suspend fun getCategoriesEntityList(): List<CategoryEntity>
+    suspend fun getCategoriesEntities(): List<CategoryEntity>
 
     fun getEnabledCategories(): LiveData<List<CategoryEntity>>
 
