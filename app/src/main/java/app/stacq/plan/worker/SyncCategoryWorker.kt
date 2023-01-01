@@ -8,6 +8,7 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.domain.asCategory
 import app.stacq.plan.domain.asDocument
 import app.stacq.plan.util.constants.AnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -33,6 +34,11 @@ class SyncCategoryWorker(context: Context, params: WorkerParameters) :
             for (categoryEntity in categoryRepository.getCategoriesEntityList()) {
                 categoryRepository.sync(categoryEntity.asDocument())
             }
+
+            for (categoryDocument in categoryRepository.getCategoriesDocuments()) {
+                categoryDocument?.let { categoryRepository.create(it.asCategory()) }
+            }
+
             Result.success()
         } catch (throwable: Throwable) {
             val params = Bundle()

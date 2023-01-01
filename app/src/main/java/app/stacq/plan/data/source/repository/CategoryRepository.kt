@@ -42,11 +42,12 @@ class CategoryRepository(
         localDataSource.getCategoriesEntityList()
     }
 
-    fun getCategoriesDocumentList(): Flow<List<CategoryDocument?>> {
+    fun getCategories(): Flow<List<CategoryDocument?>> {
         return remoteDataSource.getCategories().map {
             it.documents.map { categoryDocument ->
-             categoryDocument.toObject(CategoryDocument::class.java)
-        } }
+                categoryDocument.toObject(CategoryDocument::class.java)
+            }
+        }
     }
 
     suspend fun sync(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
@@ -59,9 +60,9 @@ class CategoryRepository(
         }
     }
 
-    fun getCategories(): LiveData<List<Category>> {
-        return localDataSource.getCategories().map { categoryEntities ->
-            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
+    suspend fun getCategoriesDocuments(): List<CategoryDocument?> = withContext(ioDispatcher) {
+        remoteDataSource.getCategoriesList().map { document ->
+            document.toObject(CategoryDocument::class.java)
         }
     }
 }

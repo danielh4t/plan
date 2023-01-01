@@ -48,3 +48,12 @@ fun CategoryEntity.asDocument() = CategoryDocument(
     color = color,
     enabled = enabled
 )
+
+fun CategoryDocument.asCategory() = Category(
+    id = id ?: "",
+    createdAt = createdAt ?: 0L,
+    name = name ?: "",
+    color = color ?: "",
+    enabled = enabled
+
+)

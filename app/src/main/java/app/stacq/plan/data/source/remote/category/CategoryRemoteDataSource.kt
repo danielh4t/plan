@@ -4,6 +4,7 @@ import app.stacq.plan.util.currentYear
 import app.stacq.plan.util.days
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -14,7 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import okhttp3.internal.wait
 
 
 private const val PROFILE = "profile"
@@ -88,6 +91,15 @@ class CategoryRemoteDataSource(
             .whereNotEqualTo("name", null)
             .snapshots()
             .flowOn(ioDispatcher)
+    }
 
+    suspend fun getCategoriesList(): List<DocumentSnapshot> = withContext(ioDispatcher) {
+        val uid = firebaseAuth.currentUser?.uid ?: return@withContext emptyList()
+
+        return@withContext firestore.collection(uid)
+            .whereNotEqualTo("name", null)
+            .get()
+            .await()
+            .documents
     }
 }
