@@ -12,7 +12,7 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query(
-        "SELECT * FROM category  WHERE enabled"
+        "SELECT * FROM category WHERE enabled ORDER By name"
     )
     fun getEnabledCategories(): LiveData<List<CategoryEntity>>
 
