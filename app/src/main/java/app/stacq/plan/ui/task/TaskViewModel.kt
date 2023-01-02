@@ -58,9 +58,9 @@ class TaskViewModel(
     }
 
     fun completeBite(bite: Bite) {
+        bite.completed = !bite.completed
+        bite.completedAt = Instant.now().epochSecond
         viewModelScope.launch {
-            bite.completed = !bite.completed
-            bite.completedAt = Instant.now().epochSecond
             bitesRepository.update(bite)
         }
     }
