@@ -72,6 +72,9 @@ class TaskFragment : Fragment() {
 
         val bitesAdapter = BitesAdapter(biteCompleteListener, biteDeleteListener)
         binding.bitesList.adapter = bitesAdapter
+        binding.bitesList.addItemDecoration(
+            MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
+        )
 
         viewModel.bites.observe(viewLifecycleOwner) {
             it?.let {
