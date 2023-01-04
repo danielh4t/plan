@@ -2,46 +2,23 @@ package app.stacq.plan.util
 
 import android.os.SystemClock
 import java.time.Instant
-import java.util.*
 
-fun millisInFuture(finishAt: Long): Long {
-    val now: Long = Instant.now().epochSecond
-    return (finishAt - now) * 1000L
-}
+class TimeUtil {
 
-fun alarmTriggerTimer(finishAt: Long): Long {
-    return SystemClock.elapsedRealtime() + millisInFuture(finishAt)
-}
+    private val instant: Instant = Instant.now()
 
-fun plusSecondsEpoch(seconds: Long): Long {
-    return Instant.now().plusSeconds(seconds).epochSecond
-}
+    fun millisInFuture(finishAt: Long): Long {
+        val now: Long = instant.epochSecond
+        return (finishAt - now) * 1000L
+    }
 
-fun currentYear(): String {
-    val calendar = Calendar.getInstance()
-    val year: Int = calendar.get(Calendar.YEAR)
-    return year.toString()
-}
+    fun alarmTriggerTimer(finishAt: Long): Long {
+        val now: Long = instant.epochSecond
+        val futureMillis = (finishAt - now) * 1000L
+        return SystemClock.elapsedRealtime() + futureMillis
+    }
 
-fun day(): Int {
-    val calendar = Calendar.getInstance()
-    return calendar.get(Calendar.DAY_OF_YEAR)
-}
-
-fun days(): Int {
-    val calendar = Calendar.getInstance()
-    calendar.get(Calendar.YEAR)
-    return calendar.getActualMaximum(Calendar.DAY_OF_YEAR)
-}
-
-fun yearStartAt(): Long {
-    val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
-    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-    calendar.set(Calendar.MONTH, 0)
-    calendar.set(Calendar.DAY_OF_MONTH, 1)
-    calendar.set(Calendar.HOUR_OF_DAY, 0)
-    calendar.set(Calendar.MINUTE, 0)
-    calendar.set(Calendar.SECOND, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    return calendar.timeInMillis / 1000L
+    fun plusSecondsEpoch(seconds: Long): Long {
+        return instant.plusSeconds(seconds).epochSecond
+    }
 }

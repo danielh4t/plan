@@ -1,8 +1,7 @@
 package app.stacq.plan.data.source.remote.task
 
 import android.util.Log
-import app.stacq.plan.util.currentYear
-import app.stacq.plan.util.day
+import app.stacq.plan.util.CalendarUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -13,6 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+
 
 private const val TASKS = "tasks"
 private const val PROFILE = "profile"
@@ -163,14 +163,14 @@ class TaskRemoteDataSource(
 
         var completedMutable: MutableList<Long> = mutableListOf()
         try {
-            val data = document.data?.get(currentYear())
+            val data = document.data?.get(CalendarUtil().currentYear())
             data?.let {
                 val dataList = it as List<*>
                 val completedList = dataList.map { item -> item as Long }
                 completedMutable = completedList.toMutableList()
                 // Update completed count on current day.
                 // Decrement to handle zero-based index since first day is 1
-                val day = day() - 1
+                val day = CalendarUtil().day() - 1
                 if (completed) {
                     completedMutable[day] = completedMutable[day] + 1
                 } else {
@@ -187,7 +187,7 @@ class TaskRemoteDataSource(
             .document(categoryId)
             .collection(PROFILE)
             .document(COMPLETED)
-            .update(currentYear(), completedMutable)
+            .update(CalendarUtil().currentYear(), completedMutable)
     }
 
     suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {

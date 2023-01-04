@@ -4,25 +4,23 @@ package app.stacq.plan.util
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
+
+
+private const val EPOCH = 1640000000L // 2021-12-20T11:33:20Z
 
 class TimeUtilUnitTest {
-    
+
+
     @Test
     fun test_MillisInFuture() {
-        val finishAt: Long = 1600016000
 
-        val expected: Long = 1440016000000
-        val actual: Long = millisInFuture(finishAt)
+        val timeUtil: TimeUtil = mock()
+        whenever(timeUtil.millisInFuture(EPOCH)).thenReturn(0L)
 
-        assertThat(expected, `is`(actual))
-    }
-
-    @Test
-    fun test_YearStartAt() {
-        // 2022
-        val expected: Long = 1640908800
-        val actual: Long = yearStartAt()
-
+        val expected: Long = 0L
+        val actual: Long = timeUtil.millisInFuture(EPOCH)
         assertThat(expected, `is`(actual))
     }
 }

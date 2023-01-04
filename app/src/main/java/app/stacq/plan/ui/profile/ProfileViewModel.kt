@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
-import app.stacq.plan.util.currentYear
-import app.stacq.plan.util.days
+import app.stacq.plan.util.CalendarUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -22,7 +21,7 @@ class ProfileViewModel(
     val completedMap = MutableLiveData<MutableMap<String, List<Int>>>(mutableMapOf())
 
     fun getCategoryProfileCompleted(categoryId: String) {
-        val year = currentYear()
+        val year = CalendarUtil().currentYear()
         viewModelScope.launch {
             val completed = taskRepository.getCategoryProfileCompleted(categoryId)
                 ?.getOrDefault(year, intArrayOf())
@@ -45,7 +44,7 @@ class ProfileViewModel(
     }
 
     fun combine(completedMap: MutableMap<String, List<Int>>): List<Int> {
-        val combined = IntArray(days()) { 0 }.asList().toMutableList()
+        val combined = IntArray(CalendarUtil().days()) { 0 }.asList().toMutableList()
         completedMap.map {
             it.value.mapIndexed { idx, value ->
                 combined[idx] = combined[idx] + value

@@ -17,9 +17,8 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
-import app.stacq.plan.util.alarmTriggerTimer
+import app.stacq.plan.util.TimeUtil
 import app.stacq.plan.util.createTimerChannel
-import app.stacq.plan.util.millisInFuture
 
 
 class TimerFragment : Fragment() {
@@ -73,10 +72,10 @@ class TimerFragment : Fragment() {
                     viewModel.updateTaskTimerFinish()
                 } else {
                     // timer started
-                    if (millisInFuture(it.timerFinishAt) > 0L) {
+                    if (TimeUtil().millisInFuture(it.timerFinishAt) > 0L) {
                         startTimer(it.timerFinishAt)
                         val requestCode: Int = it.timerFinishAt.toInt()
-                        val triggerTime = alarmTriggerTimer(it.timerFinishAt)
+                        val triggerTime = TimeUtil().alarmTriggerTimer(it.timerFinishAt)
                         // set alarm
                         if (canPostNotifications(requireActivity()) && it.timerAlarm) {
                             setAlarm(requireActivity(), requestCode, it.name, triggerTime)
@@ -102,7 +101,7 @@ class TimerFragment : Fragment() {
     }
 
     private fun startTimer(timerFinishAt: Long) {
-        val millisInFuture: Long = millisInFuture(timerFinishAt)
+        val millisInFuture: Long = TimeUtil().millisInFuture(timerFinishAt)
         val millisInterval: Long = TimerConstants.TIMER_TICK_IN_SECONDS * 1000L
 
         countDownTimer = object : CountDownTimer(millisInFuture, millisInterval) {
