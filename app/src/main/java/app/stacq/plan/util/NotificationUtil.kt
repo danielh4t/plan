@@ -70,6 +70,7 @@ fun NotificationManagerCompat.sendNotification(
         .setContentTitle(applicationContext.getString(R.string.timer_complete))
         .setContentText(contentText)
         .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
 
     notify(requestCode, builder.build())
 }
