@@ -88,6 +88,7 @@
         Sign in to sync by clicking the profile icon on the top right.
     </string>
     <string name="content_sync">Sync heartbreak</string>
+    <string name="task_completed">Task completed</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
