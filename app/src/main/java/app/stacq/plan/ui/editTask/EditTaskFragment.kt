@@ -60,12 +60,6 @@ class EditTaskFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.task.observe(viewLifecycleOwner) { task ->
-            task?.let {
-                binding.editName.setText(task.name)
-            }
-        }
-
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             binding.editCategoryChipGroup.removeAllViews()
             categories?.let {
@@ -80,10 +74,6 @@ class EditTaskFragment : Fragment() {
                     binding.editCategoryChipGroup.addView(chip)
                 }
             }
-        }
-
-        binding.editCompletionSwitch.setOnCheckedChangeListener { _, _ ->
-            viewModel.updateCompletion()
         }
 
         binding.editFab.setOnClickListener { clickedView ->
