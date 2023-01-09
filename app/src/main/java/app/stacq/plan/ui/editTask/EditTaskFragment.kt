@@ -57,7 +57,7 @@ class EditTaskFragment : Fragment() {
 
         viewModelFactory = EditTaskViewModelFactory(taskRepository, categoryRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditTaskViewModel::class.java]
-        binding.viewmodel = viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.task.observe(viewLifecycleOwner) { task ->
