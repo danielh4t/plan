@@ -74,8 +74,16 @@ class EditTaskFragment : Fragment() {
                     binding.editCategoryChipGroup.addView(chip)
                 }
             }
-        }
 
+            viewModel.task.observe(viewLifecycleOwner) { it ->
+                it?.let {
+                    val categoryChip =
+                        binding.editCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
+                    categoryChip?.isChecked = true
+                }
+            }
+        }
+        
         binding.editFab.setOnClickListener { clickedView ->
             val name: String = binding.editName.text.toString().trim()
             if (name.isEmpty()) {
@@ -88,7 +96,11 @@ class EditTaskFragment : Fragment() {
             // get checked chip
             val checkedId: Int = binding.editCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    clickedView,
+                    R.string.empty_category_details,
+                    Snackbar.LENGTH_SHORT
+                )
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
