@@ -8,6 +8,7 @@ import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Task
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 class EditTaskViewModel(
     private val taskRepository: TaskRepository,
@@ -32,6 +33,17 @@ class EditTaskViewModel(
                     task.categoryId = categoryId
                     taskRepository.updateCategory(task, previousCategoryId)
                 }
+            }
+        }
+    }
+
+    fun updateCompletion() {
+        val task = task.value
+        task?.let {
+            task.completed = !task.completed
+            task.completedAt = Instant.now().epochSecond
+            viewModelScope.launch {
+                taskRepository.updateCompletion(task)
             }
         }
     }

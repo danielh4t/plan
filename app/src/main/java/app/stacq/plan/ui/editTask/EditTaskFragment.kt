@@ -82,6 +82,10 @@ class EditTaskFragment : Fragment() {
             }
         }
 
+        binding.editCompletionSwitch.setOnCheckedChangeListener { _, _ ->
+            viewModel.updateCompletion()
+        }
+
         binding.editFab.setOnClickListener { clickedView ->
             val name: String = binding.editName.text.toString().trim()
             if (name.isEmpty()) {
