@@ -48,8 +48,12 @@ class CategoryRepository(
         }
     }
 
-    suspend fun sync(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
+    suspend fun syncRemote(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
         remoteDataSource.update(categoryDocument)
+    }
+
+    suspend fun syncLocal(category: Category) = withContext(ioDispatcher) {
+        localDataSource.create(category.asEntity())
     }
 
     fun getCategories(): Flow<List<CategoryDocument?>> {

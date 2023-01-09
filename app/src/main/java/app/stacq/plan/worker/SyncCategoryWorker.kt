@@ -32,11 +32,11 @@ class SyncCategoryWorker(context: Context, params: WorkerParameters) :
 
         return try {
             for (categoryEntity in categoryRepository.getCategoriesEntities()) {
-                categoryRepository.sync(categoryEntity.asDocument())
+                categoryRepository.syncRemote(categoryEntity.asDocument())
             }
 
             for (categoryDocument in categoryRepository.getCategoriesDocuments()) {
-                categoryDocument?.let { categoryRepository.create(it.asCategory()) }
+                categoryDocument?.let { categoryRepository.syncLocal(it.asCategory()) }
             }
 
             Result.success()

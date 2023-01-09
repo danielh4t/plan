@@ -33,7 +33,7 @@ interface CategoryDao {
      *
      * @param categoryEntity the category to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(categoryEntity: CategoryEntity)
 
     /**
