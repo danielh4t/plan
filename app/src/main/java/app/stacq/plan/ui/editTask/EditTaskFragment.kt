@@ -1,5 +1,6 @@
 package app.stacq.plan.ui.editTask
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,12 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.data.source.repository.CategoryRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentEditTaskBinding
+import app.stacq.plan.util.CalendarUtil
 import com.google.android.material.chip.Chip
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+
 
 class EditTaskFragment : Fragment() {
 
@@ -83,8 +88,23 @@ class EditTaskFragment : Fragment() {
                 }
             }
         }
-        
+
+        binding.dateButton.setOnClickListener {
+            val constraintsBuilder =
+                CalendarConstraints.Builder()
+                    .setStart(CalendarUtil().yearStartAtMillis())
+                    .setEnd(MaterialDatePicker.todayInUtcMilliseconds())
+
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText(getString(R.string.select_completed_date))
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .build()
+        }
+
         binding.editFab.setOnClickListener { clickedView ->
+
             val name: String = binding.editName.text.toString().trim()
             if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.task_name_required, Snackbar.LENGTH_SHORT)

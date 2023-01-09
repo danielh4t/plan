@@ -89,6 +89,7 @@
     </string>
     <string name="content_sync">Sync heartbreak</string>
     <string name="task_completed">Task completed</string>
+    <string name="select_completed_date">Select completed date</string>
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
