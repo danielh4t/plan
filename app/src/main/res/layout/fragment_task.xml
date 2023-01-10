@@ -33,6 +33,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/task" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
         <ImageView
             android:id="@+id/task_category_image"
             android:layout_width="wrap_content"
@@ -46,18 +52,37 @@
             app:layout_constraintTop_toBottomOf="@+id/task_name_text"
             app:tint="?attr/colorOnPrimaryContainer" />
 
-        <TextView
-            android:id="@+id/task_category_text"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/category"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto"
-            android:text="@{viewModel.task.categoryName}"
-            android:textSize="18sp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_category_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_name_text"
-            tools:text="@string/category" />
+            app:layout_constraintTop_toBottomOf="@+id/task_name_text">
+
+
+            <TextView
+                android:id="@+id/category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/category"
+                android:textSize="18sp"
+                tools:text="@string/category" />
+
+            <TextView
+                android:id="@+id/task_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@{viewModel.task.categoryName}"
+                android:textSize="18sp"
+                tools:text="@string/category" />
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/task_creation_image"
@@ -71,7 +96,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
+            app:layout_constraintTop_toBottomOf="@+id/task_category_image"
             app:tint="?attr/colorOnPrimaryContainer" />
 
         <TextView
@@ -79,12 +104,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:contentDescription="@string/content_task_creation"
             android:fontFamily="@font/roboto"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/task_creation_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_text"
+            app:layout_constraintTop_toBottomOf="@+id/category"
             app:taskTime="@{viewModel.task.createdAt}"
             tools:text="@string/date" />
 
