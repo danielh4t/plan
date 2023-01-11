@@ -11,6 +11,7 @@ import app.stacq.plan.data.source.repository.CategoryRepository
 class CreateCategoryViewModelFactory(
     private val categoryRepository: CategoryRepository
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

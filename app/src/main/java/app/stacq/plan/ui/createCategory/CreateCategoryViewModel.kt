@@ -29,5 +29,4 @@ class CreateCategoryViewModel(private val categoryRepository: CategoryRepository
             }
         }
     }
-
 }

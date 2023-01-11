@@ -35,5 +35,4 @@ class TimerViewModel(
             taskRepository.updateTimerAlarmById(taskId)
         }
     }
-
 }

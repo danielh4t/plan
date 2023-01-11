@@ -14,6 +14,7 @@ class TaskViewModelFactory(
     private val biteRepository: BiteRepository,
     private val taskId: String
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

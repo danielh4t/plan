@@ -12,8 +12,8 @@ import app.stacq.plan.data.source.repository.TaskRepository
 class ProfileViewModelFactory(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository
-) :
-    ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

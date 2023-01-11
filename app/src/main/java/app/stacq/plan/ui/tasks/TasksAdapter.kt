@@ -12,8 +12,7 @@ import app.stacq.plan.databinding.ListItemTaskBinding
 class TasksAdapter(
     private val taskNavigateListener: TaskNavigateListener,
     private val taskCompleteListener: TaskCompleteListener
-) :
-    ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
+) : ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)

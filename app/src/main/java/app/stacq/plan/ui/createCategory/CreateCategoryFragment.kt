@@ -29,6 +29,7 @@ class CreateCategoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentCreateCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -72,6 +73,4 @@ class CreateCategoryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

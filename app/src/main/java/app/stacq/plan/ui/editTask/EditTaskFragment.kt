@@ -140,5 +140,4 @@ class EditTaskFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

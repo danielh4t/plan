@@ -66,6 +66,7 @@
     <string name="bite">Bite</string>
     <string name="create_bite_label">Create Bite</string>
     <string name="priority">Priority</string>
+    <string name="priority_text">Change priority to set order of tasks</string>
     <string name="content_priority_slider">Priority slider</string>
     <!-- Profile -->
     <string name="sign_out">Sign out</string>

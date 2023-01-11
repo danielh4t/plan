@@ -21,7 +21,6 @@ class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +32,6 @@ class NotificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val args = NotificationFragmentArgs.fromBundle(requireArguments())
         val taskId: String = args.taskId
@@ -92,5 +90,4 @@ class NotificationFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
