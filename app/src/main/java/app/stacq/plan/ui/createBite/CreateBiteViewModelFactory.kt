@@ -11,6 +11,7 @@ import app.stacq.plan.data.source.repository.BiteRepository
 class CreateBiteViewModelFactory(
     private val biteRepository: BiteRepository
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

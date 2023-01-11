@@ -9,6 +9,7 @@ import app.stacq.plan.util.createBroadcastPendingIntent
 
 
 fun setAlarm(context: Context, requestCode: Int, name: String, triggerTime: Long) {
+
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     val intent: Intent = Intent(context, TimerReceiver::class.java)
@@ -41,6 +42,7 @@ fun setAlarm(context: Context, requestCode: Int, name: String, triggerTime: Long
 }
 
 fun cancelAlarm(context: Context, requestCode: Int, name: String) {
+
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     val intent: Intent = Intent(context, TimerReceiver::class.java)

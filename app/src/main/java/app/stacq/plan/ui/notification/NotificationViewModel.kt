@@ -17,5 +17,4 @@ class NotificationViewModel : ViewModel() {
         params.putString(AnalyticsConstants.Param.POST_NOTIFICATIONS, access)
         firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION, params)
     }
-
 }

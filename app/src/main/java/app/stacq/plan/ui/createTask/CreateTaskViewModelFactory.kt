@@ -13,6 +13,7 @@ class CreateTaskViewModelFactory(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {

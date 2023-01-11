@@ -54,7 +54,7 @@ class TimerFragment : Fragment() {
         val remoteDataSource = TaskRemoteDataSource()
         val taskRepository = TaskRepository(localDataSource, remoteDataSource)
 
-        if(canPostNotifications(requireActivity())) {
+        if (canPostNotifications(requireActivity())) {
             binding.timerAlarm.visibility = View.VISIBLE
         } else {
             binding.timerAlarm.visibility = View.GONE
@@ -90,7 +90,6 @@ class TimerFragment : Fragment() {
         }
 
         createTimerChannel(application)
-
     }
 
     override fun onDestroyView() {
@@ -118,7 +117,7 @@ class TimerFragment : Fragment() {
         (countDownTimer as CountDownTimer).start()
     }
 
-    private fun showTimerImage(){
+    private fun showTimerImage() {
         binding.timerAlarm.visibility = View.GONE
         binding.timerText.visibility = View.GONE
         binding.timerImage.visibility = View.VISIBLE

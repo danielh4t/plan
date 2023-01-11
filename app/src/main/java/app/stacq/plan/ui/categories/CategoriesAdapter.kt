@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.domain.Category
 import app.stacq.plan.databinding.ListItemCategoryBinding
+import app.stacq.plan.domain.Category
 
 
 class CategoriesAdapter(
     private val categoryEnableListener: CategoryEnableListener
-) :
-    ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
+) : ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)

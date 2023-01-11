@@ -106,5 +106,4 @@ class CreateTaskFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

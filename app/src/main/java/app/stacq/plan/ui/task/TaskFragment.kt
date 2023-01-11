@@ -81,6 +81,7 @@ class TaskFragment : Fragment() {
                 bitesAdapter.submitList(it)
             }
         }
+
         binding.editTaskButton.setOnClickListener {
             val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
             this.findNavController().navigate(action)
@@ -111,7 +112,6 @@ class TaskFragment : Fragment() {
         binding.prioritySlider.addOnChangeListener { _, value, _ ->
             viewModel.updatePriority(value)
         }
-
 
         binding.timerFab.setOnClickListener {
             requestPermission(requireActivity(), taskId)
@@ -149,5 +149,4 @@ class TaskFragment : Fragment() {
             }
         }
     }
-
 }

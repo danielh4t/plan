@@ -5,15 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.stacq.plan.domain.Bite
 import app.stacq.plan.databinding.ListItemBiteBinding
+import app.stacq.plan.domain.Bite
 
 
 class BitesAdapter(
     private val biteCompleteListener: BiteCompleteListener,
     private val biteDeleteListener: BiteDeleteListener
-) :
-    ListAdapter<Bite, BitesAdapter.ViewHolder>(BiteDiffCallback()) {
+) : ListAdapter<Bite, BitesAdapter.ViewHolder>(BiteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -46,7 +45,6 @@ class BitesAdapter(
             binding.executePendingBindings()
         }
     }
-
 }
 
 class BiteDiffCallback : DiffUtil.ItemCallback<Bite>() {
@@ -58,7 +56,6 @@ class BiteDiffCallback : DiffUtil.ItemCallback<Bite>() {
     override fun areContentsTheSame(oldItem: Bite, newItem: Bite): Boolean {
         return oldItem == newItem
     }
-
 }
 
 class BiteCompleteListener(val biteCompleteListener: (bite: Bite) -> Unit) {
