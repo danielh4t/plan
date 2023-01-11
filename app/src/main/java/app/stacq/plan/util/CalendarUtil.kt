@@ -41,4 +41,8 @@ class CalendarUtil {
         calendar.set(Calendar.MILLISECOND, 0)
         return calendar.timeInMillis
     }
+
+    fun todayStartAtMillis(): Long {
+        return calendar.timeInMillis
+    }
 }
