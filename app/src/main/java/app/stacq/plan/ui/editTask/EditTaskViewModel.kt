@@ -1,6 +1,5 @@
 package app.stacq.plan.ui.editTask
 
-import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,13 +37,14 @@ class EditTaskViewModel(
         }
     }
 
-    fun updateCompletion(completion: Boolean) {
+    @JvmOverloads
+    fun updateCompletion(completed: Boolean, completedAt: Long = Instant.now().epochSecond) {
         val task = task.value
         task?.let {
             // Avoids infinite loop
-            if (it.completed != completion) {
-                task.completed = completion
-                task.completedAt = Instant.now().epochSecond
+            if (it.completed != completed) {
+                task.completed = completed
+                task.completedAt = completedAt
                 viewModelScope.launch {
                     taskRepository.updateCompletion(task)
                 }

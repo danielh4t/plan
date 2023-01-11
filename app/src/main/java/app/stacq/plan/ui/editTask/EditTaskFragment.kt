@@ -20,6 +20,7 @@ import app.stacq.plan.databinding.FragmentEditTaskBinding
 import app.stacq.plan.util.CalendarUtil
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 
@@ -93,7 +94,8 @@ class EditTaskFragment : Fragment() {
             val constraintsBuilder =
                 CalendarConstraints.Builder()
                     .setStart(CalendarUtil().yearStartAtMillis())
-                    .setEnd(MaterialDatePicker.todayInUtcMilliseconds())
+                    .setEnd(CalendarUtil().todayStartAtMillis())
+                    .setValidator(DateValidatorPointBackward.now())
 
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
@@ -101,6 +103,14 @@ class EditTaskFragment : Fragment() {
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .setCalendarConstraints(constraintsBuilder.build())
                     .build()
+
+            datePicker.show(requireActivity().supportFragmentManager, "Test")
+
+            datePicker.addOnPositiveButtonClickListener {
+                it?.let {
+                    viewModel.updateCompletion(true, it / 1000L)
+                }
+            }
         }
 
         binding.editFab.setOnClickListener { clickedView ->
