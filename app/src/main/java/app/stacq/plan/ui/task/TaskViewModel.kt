@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.repository.BiteRepository
 import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
+import app.stacq.plan.domain.asBite
 import app.stacq.plan.domain.asTask
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -29,11 +31,17 @@ class TaskViewModel(
     fun clone() {
         val name = task.value?.name
         val categoryId = task.value?.categoryId
+        val bites = bites.value
         viewModelScope.launch {
-            if (name != null && categoryId != null) {
+            if (name != null && categoryId != null && bites != null) {
                 val taskEntity = TaskEntity(name = name, categoryId = categoryId)
                 val task = taskEntity.asTask()
                 taskRepository.create(task)
+                // clone incomplete bites
+                bites.filter { bite -> !bite.completed }.forEach {
+                    val biteEntity = BiteEntity(name = it.name, taskId = task.id)
+                    bitesRepository.create(biteEntity.asBite())
+                }
             }
         }
     }
