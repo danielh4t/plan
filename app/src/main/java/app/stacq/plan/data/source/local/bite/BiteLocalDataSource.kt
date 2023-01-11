@@ -17,11 +17,6 @@ class BiteLocalDataSource(
         biteDao.create(biteEntity)
     }
 
-    override suspend fun getBites(taskId: String): LiveData<List<BiteEntity>> =
-        withContext(ioDispatcher) {
-            biteDao.getBites(taskId)
-        }
-
     override suspend fun update(biteEntity: BiteEntity) {
         biteDao.update(biteEntity)
     }
@@ -34,4 +29,7 @@ class BiteLocalDataSource(
         biteDao.getBitesList()
     }
 
+    override fun getBites(taskId: String): LiveData<List<BiteEntity>> {
+        return biteDao.getBites(taskId)
+    }
 }

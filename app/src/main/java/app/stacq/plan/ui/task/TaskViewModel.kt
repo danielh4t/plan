@@ -2,7 +2,6 @@ package app.stacq.plan.ui.task
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.task.TaskEntity
@@ -19,14 +18,12 @@ import java.time.Instant
 class TaskViewModel(
     private val taskRepository: TaskRepository,
     private val bitesRepository: BiteRepository,
-    private val taskId: String
+    taskId: String
 ) : ViewModel() {
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
 
-    val bites: LiveData<List<Bite>> = liveData {
-        emitSource(bitesRepository.getBites(taskId))
-    }
+    val bites: LiveData<List<Bite>> = bitesRepository.getBites(taskId)
 
     fun clone() {
         val name = task.value?.name

@@ -7,12 +7,11 @@ interface BiteDataSource {
 
     suspend fun create(biteEntity: BiteEntity)
 
-    suspend fun getBites(taskId: String): LiveData<List<BiteEntity>>
-
     suspend fun update(biteEntity: BiteEntity)
 
     suspend fun delete(biteEntity: BiteEntity)
 
     suspend fun getBitesList(): List<BiteEntity>
 
+    fun getBites(taskId: String): LiveData<List<BiteEntity>>
 }
