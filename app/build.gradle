@@ -74,7 +74,7 @@ dependencies {
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
     kapt 'androidx.room:room-compiler:2.4.3'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
-    implementation 'androidx.databinding:databinding-common:7.3.1'
+    implementation 'androidx.databinding:databinding-common:7.4.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
