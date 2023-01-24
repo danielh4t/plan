@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             handleAuthentication()
         }
 
+        oneTapClient = Identity.getSignInClient(this)
+        FirebaseApp.initializeApp(this)
+        FirebaseAppCheck.getInstance().installCheckProviderFactory()
+
         authStateListener = FirebaseAuth.AuthStateListener {
             val user = it.currentUser
             if (user != null) {
@@ -85,15 +89,11 @@ class MainActivity : AppCompatActivity() {
                 binding.accountImageView.setImageResource(R.drawable.ic_account_circle)
             }
         }
-        oneTapClient = Identity.getSignInClient(this)
-        FirebaseApp.initializeApp(this)
-        FirebaseAppCheck.getInstance().installCheckProviderFactory()
         Firebase.auth.addAuthStateListener(authStateListener)
     }
 
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val user = Firebase.auth.currentUser
         if (user !== null) {
             showOneTapUI = false
