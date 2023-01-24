@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TIME_IN_SECONDS
 import app.stacq.plan.ui.timer.TimerConstants.TIME_MINUTE_TO_SECONDS
-import app.stacq.plan.ui.timer.TimerConstants.TIME_SECOND_TO_MILLIS
+import app.stacq.plan.ui.timer.TimerConstants.TIME_MILLIS_TO_SECONDS
 import app.stacq.plan.util.TimeUtil
 
 
@@ -27,7 +27,7 @@ fun TextView.setTaskTimer(timerFinishAt: Long) {
     } else if (TimeUtil().millisInFuture(timerFinishAt) > 0L) {
         // timer progress
         val minutes =
-            TimeUtil().millisInFuture(timerFinishAt) / TIME_MINUTE_TO_SECONDS / TIME_SECOND_TO_MILLIS
+            TimeUtil().millisInFuture(timerFinishAt) / TIME_MINUTE_TO_SECONDS / TIME_MILLIS_TO_SECONDS
         resources.getQuantityString(R.plurals.numberOfMinutes, minutes.toInt(), minutes)
     } else {
         // timer finished
