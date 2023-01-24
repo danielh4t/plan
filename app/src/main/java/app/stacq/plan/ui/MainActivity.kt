@@ -15,16 +15,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
-import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.installCheckProviderFactory
 import app.stacq.plan.util.launchSignIn
-import app.stacq.plan.worker.SyncBiteWorker
-import app.stacq.plan.worker.SyncCategoryWorker
-import app.stacq.plan.worker.SyncTaskWorker
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
@@ -102,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         if (user !== null) {
             showOneTapUI = false
-            handleSync()
         }
     }
 
@@ -123,8 +117,7 @@ class MainActivity : AppCompatActivity() {
         // if user isn't signed in and hasn't already declined to use One Tap sign-in
         if (showOneTapUI && Firebase.auth.currentUser == null) {
             val clientId = getString(R.string.default_web_client_id)
-            oneTapClient.launchSignIn(clientId)
-                .addOnSuccessListener { result ->
+            oneTapClient.launchSignIn(clientId).addOnSuccessListener { result ->
                     try {
                         val intentSenderRequest =
                             IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
@@ -132,8 +125,7 @@ class MainActivity : AppCompatActivity() {
                     } catch (e: IntentSender.SendIntentException) {
                         Log.e("MainActivity", "Couldn't start One Tap UI: ${e.localizedMessage}")
                     }
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
                     Log.d("MainActivity", "Failure: ${e.localizedMessage}")
@@ -146,39 +138,6 @@ class MainActivity : AppCompatActivity() {
             oneTapClient.signOut()
             showOneTapUI = true
         }
-    }
-
-    private fun handleSync() {
-
-        val workManager = WorkManager.getInstance(application)
-
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
-            .build()
-
-        val syncCategory = OneTimeWorkRequestBuilder<SyncCategoryWorker>()
-            .setConstraints(constraints)
-            .addTag(WorkerConstants.TAGS.CATEGORIES)
-            .build()
-
-        val syncTask = OneTimeWorkRequestBuilder<SyncTaskWorker>()
-            .setConstraints(constraints)
-            .addTag(WorkerConstants.TAGS.TASKS)
-            .build()
-
-        val syncBite = OneTimeWorkRequestBuilder<SyncBiteWorker>()
-            .setConstraints(constraints)
-            .addTag(WorkerConstants.TAGS.BITES)
-            .build()
-
-        workManager.beginUniqueWork(
-            WorkerConstants.UNIQUE.TASKS,
-            ExistingWorkPolicy.KEEP,
-            syncCategory
-        )
-            .then(syncTask)
-            .then(syncBite)
-            .enqueue()
     }
 
     private val signInLauncher =
