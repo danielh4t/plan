@@ -34,14 +34,6 @@ class BiteRepository(
         localDataSource.delete(bite.asEntity())
     }
 
-    suspend fun getBitesList(): List<BiteEntity> = withContext(ioDispatcher) {
-        localDataSource.getBitesList()
-    }
-
-    suspend fun sync(biteEntity: BiteEntity) = withContext(ioDispatcher) {
-        remoteDataSource.update(biteEntity.asDocument())
-    }
-
     fun getBites(taskId: String): LiveData<List<Bite>> =
         Transformations.map(localDataSource.getBites(taskId)) {
             it?.map { biteEntity: BiteEntity -> biteEntity.asBite() }
