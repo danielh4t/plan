@@ -14,8 +14,8 @@ android {
         applicationId "app.stacq.plan"
         minSdk 28
         targetSdk 33
-        versionCode 20
-        versionName "1.20"
+        versionCode 21
+        versionName "1.21"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles 'proguard-rules.pro'
@@ -101,7 +101,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.0'
     androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
-    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha08'
+    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha09'
     debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 }
