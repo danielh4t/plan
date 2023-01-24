@@ -94,9 +94,6 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
         Firebase.auth.addAuthStateListener(authStateListener)
-
-
-        reportFullyDrawn()
     }
 
     override fun onStart() {
