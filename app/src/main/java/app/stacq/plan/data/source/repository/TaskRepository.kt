@@ -57,14 +57,6 @@ class TaskRepository(
         remoteDataSource.updatePriority(task.asTaskDocument())
     }
 
-    suspend fun getTasksList(): List<TaskEntity> = withContext(ioDispatcher) {
-        localDataSource.getTasksList()
-    }
-
-    suspend fun sync(taskEntity: TaskEntity) = withContext(ioDispatcher) {
-        remoteDataSource.update(taskEntity.asTaskDocument())
-    }
-
     suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>? {
         return remoteDataSource.getCategoryProfileCompleted(categoryId)?.data
     }

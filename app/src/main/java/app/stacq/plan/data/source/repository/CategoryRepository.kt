@@ -37,7 +37,7 @@ class CategoryRepository(
     suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
         localDataSource.delete(categoryEntity)
     }
-    
+
     fun getCategories(): Flow<List<CategoryDocument?>> {
         return remoteDataSource.getCategories().map {
             it.documents.map { categoryDocument ->
