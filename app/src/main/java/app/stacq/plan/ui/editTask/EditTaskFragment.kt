@@ -23,6 +23,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import java.util.concurrent.TimeUnit
 
 
 class EditTaskFragment : Fragment() {
@@ -100,7 +101,7 @@ class EditTaskFragment : Fragment() {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText(getString(R.string.select_completed_date))
-                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds() - TimeUnit.DAYS.toMillis(1))
                     .setCalendarConstraints(constraintsBuilder.build())
                     .build()
 
