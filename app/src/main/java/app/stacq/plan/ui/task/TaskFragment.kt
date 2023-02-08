@@ -22,6 +22,7 @@ import app.stacq.plan.data.source.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.ui.MarginItemDecoration
+import com.google.android.material.snackbar.Snackbar
 
 
 class TaskFragment : Fragment() {
@@ -105,6 +106,14 @@ class TaskFragment : Fragment() {
                     cancelAlarm(application, requestCode, name)
                 }
             }
+
+            Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.createBiteFab)
+                .setAction(R.string.undo) {
+                    viewModel.undoDelete()
+                }
+                .show()
+
             val action = TaskFragmentDirections.actionNavTaskToNavTasks()
             this.findNavController().navigate(action)
         }

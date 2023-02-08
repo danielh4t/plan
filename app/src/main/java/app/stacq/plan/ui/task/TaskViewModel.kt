@@ -52,6 +52,15 @@ class TaskViewModel(
         }
     }
 
+    fun undoDelete() {
+        val task: Task? = task.value
+        task?.let {
+            viewModelScope.launch {
+                taskRepository.create(it)
+            }
+        }
+    }
+
     fun updatePriority(priority: Float) {
         val task: Task? = task.value
         task?.let {
