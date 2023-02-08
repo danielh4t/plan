@@ -24,10 +24,10 @@ class CreateTaskViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
-    fun create(name: String, categoryId: String) {
+    fun create(name: String, categoryId: String): String {
+        val taskEntity = TaskEntity(name = name, categoryId = categoryId)
         viewModelScope.launch {
             try {
-                val taskEntity = TaskEntity(name = name, categoryId = categoryId)
                 val task = taskEntity.asTask()
                 taskRepository.create(task)
             } catch (e: Error) {
@@ -36,5 +36,6 @@ class CreateTaskViewModel(
                 firebaseAnalytics.logEvent(AnalyticsConstants.Event.CREATE_TASK, params)
             }
         }
+        return taskEntity.id
     }
 }

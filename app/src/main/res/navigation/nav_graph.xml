@@ -13,9 +13,6 @@
             android:id="@+id/action_nav_tasks_to_nav_task"
             app:destination="@id/nav_task" />
         <action
-            android:id="@+id/action_nav_tasks_to_nav_create"
-            app:destination="@id/nav_create_task" />
-        <action
             android:id="@+id/action_nav_tasks_to_nav_create_category"
             app:destination="@id/nav_create_category"
             app:popUpTo="@id/nav_tasks"
@@ -24,6 +21,9 @@
             android:name="ShowBottomNav"
             app:argType="boolean"
             android:defaultValue="true" />
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_create_task"
+            app:destination="@id/nav_create_task" />
     </fragment>
 
     <fragment
@@ -82,10 +82,10 @@
         android:label="@string/create_task"
         tools:layout="@layout/fragment_create_task">
         <action
-            android:id="@+id/action_nav_create_task_to_nav_tasks"
-            app:destination="@id/nav_tasks"
+            android:id="@+id/action_nav_create_task_to_nav_task"
+            app:destination="@id/nav_task"
             app:popUpTo="@id/nav_tasks"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

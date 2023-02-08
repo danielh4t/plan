@@ -74,7 +74,7 @@ class TasksFragment : Fragment() {
         binding.createTaskFab.setOnClickListener {
             if (hasCategories) {
                 // Navigate to create task
-                val action = TasksFragmentDirections.actionNavTasksToNavCreate()
+                val action = TasksFragmentDirections.actionNavTasksToNavCreateTask()
                 this.findNavController().navigate(action)
             } else {
                 // Navigate to create category first
