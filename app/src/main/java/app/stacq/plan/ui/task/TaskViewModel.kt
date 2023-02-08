@@ -45,18 +45,30 @@ class TaskViewModel(
 
     fun delete() {
         val task: Task? = task.value
+        val bites: List<Bite>? = bites.value
         task?.let {
             viewModelScope.launch {
                 taskRepository.delete(it)
+                bites?.let {
+                    it.forEach { bite ->
+                        bitesRepository.delete(bite)
+                    }
+                }
             }
         }
     }
 
     fun undoDelete() {
         val task: Task? = task.value
+        val bites: List<Bite>? = bites.value
         task?.let {
             viewModelScope.launch {
                 taskRepository.create(it)
+                bites?.let {
+                    it.forEach { bite ->
+                        bitesRepository.create(bite)
+                    }
+                }
             }
         }
     }
