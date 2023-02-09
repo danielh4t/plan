@@ -68,6 +68,4 @@ class BiteRemoteDataSource(
             .document(id)
             .set(fields)
     }
-
-
 }

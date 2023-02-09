@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentNotificationBinding
+import app.stacq.plan.util.createTimerChannel
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -36,6 +37,7 @@ class NotificationFragment : Fragment() {
         val args = NotificationFragmentArgs.fromBundle(requireArguments())
         val taskId: String = args.taskId
 
+        val application = requireNotNull(this.activity).application
         val viewModel: NotificationViewModel by viewModels()
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -73,6 +75,7 @@ class NotificationFragment : Fragment() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
+            createTimerChannel(application)
         }
 
         binding.noThanksButton.setOnClickListener {

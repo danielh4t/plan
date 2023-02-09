@@ -13,6 +13,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".PlanApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.Plan"
         tools:targetApi="33">

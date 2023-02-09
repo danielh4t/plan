@@ -38,24 +38,6 @@ class CategoryRepository(
         localDataSource.delete(categoryEntity)
     }
 
-    suspend fun getCategoriesEntities() = withContext(ioDispatcher) {
-        localDataSource.getCategoriesEntities()
-    }
-
-    suspend fun getCategoriesDocuments(): List<CategoryDocument?> = withContext(ioDispatcher) {
-        remoteDataSource.getCategoriesDocuments().map { document ->
-            document.toObject(CategoryDocument::class.java)
-        }
-    }
-
-    suspend fun syncRemote(categoryDocument: CategoryDocument) = withContext(ioDispatcher) {
-        remoteDataSource.update(categoryDocument)
-    }
-
-    suspend fun syncLocal(category: Category) = withContext(ioDispatcher) {
-        localDataSource.create(category.asEntity())
-    }
-
     fun getCategories(): Flow<List<CategoryDocument?>> {
         return remoteDataSource.getCategories().map {
             it.documents.map { categoryDocument ->

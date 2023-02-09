@@ -18,9 +18,9 @@ class TimerViewModel(
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
 
-    val time: MutableLiveData<String> = MutableLiveData()
+    val time: MutableLiveData<Long> = MutableLiveData()
 
-    fun updateTaskTimerFinish() {
+    fun setTaskTimerFinish() {
         val finishAt = TimeUtil().plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS)
         val update = task.value?.apply { timerFinishAt = finishAt }
         viewModelScope.launch {
