@@ -14,7 +14,7 @@ android {
         applicationId "app.stacq.plan"
         minSdk 28
         targetSdk 33
-        versionCode 21
+        versionCode 22
         versionName "1.21"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
