@@ -4,27 +4,26 @@ import androidx.lifecycle.LiveData
 import app.stacq.plan.data.source.local.task.TaskAnalysis
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskEntityAndCategoryEntity
-import app.stacq.plan.domain.Task
 
-interface TaskDataSource {
+interface TasOldkDataSource {
 
-    suspend fun create(task: Task)
+    suspend fun create(taskEntity: TaskEntity)
 
-    fun getById(id: String): LiveData<Task>
+    fun getById(id: String): LiveData<TaskEntity>
 
-    suspend fun update(task: Task)
+    suspend fun update(taskEntity: TaskEntity)
 
-    suspend fun delete(task: Task)
+    suspend fun delete(taskEntity: TaskEntity)
 
-    suspend fun updateCompletion(task: Task)
+    suspend fun updateCompletion(taskEntity: TaskEntity)
 
-    suspend fun updateTimerFinish(task: Task)
+    suspend fun updateTimerFinish(taskEntity: TaskEntity)
 
     suspend fun updateTimerAlarmById(id: String)
 
-    suspend fun updatePriority(task: Task)
+    suspend fun updatePriority(taskEntity: TaskEntity)
 
-    suspend fun getTasksList(): List<Task>
+    suspend fun getTasksList(): List<TaskEntity>
 
     fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 

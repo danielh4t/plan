@@ -2,6 +2,7 @@ package app.stacq.plan.data.source.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import app.stacq.plan.data.source.TaskDataSource
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
@@ -15,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 
 class TaskRepository(
-    private val localDataSource: TaskLocalDataSource,
+    private val localDataSource: TaskDataSource,
     private val remoteDataSource: TaskRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

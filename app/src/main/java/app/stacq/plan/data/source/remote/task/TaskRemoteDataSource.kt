@@ -1,6 +1,11 @@
 package app.stacq.plan.data.source.remote.task
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import app.stacq.plan.data.source.TaskDataSource
+import app.stacq.plan.data.source.local.task.TaskAnalysis
+import app.stacq.plan.data.source.local.task.TaskEntity
+import app.stacq.plan.data.source.local.task.TaskEntityAndCategoryEntity
 import app.stacq.plan.util.CalendarUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,7 +27,7 @@ class TaskRemoteDataSource(
     private val firebaseAuth: FirebaseAuth = Firebase.auth,
     private val firestore: FirebaseFirestore = Firebase.firestore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+): TaskDataSource {
 
     suspend fun create(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
@@ -200,5 +205,53 @@ class TaskRemoteDataSource(
             .document(COMPLETED)
             .get()
             .await()
+    }
+
+    override suspend fun create(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getById(id: String): LiveData<TaskEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun update(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun delete(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateCompletion(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateTimerFinish(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateTimerAlarmById(id: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePriority(taskEntity: TaskEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTasksList(): List<TaskEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>> {
+        TODO("Not yet implemented")
     }
 }
