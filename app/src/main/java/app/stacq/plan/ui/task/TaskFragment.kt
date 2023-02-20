@@ -13,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
-import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
+import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.BiteRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
+import app.stacq.plan.data.repository.BiteRepository
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.ui.MarginItemDecoration
@@ -52,11 +52,11 @@ class TaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
-        val taskRemoteDataSource = TaskRemoteDataSource()
-        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
+        val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
+        val taskRepository = TaskRepository(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
-        val biteLocalDataSource = BiteLocalDataSource(database.biteDao())
+        val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
         val biteRemoteDataSource = BiteRemoteDataSource()
         val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
 

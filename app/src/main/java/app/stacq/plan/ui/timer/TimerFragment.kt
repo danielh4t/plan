@@ -14,9 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.task.TaskLocalDataSource
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
@@ -53,8 +53,8 @@ class TimerFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TaskLocalDataSource(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSource()
+        val localDataSource = TaskLocalDataSourceImpl(database.taskDao())
+        val remoteDataSource = TaskRemoteDataSourceImpl()
         val taskRepository = TaskRepository(localDataSource, remoteDataSource)
 
         if (canPostNotifications(requireActivity())) {

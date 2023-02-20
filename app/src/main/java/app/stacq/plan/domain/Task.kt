@@ -5,22 +5,24 @@ import androidx.annotation.Keep
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.remote.task.TaskDocument
 import kotlinx.parcelize.Parcelize
+import java.time.Instant
+import java.util.*
 
 
 @Keep
 @Parcelize
 data class Task(
-    var id: String,
-    var createdAt: Long,
+    var id: String = UUID.randomUUID().toString(),
+    var createdAt: Long = Instant.now().epochSecond,
     var name: String,
-    var completed: Boolean,
-    var completedAt: Long,
-    var timerFinishAt: Long,
-    var timerAlarm: Boolean,
-    var priority: Int,
     var categoryId: String,
-    var categoryName: String,
-    var categoryColor: String,
+    var completed: Boolean = false,
+    var completedAt: Long = 0,
+    var timerFinishAt: Long = 0,
+    var timerAlarm: Boolean = true,
+    var priority: Int = 0,
+    var categoryName: String  = "",
+    var categoryColor: String = "",
 ) : Parcelable
 
 fun Task.asTaskEntity() = TaskEntity(

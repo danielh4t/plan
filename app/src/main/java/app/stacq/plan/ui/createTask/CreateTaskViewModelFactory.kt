@@ -5,8 +5,8 @@ package app.stacq.plan.ui.createTask
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.TaskRepository
 
 
 class CreateTaskViewModelFactory(

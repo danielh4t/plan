@@ -1,9 +1,9 @@
-package app.stacq.plan.data.source.repository
+package app.stacq.plan.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import app.stacq.plan.data.source.local.bite.BiteEntity
-import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.asBite
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 
 
 class BiteRepository(
-    private val localDataSource: BiteLocalDataSource,
+    private val localDataSource: BiteLocalDataSourceImpl,
     private val remoteDataSource: BiteRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

@@ -9,7 +9,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 
 
 import org.junit.Test
@@ -31,8 +31,6 @@ class TasksFragmentTest {
         }
 
         onView(ViewMatchers.withId(R.id.create_fab)).perform(ViewActions.click())
-        assertEquals(navController.currentDestination?.id , R.id.nav_create_task)
+        assertEquals(navController.currentDestination?.id, R.id.nav_create_task)
     }
-
-
 }

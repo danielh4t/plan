@@ -1,42 +1,21 @@
 package app.stacq.plan.data.source.local.category
 
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.source.CategoryDataSource
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
+interface CategoryLocalDataSource {
 
-class CategoryLocalDataSource(
-    private val categoryDao: CategoryDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CategoryDataSource {
+    suspend fun create(categoryEntity: CategoryEntity)
 
-    override suspend fun create(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
-        categoryDao.insert(categoryEntity)
-    }
+    suspend fun update(categoryEntity: CategoryEntity)
 
-    override suspend fun update(categoryEntity: CategoryEntity) {
-        categoryDao.update(categoryEntity)
-    }
+    suspend fun updateEnabledById(id: String)
 
-    override suspend fun updateEnabledById(id: String) {
-        categoryDao.updateEnabledById(id)
-    }
+    suspend fun delete(categoryEntity: CategoryEntity)
 
-    override suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
-        categoryDao.delete(categoryEntity)
-    }
+    suspend fun getCategoriesEntities(): List<CategoryEntity>
 
-    override suspend fun getCategoriesEntities(): List<CategoryEntity> = withContext(ioDispatcher) {
-        categoryDao.getCategoriesEntities()
-    }
+    fun getEnabledCategories(): LiveData<List<CategoryEntity>>
 
-    override fun getEnabledCategories(): LiveData<List<CategoryEntity>> {
-        return categoryDao.getEnabledCategories()
-    }
+    fun getCategories(): LiveData<List<CategoryEntity>>
 
-    override fun getCategories(): LiveData<List<CategoryEntity>> {
-        return categoryDao.getCategories()
-    }
 }

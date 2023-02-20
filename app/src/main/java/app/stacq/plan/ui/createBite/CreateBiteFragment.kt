@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
-import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
-import app.stacq.plan.data.source.repository.BiteRepository
+import app.stacq.plan.data.repository.BiteRepository
 import app.stacq.plan.databinding.FragmentCreateBiteBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -42,7 +42,7 @@ class CreateBiteFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
 
-        val biteLocalDataSource = BiteLocalDataSource(database.biteDao())
+        val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
         val biteRemoteDataSource = BiteRemoteDataSource()
         val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
 
