@@ -1,13 +1,12 @@
-package app.stacq.plan.data.source.repository
+package app.stacq.plan.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import app.stacq.plan.data.source.TaskDataSource
-import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.local.task.asTask
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.domain.Task
+import app.stacq.plan.domain.asTask
 import app.stacq.plan.domain.asTaskDocument
 import app.stacq.plan.domain.asTaskEntity
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +15,7 @@ import kotlinx.coroutines.withContext
 
 
 class TaskRepository(
-    private val localDataSource: TaskDataSource,
+    private val localDataSource: TaskLocalDataSource,
     private val remoteDataSource: TaskRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
@@ -24,6 +23,10 @@ class TaskRepository(
     suspend fun create(task: Task) = withContext(ioDispatcher) {
         localDataSource.create(task.asTaskEntity())
         remoteDataSource.create(task.asTaskDocument())
+    }
+
+    suspend fun read(id: String): Task? = withContext(ioDispatcher) {
+        return@withContext localDataSource.read(id)?.asTask()
     }
 
     suspend fun update(task: Task) = withContext(ioDispatcher) {
@@ -62,8 +65,8 @@ class TaskRepository(
         return remoteDataSource.getCategoryProfileCompleted(categoryId)?.data
     }
 
-    fun getTasksAndCategory(): LiveData<List<Task>> =
-        Transformations.map(localDataSource.getTasksAndCategory()) {
+    fun getTasks(): LiveData<List<Task>> =
+        Transformations.map(localDataSource.getTasks()) {
             it?.map { it1 -> it1.asTask() }
         }
 

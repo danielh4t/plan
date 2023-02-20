@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.repository.CategoryRepository
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import app.stacq.plan.util.defaultColors
 import com.google.android.material.snackbar.Snackbar
@@ -40,10 +40,10 @@ class CreateCategoryFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
-            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
         viewModelFactory = CreateCategoryViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateCategoryViewModel::class.java]

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.source.repository.BiteRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.repository.BiteRepository
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite

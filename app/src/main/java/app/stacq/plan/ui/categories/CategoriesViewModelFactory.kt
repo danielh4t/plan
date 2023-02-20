@@ -5,7 +5,7 @@ package app.stacq.plan.ui.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.repository.CategoryRepository
 
 
 class CategoriesViewModelFactory(

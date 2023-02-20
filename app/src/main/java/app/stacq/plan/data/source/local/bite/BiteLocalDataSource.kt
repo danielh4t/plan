@@ -1,35 +1,16 @@
 package app.stacq.plan.data.source.local.bite
 
-
 import androidx.lifecycle.LiveData
-import app.stacq.plan.data.source.BiteDataSource
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
+interface BiteLocalDataSource {
 
-class BiteLocalDataSource(
-    private val biteDao: BiteDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : BiteDataSource {
+    suspend fun create(biteEntity: BiteEntity)
 
-    override suspend fun create(biteEntity: BiteEntity) {
-        biteDao.create(biteEntity)
-    }
+    suspend fun update(biteEntity: BiteEntity)
 
-    override suspend fun update(biteEntity: BiteEntity) {
-        biteDao.update(biteEntity)
-    }
+    suspend fun delete(biteEntity: BiteEntity)
 
-    override suspend fun delete(biteEntity: BiteEntity) {
-        biteDao.delete(biteEntity)
-    }
+    suspend fun getBitesList(): List<BiteEntity>
 
-    override suspend fun getBitesList(): List<BiteEntity> = withContext(ioDispatcher) {
-        biteDao.getBitesList()
-    }
-
-    override fun getBites(taskId: String): LiveData<List<BiteEntity>> {
-        return biteDao.getBites(taskId)
-    }
+    fun getBites(taskId: String): LiveData<List<BiteEntity>>
 }

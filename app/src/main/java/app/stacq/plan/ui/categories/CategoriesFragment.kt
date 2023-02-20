@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.source.repository.CategoryRepository
+import app.stacq.plan.data.repository.CategoryRepository
 import app.stacq.plan.databinding.FragmentCategoriesBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 
@@ -40,10 +40,10 @@ class CategoriesFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
 
-        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
-            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
         viewModelFactory = CategoriesViewModelFactory(categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoriesViewModel::class.java]

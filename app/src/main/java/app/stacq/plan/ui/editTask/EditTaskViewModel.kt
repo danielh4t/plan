@@ -3,8 +3,8 @@ package app.stacq.plan.ui.editTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Task
 import kotlinx.coroutines.launch

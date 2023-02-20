@@ -1,9 +1,9 @@
-package app.stacq.plan.data.source.repository
+package app.stacq.plan.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.category.CategoryEntity
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.domain.Category
@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
  * Interface to the data layer.
  */
 class CategoryRepository(
-    private val localDataSource: CategoryLocalDataSource,
+    private val localDataSource: CategoryLocalDataSourceImpl,
     private val remoteDataSource: CategoryRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

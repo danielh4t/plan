@@ -7,7 +7,6 @@ import androidx.room.*
 interface TaskDao {
 
 
-
     /**
      * Insert a task.
      * If the task already exists, ignore it.
@@ -17,6 +16,7 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(taskEntity: TaskEntity)
 
+
     /**
      * Select all tasks from the task.
      *
@@ -24,7 +24,7 @@ interface TaskDao {
      * @return all tasks.
      */
     @Query("SELECT * FROM task WHERE id = :id")
-    fun readById(id: String): LiveData<TaskEntity>
+    suspend fun read(id: String): TaskEntity?
 
 
     /**
@@ -93,6 +93,15 @@ interface TaskDao {
     )
     fun getTasksList(): List<TaskEntity>
 
+    /**
+     * Select all tasks from the task.
+     *
+     * @param id
+     * @return all tasks.
+     */
+    @Query("SELECT * FROM task WHERE id = :id")
+    fun readById(id: String): LiveData<TaskEntity>
+
 
     @Transaction
     @Query("SELECT * FROM task ORDER BY priority DESC")
@@ -102,10 +111,10 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :id")
     fun getTaskAndCategory(id: String): LiveData<TaskEntityAndCategoryEntity>
 
-    @Query("SELECT COUNT(*) as completed, strftime('%j',DATE(completed_at, 'unixepoch')) as day " +
+    @Query("SELECT COUNT(*) as completed " +
             "FROM task " +
             "WHERE completed and completed_at >= :yearStartAt " +
-            "GROUP BY day")
-    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<TaskAnalysis>>
+            "GROUP BY strftime('%j',DATE(completed_at, 'unixepoch'))")
+    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<Int>>
 
 }

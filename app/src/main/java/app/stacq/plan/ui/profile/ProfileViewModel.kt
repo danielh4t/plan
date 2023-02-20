@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.remote.category.CategoryDocument
-import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.util.CalendarUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

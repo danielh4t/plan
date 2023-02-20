@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
-import app.stacq.plan.data.source.local.task.TaskLocalDataSource
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
+import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import app.stacq.plan.data.source.repository.CategoryRepository
-import app.stacq.plan.data.source.repository.TaskRepository
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
+import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 
@@ -45,14 +45,14 @@ class TasksFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = getDatabase(application)
 
-        val taskLocalDataSource = TaskLocalDataSource(database.taskDao())
-        val taskRemoteDataSource = TaskRemoteDataSource()
-        val taskRepository = TaskRepository(taskLocalDataSource, taskRemoteDataSource)
+        val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
+        val taskRepository = TaskRepository(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
-        val categoryLocalDataSource = CategoryLocalDataSource(database.categoryDao())
+        val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
         val categoryRepository =
-            CategoryRepository(categoryLocalDataSource, categoryRemoteDataSource)
+            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
         viewModelFactory = TasksViewModelFactory(taskRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
