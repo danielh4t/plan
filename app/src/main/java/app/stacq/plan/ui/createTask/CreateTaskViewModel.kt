@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.repository.category.CategoryRepository
+import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.asTask
 import app.stacq.plan.util.constants.AnalyticsConstants
@@ -16,20 +16,20 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class CreateTaskViewModel(
-    private val taskRepositoryImpl: TaskRepositoryImpl,
-    categoryRepositoryImpl: CategoryRepositoryImpl
+    private val taskRepository: TaskRepository,
+    categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    val categories: LiveData<List<Category>> = categoryRepositoryImpl.getEnabledCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
     fun create(name: String, categoryId: String): String {
         val taskEntity = TaskEntity(name = name, categoryId = categoryId)
         viewModelScope.launch {
             try {
                 val task = taskEntity.asTask()
-                taskRepositoryImpl.create(task)
+                taskRepository.create(task)
             } catch (e: Error) {
                 val params = Bundle()
                 params.putString("exception", e.message)

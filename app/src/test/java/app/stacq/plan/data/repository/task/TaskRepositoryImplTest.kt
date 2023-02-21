@@ -1,7 +1,6 @@
-package app.stacq.plan.data.repository
+package app.stacq.plan.data.repository.task
 
 
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.FakeTaskLocalDataSource
 import app.stacq.plan.data.source.remote.FakeTaskRemoteDataSource
 import app.stacq.plan.domain.Task
@@ -26,7 +25,7 @@ class TaskRepositoryImplTest {
     private lateinit var taskLocalDataSource: FakeTaskLocalDataSource
     private lateinit var taskRemoteDataSource: FakeTaskRemoteDataSource
 
-    private lateinit var taskRepositoryImpl: TaskRepositoryImpl
+    private lateinit var taskRepository: TaskRepository
 
     @Before
     fun createRepository() {
