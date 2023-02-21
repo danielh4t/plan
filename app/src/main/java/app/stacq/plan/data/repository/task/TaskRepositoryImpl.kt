@@ -1,4 +1,4 @@
-package app.stacq.plan.data.repository
+package app.stacq.plan.data.repository.task
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -14,63 +14,63 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class TaskRepository(
+class TaskRepositoryImpl(
     private val localDataSource: TaskLocalDataSource,
     private val remoteDataSource: TaskRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+) : TaskRepository {
 
-    suspend fun create(task: Task) = withContext(ioDispatcher) {
+    override suspend fun create(task: Task) = withContext(ioDispatcher) {
         localDataSource.create(task.asTaskEntity())
         remoteDataSource.create(task.asTaskDocument())
     }
 
-    suspend fun read(id: String): Task? = withContext(ioDispatcher) {
+    override suspend fun read(id: String): Task? = withContext(ioDispatcher) {
         return@withContext localDataSource.read(id)?.asTask()
     }
 
-    suspend fun update(task: Task) = withContext(ioDispatcher) {
+    override suspend fun update(task: Task) = withContext(ioDispatcher) {
         localDataSource.update(task.asTaskEntity())
         remoteDataSource.update(task.asTaskDocument())
     }
 
-    suspend fun delete(task: Task) = withContext(ioDispatcher) {
+    override suspend fun delete(task: Task) = withContext(ioDispatcher) {
         localDataSource.delete(task.asTaskEntity())
     }
 
-    suspend fun updateCategory(task: Task, previousCategoryId: String) = withContext(ioDispatcher) {
+    override suspend fun updateCategory(task: Task, previousCategoryId: String) = withContext(ioDispatcher) {
         localDataSource.update(task.asTaskEntity())
         remoteDataSource.updateCategory(task.asTaskDocument(), previousCategoryId)
     }
 
-    suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
+    override suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
         localDataSource.updateCompletion(task.asTaskEntity())
         remoteDataSource.updateCompletion(task.asTaskDocument())
     }
 
-    suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {
+    override suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {
         localDataSource.updateTimerFinish(task.asTaskEntity())
     }
 
-    suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
+    override suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
         localDataSource.updateTimerAlarmById(id)
     }
 
-    suspend fun updatePriority(task: Task) = withContext(ioDispatcher) {
+    override suspend fun updatePriority(task: Task) = withContext(ioDispatcher) {
         localDataSource.updatePriority(task.asTaskEntity())
         remoteDataSource.updatePriority(task.asTaskDocument())
     }
 
-    suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>? {
+    override suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>? {
         return remoteDataSource.getCategoryProfileCompleted(categoryId)?.data
     }
 
-    fun getTasks(): LiveData<List<Task>> =
+    override fun getTasks(): LiveData<List<Task>> =
         Transformations.map(localDataSource.getTasks()) {
             it?.map { it1 -> it1.asTask() }
         }
 
-    fun getTask(id: String): LiveData<Task> = Transformations.map(localDataSource.getTask(id)) {
+    override fun getTask(id: String): LiveData<Task> = Transformations.map(localDataSource.getTask(id)) {
         it?.asTask()
     }
 }

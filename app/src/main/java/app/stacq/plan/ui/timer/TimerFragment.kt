@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
@@ -55,7 +55,7 @@ class TimerFragment : Fragment() {
 
         val localDataSource = TaskLocalDataSourceImpl(database.taskDao())
         val remoteDataSource = TaskRemoteDataSourceImpl()
-        val taskRepository = TaskRepository(localDataSource, remoteDataSource)
+        val taskRepositoryImpl = TaskRepositoryImpl(localDataSource, remoteDataSource)
 
         if (canPostNotifications(requireActivity())) {
             binding.timerAlarmCheckbox.visibility = View.VISIBLE
@@ -63,7 +63,7 @@ class TimerFragment : Fragment() {
             binding.timerAlarmCheckbox.visibility = View.GONE
         }
 
-        viewModelFactory = TimerViewModelFactory(taskRepository, taskId)
+        viewModelFactory = TimerViewModelFactory(taskRepositoryImpl, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

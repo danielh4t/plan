@@ -11,7 +11,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import app.stacq.plan.util.defaultColors
 import com.google.android.material.snackbar.Snackbar
@@ -42,10 +42,10 @@ class CreateCategoryFragment : Fragment() {
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
+        val categoryRepositoryImpl =
+            CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
-        viewModelFactory = CreateCategoryViewModelFactory(categoryRepository)
+        viewModelFactory = CreateCategoryViewModelFactory(categoryRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateCategoryViewModel::class.java]
 
         binding.viewmodel = viewModel

@@ -1,6 +1,7 @@
 package app.stacq.plan.data.repository
 
 
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.FakeTaskLocalDataSource
 import app.stacq.plan.data.source.remote.FakeTaskRemoteDataSource
 import app.stacq.plan.domain.Task
@@ -16,7 +17,7 @@ import org.hamcrest.core.IsEqual
 import org.junit.Before
 import org.junit.Test
 
-class TaskRepositoryTest {
+class TaskRepositoryImplTest {
 
     private val task = Task(name = "Task", categoryId = "1")
     private val localTasks = listOf(task.asTaskEntity())
@@ -25,14 +26,14 @@ class TaskRepositoryTest {
     private lateinit var taskLocalDataSource: FakeTaskLocalDataSource
     private lateinit var taskRemoteDataSource: FakeTaskRemoteDataSource
 
-    private lateinit var taskRepository: TaskRepository
+    private lateinit var taskRepositoryImpl: TaskRepositoryImpl
 
     @Before
     fun createRepository() {
         taskLocalDataSource = FakeTaskLocalDataSource(localTasks.toMutableList())
         taskRemoteDataSource = FakeTaskRemoteDataSource(remoteTasks.toMutableList())
-        taskRepository =
-            TaskRepository(taskLocalDataSource, taskRemoteDataSource, Dispatchers.Unconfined)
+        taskRepositoryImpl =
+            TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource, Dispatchers.Unconfined)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -43,9 +44,9 @@ class TaskRepositoryTest {
             val priority = 10
             task.priority = priority
             // When a task priority is updated from the task repository
-            launch { taskRepository.updatePriority(task) }
+            launch { taskRepositoryImpl.updatePriority(task) }
 
             // Then the task priority is updated
-            assertThat(taskRepository.read(task.id)?.priority, IsEqual(priority))
+            assertThat(taskRepositoryImpl.read(task.id)?.priority, IsEqual(priority))
         }
 }

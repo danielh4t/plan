@@ -5,18 +5,18 @@ package app.stacq.plan.ui.createBite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.BiteRepository
+import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 
 
 class CreateBiteViewModelFactory(
-    private val biteRepository: BiteRepository
+    private val biteRepositoryImpl: BiteRepositoryImpl
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {
                 isAssignableFrom(CreateBiteViewModel::class.java) ->
-                    return CreateBiteViewModel(biteRepository) as T
+                    return CreateBiteViewModel(biteRepositoryImpl) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }

@@ -4,26 +4,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.remote.category.CategoryDocument
-import app.stacq.plan.data.repository.CategoryRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.util.CalendarUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
 class ProfileViewModel(
-    private val taskRepository: TaskRepository,
-    categoryRepository: CategoryRepository
+    private val taskRepositoryImpl: TaskRepositoryImpl,
+    categoryRepositoryImpl: CategoryRepositoryImpl
 ) : ViewModel() {
 
-    val categories: Flow<List<CategoryDocument?>> = categoryRepository.fetchCategories()
+    val categories: Flow<List<CategoryDocument?>> = categoryRepositoryImpl.fetchCategories()
 
     val completedMap = MutableLiveData<MutableMap<String, List<Int>>>(mutableMapOf())
 
     fun getCategoryProfileCompleted(categoryId: String) {
         val year = CalendarUtil().currentYear()
         viewModelScope.launch {
-            val completed = taskRepository.getCategoryProfileCompleted(categoryId)
+            val completed = taskRepositoryImpl.getCategoryProfileCompleted(categoryId)
                 ?.getOrDefault(year, intArrayOf())
             try {
                 completed?.let {

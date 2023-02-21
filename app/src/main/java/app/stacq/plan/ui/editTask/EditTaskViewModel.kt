@@ -3,22 +3,22 @@ package app.stacq.plan.ui.editTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.repository.CategoryRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Task
 import kotlinx.coroutines.launch
 import java.time.Instant
 
 class EditTaskViewModel(
-    private val taskRepository: TaskRepository,
-    categoryRepository: CategoryRepository,
+    private val taskRepositoryImpl: TaskRepositoryImpl,
+    categoryRepositoryImpl: CategoryRepositoryImpl,
     taskId: String
 ) : ViewModel() {
 
-    val task: LiveData<Task> = taskRepository.getTask(taskId)
+    val task: LiveData<Task> = taskRepositoryImpl.getTask(taskId)
 
-    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
+    val categories: LiveData<List<Category>> = categoryRepositoryImpl.getEnabledCategories()
 
     fun edit(name: String, categoryId: String) {
         viewModelScope.launch {
@@ -26,12 +26,12 @@ class EditTaskViewModel(
             task?.let {
                 if (task.categoryId == categoryId) {
                     task.name = name
-                    taskRepository.update(task)
+                    taskRepositoryImpl.update(task)
                 } else {
                     // update category
                     val previousCategoryId = task.categoryId
                     task.categoryId = categoryId
-                    taskRepository.updateCategory(task, previousCategoryId)
+                    taskRepositoryImpl.updateCategory(task, previousCategoryId)
                 }
             }
         }
@@ -46,7 +46,7 @@ class EditTaskViewModel(
                 task.completed = completed
                 task.completedAt = completedAt
                 viewModelScope.launch {
-                    taskRepository.updateCompletion(task)
+                    taskRepositoryImpl.updateCompletion(task)
                 }
             }
         }

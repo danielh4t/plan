@@ -11,7 +11,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.databinding.FragmentCategoriesBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
 
@@ -42,10 +42,10 @@ class CategoriesFragment : Fragment() {
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
         val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
+        val categoryRepositoryImpl =
+            CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
-        viewModelFactory = CategoriesViewModelFactory(categoryRepository)
+        viewModelFactory = CategoriesViewModelFactory(categoryRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[CategoriesViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
 

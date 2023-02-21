@@ -11,7 +11,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
-import app.stacq.plan.data.repository.BiteRepository
+import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateBiteBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -44,9 +44,9 @@ class CreateBiteFragment : Fragment() {
 
         val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
         val biteRemoteDataSource = BiteRemoteDataSource()
-        val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
+        val biteRepositoryImpl = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSource)
 
-        viewModelFactory = CreateBiteViewModelFactory(biteRepository)
+        viewModelFactory = CreateBiteViewModelFactory(biteRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateBiteViewModel::class.java]
 
         binding.viewModel = viewModel

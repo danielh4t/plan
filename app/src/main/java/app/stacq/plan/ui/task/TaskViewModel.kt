@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.repository.BiteRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite
@@ -16,12 +16,12 @@ import java.time.Instant
 
 
 class TaskViewModel(
-    private val taskRepository: TaskRepository,
-    private val bitesRepository: BiteRepository,
+    private val taskRepositoryImpl: TaskRepositoryImpl,
+    private val bitesRepository: BiteRepositoryImpl,
     taskId: String
 ) : ViewModel() {
 
-    val task: LiveData<Task> = taskRepository.getTask(taskId)
+    val task: LiveData<Task> = taskRepositoryImpl.getTask(taskId)
 
     val bites: LiveData<List<Bite>> = bitesRepository.getBites(taskId)
 
@@ -33,7 +33,7 @@ class TaskViewModel(
             if (name != null && categoryId != null && bites != null) {
                 val taskEntity = TaskEntity(name = name, categoryId = categoryId)
                 val task = taskEntity.asTask()
-                taskRepository.create(task)
+                taskRepositoryImpl.create(task)
                 // clone incomplete bites
                 bites.filter { bite -> !bite.completed }.forEach {
                     val biteEntity = BiteEntity(name = it.name, taskId = task.id)
@@ -48,7 +48,7 @@ class TaskViewModel(
         val bites: List<Bite>? = bites.value
         task?.let {
             viewModelScope.launch {
-                taskRepository.delete(it)
+                taskRepositoryImpl.delete(it)
                 bites?.let {
                     it.forEach { bite ->
                         bitesRepository.delete(bite)
@@ -63,7 +63,7 @@ class TaskViewModel(
         val bites: List<Bite>? = bites.value
         task?.let {
             viewModelScope.launch {
-                taskRepository.create(it)
+                taskRepositoryImpl.create(it)
                 bites?.let {
                     it.forEach { bite ->
                         bitesRepository.create(bite)
@@ -78,7 +78,7 @@ class TaskViewModel(
         task?.let {
             it.priority = priority.toInt()
             viewModelScope.launch {
-                taskRepository.updatePriority(it)
+                taskRepositoryImpl.updatePriority(it)
             }
         }
     }

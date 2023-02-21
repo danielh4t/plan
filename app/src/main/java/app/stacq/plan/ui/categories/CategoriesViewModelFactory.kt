@@ -5,18 +5,18 @@ package app.stacq.plan.ui.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 
 
 class CategoriesViewModelFactory(
-    private val categoryRepository: CategoryRepository
+    private val categoryRepositoryImpl: CategoryRepositoryImpl
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         with(modelClass) {
             when {
                 isAssignableFrom(CategoriesViewModel::class.java) ->
-                    return CategoriesViewModel(categoryRepository) as T
+                    return CategoriesViewModel(categoryRepositoryImpl) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }

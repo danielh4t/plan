@@ -5,13 +5,13 @@ package app.stacq.plan.ui.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.BiteRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 
 
 class TaskViewModelFactory(
-    private val taskRepository: TaskRepository,
-    private val biteRepository: BiteRepository,
+    private val taskRepositoryImpl: TaskRepositoryImpl,
+    private val biteRepositoryImpl: BiteRepositoryImpl,
     private val taskId: String
 ) : ViewModelProvider.Factory {
 
@@ -19,7 +19,7 @@ class TaskViewModelFactory(
         with(modelClass) {
             when {
                 isAssignableFrom(TaskViewModel::class.java) ->
-                    return TaskViewModel(taskRepository, biteRepository, taskId) as T
+                    return TaskViewModel(taskRepositoryImpl, biteRepositoryImpl, taskId) as T
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }

@@ -1,4 +1,4 @@
-package app.stacq.plan.data.repository
+package app.stacq.plan.data.repository.bite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -14,27 +14,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class BiteRepository(
+class BiteRepositoryImpl(
     private val localDataSource: BiteLocalDataSourceImpl,
     private val remoteDataSource: BiteRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
-
-    suspend fun create(bite: Bite) = withContext(ioDispatcher) {
+) : BiteRepository {
+    override suspend fun create(bite: Bite) = withContext(ioDispatcher) {
         localDataSource.create(bite.asEntity())
         remoteDataSource.create(bite.asDocument())
     }
 
-    suspend fun update(bite: Bite) = withContext(ioDispatcher) {
+    override suspend fun update(bite: Bite) = withContext(ioDispatcher) {
         localDataSource.update(bite.asEntity())
         remoteDataSource.update(bite.asDocument())
     }
 
-    suspend fun delete(bite: Bite) = withContext(ioDispatcher) {
+    override suspend fun delete(bite: Bite) = withContext(ioDispatcher) {
         localDataSource.delete(bite.asEntity())
     }
 
-    fun getBites(taskId: String): LiveData<List<Bite>> =
+    override fun getBites(taskId: String): LiveData<List<Bite>> =
         Transformations.map(localDataSource.getBites(taskId)) {
             it?.map { biteEntity: BiteEntity -> biteEntity.asBite() }
         }
