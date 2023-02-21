@@ -22,5 +22,7 @@ data class CategoryEntity(
 
     var color: String,
 
-    var enabled: Boolean = true
+    var enabled: Boolean = true,
+
+    var deleted: Boolean = false
 )
