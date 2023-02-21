@@ -37,8 +37,8 @@ class CategoriesAdapter(
         fun bind(category: Category, categoryEnableListener: CategoryEnableListener) {
             binding.category = category
             binding.categoryEnableListener = categoryEnableListener
-            binding.categoryColor.contentDescription = "${category.name} color"
-            binding.categoryName.contentDescription = "${category.name} name"
+            binding.categoryEnabled.contentDescription = "${category.name} is ${category.enabled}"
+            binding.categoryName.contentDescription = "${category.name}"
             binding.executePendingBindings()
         }
     }

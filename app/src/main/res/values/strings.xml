@@ -83,6 +83,7 @@
     <string name="content_task_checkbox">Task complete</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_name">Task name</string>
+    <string name="content_category_checkbox">Category enabled</string>
     <string name="content_account_image">Account image</string>
     <string name="this_year">This Year</string>
     <string name="sign_in_sync">Not synced yet, sync is required to backup progress over the year.
