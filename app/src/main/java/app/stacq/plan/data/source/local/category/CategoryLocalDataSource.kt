@@ -18,4 +18,5 @@ interface CategoryLocalDataSource {
 
     fun getCategories(): LiveData<List<CategoryEntity>>
 
+    fun getAllCategories(): LiveData<List<CategoryEntity>>
 }

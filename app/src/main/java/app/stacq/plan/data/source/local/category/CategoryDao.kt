@@ -16,6 +16,16 @@ interface CategoryDao {
     )
     fun getEnabledCategories(): LiveData<List<CategoryEntity>>
 
+    /**
+     * Select categories from the category that are not deleted.
+     *
+     * @return all categories.
+     */
+    @Query(
+        "SELECT * FROM category WHERE NOT deleted ORDER By name"
+    )
+    fun getCategories(): LiveData<List<CategoryEntity>>
+
 
     /**
      * Select all categories from the category.
@@ -25,7 +35,7 @@ interface CategoryDao {
     @Query(
         "SELECT * FROM category"
     )
-    fun getCategories(): LiveData<List<CategoryEntity>>
+    fun getAllCategories(): LiveData<List<CategoryEntity>>
 
     /**
      * Insert a category.

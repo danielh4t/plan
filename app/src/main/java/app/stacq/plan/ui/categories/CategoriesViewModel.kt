@@ -12,7 +12,7 @@ class CategoriesViewModel(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getCategories()
 
     /**
      * On long click of category list item flip enabled

@@ -16,7 +16,7 @@ class ProfileViewModel(
     categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    val categories: Flow<List<CategoryDocument?>> = categoryRepository.getCategories()
+    val categories: Flow<List<CategoryDocument?>> = categoryRepository.fetchCategories()
 
     val completedMap = MutableLiveData<MutableMap<String, List<Int>>>(mutableMapOf())
 

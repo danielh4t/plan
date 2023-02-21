@@ -38,4 +38,8 @@ class CategoryLocalDataSourceImpl(
     override fun getCategories(): LiveData<List<CategoryEntity>> {
         return categoryDao.getCategories()
     }
+
+    override fun getAllCategories(): LiveData<List<CategoryEntity>> {
+        return categoryDao.getAllCategories()
+    }
 }

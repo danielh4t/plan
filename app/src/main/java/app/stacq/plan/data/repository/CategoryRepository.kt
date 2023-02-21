@@ -38,7 +38,13 @@ class CategoryRepository(
         localDataSource.delete(categoryEntity)
     }
 
-    fun getCategories(): Flow<List<CategoryDocument?>> {
+    fun getEnabledCategories(): LiveData<List<Category>> {
+        return localDataSource.getEnabledCategories().map { categoryEntities ->
+            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
+        }
+    }
+
+    fun fetchCategories(): Flow<List<CategoryDocument?>> {
         return remoteDataSource.getCategories().map {
             it.documents.map { categoryDocument ->
                 categoryDocument.toObject(CategoryDocument::class.java)
@@ -46,8 +52,14 @@ class CategoryRepository(
         }
     }
 
-    fun getEnabledCategories(): LiveData<List<Category>> {
-        return localDataSource.getEnabledCategories().map { categoryEntities ->
+    fun getCategories(): LiveData<List<Category>> {
+        return localDataSource.getCategories().map { categoryEntities ->
+            categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
+        }
+    }
+
+    fun getAllCategories(): LiveData<List<Category>> {
+        return localDataSource.getAllCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
         }
     }
