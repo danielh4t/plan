@@ -26,28 +26,29 @@
         <CheckBox
             android:id="@+id/task_completed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center|end"
             android:button="@drawable/task_complete_checkbox"
             android:checked="@{task.completed}"
             android:contentDescription="@string/content_task_checkbox"
             android:onClick="@{() -> taskCompleteListener.onClick(task)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            android:padding="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/task_linear_layout"
+            app:layout_constraintEnd_toStartOf="@+id/task_linear_layout"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/task_linear_layout"
             app:taskCategoryColor="@{task.categoryColor}" />
 
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/task_linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/task_completed"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_completed"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toEndOf="@id/task_completed">
 
             <TextView
                 android:id="@+id/task_name"
@@ -66,7 +67,6 @@
                 android:contentDescription="@string/content_task_category"
                 android:text="@{task.categoryName}"
                 android:textColor="?android:attr/textColorTertiary"
-
                 android:textSize="16sp"
                 tools:text="@string/category" />
         </LinearLayout>
