@@ -30,7 +30,6 @@
             android:button="@drawable/task_complete_checkbox"
             android:onClick="@{() -> biteCompleteListener.onClick(bite)}"
             android:checked="@{bite.completed}"
-            app:buttonTint="@color/plan_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@{bite.name}"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/bite_completed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bite_completed"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bite_completed"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/bite" />
 
