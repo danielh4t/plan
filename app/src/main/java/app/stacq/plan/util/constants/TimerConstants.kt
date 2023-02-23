@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.timer
+package app.stacq.plan.util.constants
 
 object TimerConstants {
     const val TIMER_TIME_IN_SECONDS: Long = 3120L

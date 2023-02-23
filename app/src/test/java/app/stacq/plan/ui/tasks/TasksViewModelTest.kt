@@ -2,30 +2,26 @@ package app.stacq.plan.ui.tasks
 
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
-
+import app.stacq.plan.data.repository.category.FakeCategoryRepository
+import app.stacq.plan.data.repository.task.FakeTaskRepository
 import org.junit.Before
 import org.junit.Rule
 
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.mock
 
-
-@RunWith(MockitoJUnitRunner::class)
 class TasksViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var repository: TaskRepositoryImpl
+    private lateinit var taskRepository: FakeTaskRepository
+    private lateinit var categoryRepository: FakeCategoryRepository
     private lateinit var viewModel: TasksViewModel
 
     @Before
-    fun before() {
-        repository = mock()
+    fun setup() {
+        taskRepository = FakeTaskRepository()
+        categoryRepository = FakeCategoryRepository()
 
+        viewModel = TasksViewModel(taskRepository, categoryRepository)
     }
-
-
 }

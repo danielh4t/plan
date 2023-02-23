@@ -25,13 +25,13 @@ class TaskRepositoryImplTest {
     private lateinit var taskLocalDataSource: FakeTaskLocalDataSource
     private lateinit var taskRemoteDataSource: FakeTaskRemoteDataSource
 
-    private lateinit var taskRepository: TaskRepository
+    private lateinit var taskRepository: TaskRepositoryImpl
 
     @Before
     fun createRepository() {
         taskLocalDataSource = FakeTaskLocalDataSource(localTasks.toMutableList())
         taskRemoteDataSource = FakeTaskRemoteDataSource(remoteTasks.toMutableList())
-        taskRepositoryImpl =
+        taskRepository =
             TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource, Dispatchers.Unconfined)
     }
 
@@ -43,9 +43,9 @@ class TaskRepositoryImplTest {
             val priority = 10
             task.priority = priority
             // When a task priority is updated from the task repository
-            launch { taskRepositoryImpl.updatePriority(task) }
+            launch { taskRepository.updatePriority(task) }
 
             // Then the task priority is updated
-            assertThat(taskRepositoryImpl.read(task.id)?.priority, IsEqual(priority))
+            assertThat(taskRepository.read(task.id)?.priority, IsEqual(priority))
         }
 }

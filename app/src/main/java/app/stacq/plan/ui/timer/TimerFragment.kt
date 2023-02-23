@@ -18,9 +18,9 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTimerBinding
-import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_MILLIS
-import app.stacq.plan.ui.timer.TimerConstants.TIMER_TICK_IN_SECONDS
-import app.stacq.plan.ui.timer.TimerConstants.TIME_MILLIS_TO_SECONDS
+import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_MILLIS
+import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_SECONDS
+import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
 import app.stacq.plan.util.TimeUtil
 
 
