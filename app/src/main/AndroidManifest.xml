@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.timer.TimerReceiver" />
+        <receiver android:name=".domain.receivers.TimerCompleteReceiver" />
 
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"

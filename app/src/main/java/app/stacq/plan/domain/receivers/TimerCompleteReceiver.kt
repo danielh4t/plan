@@ -1,4 +1,4 @@
-package app.stacq.plan.ui.timer
+package app.stacq.plan.domain.receivers
 
 
 import android.content.BroadcastReceiver
@@ -10,7 +10,7 @@ import app.stacq.plan.util.constants.TimerConstants
 import app.stacq.plan.util.sendNotification
 
 
-class TimerReceiver : BroadcastReceiver() {
+class TimerCompleteReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         with(NotificationManagerCompat.from(context)) {
