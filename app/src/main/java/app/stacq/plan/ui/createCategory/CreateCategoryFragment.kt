@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import app.stacq.plan.util.defaultColors
@@ -41,7 +41,7 @@ class CreateCategoryFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource()
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl()
         val categoryRepositoryImpl =
             CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 

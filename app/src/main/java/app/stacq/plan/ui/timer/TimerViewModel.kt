@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.domain.Task
-import app.stacq.plan.util.TimeUtil
+import app.stacq.plan.util.time.TimeUtil
 import app.stacq.plan.util.constants.TimerConstants
 import kotlinx.coroutines.launch
 

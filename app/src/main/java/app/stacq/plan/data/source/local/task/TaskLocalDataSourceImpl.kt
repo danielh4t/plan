@@ -5,9 +5,12 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class TaskLocalDataSourceImpl(
+@Singleton
+class TaskLocalDataSourceImpl @Inject constructor(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskLocalDataSource {

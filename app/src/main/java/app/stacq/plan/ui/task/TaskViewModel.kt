@@ -11,11 +11,14 @@ import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite
 import app.stacq.plan.domain.asTask
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.Instant
+import javax.inject.Inject
 
 
-class TaskViewModel(
+@HiltViewModel
+class TaskViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     private val bitesRepository: BiteRepository,
     taskId: String

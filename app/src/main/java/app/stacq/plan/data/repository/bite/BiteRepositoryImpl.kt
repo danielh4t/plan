@@ -3,7 +3,7 @@ package app.stacq.plan.data.repository.bite
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import app.stacq.plan.data.source.local.bite.BiteEntity
-import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
+import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.asBite
@@ -12,29 +12,30 @@ import app.stacq.plan.domain.asEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class BiteRepositoryImpl(
-    private val localDataSource: BiteLocalDataSourceImpl,
-    private val remoteDataSource: BiteRemoteDataSource,
+class BiteRepositoryImpl @Inject constructor(
+    private val biteLocalDataSource: BiteLocalDataSource,
+    private val biteRemoteDataSource: BiteRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BiteRepository {
     override suspend fun create(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.create(bite.asEntity())
-        remoteDataSource.create(bite.asDocument())
+        biteLocalDataSource.create(bite.asEntity())
+        biteRemoteDataSource.create(bite.asDocument())
     }
 
     override suspend fun update(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.update(bite.asEntity())
-        remoteDataSource.update(bite.asDocument())
+        biteLocalDataSource.update(bite.asEntity())
+        biteRemoteDataSource.update(bite.asDocument())
     }
 
     override suspend fun delete(bite: Bite) = withContext(ioDispatcher) {
-        localDataSource.delete(bite.asEntity())
+        biteLocalDataSource.delete(bite.asEntity())
     }
 
     override fun getBites(taskId: String): LiveData<List<Bite>> =
-        Transformations.map(localDataSource.getBites(taskId)) {
+        Transformations.map(biteLocalDataSource.getBites(taskId)) {
             it?.map { biteEntity: BiteEntity -> biteEntity.asBite() }
         }
 }

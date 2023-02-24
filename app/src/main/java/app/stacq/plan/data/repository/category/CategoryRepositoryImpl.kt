@@ -3,7 +3,7 @@ package app.stacq.plan.data.repository.category
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.category.CategoryEntity
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSource
 import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
 import app.stacq.plan.domain.Category
@@ -15,37 +15,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-/**
- * Interface to the data layer.
- */
-class CategoryRepositoryImpl(
-    private val localDataSource: CategoryLocalDataSourceImpl,
-    private val remoteDataSource: CategoryRemoteDataSource,
+
+class CategoryRepositoryImpl @Inject constructor(
+    private val categoryLocalDataSource: CategoryLocalDataSource,
+    private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CategoryRepository {
 
     override suspend fun create(category: Category) = withContext(ioDispatcher) {
-        localDataSource.create(category.asEntity())
-        remoteDataSource.create(category.asDocument())
+        categoryLocalDataSource.create(category.asEntity())
+        categoryRemoteDataSource.create(category.asDocument())
     }
 
     override suspend fun updateEnabledById(id: String) = withContext(ioDispatcher) {
-        localDataSource.updateEnabledById(id)
+        categoryLocalDataSource.updateEnabledById(id)
     }
 
     override suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
-        localDataSource.delete(categoryEntity)
+        categoryLocalDataSource.delete(categoryEntity)
     }
 
     override fun getEnabledCategories(): LiveData<List<Category>> {
-        return localDataSource.getEnabledCategories().map { categoryEntities ->
+        return categoryLocalDataSource.getEnabledCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
         }
     }
 
     override fun fetchCategories(): Flow<List<CategoryDocument?>> {
-        return remoteDataSource.getCategories().map {
+        return categoryRemoteDataSource.getCategories().map {
             it.documents.map { categoryDocument ->
                 categoryDocument.toObject(CategoryDocument::class.java)
             }
@@ -53,13 +52,13 @@ class CategoryRepositoryImpl(
     }
 
     override fun getCategories(): LiveData<List<Category>> {
-        return localDataSource.getCategories().map { categoryEntities ->
+        return categoryLocalDataSource.getCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
         }
     }
 
     override fun getAllCategories(): LiveData<List<Category>> {
-        return localDataSource.getAllCategories().map { categoryEntities ->
+        return categoryLocalDataSource.getAllCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
         }
     }

@@ -12,7 +12,7 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
@@ -58,7 +58,7 @@ class EditTaskFragment : Fragment() {
         val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource()
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl()
         val categoryRepositoryImpl =
             CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 

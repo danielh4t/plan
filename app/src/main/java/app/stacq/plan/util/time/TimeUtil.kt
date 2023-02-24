@@ -1,4 +1,4 @@
-package app.stacq.plan.util
+package app.stacq.plan.util.time
 
 import android.os.SystemClock
 import java.time.Instant

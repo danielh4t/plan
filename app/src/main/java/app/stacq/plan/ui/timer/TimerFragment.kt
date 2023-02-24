@@ -21,7 +21,7 @@ import app.stacq.plan.databinding.FragmentTimerBinding
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
-import app.stacq.plan.util.TimeUtil
+import app.stacq.plan.util.time.TimeUtil
 
 
 class TimerFragment : Fragment() {

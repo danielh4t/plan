@@ -11,15 +11,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 private const val TASKS = "tasks"
 private const val PROFILE = "profile"
 private const val COMPLETED = "completed"
 
-class TaskRemoteDataSourceImpl(
-    private val firebaseAuth: FirebaseAuth = Firebase.auth,
-    private val firestore: FirebaseFirestore = Firebase.firestore,
+class TaskRemoteDataSourceImpl @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskRemoteDataSource {
 

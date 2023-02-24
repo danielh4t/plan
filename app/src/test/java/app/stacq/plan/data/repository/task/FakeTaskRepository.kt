@@ -1,15 +1,22 @@
 package app.stacq.plan.data.repository.task
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import app.stacq.plan.domain.Task
+import kotlinx.coroutines.runBlocking
 
 class FakeTaskRepository: TaskRepository {
+
+    var tasksList = mutableListOf<Task>()
+
+    private val tasks = MutableLiveData<List<Task>>()
     override suspend fun create(task: Task) {
-        TODO("Not yet implemented")
+        tasksList.add(task)
+        runBlocking { tasks.value = tasksList.toList() }
     }
 
     override suspend fun read(id: String): Task? {
-        TODO("Not yet implemented")
+        return tasksList.find { task -> task.id === id}
     }
 
     override suspend fun update(task: Task) {
@@ -17,7 +24,8 @@ class FakeTaskRepository: TaskRepository {
     }
 
     override suspend fun delete(task: Task) {
-        TODO("Not yet implemented")
+        tasksList.remove(task)
+        runBlocking { tasks.value = tasksList.toList() }
     }
 
     override suspend fun updateCategory(task: Task, previousCategoryId: String) {
@@ -45,7 +53,7 @@ class FakeTaskRepository: TaskRepository {
     }
 
     override fun getTasks(): LiveData<List<Task>> {
-        TODO("Not yet implemented")
+        return tasks
     }
 
     override fun getTask(id: String): LiveData<Task> {

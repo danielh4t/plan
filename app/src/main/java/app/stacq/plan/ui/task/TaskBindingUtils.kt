@@ -7,7 +7,7 @@ import app.stacq.plan.R
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TIME_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MINUTE_TO_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
-import app.stacq.plan.util.TimeUtil
+import app.stacq.plan.util.time.TimeUtil
 
 
 @BindingAdapter("taskCategoryImage")

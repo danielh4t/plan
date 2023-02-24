@@ -5,9 +5,10 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class BiteLocalDataSourceImpl(
+class BiteLocalDataSourceImpl @Inject constructor(
     private val biteDao: BiteDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BiteLocalDataSource {
