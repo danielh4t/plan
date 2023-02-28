@@ -18,6 +18,9 @@ import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateTaskBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CreateTaskFragment : Fragment() {
 
@@ -44,11 +47,11 @@ class CreateTaskFragment : Fragment() {
         val database = getDatabase(application)
 
         val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl()
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val categoryRepositoryImpl =
             CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 

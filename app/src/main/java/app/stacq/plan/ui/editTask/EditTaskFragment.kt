@@ -23,6 +23,9 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
 
@@ -54,11 +57,11 @@ class EditTaskFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl()
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val categoryRepositoryImpl =
             CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 

@@ -22,6 +22,9 @@ import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
 import app.stacq.plan.util.time.TimeUtil
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class TimerFragment : Fragment() {
@@ -54,7 +57,7 @@ class TimerFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val localDataSource = TaskLocalDataSourceImpl(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSourceImpl()
+        val remoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val taskRepositoryImpl = TaskRepositoryImpl(localDataSource, remoteDataSource)
 
         if (canPostNotifications(requireActivity())) {

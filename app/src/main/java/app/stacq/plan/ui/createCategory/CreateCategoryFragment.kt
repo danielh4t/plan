@@ -15,6 +15,9 @@ import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import app.stacq.plan.util.defaultColors
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CreateCategoryFragment : Fragment() {
 
@@ -41,7 +44,7 @@ class CreateCategoryFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl()
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val categoryRepositoryImpl =
             CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 

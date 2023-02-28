@@ -14,6 +14,9 @@ import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSourceImpl
 import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateBiteBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CreateBiteFragment : Fragment() {
 
@@ -39,14 +42,14 @@ class CreateBiteFragment : Fragment() {
         val args = CreateBiteFragmentArgs.fromBundle(requireArguments())
         val taskId = args.taskId
 
-//        val application = requireNotNull(this.activity).application
-//        val database = getDatabase(application)
-//
-//        val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
-//        val biteRemoteDataSourceImpl = BiteRemoteDataSourceImpl()
-//        val biteRepositoryImpl = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSourceImpl)
-//
-//        viewModelFactory = CreateBiteViewModelFactory(biteRepositoryImpl)
+        val application = requireNotNull(this.activity).application
+        val database = getDatabase(application)
+
+        val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
+        val biteRemoteDataSourceImpl = BiteRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val biteRepositoryImpl = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSourceImpl)
+
+        viewModelFactory = CreateBiteViewModelFactory(biteRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateBiteViewModel::class.java]
 
         binding.viewModel = viewModel
