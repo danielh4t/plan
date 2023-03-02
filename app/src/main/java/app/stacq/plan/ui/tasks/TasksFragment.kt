@@ -11,12 +11,15 @@ import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.data.repository.CategoryRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class TasksFragment : Fragment() {
@@ -46,15 +49,15 @@ class TasksFragment : Fragment() {
         val database = getDatabase(application)
 
         val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
-        val taskRepository = TaskRepository(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val categoryRepositoryImpl =
+            CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
-        viewModelFactory = TasksViewModelFactory(taskRepository, categoryRepository)
+        viewModelFactory = TasksViewModelFactory(taskRepositoryImpl, categoryRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

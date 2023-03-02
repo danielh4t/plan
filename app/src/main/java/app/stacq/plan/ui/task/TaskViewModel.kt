@@ -3,19 +3,20 @@ package app.stacq.plan.ui.task
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.repository.bite.BiteRepository
+import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.repository.BiteRepository
-import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite
 import app.stacq.plan.domain.asTask
 import kotlinx.coroutines.launch
 import java.time.Instant
+import javax.inject.Inject
 
 
-class TaskViewModel(
+class TaskViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     private val bitesRepository: BiteRepository,
     taskId: String

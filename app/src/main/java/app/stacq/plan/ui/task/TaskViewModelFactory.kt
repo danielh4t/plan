@@ -5,8 +5,8 @@ package app.stacq.plan.ui.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.BiteRepository
-import app.stacq.plan.data.repository.TaskRepository
+import app.stacq.plan.data.repository.bite.BiteRepository
+import app.stacq.plan.data.repository.task.TaskRepository
 
 
 class TaskViewModelFactory(

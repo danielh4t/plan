@@ -12,17 +12,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
+import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
+import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.data.repository.BiteRepository
-import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.ui.MarginItemDecoration
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class TaskFragment : Fragment() {
@@ -53,14 +56,14 @@ class TaskFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl()
-        val taskRepository = TaskRepository(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
+        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
 
         val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
-        val biteRemoteDataSource = BiteRemoteDataSource()
-        val biteRepository = BiteRepository(biteLocalDataSource, biteRemoteDataSource)
+        val biteRemoteDataSource = BiteRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val biteRepositoryImpl = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSource)
 
-        viewModelFactory = TaskViewModelFactory(taskRepository, biteRepository, taskId)
+        viewModelFactory = TaskViewModelFactory(taskRepositoryImpl, biteRepositoryImpl, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

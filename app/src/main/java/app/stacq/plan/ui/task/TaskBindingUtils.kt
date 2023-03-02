@@ -1,22 +1,14 @@
 package app.stacq.plan.ui.task
 
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TIME_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MINUTE_TO_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
-import app.stacq.plan.util.TimeUtil
+import app.stacq.plan.util.time.TimeUtil
 
 
-@BindingAdapter("taskCategoryImage")
-fun ImageView.setTaskCategoryImageTime(completed: Boolean) {
-    if (completed)
-        setImageResource(R.drawable.ic_circle_checkmark)
-    else
-        setImageResource(R.drawable.ic_circle_outline)
-}
 
 @BindingAdapter("taskTimer")
 fun TextView.setTaskTimer(timerFinishAt: Long) {

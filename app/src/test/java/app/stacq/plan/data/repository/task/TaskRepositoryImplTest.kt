@@ -1,4 +1,4 @@
-package app.stacq.plan.data.repository
+package app.stacq.plan.data.repository.task
 
 
 import app.stacq.plan.data.source.local.FakeTaskLocalDataSource
@@ -16,7 +16,7 @@ import org.hamcrest.core.IsEqual
 import org.junit.Before
 import org.junit.Test
 
-class TaskRepositoryTest {
+class TaskRepositoryImplTest {
 
     private val task = Task(name = "Task", categoryId = "1")
     private val localTasks = listOf(task.asTaskEntity())
@@ -25,14 +25,14 @@ class TaskRepositoryTest {
     private lateinit var taskLocalDataSource: FakeTaskLocalDataSource
     private lateinit var taskRemoteDataSource: FakeTaskRemoteDataSource
 
-    private lateinit var taskRepository: TaskRepository
+    private lateinit var taskRepository: TaskRepositoryImpl
 
     @Before
     fun createRepository() {
         taskLocalDataSource = FakeTaskLocalDataSource(localTasks.toMutableList())
         taskRemoteDataSource = FakeTaskRemoteDataSource(remoteTasks.toMutableList())
         taskRepository =
-            TaskRepository(taskLocalDataSource, taskRemoteDataSource, Dispatchers.Unconfined)
+            TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource, Dispatchers.Unconfined)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

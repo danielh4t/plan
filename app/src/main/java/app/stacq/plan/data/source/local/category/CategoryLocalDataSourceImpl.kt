@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class CategoryLocalDataSourceImpl(
+class CategoryLocalDataSourceImpl @Inject constructor(
     private val categoryDao: CategoryDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CategoryLocalDataSource {

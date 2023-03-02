@@ -10,11 +10,14 @@ import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSource
-import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.databinding.FragmentCreateCategoryBinding
 import app.stacq.plan.util.defaultColors
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CreateCategoryFragment : Fragment() {
 
@@ -41,11 +44,11 @@ class CreateCategoryFragment : Fragment() {
         val database = PlanDatabase.getDatabase(application)
 
         val categoryLocalDataSourceImpl = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSource()
-        val categoryRepository =
-            CategoryRepository(categoryLocalDataSourceImpl, categoryRemoteDataSource)
+        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val categoryRepositoryImpl =
+            CategoryRepositoryImpl(categoryLocalDataSourceImpl, categoryRemoteDataSource)
 
-        viewModelFactory = CreateCategoryViewModelFactory(categoryRepository)
+        viewModelFactory = CreateCategoryViewModelFactory(categoryRepositoryImpl)
         viewModel = ViewModelProvider(this, viewModelFactory)[CreateCategoryViewModel::class.java]
 
         binding.viewmodel = viewModel

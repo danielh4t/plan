@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Plan"
+rootProject.name = "plan"
 include ':app'
 include ':macrobenchmark'

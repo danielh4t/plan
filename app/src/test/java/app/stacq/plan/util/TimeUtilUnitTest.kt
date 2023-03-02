@@ -1,6 +1,7 @@
 package app.stacq.plan.util
 
 
+import app.stacq.plan.util.time.TimeUtil
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -19,7 +20,7 @@ class TimeUtilUnitTest {
         val timeUtil: TimeUtil = mock()
         whenever(timeUtil.millisInFuture(EPOCH)).thenReturn(0L)
 
-        val expected: Long = 0L
+        val expected = 0L
         val actual: Long = timeUtil.millisInFuture(EPOCH)
         assertThat(expected, `is`(actual))
     }

@@ -5,7 +5,7 @@ package app.stacq.plan.ui.createCategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.CategoryRepository
+import app.stacq.plan.data.repository.category.CategoryRepository
 
 
 class CreateCategoryViewModelFactory(

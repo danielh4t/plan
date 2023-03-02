@@ -5,7 +5,7 @@ package app.stacq.plan.ui.createBite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.stacq.plan.data.repository.BiteRepository
+import app.stacq.plan.data.repository.bite.BiteRepository
 
 
 class CreateBiteViewModelFactory(

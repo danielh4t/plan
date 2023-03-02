@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.stacq.plan.data.repository.category.CategoryRepository
+import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.data.repository.CategoryRepository
-import app.stacq.plan.data.repository.TaskRepository
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.asTask
 import app.stacq.plan.util.constants.AnalyticsConstants
