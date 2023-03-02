@@ -22,4 +22,3 @@ class MainActivityTest {
         assertEquals("app.stacq.plan", appContext.packageName)
     }
 }
-
