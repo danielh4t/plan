@@ -54,7 +54,7 @@ class CreateCategoryFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.createFab.setOnClickListener { clickedView ->
+        binding.createCategoryFab.setOnClickListener { clickedView ->
             val name: String = binding.name.text.toString().trim()
             if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_LONG)
@@ -69,7 +69,6 @@ class CreateCategoryFragment : Fragment() {
             val action = CreateCategoryFragmentDirections.actionNavCategoryToNavCategories()
             this.findNavController().navigate(action)
         }
-
     }
 
     override fun onDestroyView() {
