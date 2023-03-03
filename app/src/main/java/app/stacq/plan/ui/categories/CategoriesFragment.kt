@@ -65,7 +65,7 @@ class CategoriesFragment : Fragment() {
             )
         )
 
-        binding.createCategoryFab.setOnClickListener {
+        binding.addCategoryFab.setOnClickListener {
             val action = CategoriesFragmentDirections.actionNavCategoriesToNavCategory()
             this.findNavController().navigate(action)
         }
