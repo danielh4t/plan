@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
@@ -66,8 +66,8 @@ class CreateCategoryFragment : Fragment() {
             val color = getString(defaultColors(name))
             viewModel.create(name, color)
 
-            val action = CreateCategoryFragmentDirections.actionNavCategoryToNavCategories()
-            this.findNavController().navigate(action)
+            val action = CreateCategoryFragmentDirections.actionNavCreateCategoryToNavCategories()
+            clickedView.findNavController().navigate(action)
         }
     }
 

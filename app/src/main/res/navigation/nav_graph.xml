@@ -32,7 +32,7 @@
         android:label="@string/categories"
         tools:layout="@layout/fragment_categories">
         <action
-            android:id="@+id/action_nav_categories_to_nav_category"
+            android:id="@+id/action_nav_categories_to_nav_create_category"
             app:destination="@id/nav_create_category" />
         <argument
             android:name="ShowBottomNav"
@@ -123,9 +123,9 @@
         android:label="@string/create_category"
         tools:layout="@layout/fragment_create_category">
         <action
-            android:id="@+id/action_nav_category_to_nav_categories"
+            android:id="@+id/action_nav_create_category_to_nav_categories"
             app:destination="@id/nav_categories"
-            app:popUpTo="@id/nav_categories"
+            app:popUpTo="@id/nav_create_category"
             app:popUpToInclusive="true" />
     </fragment>
 
