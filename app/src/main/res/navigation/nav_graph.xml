@@ -84,8 +84,7 @@
         <action
             android:id="@+id/action_nav_create_task_to_nav_task"
             app:destination="@id/nav_task"
-            app:popUpTo="@id/nav_tasks"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/nav_tasks" />
     </fragment>
 
     <fragment
