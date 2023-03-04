@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.databinding.ActivityMainBinding
@@ -36,7 +35,6 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var oneTapClient: SignInClient
@@ -46,18 +44,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        appBarConfiguration = AppBarConfiguration(
+
+        val navController = navController()
+
+        val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_tasks, R.id.nav_categories, R.id.nav_profile
             )
         )
+        val topAppBar = binding.topAppBar
+        topAppBar.setupWithNavController(navController, appBarConfiguration)
 
-        val navController = navController()
-        setSupportActionBar(binding.topAppBar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        val bottomNavView: BottomNavigationView = binding.bottomNavigation
+        val bottomNavView = binding.bottomNavigation
         bottomNavView.setupWithNavController(navController)
         bottomNavView.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
@@ -118,18 +118,18 @@ class MainActivity : AppCompatActivity() {
         if (showOneTapUI && Firebase.auth.currentUser == null) {
             val clientId = getString(R.string.default_web_client_id)
             oneTapClient.launchSignIn(clientId).addOnSuccessListener { result ->
-                    try {
-                        val intentSenderRequest =
-                            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
-                        signInLauncher.launch(intentSenderRequest)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e("MainActivity", "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }.addOnFailureListener { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d("MainActivity", "Failure: ${e.localizedMessage}")
+                try {
+                    val intentSenderRequest =
+                        IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                    signInLauncher.launch(intentSenderRequest)
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e("MainActivity", "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
+            }.addOnFailureListener { e ->
+                // No saved credentials found. Launch the One Tap sign-up flow, or
+                // do nothing and continue presenting the signed-out UI.
+                Log.d("MainActivity", "Failure: ${e.localizedMessage}")
+            }
             // don't
             showOneTapUI = false
         } else {
