@@ -14,9 +14,7 @@
             app:destination="@id/nav_task" />
         <action
             android:id="@+id/action_nav_tasks_to_nav_create_category"
-            app:destination="@id/nav_create_category"
-            app:popUpTo="@id/nav_tasks"
-            app:popUpToInclusive="true" />
+            app:destination="@id/nav_create_category" />
         <argument
             android:name="ShowBottomNav"
             app:argType="boolean"
