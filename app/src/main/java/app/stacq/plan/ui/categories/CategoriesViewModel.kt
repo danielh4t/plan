@@ -19,7 +19,7 @@ class CategoriesViewModel(
      */
     fun updateEnabled(categoryId: String) {
         viewModelScope.launch {
-            categoryRepository.updateEnabledById(categoryId)
+            categoryRepository.updateEnabled(categoryId)
         }
     }
 }

@@ -8,9 +8,11 @@ interface CategoryLocalDataSource {
 
     suspend fun update(categoryEntity: CategoryEntity)
 
-    suspend fun updateEnabledById(id: String)
-
     suspend fun delete(categoryEntity: CategoryEntity)
+
+    suspend fun upsert(categoryEntity: CategoryEntity)
+
+    suspend fun updateEnabled(categoryId: String)
 
     suspend fun getCategoriesEntities(): List<CategoryEntity>
 
@@ -19,4 +21,5 @@ interface CategoryLocalDataSource {
     fun getCategories(): LiveData<List<CategoryEntity>>
 
     fun getAllCategories(): LiveData<List<CategoryEntity>>
+    fun getCategory(categoryId: String): LiveData<CategoryEntity>
 }

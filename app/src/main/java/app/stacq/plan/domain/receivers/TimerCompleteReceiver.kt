@@ -1,6 +1,5 @@
 package app.stacq.plan.domain.receivers
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +14,7 @@ class TimerCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         with(NotificationManagerCompat.from(context)) {
             val requestCode: Int =
-                intent.getLongExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, 0).toInt()
+                intent.getIntExtra(TimerConstants.TIMER_RECEIVER_ID_KEY, 0)
             val content: String =
                 intent.getStringExtra(TimerConstants.TIMER_RECEIVER_TEXT_KEY).toString()
             if (areNotificationsEnabled()) {

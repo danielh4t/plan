@@ -12,18 +12,13 @@
         <action
             android:id="@+id/action_nav_tasks_to_nav_task"
             app:destination="@id/nav_task" />
-        <action
-            android:id="@+id/action_nav_tasks_to_nav_create_category"
-            app:destination="@id/nav_create_category"
-            app:popUpTo="@id/nav_tasks"
-            app:popUpToInclusive="true" />
         <argument
             android:name="ShowBottomNav"
             app:argType="boolean"
             android:defaultValue="true" />
         <action
-            android:id="@+id/action_nav_tasks_to_nav_create_task"
-            app:destination="@id/nav_create_task" />
+            android:id="@+id/action_nav_tasks_to_nav_task_modify"
+            app:destination="@id/nav_task_modify" />
     </fragment>
 
     <fragment
@@ -32,23 +27,32 @@
         android:label="@string/categories"
         tools:layout="@layout/fragment_categories">
         <action
-            android:id="@+id/action_nav_categories_to_nav_create_category"
-            app:destination="@id/nav_create_category" />
+            android:id="@+id/action_nav_categories_to_nav_category_modify"
+            app:destination="@id/nav_category_modify" />
         <argument
             android:name="ShowBottomNav"
             app:argType="boolean"
             android:defaultValue="true" />
+        <action
+            android:id="@+id/action_nav_categories_to_nav_category"
+            app:destination="@id/nav_category" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="app.stacq.plan.ui.profile.ProfileFragment"
-        android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" >
+        android:id="@+id/nav_goals"
+        android:name="app.stacq.plan.ui.goals.GoalsFragment"
+        android:label="@string/goals"
+        tools:layout="@layout/fragment_goals" >
         <argument
             android:name="ShowBottomNav"
             app:argType="boolean"
             android:defaultValue="true" />
+        <action
+            android:id="@+id/action_nav_goals_to_nav_goal"
+            app:destination="@id/nav_goal" />
+        <action
+            android:id="@+id/action_nav_goals_to_nav_goal_modify"
+            app:destination="@id/nav_goal_modify" />
     </fragment>
 
     <fragment
@@ -61,72 +65,48 @@
             app:argType="string" />
         <action
             android:id="@+id/action_nav_task_to_nav_tasks"
-            app:destination="@id/nav_tasks" />
+            app:destination="@id/nav_tasks"
+            app:popUpTo="@id/nav_tasks"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_nav_task_to_nav_edit"
-            app:destination="@id/nav_edit_task" />
+            app:destination="@id/nav_task_modify" />
         <action
-            android:id="@+id/action_nav_task_to_nav_notification"
-            app:destination="@id/nav_notification" />
-        <action
-            android:id="@+id/action_nav_task_to_createBiteFragment"
-            app:destination="@id/nav_create_bite" />
+            android:id="@+id/action_nav_task_to_nav_bite_modify"
+            app:destination="@id/nav_bite_modify" />
         <action
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_create_task"
-        android:name="app.stacq.plan.ui.createTask.CreateTaskFragment"
-        android:label="@string/create_task"
-        tools:layout="@layout/fragment_create_task">
-        <action
-            android:id="@+id/action_nav_create_task_to_nav_task"
-            app:destination="@id/nav_task"
-            app:popUpTo="@id/nav_tasks" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_edit_task"
-        android:name="app.stacq.plan.ui.editTask.EditTaskFragment"
-        android:label="@string/edit"
-        tools:layout="@layout/fragment_edit_task">
+        android:id="@+id/nav_task_modify"
+        android:name="app.stacq.plan.ui.taskModify.TaskModifyFragment"
+        android:label="@string/task"
+        tools:layout="@layout/fragment_task_modify">
         <argument
             android:name="taskId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_nav_edit_to_nav_task"
             app:destination="@id/nav_task"
-            app:popUpTo="@id/nav_task"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
-
     <fragment
-        android:id="@+id/nav_notification"
-        android:name="app.stacq.plan.ui.notification.NotificationFragment"
-        android:label="@string/notification"
-        tools:layout="@layout/fragment_notification">
-        <action
-            android:id="@+id/action_nav_notification_to_nav_timer"
-            app:destination="@id/nav_timer"
-            app:popUpTo="@id/nav_task" />
+        android:id="@+id/nav_category_modify"
+        android:name="app.stacq.plan.ui.categoryModify.CategoryModifyFragment"
+        android:label="@string/category"
+        tools:layout="@layout/fragment_category_modify">
         <argument
-            android:name="taskId"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_create_category"
-        android:name="app.stacq.plan.ui.createCategory.CreateCategoryFragment"
-        android:label="@string/create_category"
-        tools:layout="@layout/fragment_create_category">
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true" />
         <action
-            android:id="@+id/action_nav_create_category_to_nav_categories"
-            app:destination="@id/nav_categories"
-            app:popUpTo="@id/nav_categories"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_nav_category_modify_to_nav_category"
+            app:destination="@id/nav_category"
+            app:popUpTo="@id/nav_categories" />
     </fragment>
 
     <fragment
@@ -140,17 +120,71 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_create_bite"
-        android:name="app.stacq.plan.ui.createBite.CreateBiteFragment"
-        android:label="@string/create_bite_label"
-        tools:layout="@layout/fragment_create_bite">
+        android:id="@+id/nav_bite_modify"
+        android:name="app.stacq.plan.ui.biteModify.BiteModifyFragment"
+        android:label="@string/bite"
+        tools:layout="@layout/fragment_bite_modify">
         <action
-            android:id="@+id/action_nav_create_bite_to_nav_task"
+            android:id="@+id/action_nav_bite_modify_to_nav_task"
             app:destination="@id/nav_task"
             app:popUpTo="@id/nav_task"
             app:popUpToInclusive="true" />
         <argument
             android:name="taskId"
+            app:argType="string" />
+        <argument
+            android:name="biteId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_goal_modify"
+        android:name="app.stacq.plan.ui.goalModify.GoalModifyFragment"
+        android:label="@string/goal"
+        tools:layout="@layout/fragment_goal_modify" >
+        <argument
+            android:name="goalId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_nav_goal_modify_to_nav_goal"
+            app:destination="@id/nav_goal"
+            app:popUpTo="@id/nav_goals" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_goal"
+        android:name="app.stacq.plan.ui.goal.GoalFragment"
+        android:label="@string/goal"
+        tools:layout="@layout/fragment_goal">
+        <argument
+            android:name="goalId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_nav_goal_to_nav_goal_modify"
+            app:destination="@id/nav_goal_modify" />
+        <action
+            android:id="@+id/action_nav_goal_to_nav_goals"
+            app:destination="@id/nav_goals"
+            app:popUpTo="@id/nav_goals"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="app.stacq.plan.ui.category.CategoryFragment"
+        android:label="@string/category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_nav_category_to_nav_category_modify"
+            app:destination="@id/nav_category_modify" />
+        <action
+            android:id="@+id/action_nav_category_to_nav_categories"
+            app:destination="@id/nav_categories"
+            app:popUpTo="@id/nav_categories"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="categoryId"
             app:argType="string" />
     </fragment>
 

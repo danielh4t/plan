@@ -1,6 +1,5 @@
 package app.stacq.plan.ui.tasks
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +12,7 @@ import java.time.Instant
 
 class TasksViewModel(
     private val taskRepository: TaskRepository,
-    categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val tasksCategory: LiveData<List<Task>> = taskRepository.getTasks()
@@ -31,6 +30,12 @@ class TasksViewModel(
     fun delete(task: Task) {
         viewModelScope.launch {
             taskRepository.delete(task)
+        }
+    }
+
+    fun sync() {
+        viewModelScope.launch {
+            categoryRepository.syncCategories()
         }
     }
 }

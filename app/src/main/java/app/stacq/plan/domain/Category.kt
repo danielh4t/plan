@@ -14,7 +14,8 @@ data class Category(
     var createdAt: Long,
     var name: String,
     var color: String,
-    var enabled: Boolean
+    var enabled: Boolean,
+    var deleted: Boolean,
 ) : Parcelable
 
 fun Category.asEntity() = CategoryEntity(
@@ -30,7 +31,8 @@ fun Category.asDocument() = CategoryDocument(
     createdAt = createdAt,
     name = name,
     color = color,
-    enabled = enabled
+    enabled = enabled,
+    deleted = deleted,
 )
 
 fun CategoryEntity.asCategory() = Category(
@@ -38,15 +40,8 @@ fun CategoryEntity.asCategory() = Category(
     createdAt = createdAt,
     name = name,
     color = color,
-    enabled = enabled
-)
-
-fun CategoryEntity.asDocument() = CategoryDocument(
-    id = id,
-    createdAt = createdAt,
-    name = name,
-    color = color,
-    enabled = enabled
+    enabled = enabled,
+    deleted = deleted,
 )
 
 fun CategoryDocument.asCategory() = Category(
@@ -54,6 +49,6 @@ fun CategoryDocument.asCategory() = Category(
     createdAt = createdAt ?: 0L,
     name = name ?: "",
     color = color ?: "",
-    enabled = enabled
-
+    enabled = enabled,
+    deleted = deleted,
 )

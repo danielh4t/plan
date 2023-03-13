@@ -1,16 +1,14 @@
 package app.stacq.plan.data.source.local.task
 
-
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class TaskLocalDataSourceImpl @Inject constructor(
+class TaskLocalDataSourceImpl (
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskLocalDataSource {
@@ -19,8 +17,8 @@ class TaskLocalDataSourceImpl @Inject constructor(
         taskDao.create(taskEntity)
     }
 
-    override suspend fun read(id: String): TaskEntity? = withContext(ioDispatcher) {
-        return@withContext taskDao.read(id)
+    override suspend fun read(taskId: String): TaskEntity? = withContext(ioDispatcher) {
+        return@withContext taskDao.read(taskId)
     }
 
     override suspend fun update(taskEntity: TaskEntity) = withContext(ioDispatcher) {
@@ -45,8 +43,8 @@ class TaskLocalDataSourceImpl @Inject constructor(
             taskDao.updateTimerFinishById(taskEntity.id, taskEntity.timerFinishAt)
         }
 
-    override suspend fun updateTimerAlarmById(id: String) = withContext(ioDispatcher) {
-        taskDao.updateTimerAlarmById(id)
+    override suspend fun updateTimerAlarmById(taskId: String) = withContext(ioDispatcher) {
+        taskDao.updateTimerAlarmById(taskId)
     }
 
     override suspend fun updatePriority(taskEntity: TaskEntity) =
@@ -63,11 +61,7 @@ class TaskLocalDataSourceImpl @Inject constructor(
         return taskDao.getTasksAndCategory()
     }
 
-    override fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity> {
-        return taskDao.getTaskAndCategory(id)
-    }
-
-    override fun getTaskAnalysis(yearStartAt: Long): LiveData<List<Int>> {
-        return taskDao.getTaskAnalysis(yearStartAt)
+    override fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity> {
+        return taskDao.getTaskAndCategory(taskId)
     }
 }

@@ -12,22 +12,25 @@
         <variable
             name="categoryEnableListener"
             type="app.stacq.plan.ui.categories.CategoryEnableListener" />
+
+        <variable
+            name="categoryNavigateListener"
+            type="app.stacq.plan.ui.categories.CategoryNavigateListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> categoryNavigateListener.onClick(category.id)}">
 
         <CheckBox
             android:id="@+id/category_enabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:button="@drawable/task_complete_checkbox"
+            android:button="@drawable/enabled_disabled_checkbox"
             android:checked="@{category.enabled}"
-            android:contentDescription="@string/content_task_checkbox"
+            android:contentDescription="@string/content_category_checkbox"
             android:onClick="@{() -> categoryEnableListener.onClick(category.id)}"
             android:padding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,12 +38,13 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:taskCategoryColor="@{category.color}" />
+            app:categoryColor="@{category.color}" />
 
         <TextView
             android:id="@+id/category_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/content_category_name"
             android:fontFamily="@font/roboto"
             android:text="@{category.name}"
             android:textSize="20sp"
@@ -48,7 +52,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/category_enabled"
             app:layout_constraintTop_toTopOf="@+id/category_enabled"
-            tools:ignore="ContentDescription"
             tools:text="@string/category" />
 
 

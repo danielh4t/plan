@@ -2,6 +2,7 @@ package app.stacq.plan.data.repository.bite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
@@ -12,10 +13,9 @@ import app.stacq.plan.domain.asEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 
-class BiteRepositoryImpl @Inject constructor(
+class BiteRepositoryImpl(
     private val biteLocalDataSource: BiteLocalDataSource,
     private val biteRemoteDataSource: BiteRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -23,6 +23,10 @@ class BiteRepositoryImpl @Inject constructor(
     override suspend fun create(bite: Bite) = withContext(ioDispatcher) {
         biteLocalDataSource.create(bite.asEntity())
         biteRemoteDataSource.create(bite.asDocument())
+    }
+
+    override suspend fun read(biteId: String): Bite? {
+        return biteLocalDataSource.read(biteId)?.asBite()
     }
 
     override suspend fun update(bite: Bite) = withContext(ioDispatcher) {
@@ -38,4 +42,8 @@ class BiteRepositoryImpl @Inject constructor(
         Transformations.map(biteLocalDataSource.getBites(taskId)) {
             it?.map { biteEntity: BiteEntity -> biteEntity.asBite() }
         }
+
+    override fun getBite(biteId: String): LiveData<Bite> {
+        return biteLocalDataSource.getBite(biteId).map { it.asBite() }
+    }
 }

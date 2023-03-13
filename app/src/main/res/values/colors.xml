@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="plan_primary">#FF6750A4</color>
     <color name="plan_green">#FF3DDB85</color>
     <color name="plan_red">#FFFF1744</color>
     <color name="plan_orange">#FFFF3D00</color>
     <color name="plan_indigo">#FFC026D3</color>
     <color name="plan_blue">#FF3D5AFE</color>
-    <color name="plan_empty">#FF10B981</color>
 </resources>

@@ -12,6 +12,11 @@ class TimeUtil {
         return (finishAt - now) * 1000L
     }
 
+    fun secondsInFuture(finishAt: Long): Long {
+        val now: Long = instant.epochSecond
+        return ((finishAt / 1000L) - now)
+    }
+
     fun alarmTriggerTimer(finishAt: Long): Long {
         val now: Long = instant.epochSecond
         val futureMillis = (finishAt - now) * 1000L

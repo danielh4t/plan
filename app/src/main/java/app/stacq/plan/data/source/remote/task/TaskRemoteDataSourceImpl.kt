@@ -1,21 +1,15 @@
 package app.stacq.plan.data.source.remote.task
 
-import app.stacq.plan.util.CalendarUtil
+import app.stacq.plan.util.constants.FirestoreConstants.TASKS
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 
-private const val TASKS = "tasks"
-private const val PROFILE = "profile"
-private const val COMPLETED = "completed"
-
-class TaskRemoteDataSourceImpl @Inject constructor(
+class
+TaskRemoteDataSourceImpl(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -37,7 +31,8 @@ class TaskRemoteDataSourceImpl @Inject constructor(
             "completedAt" to taskDocument.completedAt,
             "timerFinishAt" to taskDocument.timerFinishAt,
             "timerAlarm" to taskDocument.timerAlarm,
-            "priority" to taskDocument.priority
+            "priority" to taskDocument.priority,
+            "goalId" to taskDocument.goalId,
         )
 
         firestore.collection(uid)
@@ -45,7 +40,6 @@ class TaskRemoteDataSourceImpl @Inject constructor(
             .collection(TASKS)
             .document(taskId)
             .set(fields)
-
     }
 
     override suspend fun update(taskDocument: TaskDocument) = withContext(ioDispatcher) {
@@ -64,7 +58,8 @@ class TaskRemoteDataSourceImpl @Inject constructor(
             "completedAt" to taskDocument.completedAt,
             "timerFinishAt" to taskDocument.timerFinishAt,
             "timerAlarm" to taskDocument.timerAlarm,
-            "priority" to taskDocument.priority
+            "priority" to taskDocument.priority,
+            "goalId" to taskDocument.goalId,
         )
 
         firestore.collection(uid)
@@ -99,7 +94,8 @@ class TaskRemoteDataSourceImpl @Inject constructor(
                 "completedAt" to taskDocument.completedAt,
                 "timerFinishAt" to taskDocument.timerFinishAt,
                 "timerAlarm" to taskDocument.timerAlarm,
-                "priority" to taskDocument.priority
+                "priority" to taskDocument.priority,
+                "goalId" to taskDocument.goalId,
             )
 
             firestore.collection(uid)
@@ -126,7 +122,6 @@ class TaskRemoteDataSourceImpl @Inject constructor(
             .collection(TASKS)
             .document(taskId)
             .update(fields)
-
     }
 
     override suspend fun updateCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
@@ -134,7 +129,6 @@ class TaskRemoteDataSourceImpl @Inject constructor(
         val uid = firebaseAuth.currentUser?.uid
         val taskId = taskDocument.id
         val categoryId = taskDocument.categoryId
-        val completed = taskDocument.completed
 
         if (uid == null || taskId == null || categoryId == null) return@withContext
 
@@ -148,52 +142,5 @@ class TaskRemoteDataSourceImpl @Inject constructor(
             .collection(TASKS)
             .document(taskId)
             .update(fields)
-
-        val document = firestore.collection(uid)
-            .document(categoryId)
-            .collection(PROFILE)
-            .document(COMPLETED)
-            .get()
-            .await()
-
-        var completedMutable: MutableList<Long> = mutableListOf()
-        try {
-            val data = document.data?.get(CalendarUtil().currentYear())
-            data?.let {
-                val dataList = it as List<*>
-                val completedList = dataList.map { item -> item as Long }
-                completedMutable = completedList.toMutableList()
-                // Update completed count on current day.
-                // Decrement to handle zero-based index since first day is 1
-                val day = CalendarUtil().day() - 1
-                if (completed) {
-                    completedMutable[day] = completedMutable[day] + 1
-                } else {
-                    completedMutable[day] = completedMutable[day] - 1
-                }
-            }
-        } catch (e: ClassCastException) {
-            return@withContext
-        }
-
-        if (completedMutable.isEmpty()) return@withContext
-
-        firestore.collection(uid)
-            .document(categoryId)
-            .collection(PROFILE)
-            .document(COMPLETED)
-            .update(CalendarUtil().currentYear(), completedMutable)
-    }
-
-    override suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {
-
-        val uid = firebaseAuth.currentUser?.uid ?: return null
-
-        return firestore.collection(uid)
-            .document(categoryId)
-            .collection(PROFILE)
-            .document(COMPLETED)
-            .get()
-            .await()
     }
 }

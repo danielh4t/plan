@@ -6,22 +6,32 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
+import android.text.format.DateFormat.is24HourFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import app.stacq.plan.R
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTimerBinding
+import app.stacq.plan.util.CalendarUtil
+import app.stacq.plan.util.constants.TimerConstants
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
 import app.stacq.plan.util.time.TimeUtil
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
+import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -56,9 +66,22 @@ class TimerFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val localDataSource = TaskLocalDataSourceImpl(database.taskDao())
-        val remoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val taskRepositoryImpl = TaskRepositoryImpl(localDataSource, remoteDataSource)
+        val taskLocalDataSource = TaskLocalDataSourceImpl(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
+
+        viewModelFactory = TimerViewModelFactory(taskRepository, taskId)
+        viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.timerAppBarLayout.statusBarForeground =
+            MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.timerAppBar.setupWithNavController(navController, appBarConfiguration)
 
         if (canPostNotifications(requireActivity())) {
             binding.timerAlarmCheckbox.visibility = View.VISIBLE
@@ -66,18 +89,45 @@ class TimerFragment : Fragment() {
             binding.timerAlarmCheckbox.visibility = View.GONE
         }
 
-        viewModelFactory = TimerViewModelFactory(taskRepositoryImpl, taskId)
-        viewModel = ViewModelProvider(this, viewModelFactory)[TimerViewModel::class.java]
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.timerButtonToggleGroup.addOnButtonCheckedListener { _, checkedId, _ ->
+            // Respond to button selection
+            when (checkedId) {
+                binding.twentyFiveMinutesButton.id -> {
+                    viewModel.setTaskTimerFinish(TimerConstants.TIMER_TIME_IN_SECONDS_25)
+                }
+                binding.fiftyTwoMinutesButton.id -> {
+                    viewModel.setTaskTimerFinish(TimerConstants.TIMER_TIME_IN_SECONDS_52)
+                }
+                binding.customButton.id -> {
+                    val isSystem24Hour = is24HourFormat(context)
+                    val clockFormat =
+                        if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+                    val picker =
+                        MaterialTimePicker.Builder()
+                            .setTimeFormat(clockFormat)
+                            .setHour(CalendarUtil().hour())
+                            .setMinute(CalendarUtil().minute())
+                            .setTitleText(getString(R.string.timer_complete))
+                            .setInputMode(INPUT_MODE_CLOCK)
+                            .build()
+                    picker.show(requireActivity().supportFragmentManager, "timer_tag")
+
+                    picker.addOnPositiveButtonClickListener {
+                        val millis = CalendarUtil().millisFromTime(picker.hour, picker.minute)
+                        val time = TimeUtil().secondsInFuture(millis)
+                        viewModel.setTaskTimerFinish(time)
+
+                    }
+                }
+            }
+        }
 
         viewModel.task.observe(viewLifecycleOwner) { task ->
             task?.let {
-                if (task.timerFinishAt == 0L) {
-                    // timer not set
-                    viewModel.setTaskTimerFinish()
-                } else {
+                if (task.timerFinishAt != 0L) {
                     // timer set
+                    binding.timerButtonToggleGroup.isEnabled = false
+
                     if (TimeUtil().millisInFuture(it.timerFinishAt) > 0L) {
                         // timer not finished
                         startTimer(task.timerFinishAt)
@@ -111,16 +161,13 @@ class TimerFragment : Fragment() {
 
         countDownTimer = object : CountDownTimer(millisInFuture, millisInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                Log.d("Millis", millisUntilFinished.toString())
                 // convert to minutes
                 var time = millisUntilFinished / (TIMER_TICK_IN_MILLIS * TIMER_TICK_IN_SECONDS)
                 if (time < 1L) {
                     // convert to seconds below 1 minute
                     time = millisUntilFinished / TIME_MILLIS_TO_SECONDS
                 }
-                Log.d("Time", time.toString())
                 viewModel.time.postValue(time)
-
             }
 
             override fun onFinish() {

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.goal.GoalFragment">
+
+    <data>
+
+        <variable
+            name="goal"
+            type="app.stacq.plan.domain.Goal" />
+
+        <variable
+            name="viewModel"
+            type="app.stacq.plan.ui.goal.GoalViewModel" />
+
+        <variable
+            name="completedDays"
+            type="int" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/goal_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/goal_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:menu="@menu/goal_app_bar_menu"
+                app:title="@{goal.name}"
+                tools:title="@string/goal">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/goal_category_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_category_image"
+            android:src="@drawable/ic_color_palette_outline"
+            app:layout_constraintBottom_toBottomOf="@id/goal_category_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_category_label_text"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/goal_category_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_creation"
+            android:fontFamily="@font/roboto"
+            android:text="@string/category"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_category_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_app_bar_layout" />
+
+        <TextView
+            android:id="@+id/goal_category_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_category"
+            android:fontFamily="@font/roboto"
+            android:text="@{goal.categoryName}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_category_image"
+            app:layout_constraintTop_toBottomOf="@+id/goal_category_label_text"
+            tools:text="@string/category" />
+
+        <ImageView
+            android:id="@+id/goal_creation_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_goal_creation_icon"
+            android:src="@drawable/ic_clock_outline"
+            app:layout_constraintBottom_toBottomOf="@id/goal_creation_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_creation_label_text"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/goal_creation_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_creation_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/created"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_category_text" />
+
+        <TextView
+            android:id="@+id/goal_creation_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_creation"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
+            app:goalCreationDateTime="@{goal.createdAt}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_creation_label_text"
+            tools:text="@string/tools_creation" />
+
+        <ImageView
+            android:id="@+id/goal_period_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_goal_creation_icon"
+            android:src="@drawable/ic_pie_chart"
+            app:layout_constraintBottom_toBottomOf="@id/goal_period_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_period_label_text"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/goal_period_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_period_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/period"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_period_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_creation_text" />
+
+        <TextView
+            android:id="@+id/goal_period_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_period"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
+            app:daysDifference="@{goal.createdAt}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_period_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_period_label_text"
+            tools:text="@string/tools_days" />
+
+        <ImageView
+            android:id="@+id/goal_days_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_goal_creation_icon"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintBottom_toBottomOf="@id/goal_days_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_days_label_text"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/goal_days_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_days_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/days"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_days_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_period_text" />
+
+        <TextView
+            android:id="@+id/goal_days_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_goal_days"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
+            app:goalCompletedDays="@{completedDays}"
+            app:goalDays="@{goal.days}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goal_days_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_days_label_text"
+            tools:text="@string/tools_days" />
+
+
+        <ImageView
+            android:id="@+id/goal_generate_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_goal_generate_icon"
+            android:src="@drawable/ic_sync"
+            app:layout_constraintBottom_toBottomOf="@id/goal_generate_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_generate_switch"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/goal_generate_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:checked="@{goal.generate}"
+            android:onCheckedChanged="@{(_, isChecked) -> viewModel.updateGenerate(isChecked)}"
+            android:text="@string/generate"
+            android:fontFamily="@font/roboto"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_generate_image"
+            app:layout_constraintTop_toBottomOf="@+id/goal_days_text" />
+
+        <TextView
+            android:id="@+id/goal_progress_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/progress"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goal_generate_switch" />
+
+
+        <GridLayout
+            android:id="@+id/goal_days_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:columnCount="7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/goal_progress_text">
+
+            <!-- dynamic -->
+
+        </GridLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

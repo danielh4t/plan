@@ -6,7 +6,7 @@ import app.stacq.plan.domain.Task
 interface TaskRepository {
     suspend fun create(task: Task)
 
-    suspend fun read(id: String): Task?
+    suspend fun read(taskId: String): Task?
 
     suspend fun update(task: Task)
 
@@ -18,13 +18,11 @@ interface TaskRepository {
 
     suspend fun updateTimerFinish(task: Task)
 
-    suspend fun updateTimerAlarmById(id: String)
+    suspend fun updateTimerAlarmById(taskId: String)
 
     suspend fun updatePriority(task: Task)
 
-    suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>?
-
     fun getTasks(): LiveData<List<Task>>
 
-    fun getTask(id: String): LiveData<Task>
+    fun getTask(taskId: String): LiveData<Task>
 }

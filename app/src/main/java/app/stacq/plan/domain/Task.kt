@@ -3,17 +3,16 @@ package app.stacq.plan.domain
 import android.os.Parcelable
 import androidx.annotation.Keep
 import app.stacq.plan.data.source.local.task.TaskEntity
+import app.stacq.plan.data.source.local.task.TaskEntityAndCategoryEntity
 import app.stacq.plan.data.source.remote.task.TaskDocument
 import kotlinx.parcelize.Parcelize
-import java.time.Instant
-import java.util.*
 
 
 @Keep
 @Parcelize
 data class Task(
-    var id: String = UUID.randomUUID().toString(),
-    var createdAt: Long = Instant.now().epochSecond,
+    var id: String,
+    var createdAt: Long,
     var name: String,
     var categoryId: String,
     var completed: Boolean = false,
@@ -21,8 +20,9 @@ data class Task(
     var timerFinishAt: Long = 0,
     var timerAlarm: Boolean = true,
     var priority: Int = 0,
-    var categoryName: String  = "",
-    var categoryColor: String = "",
+    var categoryName: String?  = null,
+    var categoryColor: String? = null,
+    var goalId: String? = null
 ) : Parcelable
 
 fun Task.asTaskEntity() = TaskEntity(
@@ -34,7 +34,8 @@ fun Task.asTaskEntity() = TaskEntity(
     completedAt = completedAt,
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
-    priority = priority
+    priority = priority,
+    goalId = goalId,
 )
 
 fun Task.asTaskDocument() = TaskDocument(
@@ -46,7 +47,8 @@ fun Task.asTaskDocument() = TaskDocument(
     completedAt = completedAt,
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
-    priority = priority
+    priority = priority,
+    goalId = goalId,
 )
 
 fun TaskEntity.asTask() = Task(
@@ -58,21 +60,21 @@ fun TaskEntity.asTask() = Task(
     completedAt = completedAt,
     timerAlarm = timerAlarm,
     timerFinishAt = timerFinishAt,
-    categoryName = "",
-    categoryColor = "",
-    priority = priority
+    priority = priority,
+    goalId = goalId,
 )
 
-fun TaskEntity.asTaskDocument() = TaskDocument(
-    id = id,
-    createdAt = createdAt,
-    name = name,
-    categoryId = categoryId,
-    completed = completed,
-    completedAt = completedAt,
-    timerAlarm = timerAlarm,
-    timerFinishAt = timerFinishAt,
-    priority = priority
+fun TaskEntityAndCategoryEntity.asTask() = Task(
+    id = taskEntity.id,
+    createdAt = taskEntity.createdAt,
+    name = taskEntity.name,
+    completed = taskEntity.completed,
+    completedAt = taskEntity.completedAt,
+    timerFinishAt = taskEntity.timerFinishAt,
+    timerAlarm = taskEntity.timerAlarm,
+    priority = taskEntity.priority,
+    categoryId = taskEntity.categoryId,
+    categoryName = categoryEntity.name,
+    categoryColor = categoryEntity.color,
+    goalId = taskEntity.goalId,
 )
-
-
