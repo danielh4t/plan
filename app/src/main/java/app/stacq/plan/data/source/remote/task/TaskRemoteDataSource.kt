@@ -1,7 +1,5 @@
 package app.stacq.plan.data.source.remote.task
 
-import com.google.firebase.firestore.DocumentSnapshot
-
 interface TaskRemoteDataSource {
 
     suspend fun create(taskDocument: TaskDocument)
@@ -13,6 +11,4 @@ interface TaskRemoteDataSource {
     suspend fun updatePriority(taskDocument: TaskDocument)
 
     suspend fun updateCompletion(taskDocument: TaskDocument)
-
-    suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot?
 }

@@ -10,22 +10,72 @@
             name="viewModel"
             type="app.stacq.plan.ui.timer.TimerViewModel" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/timer_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/timer_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/timer">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/timer_button_toggle_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timer_app_bar_layout"
+            app:singleSelection="true">
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/twenty_five_minutes_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/twenty_five_minutes" />
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/fifty_two_minutes_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fifty_two_minutes"
+                />
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/custom_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/custom"
+                />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <CheckBox
             android:id="@+id/timer_alarm_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:button="@drawable/timer_alarm_checkbox"
             android:checked="@{viewModel.task.timerAlarm}"
             android:onClick="@{()->viewModel.updateTaskTimerAlarm()}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timer_text"
             app:timerAlarmCheckBoxVisibility="@{viewModel.time}" />
 
         <TextView
@@ -40,7 +90,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:timerTextVisibility="@{viewModel.time}"
-            tools:text="@string/blank_time" />
+            tools:text="@string/tools_time" />
 
         <ImageView
             android:id="@+id/timer_image"

@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.remote
 
 import app.stacq.plan.data.source.remote.task.TaskDocument
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
-import com.google.firebase.firestore.DocumentSnapshot
 
 
 class FakeTaskRemoteDataSource(private val tasks: MutableList<TaskDocument>? = mutableListOf()):
@@ -26,9 +25,4 @@ class FakeTaskRemoteDataSource(private val tasks: MutableList<TaskDocument>? = m
     override suspend fun updateCompletion(taskDocument: TaskDocument) {
         TODO("Not yet implemented")
     }
-
-    override suspend fun getCategoryProfileCompleted(categoryId: String): DocumentSnapshot? {
-        TODO("Not yet implemented")
-    }
-
 }

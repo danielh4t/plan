@@ -15,11 +15,15 @@
         <variable
             name="biteDeleteListener"
             type="app.stacq.plan.ui.task.BiteDeleteListener" />
+        <variable
+            name="biteNavigateListener"
+            type="app.stacq.plan.ui.task.BiteNavigateListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()-> biteNavigateListener.onClick(bite.id)}"
         android:onLongClick="@{()-> biteDeleteListener.onLongClick(bite)}">
 
         <CheckBox
@@ -27,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:button="@drawable/task_complete_checkbox"
+            android:button="@drawable/complete_incomplete_checkbox"
             android:onClick="@{() -> biteCompleteListener.onClick(bite)}"
             android:checked="@{bite.completed}"
             app:layout_constraintBottom_toBottomOf="parent"

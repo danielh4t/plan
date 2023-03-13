@@ -11,12 +11,16 @@ import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite
 import app.stacq.plan.domain.asTask
+import app.stacq.plan.util.constants.AnalyticsConstants
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import java.time.Instant
-import javax.inject.Inject
 
 
-class TaskViewModel @Inject constructor(
+class TaskViewModel(
     private val taskRepository: TaskRepository,
     private val bitesRepository: BiteRepository,
     taskId: String
@@ -26,18 +30,26 @@ class TaskViewModel @Inject constructor(
 
     val bites: LiveData<List<Bite>> = bitesRepository.getBites(taskId)
 
+    private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+
+    fun logPermission(isGranted: Boolean) {
+        firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION) {
+            param("notifications", if (isGranted) "true" else "false")
+        }
+    }
     fun clone() {
         val name = task.value?.name
         val categoryId = task.value?.categoryId
+        val goalId = task.value?.goalId
         val bites = bites.value
         viewModelScope.launch {
             if (name != null && categoryId != null && bites != null) {
-                val taskEntity = TaskEntity(name = name, categoryId = categoryId)
+                val taskEntity = TaskEntity(name = name, categoryId = categoryId, goalId = goalId)
                 val task = taskEntity.asTask()
                 taskRepository.create(task)
                 // clone incomplete bites
                 bites.filter { bite -> !bite.completed }.forEach {
-                    val biteEntity = BiteEntity(name = it.name, taskId = task.id)
+                    val biteEntity = BiteEntity(name = it.name, taskId = task.id, categoryId = categoryId)
                     bitesRepository.create(biteEntity.asBite())
                 }
             }

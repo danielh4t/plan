@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 
-class CategoryLocalDataSourceImpl @Inject constructor(
+class CategoryLocalDataSourceImpl (
     private val categoryDao: CategoryDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CategoryLocalDataSource {
@@ -16,18 +15,21 @@ class CategoryLocalDataSourceImpl @Inject constructor(
         categoryDao.insert(categoryEntity)
     }
 
-    override suspend fun update(categoryEntity: CategoryEntity) {
+    override suspend fun update(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
         categoryDao.update(categoryEntity)
-    }
-
-    override suspend fun updateEnabledById(id: String) {
-        categoryDao.updateEnabledById(id)
     }
 
     override suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
         categoryDao.delete(categoryEntity)
     }
 
+    override suspend fun upsert(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
+        categoryDao.upsert(categoryEntity)
+    }
+
+    override suspend fun updateEnabled(categoryId: String) = withContext(ioDispatcher) {
+        categoryDao.updateEnabledById(categoryId)
+    }
     override suspend fun getCategoriesEntities(): List<CategoryEntity> = withContext(ioDispatcher) {
         categoryDao.getCategoriesEntities()
     }
@@ -42,5 +44,9 @@ class CategoryLocalDataSourceImpl @Inject constructor(
 
     override fun getAllCategories(): LiveData<List<CategoryEntity>> {
         return categoryDao.getAllCategories()
+    }
+
+    override fun getCategory(categoryId: String): LiveData<CategoryEntity> {
+        return categoryDao.getCategory(categoryId)
     }
 }

@@ -7,31 +7,36 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="app.stacq.plan.ui.task.TaskViewModel" />
+            name="task"
+            type="app.stacq.plan.domain.Task" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <TextView
-            android:id="@+id/task_name_text"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/task_app_bar_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:autoSizeTextType="uniform"
-            android:fontFamily="@font/roboto"
-            android:text="@{viewModel.task.name}"
-            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/task" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/task_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:menu="@menu/task_app_bar_menu"
+                app:title="@{task.name}"
+                tools:title="@string/task">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <ImageView
@@ -39,48 +44,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/category"
+            android:contentDescription="@string/content_category_image"
             android:src="@drawable/ic_color_palette_outline"
-            app:layout_constraintBottom_toBottomOf="@+id/category"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/category"
+            app:layout_constraintTop_toTopOf="@id/task_category_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/task_category_text"
             app:tint="?attr/colorPrimary" />
 
-        <LinearLayout
-            android:id="@+id/category"
+        <TextView
+            android:id="@+id/task_category_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="vertical"
+            android:contentDescription="@string/content_task_creation"
+            android:fontFamily="@font/roboto"
+            android:text="@string/category"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/task_category_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_category_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_name_text">
+            app:layout_constraintStart_toEndOf="@id/task_category_image"
+            app:layout_constraintTop_toBottomOf="@id/task_app_bar_layout" />
 
-            <TextView
-                android:id="@+id/category_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_task_creation"
-                android:fontFamily="@font/roboto"
-                android:text="@string/category"
-                android:textSize="20sp"
-                tools:text="@string/category" />
-
-            <TextView
-                android:id="@+id/task_category_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_task_creation"
-                android:fontFamily="@font/roboto"
-                android:text="@{viewModel.task.categoryName}"
-                android:textSize="18sp"
-                tools:text="@string/category" />
-
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/task_category_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_category"
+            android:fontFamily="@font/roboto"
+            android:text="@{task.categoryName}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_category_image"
+            app:layout_constraintTop_toBottomOf="@id/task_category_label_text"
+            tools:text="@string/category" />
 
         <ImageView
             android:id="@+id/task_creation_image"
@@ -89,147 +89,131 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/task_creation_icon"
             android:src="@drawable/ic_clock_outline"
-            app:layout_constraintBottom_toBottomOf="@+id/timer"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/timer"
+            app:layout_constraintTop_toTopOf="@id/task_creation_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/task_creation_text"
             app:tint="?attr/colorPrimary" />
 
-        <LinearLayout
-            android:id="@+id/timer"
+        <TextView
+            android:id="@+id/task_creation_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="vertical"
+            android:contentDescription="@string/content_task_creation_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/created"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/task_creation_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_category_image"
-            app:layout_constraintTop_toBottomOf="@+id/category">
+            app:layout_constraintStart_toEndOf="@id/task_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/task_category_text" />
 
-            <TextView
-                android:id="@+id/task_creation_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_task_creation"
-                android:fontFamily="@font/roboto"
-                android:text="@string/timer"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/task_timer_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_task_creation"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                app:taskTimer="@{viewModel.task.timerFinishAt}"
-                tools:text="@string/time" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/priority"
+        <TextView
+            android:id="@+id/task_creation_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="vertical"
+            android:contentDescription="@string/content_task_creation"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_category_image"
-            app:layout_constraintTop_toBottomOf="@+id/timer">
+            app:layout_constraintStart_toEndOf="@id/task_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/task_creation_label_text"
+            app:taskCreationDateTime="@{task.createdAt}"
+            tools:text="@string/tools_creation" />
 
-            <TextView
-                android:id="@+id/priority_label_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:text="@string/priority"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/priority_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:text="@string/priority_text"
-                android:textSize="16sp" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/priority_slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_priority_slider"
-                android:stepSize="1.0"
-                android:value="@{viewModel.task.priority}"
-                android:valueFrom="0.0"
-                android:valueTo="10.0" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/edit_task_button"
-            style="@style/Widget.Material3.Button.TonalButton.Icon"
+        <ImageView
+            android:id="@+id/task_completion_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/content_edit_task"
-            android:text="@string/edit"
-            app:icon="@drawable/ic_edit_outline"
-            app:layout_constraintEnd_toStartOf="@+id/clone_task_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:contentDescription="@string/content_task_completion_icon"
+            android:src="@drawable/ic_clock_outline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priority" />
+            app:layout_constraintTop_toTopOf="@id/task_completion_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/task_completion_text"
+            app:tint="?attr/colorPrimary" />
 
-        <Button
-            android:id="@+id/clone_task_button"
-            style="@style/Widget.Material3.Button.TonalButton.Icon"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/task_completion_label_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/content_task_clone"
-            android:text="@string/clone"
-            app:icon="@drawable/ic_copy"
-            app:layout_constraintEnd_toStartOf="@+id/delete_task_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_task_button"
-            app:layout_constraintTop_toBottomOf="@+id/priority" />
-
-        <Button
-            android:id="@+id/delete_task_button"
-            style="@style/Widget.Material3.Button.TonalButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:contentDescription="@string/content_delete_task"
-            android:text="@string/delete"
-            app:icon="@drawable/ic_trash_outline"
+            android:contentDescription="@string/content_task_completion_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/completion"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/task_completion_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/clone_task_button"
-            app:layout_constraintTop_toBottomOf="@+id/priority" />
+            app:layout_constraintStart_toEndOf="@id/task_completion_image"
+            app:layout_constraintTop_toBottomOf="@id/task_creation_text" />
+
+        <TextView
+            android:id="@+id/task_completion_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_completion"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_completion_image"
+            app:layout_constraintTop_toBottomOf="@id/task_completion_label_text"
+            app:taskCompletionDateTime="@{task.completedAt}"
+            tools:text="@string/tools_creation" />
 
         <ImageView
             android:id="@+id/task_priority_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/task_creation_icon"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/task_priority_icon"
             android:src="@drawable/ic_compass_outline"
-            app:layout_constraintBottom_toBottomOf="@+id/priority"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="@id/task_priority_slider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/priority"
+            app:layout_constraintTop_toTopOf="@id/task_priority_label_text"
             app:tint="?attr/colorPrimary" />
 
+        <TextView
+            android:id="@+id/task_priority_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_creation"
+            android:fontFamily="@font/roboto"
+            android:text="@string/priority"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_priority_image"
+            app:layout_constraintTop_toBottomOf="@id/task_completion_text" />
+
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/task_priority_slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_priority_slider"
+            android:stepSize="1.0"
+            android:value="@{task.priority}"
+            android:valueFrom="0.0"
+            android:valueTo="10.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_priority_image"
+            app:layout_constraintTop_toBottomOf="@id/task_priority_label_text" />
 
         <TextView
-            android:id="@+id/bites_text"
+            android:id="@+id/task_bites_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -237,24 +221,23 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/bites"
+            android:contentDescription="@string/content_task_bites_label"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clone_task_button" />
+            app:layout_constraintTop_toBottomOf="@id/task_priority_slider" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bites_list"
+            android:id="@+id/task_bites_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:contentDescription="@string/content_list_bites"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/create_bite_fab"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bites_text" />
+            app:layout_constraintTop_toBottomOf="@id/task_bites_label_text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/timer_fab"
@@ -273,6 +256,7 @@
             android:id="@+id/create_bite_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
             android:contentDescription="@string/content_create_bite"
@@ -281,5 +265,6 @@
             app:srcCompat="@android:drawable/ic_input_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

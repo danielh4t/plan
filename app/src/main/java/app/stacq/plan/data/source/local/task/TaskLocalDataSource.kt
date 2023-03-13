@@ -6,7 +6,7 @@ interface TaskLocalDataSource {
 
     suspend fun create(taskEntity: TaskEntity)
 
-    suspend fun read(id: String): TaskEntity?
+    suspend fun read(taskId: String): TaskEntity?
 
     suspend fun update(taskEntity: TaskEntity)
 
@@ -16,7 +16,7 @@ interface TaskLocalDataSource {
 
     suspend fun updateTimerFinish(taskEntity: TaskEntity)
 
-    suspend fun updateTimerAlarmById(id: String)
+    suspend fun updateTimerAlarmById(taskId: String)
 
     suspend fun updatePriority(taskEntity: TaskEntity)
 
@@ -24,7 +24,5 @@ interface TaskLocalDataSource {
 
     fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 
-    fun getTask(id: String): LiveData<TaskEntityAndCategoryEntity>
-
-    fun getTaskAnalysis(yearStartAt: Long): LiveData<List<Int>>
+    fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity>
 }

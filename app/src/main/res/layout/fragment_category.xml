@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.category.CategoryFragment">
+
+    <data>
+
+        <variable
+            name="category"
+            type="app.stacq.plan.domain.Category" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/category_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/category_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:menu="@menu/goal_app_bar_menu"
+                app:title="@{category.name}"
+                tools:title="@string/category">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ImageView
+            android:id="@+id/category_creation_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/task_creation_icon"
+            android:src="@drawable/ic_clock_outline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/category_creation_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/category_creation_text"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/category_creation_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_creation_label"
+            android:fontFamily="@font/roboto"
+            android:text="@string/created"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/category_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/category_app_bar_layout" />
+
+        <TextView
+            android:id="@+id/category_creation_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_category_creation"
+            android:fontFamily="@font/roboto"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/category_creation_image"
+            app:layout_constraintTop_toBottomOf="@id/category_creation_label_text"
+            app:categoryCreationDateTime="@{category.createdAt}"
+            tools:text="@string/tools_creation" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -2,101 +2,164 @@
     <string name="app_name">Plan</string>
     <!-- Main -->
     <string name="tasks">Tasks</string>
-    <string name="task">Task</string>
-    <string name="category">Category</string>
-    <!-- Create fragment -->
-    <string name="create">Create</string>
-    <string name="create_task">Create Task</string>
+    <string name="categories">Categories</string>
+    <string name="goals">Goals</string>
+
+    <!-- Tasks fragment -->
+
+    <!-- Create Task fragment -->
     <string name="name">Name</string>
     <string name="create_fab">create action</string>
     <string name="task_name_required">Task name is required</string>
-    <string name="category_name_required">Category name is required</string>
     <string name="bite_name_required">Bite name is required</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
-    <string name="empty_category_details">Select a category</string>
-    <!-- Task fragment -->
-    <string name="date">01 January 1970 00:00</string>
+    <string name="empty_category_details">Create or select a category</string>
+
+    <!-- Goals fragment -->
+    <string name="content_list_of_goals">List of goals</string>
+    <string name="content_add_goal">Add Goal</string>
+    <string name="goal">Goal</string>
+    <string name="content_goal_name">Goal name</string>
+
+    <!-- Create Goal fragment -->
+    <string name="set_goal">Set Goal</string>
+    <string name="content_goal_modify_action">Add or Edit Goal</string>
+
+    <!-- Goal Fragment -->
+    <string name="content_goal_creation_icon">clock icon</string>
+    <plurals name="numberOfDays">
+        <item quantity="zero">%d day</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="out_of">out of</string>
+    <string name="period">Period</string>
+    <string name="content_goal_period_label">Goal period</string>
+    <string name="content_goal_period">Goal period from creation to current day</string>
+
     <!-- Timer fragment  -->
-    <string name="time">52 minutes</string>
-    <string name="blank_time">52</string>
-    <!-- Sign In Status -->
+    <string name="tools_time">52</string>
     <!-- Task fragment -->
-    <string name="timer">Timer</string>
-    <string name="content_timer">Open Timer</string>
+    <string name="task">Task</string>
     <string name="edit">Edit</string>
     <string name="content_edit_task">Edit Task </string>
     <string name="clone">Clone</string>
     <string name="content_task_clone">Task Completion</string>
     <string name="delete">Delete</string>
     <string name="content_delete_task">Delete Task</string>
+    <string name="content_category_image">Color palette icon</string>
+    <string name="content_task_category">Task category name</string>
+    <string name="content_task_creation_label">Task creation</string>
     <string name="content_task_creation">Task creation date and time</string>
-    <!-- Menu -->
-    <string name="profile">Profile</string>
+    <string name="tools_creation">01 January 1970 00:00</string>
+    <string name="priority">Priority</string>
+    <string name="content_task_priority_slider">Priority slider</string>
+    <string name="bites">Bites</string>
+    <string name="content_task_bites_label">Bites label</string>
+    <string name="content_list_bites">List of task bites</string>
+    <string name="content_timer">Open Timer</string>
+    <string name="content_create_bite">Create Bite</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="task_creation_icon">task creation icon</string>
+    <string name="content_create_task">Create Task</string>
+
+    <!-- Create Bite Fragment -->
+
+    <string name="timer">Timer</string>
+    <string name="bite">Bite</string>
+
     <!-- Notifications -->
     <string name="timer_channel_id" translatable="false">timer_channel</string>
     <string name="timer_channel_name" translatable="true">Timer</string>
     <string name="timer_channel_description">Timer Alerts</string>
     <!-- Notification fragment -->
-    <string name="notification">Notification</string>
     <string name="timer_complete">Timer complete</string>
-    <string name="content_notification_bell">Notification Bell</string>
-    <string name="content_agree">Agree to notification image</string>
-    <string name="timer_notification">Receive notification when the timer is complete</string>
-    <string name="yes_please">Yes, please</string>
-    <string name="no_thanks">No, thanks</string>
+    <string name="timer_notification">Timer Notification</string>
+    <string name="timer_notification_message">Receive notification when the timer is complete</string>
+
     <string name="yes_notification">Timer complete notification will be sent</string>
     <string name="no_notification">Timer complete notification will not be sent</string>
 
-    <string name="categories">Categories</string>
-    <string name="content_category_color">Category color</string>
-    <string name="content_tasks">Tasks list and create task</string>
-    <string name="content_category_list">list of categories</string>
+    <!-- Categories -->
+    <string name="category">Category</string>
+
+
+    <!-- Bottom Navigation Menu -->
     <string name="title_tasks">Tasks tab</string>
     <string name="content_tasks_menu">View, add, edit tasks</string>
     <string name="title_categories">Categories tab</string>
     <string name="content_categories_menu">View, add or remove categories</string>
-    <string name="title_profile">Profile tab</string>
-    <string name="content_profile_menu">View year productivity</string>
-    <string name="task_creation_icon">task creation icon</string>
-    <string name="task_timer_icon">task timer time icon</string>
-    <string name="bites">Bites</string>
-    <string name="content_create_bite">Create Bite</string>
-    <string name="content_create_task">Create Task</string>
-    <string name="bite">Bite</string>
-    <string name="create_bite_label">Create Bite</string>
-    <string name="priority">Priority</string>
-    <string name="priority_text">Change priority to set order of tasks</string>
-    <string name="content_priority_slider">Priority slider</string>
-    <!-- Profile -->
-    <string name="sign_out">Sign out</string>
-    <string name="sync_complete">sync complete</string>
-    <string name="category_removed">Category removed</string>
-    <string name="action_undo_text">UNDO</string>
-    <string name="content_sign_in">Sign in with Google</string>
-    <string name="content_sign_out">Sign out</string>
-    <string name="content_list_bites">List of task bites</string>
-    <string name="content_list_of_categories">List of categories</string>
+    <string name="title_goals">Goals tab</string>
+    <string name="content_goals_menu">View, add, edit  goals</string>
+
     <string name="content_list_tasks">List of tasks</string>
+    <string name="content_list_of_categories">List of categories</string>
+
     <string name="content_category_name">Category name</string>
     <string name="content_category_chip">%1$s chip</string>
     <string name="content_task_checkbox">Task complete</string>
-    <string name="content_task_category">Task category name</string>
+
     <string name="content_task_name">Task name</string>
     <string name="content_category_checkbox">Category enabled</string>
     <string name="content_account_image">Account image</string>
-    <string name="this_year">This Year</string>
-    <string name="sign_in_sync">Not synced yet, sync is required to backup progress over the year.
-        Sign in to sync by clicking the profile icon on the top right.
-    </string>
-    <string name="content_sync">Sync heartbreak</string>
-    <string name="task_completed">Task completed</string>
+
+
     <string name="select_completed_date">Select completed date</string>
     <string name="undo">Undo</string>
-    <string name="task_deleted">Task deleted</string>
+
+    <string name="task_priority_icon">Compass icon</string>
+    <string name="created">Creation</string>
+    <string name="content_goal_creation">Goal creation date and time</string>
+    <string name="days">Days</string>
+    <string name="tools_days">10 days</string>
+    <string name="content_goal_days_label">Goal days</string>
+    <string name="content_goal_days">Number of goal days</string>
+    <string name="completion_date">Completion date</string>
+    <string name="content_task_date_start_icon">Calendar icon</string>
+    <string name="select_completed_time">Select Completion Time</string>
+    <string name="content_task_completion_label">Task completion</string>
+    <string name="content_task_completion">Task completion</string>
+    <string name="content_task_completion_icon">Clock icon</string>
+    <string name="completion">Completion</string>
+    <string name="set_category">Set Category</string>
+    <string name="content_category_modify_fab">Modify category</string>
+    <string name="content_category_creation">Category creation date and tie</string>
+    <string name="content_goal_category">Goal category</string>
+    <string name="content_goal_creation_label">Goal creation label</string>
+    <string name="set_task">Set Task</string>
+    <string name="set_bite">Set Bite</string>
+    <string name="content_bite_modify_fab">Modify Bite</string>
+    <string name="progress">Progress</string>
+    <!-- Timer -->
+    <string name="twenty_five_minutes">25 minutes</string>
+    <string name="fifty_two_minutes">52 minutes</string>
+    <string name="custom">Custom</string>
+
+    <!--  Dialog -->
+    <string name="yes_please">Yes, please</string>
+    <string name="no_thanks">No, thanks</string>
+
+    <!-- Backup Dialog -->
+    <string name="backup_sync">Backup and Sync</string>
+    <string name="sign_in_sync">Sign in with Google to backup and sync task, goals and categories.</string>
+    <string name="sign_out_sync">Sign out to stop backup and sync</string>
+    <string name="content_name_image">Brush icon</string>
+    <string name="content_task_modify_date_time">Modify task completion date and time</string>
+    <string name="not_completed">Not completed</string>
+    <string name="goal_deleted">Goal deleted</string>
+    <string name="goal_days_required">Goal days is required</string>
+    <string name="goal_name_required">Goal name is required</string>
+    <string name="generate">Generate</string>
+    <string name="content_goal_generate_icon">Circular arrows</string>
+    <string name="content_edit_goal">Edit Goal</string>
+    <string name="content_generate_goal_task">Generate Goal Task</string>
+    <string name="content_delete_goal">Delete GOal</string>
+
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+
 </resources>

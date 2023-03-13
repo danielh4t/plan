@@ -36,6 +36,8 @@ data class TaskEntity(
     var timerAlarm: Boolean = true,
 
     @ColumnInfo(name= "priority")
-    var priority: Int = 0
+    var priority: Int = 0,
 
+    @ColumnInfo(name = "goal_id")
+    var goalId: String?,
 )

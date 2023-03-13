@@ -3,26 +3,24 @@ package app.stacq.plan.ui.task
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.R
-import app.stacq.plan.util.constants.TimerConstants.TIMER_TIME_IN_SECONDS
-import app.stacq.plan.util.constants.TimerConstants.TIME_MINUTE_TO_SECONDS
-import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
-import app.stacq.plan.util.time.TimeUtil
+import java.text.SimpleDateFormat
+import java.util.*
 
 
+@BindingAdapter("taskCreationDateTime")
+fun TextView.creationTimestampToDateTime(timestamp: Long) {
+    val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
+    val date = Date(timestamp * 1000)
+    text = dateFormat.format(date)
+}
 
-@BindingAdapter("taskTimer")
-fun TextView.setTaskTimer(timerFinishAt: Long) {
-    text = if (timerFinishAt == 0L) {
-        // timer not started
-        val minutes = TIMER_TIME_IN_SECONDS / TIME_MINUTE_TO_SECONDS
-        resources.getQuantityString(R.plurals.numberOfMinutes, minutes.toInt(), minutes)
-    } else if (TimeUtil().millisInFuture(timerFinishAt) > 0L) {
-        // timer progress
-        val minutes =
-            TimeUtil().millisInFuture(timerFinishAt) / TIME_MINUTE_TO_SECONDS / TIME_MILLIS_TO_SECONDS
-        resources.getQuantityString(R.plurals.numberOfMinutes, minutes.toInt(), minutes)
-    } else {
-        // timer finished
-        resources.getString(R.string.timer_complete)
+@BindingAdapter("taskCompletionDateTime")
+fun TextView.completionTimestampToDateTime(timestamp: Long) {
+    text= if (timestamp == 0L) {
+        resources.getString(R.string.not_completed)
+    }else {
+        val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
+        val date = Date(timestamp * 1000)
+        dateFormat.format(date)
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/edit"
+        android:title="@string/edit"
+        android:contentDescription="@string/content_edit_task"
+        android:icon="@drawable/ic_edit_outline"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/clone"
+        android:title="@string/clone"
+        android:contentDescription="@string/content_task_clone"
+        android:icon="@drawable/ic_copy"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"
+        android:contentDescription="@string/content_delete_task"
+        android:icon="@drawable/ic_trash_outline"
+        app:showAsAction="ifRoom" />
+
+</menu>

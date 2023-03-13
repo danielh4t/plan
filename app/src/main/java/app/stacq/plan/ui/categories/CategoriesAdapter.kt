@@ -1,6 +1,5 @@
 package app.stacq.plan.ui.categories
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +10,8 @@ import app.stacq.plan.domain.Category
 
 
 class CategoriesAdapter(
-    private val categoryEnableListener: CategoryEnableListener
+    private val categoryEnableListener: CategoryEnableListener,
+    private val categoryNavigateListener: CategoryNavigateListener,
 ) : ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +20,7 @@ class CategoriesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
-        holder.bind(category, categoryEnableListener)
+        holder.bind(category, categoryEnableListener, categoryNavigateListener)
     }
 
     class ViewHolder private constructor(private val binding: ListItemCategoryBinding) :
@@ -34,11 +34,12 @@ class CategoriesAdapter(
             }
         }
 
-        fun bind(category: Category, categoryEnableListener: CategoryEnableListener) {
+        fun bind(category: Category, categoryEnableListener: CategoryEnableListener, categoryNavigateListener: CategoryNavigateListener,) {
             binding.category = category
             binding.categoryEnableListener = categoryEnableListener
+            binding.categoryNavigateListener = categoryNavigateListener
             binding.categoryEnabled.contentDescription = "${category.name} is ${category.enabled}"
-            binding.categoryName.contentDescription = "${category.name}"
+            binding.categoryName.contentDescription = "${category.name} category"
             binding.executePendingBindings()
         }
     }
@@ -57,4 +58,8 @@ class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
 
 class CategoryEnableListener(val categoryEnableListener: (categoryId: String) -> Unit) {
     fun onClick(categoryId: String) = categoryEnableListener(categoryId)
+}
+
+class CategoryNavigateListener(val categoryNavigateListener: (categoryId: String) -> Unit) {
+    fun onClick(categoryId: String) = categoryNavigateListener(categoryId)
 }

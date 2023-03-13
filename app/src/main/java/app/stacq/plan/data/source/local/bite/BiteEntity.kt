@@ -22,9 +22,11 @@ data class BiteEntity(
     @ColumnInfo(name = "task_id")
     var taskId: String,
 
+    @ColumnInfo(name = "category_id")
+    var categoryId: String,
+
     var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")
     var completedAt: Long = 0,
 )
-

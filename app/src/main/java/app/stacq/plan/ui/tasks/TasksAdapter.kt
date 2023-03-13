@@ -60,12 +60,10 @@ class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
 
 }
 
-class TaskCompleteListener(val completeListener: (task: Task) -> Unit) {
-    fun onClick(task: Task) = completeListener(task)
-}
-
 class TaskNavigateListener(val navigateListener: (taskId: String) -> Unit) {
     fun onClick(taskId: String) = navigateListener(taskId)
 }
 
-
+class TaskCompleteListener(val completeListener: (task: Task) -> Unit) {
+    fun onClick(task: Task) = completeListener(task)
+}

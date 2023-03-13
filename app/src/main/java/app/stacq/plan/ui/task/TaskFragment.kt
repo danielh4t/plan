@@ -1,16 +1,19 @@
 package app.stacq.plan.ui.task
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
@@ -21,7 +24,10 @@ import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
+import app.stacq.plan.util.createTimerChannel
 import app.stacq.plan.util.ui.MarginItemDecoration
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -55,30 +61,118 @@ class TaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
-        val taskLocalDataSourceImpl = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSourceImpl = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val taskRepositoryImpl = TaskRepositoryImpl(taskLocalDataSourceImpl, taskRemoteDataSourceImpl)
+        val taskLocalDataSource = TaskLocalDataSourceImpl(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
 
         val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
         val biteRemoteDataSource = BiteRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val biteRepositoryImpl = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSource)
+        val biteRepository = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSource)
 
-        viewModelFactory = TaskViewModelFactory(taskRepositoryImpl, biteRepositoryImpl, taskId)
+        viewModelFactory = TaskViewModelFactory(taskRepository, biteRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
-        binding.viewModel = viewModel
+
         binding.lifecycleOwner = viewLifecycleOwner
+
+
+        binding.taskAppBarLayout.statusBarForeground =
+            MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.taskAppBar.setupWithNavController(navController, appBarConfiguration)
+
+        binding.taskAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.edit -> {
+                    val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
+                    navController.navigate(action)
+                    true
+                }
+                R.id.clone -> {
+                    viewModel.clone()
+                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+                    navController.navigate(action)
+                    true
+                }
+                R.id.delete -> {
+                    viewModel.delete()
+                    // cancel alarm
+                    val hasAlarm = viewModel.hasAlarm()
+                    if (hasAlarm) {
+                        // finish_at
+                        viewModel.task.value?.let {
+                            val name = it.name
+                            val requestCode: Int = it.timerFinishAt.toInt()
+                            cancelAlarm(application, requestCode, name)
+                        }
+                    }
+
+                    Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.createBiteFab)
+                        .setAction(R.string.undo) {
+                            viewModel.undoDelete()
+                        }
+                        .show()
+
+                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
+                    navController.navigate(action)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Handles the user's response to the system permissions dialog.
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Permission granted.
+                    viewModel.logPermission(true)
+                    Snackbar.make(
+                        binding.createBiteFab,
+                        R.string.yes_notification,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                } else {
+                    // Permission denied.
+                    viewModel.logPermission(false)
+                    // Explain to the user that the notification feature unavailable.
+                    Snackbar.make(
+                        binding.createBiteFab,
+                        R.string.no_notification,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                // Navigate to timer.
+                val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                navController.navigate(action)
+            }
 
         val biteCompleteListener = BiteCompleteListener { viewModel.completeBite(it) }
         val biteDeleteListener = BiteDeleteListener {
             viewModel.deleteBite(it)
             true
         }
+        val biteNavigateListener = BiteNavigateListener {
+            val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, it)
+            navController.navigate(action)
+        }
 
-        val bitesAdapter = BitesAdapter(biteCompleteListener, biteDeleteListener)
-        binding.bitesList.adapter = bitesAdapter
-        binding.bitesList.addItemDecoration(
+        val bitesAdapter =
+            BitesAdapter(biteCompleteListener, biteDeleteListener, biteNavigateListener)
+        binding.taskBitesList.adapter = bitesAdapter
+        binding.taskBitesList.addItemDecoration(
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
         )
+
+        viewModel.task.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.task = it
+            }
+        }
 
         viewModel.bites.observe(viewLifecycleOwner) {
             it?.let {
@@ -86,79 +180,59 @@ class TaskFragment : Fragment() {
             }
         }
 
-        binding.editTaskButton.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
-            this.findNavController().navigate(action)
-        }
-
-        binding.cloneTaskButton.setOnClickListener {
-            viewModel.clone()
-            val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-            this.findNavController().navigate(action)
-        }
-
-        binding.deleteTaskButton.setOnClickListener {
-            viewModel.delete()
-            // cancel alarm
-            val hasAlarm = viewModel.hasAlarm()
-            if (hasAlarm) {
-                // finish_at
-                viewModel.task.value?.let {
-                    val name = it.name
-                    val requestCode: Int = it.timerFinishAt.toInt()
-                    cancelAlarm(application, requestCode, name)
-                }
-            }
-
-            Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.createBiteFab)
-                .setAction(R.string.undo) {
-                    viewModel.undoDelete()
-                }
-                .show()
-
-            val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-            this.findNavController().navigate(action)
-        }
-
-        binding.prioritySlider.addOnChangeListener { _, value, _ ->
+        binding.taskPrioritySlider.addOnChangeListener { _, value, _ ->
             viewModel.updatePriority(value)
         }
 
         binding.timerFab.setOnClickListener {
-            requestPermission(requireActivity(), taskId)
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // You can use the API that requires the permission.
+                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                    navController.navigate(action)
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                    // Explain to the user why your app requires this permission
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(resources.getString(R.string.timer_notification))
+                        .setMessage(resources.getString(R.string.timer_notification_message))
+                        .setNegativeButton(resources.getString(R.string.no_thanks)) { _, _ ->
+                            // Respond to negative button press
+                            Snackbar.make(
+                                binding.createBiteFab,
+                                R.string.no_notification,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                            navController.navigate(action)
+                        }
+                        .setPositiveButton(resources.getString(R.string.yes_please)) { _, _ ->
+                            // Respond to positive button press
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            }
+                            createTimerChannel(requireNotNull(this.activity).application)
+                        }
+                        .show()
+                } else -> {
+                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                    navController.navigate(action)
+                }
+            }
+
         }
 
         binding.createBiteFab.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToCreateBiteFragment(taskId)
-            this.findNavController().navigate(action)
+            val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, null)
+            navController.navigate(action)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun requestPermission(context: Context, taskId: String) {
-        when {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                // You can use the API that requires the permission.
-                val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
-                this.findNavController().navigate(action)
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                // Explain to the user why your app requires this permission
-                val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
-                this.findNavController().navigate(action)
-            }
-            else -> {
-                val action = TaskFragmentDirections.actionNavTaskToNavNotification(taskId)
-                this.findNavController().navigate(action)
-            }
-        }
     }
 }

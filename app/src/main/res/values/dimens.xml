@@ -3,4 +3,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_margin">16dp</dimen>
     <dimen name="list_margin_compact">8dp</dimen>
+    <dimen name="goal_image_bottom_margin">8dp</dimen>
+    <dimen name="goal_image">24dp</dimen>
 </resources>

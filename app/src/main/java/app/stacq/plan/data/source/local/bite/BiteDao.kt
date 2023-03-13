@@ -26,6 +26,15 @@ interface BiteDao {
     suspend fun create(biteEntity: BiteEntity)
 
     /**
+     * Select all tasks from the task.
+     *
+     * @param biteId
+     * @return all tasks.
+     */
+    @Query("SELECT * FROM bite WHERE id = :biteId")
+    suspend fun read(biteId: String): BiteEntity?
+
+    /**
      * Update a bite
      *
      * @param biteEntity id of the bite
@@ -44,5 +53,8 @@ interface BiteDao {
 
     @Query("SELECT * FROM bite")
     fun getBitesList(): List<BiteEntity>
+
+    @Query("SELECT * FROM bite WHERE id = :biteId")
+    fun getBite(biteId: String): LiveData<BiteEntity>
 
 }

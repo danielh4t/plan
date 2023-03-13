@@ -6,16 +6,18 @@ class CalendarUtil {
 
     private val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
 
-    fun currentYear(): String {
-        val year: Int = calendar.get(Calendar.YEAR)
-        return year.toString()
+    fun hour(): Int {
+        val calendar = Calendar.getInstance()
+        return calendar.get(Calendar.HOUR_OF_DAY)
     }
 
-    fun day(): Int {
-        return calendar.get(Calendar.DAY_OF_YEAR)
+    fun minute(): Int {
+        val calendar = Calendar.getInstance()
+        return calendar.get(Calendar.MINUTE)
     }
 
     fun days(): Int {
+        val calendar = Calendar.getInstance()
         calendar.get(Calendar.YEAR)
         return calendar.getActualMaximum(Calendar.DAY_OF_YEAR)
     }
@@ -43,6 +45,27 @@ class CalendarUtil {
     }
 
     fun todayStartAtMillis(): Long {
+        return calendar.timeInMillis
+    }
+
+    fun differenceInDays(timestamp: Long): Long {
+        val differenceCalendar = Calendar.getInstance()
+        differenceCalendar.timeInMillis = timestamp * 1000L
+
+        // Calculate the difference in milliseconds between the two dates
+        val differenceInMillis = calendar.timeInMillis - differenceCalendar.timeInMillis
+
+        // Convert the difference in milliseconds to days
+        return differenceInMillis / (24 * 60 * 60 * 1000)
+    }
+
+    fun millisFromTime(hour: Int, minute: Int): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
         return calendar.timeInMillis
     }
 }
