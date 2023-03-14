@@ -97,7 +97,7 @@ class TimerFragment : Fragment() {
                     viewModel.setTaskTimerFinish(finishAt)
                 }
                 binding.fiftyTwoMinutesButton.id -> {
-                    val finishAt = TimeUtil().plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS_25)
+                    val finishAt = TimeUtil().plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS_52)
                     viewModel.setTaskTimerFinish(finishAt)
                 }
                 binding.customButton.id -> {
@@ -115,8 +115,7 @@ class TimerFragment : Fragment() {
                     picker.show(requireActivity().supportFragmentManager, "timer_tag")
 
                     picker.addOnPositiveButtonClickListener {
-                        val millis = CalendarUtil().timeMillis(picker.hour, picker.minute)
-                        val time = millis / 1000L
+                        val time = TimeUtil().timeSeconds(picker.hour, picker.minute)
                         val finishAt = TimeUtil().plusSecondsEpoch(time)
                         viewModel.setTaskTimerFinish(finishAt)
                     }
