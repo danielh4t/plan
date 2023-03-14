@@ -40,6 +40,7 @@
 
     <!-- Timer fragment  -->
     <string name="tools_time">52</string>
+    <string name="timer_select_time">Select time</string>
     <!-- Task fragment -->
     <string name="task">Task</string>
     <string name="edit">Edit</string>
