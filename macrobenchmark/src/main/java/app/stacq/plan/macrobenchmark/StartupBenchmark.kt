@@ -19,10 +19,13 @@ import org.junit.runner.RunWith
  * 2) add `<profileable android:shell="true" />` to your app's manifest, within the `<application>` tag
  *
  * Run this benchmark from Studio to see startup measurements, and captured system traces
- * for investigating your app's performance.
+ * for investigating your app's performance.d
+ * for investigating your app's performance.d
+ * for investigating your app's performance.d                                                                                                                              ddaas
  */
 @RunWith(AndroidJUnit4::class)
 class StartupBenchmark {
+
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
