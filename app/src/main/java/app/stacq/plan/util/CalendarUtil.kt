@@ -1,6 +1,11 @@
 package app.stacq.plan.util
 
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
+import kotlin.math.min
 
 class CalendarUtil {
 
@@ -67,5 +72,26 @@ class CalendarUtil {
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, minute)
         return calendar.timeInMillis
+    }
+
+    fun timeMillis(hour: Int, minute: Int): Long {
+        val now = LocalDateTime.now()
+        val timerTime = LocalTime.of(hour, minute)
+        val timerDateTime = LocalDateTime.of(now.toLocalDate(), timerTime)
+
+        return if (timerDateTime.isAfter(now)) {
+            // timer time on clock is in future
+            val timerEpochTime =
+                timerDateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+            val nowEpochTime = now.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+            timerEpochTime - nowEpochTime
+        } else {
+            // timer time on clock is past
+            val tomorrowDateTime = timerDateTime.plusDays(1)
+            val timerEpochTime =
+                tomorrowDateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+            val nowEpochTime = now.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+            timerEpochTime - nowEpochTime
+        }
     }
 }
