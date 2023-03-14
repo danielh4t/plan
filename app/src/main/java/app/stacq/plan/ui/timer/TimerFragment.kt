@@ -113,10 +113,9 @@ class TimerFragment : Fragment() {
                     picker.show(requireActivity().supportFragmentManager, "timer_tag")
 
                     picker.addOnPositiveButtonClickListener {
-                        val millis = CalendarUtil().millisFromTime(picker.hour, picker.minute)
-                        val time = TimeUtil().secondsInFuture(millis)
+                        val millis = CalendarUtil().timeMillis(picker.hour, picker.minute)
+                        val time = millis / 1000L
                         viewModel.setTaskTimerFinish(time)
-
                     }
                 }
             }
