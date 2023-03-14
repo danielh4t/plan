@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.domain.Task
-import app.stacq.plan.util.time.TimeUtil
 import kotlinx.coroutines.launch
 
 
@@ -20,8 +19,7 @@ class TimerViewModel(
 
     val time: MutableLiveData<Long> = MutableLiveData()
 
-    fun setTaskTimerFinish(time: Long) {
-        val finishAt = TimeUtil().plusSecondsEpoch(time)
+    fun setTaskTimerFinish(finishAt: Long) {
         val update = task.value?.apply { timerFinishAt = finishAt }
         viewModelScope.launch {
             if (update != null) {

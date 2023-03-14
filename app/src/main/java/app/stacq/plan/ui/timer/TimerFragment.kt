@@ -93,10 +93,12 @@ class TimerFragment : Fragment() {
             // Respond to button selection
             when (checkedId) {
                 binding.twentyFiveMinutesButton.id -> {
-                    viewModel.setTaskTimerFinish(TimerConstants.TIMER_TIME_IN_SECONDS_25)
+                    val finishAt = TimeUtil().plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS_25)
+                    viewModel.setTaskTimerFinish(finishAt)
                 }
                 binding.fiftyTwoMinutesButton.id -> {
-                    viewModel.setTaskTimerFinish(TimerConstants.TIMER_TIME_IN_SECONDS_52)
+                    val finishAt = TimeUtil().plusSecondsEpoch(TimerConstants.TIMER_TIME_IN_SECONDS_25)
+                    viewModel.setTaskTimerFinish(finishAt)
                 }
                 binding.customButton.id -> {
                     val isSystem24Hour = is24HourFormat(context)
@@ -115,7 +117,8 @@ class TimerFragment : Fragment() {
                     picker.addOnPositiveButtonClickListener {
                         val millis = CalendarUtil().timeMillis(picker.hour, picker.minute)
                         val time = millis / 1000L
-                        viewModel.setTaskTimerFinish(time)
+                        val finishAt = TimeUtil().plusSecondsEpoch(time)
+                        viewModel.setTaskTimerFinish(finishAt)
                     }
                 }
             }
