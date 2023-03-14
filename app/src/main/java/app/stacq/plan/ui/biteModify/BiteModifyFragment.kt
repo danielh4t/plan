@@ -74,6 +74,18 @@ class BiteModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.biteModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        binding.biteModifyAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.delete -> {
+                    viewModel.delete()
+                    val action = BiteModifyFragmentDirections.actionNavBiteModifyToNavTask(taskId)
+                    navController.navigate(action)
+                    true
+                }
+                else -> false
+            }
+        }
+
         viewModel.bite.observe(viewLifecycleOwner) { it ->
             it?.let {
                 binding.biteModifyNameEditText.setText(it.name)

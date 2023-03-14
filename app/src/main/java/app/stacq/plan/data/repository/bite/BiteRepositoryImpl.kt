@@ -2,7 +2,6 @@ package app.stacq.plan.data.repository.bite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.bite.BiteLocalDataSource
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSource
@@ -43,7 +42,8 @@ class BiteRepositoryImpl(
             it?.map { biteEntity: BiteEntity -> biteEntity.asBite() }
         }
 
-    override fun getBite(biteId: String): LiveData<Bite> {
-        return biteLocalDataSource.getBite(biteId).map { it.asBite() }
+    override fun getBite(biteId: String): LiveData<Bite> =
+        Transformations.map(biteLocalDataSource.getBite(biteId)) {
+            it?.asBite()
     }
 }

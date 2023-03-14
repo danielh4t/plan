@@ -155,6 +155,7 @@
     <string name="content_edit_goal">Edit Goal</string>
     <string name="content_generate_goal_task">Generate Goal Task</string>
     <string name="content_delete_goal">Delete GOal</string>
+    <string name="content_delete_bite">Delete bite</string>
 
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
