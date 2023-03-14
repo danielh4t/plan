@@ -107,7 +107,7 @@ class TimerFragment : Fragment() {
                             .setTimeFormat(clockFormat)
                             .setHour(CalendarUtil().hour())
                             .setMinute(CalendarUtil().minute())
-                            .setTitleText(getString(R.string.timer_complete))
+                            .setTitleText(getString(R.string.timer_select_time))
                             .setInputMode(INPUT_MODE_CLOCK)
                             .build()
                     picker.show(requireActivity().supportFragmentManager, "timer_tag")
