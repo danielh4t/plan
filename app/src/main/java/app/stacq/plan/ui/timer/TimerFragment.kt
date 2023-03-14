@@ -27,6 +27,9 @@ import app.stacq.plan.util.constants.TimerConstants
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_MILLIS
 import app.stacq.plan.util.constants.TimerConstants.TIMER_TICK_IN_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
+import app.stacq.plan.util.constants.TimerConstants.TIME_MINUTES_TO_HOURS
+import app.stacq.plan.util.constants.TimerConstants.TIME_ONE_HOUR_MINUTES
+import app.stacq.plan.util.constants.TimerConstants.TIME_ONE_MINUTE_MINUTES
 import app.stacq.plan.util.time.TimeUtil
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -164,9 +167,13 @@ class TimerFragment : Fragment() {
             override fun onTick(millisUntilFinished: Long) {
                 // convert to minutes
                 var time = millisUntilFinished / (TIMER_TICK_IN_MILLIS * TIMER_TICK_IN_SECONDS)
-                if (time < 1L) {
+
+                if (time < TIME_ONE_MINUTE_MINUTES) {
                     // convert to seconds below 1 minute
                     time = millisUntilFinished / TIME_MILLIS_TO_SECONDS
+                } else if(time > TIME_ONE_HOUR_MINUTES) {
+                    // convert to hours
+                    time /= TIME_MINUTES_TO_HOURS
                 }
                 viewModel.time.postValue(time)
             }
