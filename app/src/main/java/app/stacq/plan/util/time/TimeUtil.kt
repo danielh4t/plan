@@ -23,7 +23,7 @@ class TimeUtil {
     }
 
     fun plusSecondsEpoch(seconds: Long): Long {
-        return instant.plusMillis(seconds).epochSecond
+        return instant.plusSeconds(seconds).epochSecond
     }
 
     fun timeSeconds(hour: Int, minute: Int): Long {
