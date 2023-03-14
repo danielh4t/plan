@@ -91,6 +91,7 @@
         <action
             android:id="@+id/action_nav_edit_to_nav_task"
             app:destination="@id/nav_task"
+            app:popUpTo="@id/nav_tasks"
             app:popUpToInclusive="false" />
     </fragment>
 
