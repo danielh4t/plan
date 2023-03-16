@@ -12,7 +12,7 @@ import java.time.Instant
 
 class TasksViewModel(
     private val taskRepository: TaskRepository,
-    private val categoryRepository: CategoryRepository
+    categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val tasksCategory: LiveData<List<Task>> = taskRepository.getTasks()
@@ -30,12 +30,6 @@ class TasksViewModel(
     fun delete(task: Task) {
         viewModelScope.launch {
             taskRepository.delete(task)
-        }
-    }
-
-    fun sync() {
-        viewModelScope.launch {
-            categoryRepository.syncCategories()
         }
     }
 }
