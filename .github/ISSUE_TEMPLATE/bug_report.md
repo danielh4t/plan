@@ -20,18 +20,10 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
 **Smartphone (please complete the following information):**
- - Device: [e.g. Pixel]
+ - Device: [e.g.Google Pixel 6a]
  - OS: [e.g. Android 13]
- - Version [e.g. 1.0]
+ - Version: [e.g. 1.0(1)]
 
-**Additional context**
-Add any other context about the problem here.
+**Additional Context and Screenshots**
+If applicable, add screenshots to help explain your problem.
