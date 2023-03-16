@@ -12,7 +12,7 @@ import java.time.Instant
 
 class TasksViewModel(
     private val taskRepository: TaskRepository,
-    private val categoryRepository: CategoryRepository
+    categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val tasksCategory: LiveData<List<Task>> = taskRepository.getTasks()
