@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, _, arguments ->
             bottomNavView.isVisible = arguments?.getBoolean("ShowBottomNav", false) == true
         }
+
+        reportFullyDrawn()
     }
 
     override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
