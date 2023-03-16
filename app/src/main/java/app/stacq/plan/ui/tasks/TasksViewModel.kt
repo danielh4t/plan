@@ -32,10 +32,4 @@ class TasksViewModel(
             taskRepository.delete(task)
         }
     }
-
-    fun sync() {
-        viewModelScope.launch {
-            categoryRepository.syncCategories()
-        }
-    }
 }
