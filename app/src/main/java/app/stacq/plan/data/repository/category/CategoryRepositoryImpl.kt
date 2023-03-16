@@ -44,7 +44,7 @@ class CategoryRepositoryImpl(
             categoryRemoteDataSource.update(categoryDocument)
         }
 
-        categoryRemoteDataSource.getCategories().map {
+        categoryRemoteDataSource.getCategoriesDocuments().map {
             val categoryEntity = it.asCategory().asEntity()
             if(!it.deleted) {
                 categoryLocalDataSource.upsert(categoryEntity)
