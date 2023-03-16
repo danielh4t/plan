@@ -38,20 +38,6 @@ class CategoryRepositoryImpl(
         categoryLocalDataSource.updateEnabled(categoryId)
     }
 
-    override suspend fun syncCategories() {
-        categoryLocalDataSource.getCategoriesEntities().map {
-            val categoryDocument = it.asCategory().asDocument()
-            categoryRemoteDataSource.update(categoryDocument)
-        }
-
-        categoryRemoteDataSource.getCategoriesDocuments().map {
-            val categoryEntity = it.asCategory().asEntity()
-            if(!it.deleted) {
-                categoryLocalDataSource.upsert(categoryEntity)
-            }
-        }
-    }
-
     override fun getEnabledCategories(): LiveData<List<Category>> {
         return categoryLocalDataSource.getEnabledCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }
