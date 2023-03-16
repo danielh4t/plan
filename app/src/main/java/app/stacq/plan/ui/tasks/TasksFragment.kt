@@ -94,8 +94,6 @@ class TasksFragment : Fragment() {
                         transformations(CircleCropTransformation())
                     }
                 }
-                // sync
-                viewModel.sync()
             } else {
                 // signed out
                 binding.tasksAccountImageView.setImageResource(R.drawable.ic_account_circle)
