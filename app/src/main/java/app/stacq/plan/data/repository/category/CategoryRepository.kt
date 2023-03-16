@@ -12,8 +12,6 @@ interface CategoryRepository {
 
     suspend fun updateEnabled(categoryId: String)
 
-    suspend fun syncCategories()
-
     fun getEnabledCategories(): LiveData<List<Category>>
 
     fun getCategories(): LiveData<List<Category>>
