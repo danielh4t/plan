@@ -105,7 +105,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
     androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
-    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha10'
+    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha11'
     androidTestImplementation 'androidx.fragment:fragment-testing:1.6.0-alpha04'
     debugImplementation 'androidx.fragment:fragment-testing-manifest:1.6.0-alpha04'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
