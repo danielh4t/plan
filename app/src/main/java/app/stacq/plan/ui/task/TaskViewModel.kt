@@ -33,7 +33,7 @@ class TaskViewModel(
     private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
     fun logPermission(isGranted: Boolean) {
-        firebaseAnalytics.logEvent(AnalyticsConstants.Event.APP_PERMISSION) {
+        firebaseAnalytics.logEvent(AnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
             param("notifications", if (isGranted) "true" else "false")
         }
     }
