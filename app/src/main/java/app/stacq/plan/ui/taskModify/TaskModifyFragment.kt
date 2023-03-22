@@ -137,8 +137,8 @@ class TaskModifyFragment : Fragment() {
         val timePicker =
             MaterialTimePicker.Builder()
                 .setTimeFormat(clockFormat)
-                .setHour(12)
-                .setMinute(0)
+                .setHour(CalendarUtil().hour())
+                .setMinute(CalendarUtil().minute())
                 .setTitleText(getString(R.string.select_completed_time))
                 .build()
 
