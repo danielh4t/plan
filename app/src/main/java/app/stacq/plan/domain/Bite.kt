@@ -14,8 +14,8 @@ data class Bite(
     var name: String,
     var taskId: String,
     var categoryId: String,
-    var completed: Boolean,
-    var completedAt: Long,
+    var completed: Boolean = false,
+    var completedAt: Long = 0,
 ) : Parcelable
 
 
