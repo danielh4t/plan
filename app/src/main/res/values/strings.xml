@@ -64,6 +64,7 @@
     <string name="task_deleted">Task deleted</string>
     <string name="task_creation_icon">task creation icon</string>
     <string name="content_create_task">Create Task</string>
+    <string name="task_cloned">Task cloned and bites moved</string>
 
     <!-- Create Bite Fragment -->
 
