@@ -36,7 +36,6 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class TaskModifyFragment : Fragment() {
@@ -126,7 +125,7 @@ class TaskModifyFragment : Fragment() {
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText(getString(R.string.select_completed_date))
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds() - TimeUnit.DAYS.toMillis(1))
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build()
 
@@ -142,26 +141,25 @@ class TaskModifyFragment : Fragment() {
                 .setTitleText(getString(R.string.select_completed_time))
                 .build()
 
-
-        datePicker.addOnPositiveButtonClickListener {
-            it?.let {
-                viewModel.calendar.timeInMillis = it
-            }
-        }
-
         timePicker.addOnPositiveButtonClickListener {
             viewModel.calendar.set(Calendar.HOUR_OF_DAY, timePicker.hour)
             viewModel.calendar.set(Calendar.MINUTE, timePicker.minute)
 
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
             val dateTimeString = sdf.format(viewModel.calendar.time)
-
             binding.taskModifyDateTimeEditText.setText(dateTimeString)
         }
 
+        datePicker.addOnPositiveButtonClickListener {
+            it?.let {
+                viewModel.calendar.timeInMillis = it
+                timePicker.show(requireActivity().supportFragmentManager, "time_picker")
+            }
+        }
+
+
         binding.taskModifyDateTimeEditText.setOnClickListener {
             datePicker.show(requireActivity().supportFragmentManager, "date_picker")
-            timePicker.show(requireActivity().supportFragmentManager, "time_picker")
         }
 
         binding.taskModifyFab.setOnClickListener { clickedView ->
