@@ -1,6 +1,7 @@
 package app.stacq.plan.ui.taskModify
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,9 +130,13 @@ class TaskModifyFragment : Fragment() {
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build()
 
+        val isSystem24Hour = DateFormat.is24HourFormat(context)
+        val clockFormat =
+            if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+
         val timePicker =
             MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setTimeFormat(clockFormat)
                 .setHour(12)
                 .setMinute(0)
                 .setTitleText(getString(R.string.select_completed_time))
