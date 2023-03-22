@@ -91,8 +91,10 @@ class TaskFragment : Fragment() {
                 }
                 R.id.clone -> {
                     viewModel.clone()
-                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-                    navController.navigate(action)
+                    Snackbar.make(view, R.string.task_cloned, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.timerFab)
+                        .show()
+
                     true
                 }
                 R.id.delete -> {
@@ -109,7 +111,7 @@ class TaskFragment : Fragment() {
                     }
 
                     Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.createBiteFab)
+                        .setAnchorView(binding.timerFab)
                         .setAction(R.string.undo) {
                             viewModel.undoDelete()
                         }
