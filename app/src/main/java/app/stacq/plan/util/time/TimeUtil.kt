@@ -48,4 +48,8 @@ class TimeUtil {
 
         return millis / TimerConstants.TIME_MILLIS_TO_SECONDS
     }
+
+    fun nowInSeconds(): Long {
+        return instant.epochSecond
+    }
 }
