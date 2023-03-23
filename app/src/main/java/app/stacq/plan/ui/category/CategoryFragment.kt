@@ -75,7 +75,7 @@ class CategoryFragment : Fragment() {
                 }
                 R.id.delete -> {
                     viewModel.delete()
-                    Snackbar.make(binding.root, R.string.goal_deleted, Snackbar.LENGTH_LONG)
+                    Snackbar.make(binding.root, R.string.category_deleted, Snackbar.LENGTH_LONG)
                         .setAction(R.string.undo) {
                             viewModel.undoDelete()
                         }
