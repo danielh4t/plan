@@ -160,6 +160,7 @@
     <string name="content_delete_bite">Delete bite</string>
     <string name="content_delete_category">Delete Category</string>
     <string name="content_edit_category">Edit Category</string>
+    <string name="category_deleted">Category Deleted</string>
 
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
