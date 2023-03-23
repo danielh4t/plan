@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:menu="@menu/goal_app_bar_menu"
+                app:menu="@menu/category_app_bar_menu"
                 app:title="@{category.name}"
                 tools:title="@string/category">
 
