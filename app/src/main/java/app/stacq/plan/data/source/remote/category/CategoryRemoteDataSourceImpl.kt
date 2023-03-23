@@ -62,9 +62,8 @@ class CategoryRemoteDataSourceImpl(
 
         if (uid == null || categoryId == null) return@withContext
 
-        val fields = mapOf(
-            "deleted" to categoryDocument.deleted
-        )
+        // flips deleted
+        val fields = mapOf("deleted" to !categoryDocument.deleted)
 
         firestore.collection(uid)
             .document(categoryId)

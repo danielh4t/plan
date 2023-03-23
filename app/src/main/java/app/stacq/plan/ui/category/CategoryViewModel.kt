@@ -13,24 +13,12 @@ class CategoryViewModel(
     categoryId: String
 ) : ViewModel() {
 
-
     val category: LiveData<Category> = categoryRepository.getCategory(categoryId)
 
     fun delete() {
-        val category: Category? = category.value
-        category?.let {
+        category.value?.let {
             viewModelScope.launch {
-                category.deleted = !category.deleted
                 categoryRepository.delete(it)
-            }
-        }
-    }
-
-    fun undoDelete() {
-        val category: Category? = category.value
-        category?.let {
-            viewModelScope.launch {
-                categoryRepository.create(it)
             }
         }
     }

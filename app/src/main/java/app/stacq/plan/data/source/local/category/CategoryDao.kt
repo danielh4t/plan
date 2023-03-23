@@ -38,12 +38,12 @@ interface CategoryDao {
     suspend fun updateEnabledById(categoryId: String)
 
     /**
-     * Delete a category.
+     * Soft delete a category or reverts it.
      *
-     * @param categoryEntity to be delete
+     * @param categoryId to be delete
      */
-    @Delete
-    suspend fun delete(categoryEntity: CategoryEntity)
+    @Query("UPDATE category SET deleted = NOT deleted WHERE id = :categoryId")
+    suspend fun delete(categoryId: String)
 
     /**
      * Count categories.

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,6 @@ import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentCategoryBinding
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -68,17 +68,15 @@ class CategoryFragment : Fragment() {
 
         binding.categoryAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.edit -> {
-                    val action = CategoryFragmentDirections.actionNavCategoryToNavCategoryModify(categoryId)
+                R.id.edit_category -> {
+                    val action =
+                        CategoryFragmentDirections.actionNavCategoryToNavCategoryModify(categoryId)
                     navController.navigate(action)
                     true
                 }
-                R.id.delete -> {
+                R.id.delete_category -> {
                     viewModel.delete()
-                    Snackbar.make(binding.root, R.string.category_deleted, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo) {
-                            viewModel.undoDelete()
-                        }
+                    Toast.makeText(requireContext(), R.string.category_deleted, Toast.LENGTH_SHORT)
                         .show()
                     val action = CategoryFragmentDirections.actionNavCategoryToNavCategories()
                     navController.navigate(action)
