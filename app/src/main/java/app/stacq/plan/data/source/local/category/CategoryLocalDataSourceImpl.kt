@@ -20,7 +20,7 @@ class CategoryLocalDataSourceImpl (
     }
 
     override suspend fun delete(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
-        categoryDao.delete(categoryEntity)
+        categoryDao.delete(categoryEntity.id)
     }
 
     override suspend fun upsert(categoryEntity: CategoryEntity) = withContext(ioDispatcher) {
