@@ -161,6 +161,7 @@
     <string name="content_delete_category">Delete Category</string>
     <string name="content_edit_category">Edit Category</string>
     <string name="category_deleted">Category Deleted</string>
+    <string name="content_days_image">Sun icon</string>
 
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
