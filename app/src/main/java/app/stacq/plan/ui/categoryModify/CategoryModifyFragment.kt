@@ -86,7 +86,7 @@ class CategoryModifyFragment : Fragment() {
             val id = if (categoryId == null) {
                 viewModel.create(name, color)
             } else {
-                viewModel.update(name, color)
+                viewModel.update(name)
                 categoryId
             }
 
