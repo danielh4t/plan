@@ -33,6 +33,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
+        <ImageView
+            android:id="@+id/goal_modify_name_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_name_image"
+            android:src="@drawable/ic_brush"
+            app:layout_constraintTop_toTopOf="@+id/goal_modify_name_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_modify_name_layout"
+            app:layout_constraintEnd_toStartOf="@+id/goal_modify_name_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="?attr/colorPrimary" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/goal_modify_name_layout"
             android:layout_width="0dp"
@@ -43,8 +57,10 @@
             android:hint="@string/name"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_modify_app_bar_layout">
+            app:layout_constraintStart_toEndOf="@+id/goal_modify_name_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_modify_app_bar_layout"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/goal_modify_name_edit_text"
@@ -84,6 +100,19 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <ImageView
+            android:id="@+id/goal_modify_days_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_days_image"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintTop_toTopOf="@+id/goal_modify_days_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_modify_days_layout"
+            app:layout_constraintEnd_toStartOf="@+id/goal_modify_days_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="?attr/colorPrimary" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/goal_modify_days_layout"
             android:layout_width="0dp"
@@ -94,8 +123,10 @@
             android:hint="@string/days"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_modify_category_chip_group">
+            app:layout_constraintStart_toEndOf="@+id/goal_modify_days_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_modify_category_chip_group"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/goal_modify_days_edit_text"
