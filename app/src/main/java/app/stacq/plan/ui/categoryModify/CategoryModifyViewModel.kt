@@ -31,11 +31,10 @@ class CategoryModifyViewModel(
         return categoryEntity.id
     }
 
-    fun update(name: String, color: String) {
+    fun update(name: String) {
         viewModelScope.launch {
             category.value?.let {
                 it.name = name
-                it.color = color
                 categoryRepository.update(it)
             }
         }
