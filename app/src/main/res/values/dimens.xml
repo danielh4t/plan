@@ -5,4 +5,6 @@
     <dimen name="list_margin_compact">8dp</dimen>
     <dimen name="goal_image_bottom_margin">8dp</dimen>
     <dimen name="goal_image">24dp</dimen>
+    <dimen name="input_layout_min">300dp</dimen>
+    <dimen name="input_layout_max">480dp</dimen>
 </resources>
