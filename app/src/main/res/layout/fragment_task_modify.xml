@@ -56,7 +56,9 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_modify_name_image"
-            app:layout_constraintTop_toBottomOf="@id/task_modify_app_bar_layout">
+            app:layout_constraintTop_toBottomOf="@id/task_modify_app_bar_layout"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/task_name_edit_text"
@@ -119,7 +121,9 @@
             android:hint="@string/completion"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_modify_date_time_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_category_chip_group">
+            app:layout_constraintTop_toBottomOf="@+id/task_category_chip_group"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/task_modify_date_time_edit_text"
