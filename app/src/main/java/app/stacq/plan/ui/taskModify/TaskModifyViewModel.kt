@@ -10,6 +10,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTask
+import app.stacq.plan.util.CalendarUtil
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -27,7 +28,7 @@ class TaskModifyViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
-    val calendar: Calendar = Calendar.getInstance()
+    val calendar = CalendarUtil()
 
     fun create(name: String, categoryId: String): String {
         val taskEntity = TaskEntity(name = name, categoryId = categoryId, goalId = null)
