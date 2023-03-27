@@ -4,55 +4,59 @@ import java.util.*
 
 class CalendarUtil {
 
-    private val calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+    private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+    private val localCalendar = Calendar.getInstance()
 
     fun hour(): Int {
-        val calendar = Calendar.getInstance()
         return calendar.get(Calendar.HOUR_OF_DAY)
     }
 
+    fun setLocalHour(hour: Int) {
+        localCalendar.set(Calendar.HOUR_OF_DAY, hour)
+    }
+
+    fun localHour(): Int {
+        return localCalendar.get(Calendar.HOUR_OF_DAY)
+    }
+
     fun minute(): Int {
-        val calendar = Calendar.getInstance()
         return calendar.get(Calendar.MINUTE)
     }
 
-    fun days(): Int {
-        val calendar = Calendar.getInstance()
-        calendar.get(Calendar.YEAR)
-        return calendar.getActualMaximum(Calendar.DAY_OF_YEAR)
+    fun setLocalMinute(minute: Int) {
+        localCalendar.set(Calendar.MINUTE, minute)
     }
 
-    fun yearStartAt(): Long {
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-        calendar.set(Calendar.MONTH, 0)
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.timeInMillis / 1000L
+    fun localMinute(): Int {
+        return localCalendar.get(Calendar.MINUTE)
     }
 
-    fun yearStartAtMillis(): Long {
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-        calendar.set(Calendar.MONTH, 0)
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.timeInMillis
+    fun time(): Date {
+        return calendar.time
     }
 
-    fun todayStartAtMillis(): Long {
-        return calendar.timeInMillis
+    fun localTime(): Date {
+        return localCalendar.time
     }
 
-    fun differenceInDays(timestamp: Long): Long {
-        val differenceCalendar = Calendar.getInstance()
-        differenceCalendar.timeInMillis = timestamp * 1000L
+    fun setLocalTime(millis: Long) {
+        localCalendar.timeInMillis = millis
+    }
 
-        // Calculate the difference in milliseconds between the two dates
+    fun getLocalTimeUTC(): Long {
+        localCalendar.timeZone = TimeZone.getTimeZone("UTC")
+        return localCalendar.timeInMillis / 1000L
+    }
+
+    fun getTodayTimeInMillis(): Long {
+        return Calendar.getInstance().timeInMillis
+    }
+
+    fun differenceInDays(epochTimeInSeconds: Long): Long {
+        val differenceCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        differenceCalendar.timeInMillis = epochTimeInSeconds * 1000L
+
+        // Calculate the difference in milliseconds between the current time and past epoch time
         val differenceInMillis = calendar.timeInMillis - differenceCalendar.timeInMillis
 
         // Convert the difference in milliseconds to days

@@ -110,12 +110,12 @@ class TimerFragment : Fragment() {
                     val picker =
                         MaterialTimePicker.Builder()
                             .setTimeFormat(clockFormat)
-                            .setHour(CalendarUtil().hour())
-                            .setMinute(CalendarUtil().minute())
+                            .setHour(CalendarUtil().localHour())
+                            .setMinute(CalendarUtil().localMinute())
                             .setTitleText(getString(R.string.timer_select_time))
                             .setInputMode(INPUT_MODE_CLOCK)
                             .build()
-                    picker.show(requireActivity().supportFragmentManager, "timer_tag")
+                    picker.show(requireActivity().supportFragmentManager, "timer_picker")
 
                     picker.addOnPositiveButtonClickListener {
                         val time = TimeUtil().timeSeconds(picker.hour, picker.minute)

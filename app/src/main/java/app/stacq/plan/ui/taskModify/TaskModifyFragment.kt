@@ -32,9 +32,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -118,8 +115,7 @@ class TaskModifyFragment : Fragment() {
 
         val constraintsBuilder =
             CalendarConstraints.Builder()
-                .setStart(CalendarUtil().yearStartAtMillis())
-                .setEnd(CalendarUtil().todayStartAtMillis())
+                .setEnd(CalendarUtil().getTodayTimeInMillis())
                 .setValidator(DateValidatorPointBackward.now())
 
         val datePicker =
@@ -136,30 +132,35 @@ class TaskModifyFragment : Fragment() {
         val timePicker =
             MaterialTimePicker.Builder()
                 .setTimeFormat(clockFormat)
-                .setHour(CalendarUtil().hour())
-                .setMinute(CalendarUtil().minute())
+                .setHour(CalendarUtil().localHour())
+                .setMinute(CalendarUtil().localMinute())
                 .setTitleText(getString(R.string.select_completed_time))
                 .build()
 
         timePicker.addOnPositiveButtonClickListener {
-            viewModel.calendar.set(Calendar.HOUR_OF_DAY, timePicker.hour)
-            viewModel.calendar.set(Calendar.MINUTE, timePicker.minute)
+
+            viewModel.calendar.setLocalHour(timePicker.hour)
+            viewModel.calendar.setLocalMinute(timePicker.minute)
 
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-            val dateTimeString = sdf.format(viewModel.calendar.time)
+            val time = viewModel.calendar.localTime()
+            val dateTimeString = sdf.format(time)
             binding.taskModifyDateTimeEditText.setText(dateTimeString)
         }
 
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
-                viewModel.calendar.timeInMillis = it
-                timePicker.show(requireActivity().supportFragmentManager, "time_picker")
+                viewModel.calendar.setLocalTime(it)
+                if (!timePicker.isAdded) {
+                    timePicker.show(requireActivity().supportFragmentManager, "time_picker")
+                }
             }
         }
 
-
         binding.taskModifyDateTimeEditText.setOnClickListener {
-            datePicker.show(requireActivity().supportFragmentManager, "date_picker")
+            if (!datePicker.isAdded) {
+                datePicker.show(requireActivity().supportFragmentManager, "date_picker")
+            }
         }
 
         binding.taskModifyFab.setOnClickListener { clickedView ->
@@ -184,6 +185,7 @@ class TaskModifyFragment : Fragment() {
                     .show()
                 return@setOnClickListener
             }
+
             val checkedChip = binding.taskCategoryChipGroup.findViewById<Chip>(checkedId)
             // get category id from chip tag
             val categoryId = checkedChip.tag as String
@@ -191,14 +193,7 @@ class TaskModifyFragment : Fragment() {
             var completedAt: Long? = null
             val dateTimeText = binding.taskModifyDateTimeEditText.text.toString()
             if (dateTimeText.isNotEmpty()) {
-                val dateTime = LocalDateTime.parse(
-                    dateTimeText,
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                )
-                // Convert the LocalDateTime to a ZonedDateTime in UTC
-                val dateTimeUtc = dateTime.atZone(ZoneOffset.UTC)
-                // Get the Unix time in seconds
-                completedAt = dateTimeUtc.toEpochSecond()
+                completedAt = viewModel.calendar.getLocalTimeUTC()
             }
 
             val id = if (taskId == null) {
