@@ -5,8 +5,6 @@ import androidx.room.*
 
 @Dao
 interface TaskDao {
-
-
     /**
      * Insert a task.
      * If the task already exists, ignore it.
@@ -16,7 +14,6 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(taskEntity: TaskEntity)
 
-
     /**
      * Select all tasks from the task.
      *
@@ -25,18 +22,6 @@ interface TaskDao {
      */
     @Query("SELECT * FROM task WHERE id = :taskId")
     suspend fun read(taskId: String): TaskEntity?
-
-
-    /**
-     * When updating a row with a value already set in a column,
-     * replaces the old value with the new one.
-     *
-     * @param taskId task id
-     * @param name new task name
-     * @param categoryId new task category id
-     */
-    @Query("UPDATE task SET name = :name, category_id = :categoryId WHERE id = :taskId")
-    suspend fun updateNameAndCategoryById(taskId: String, name: String, categoryId: Int)
 
     /**
      * Update a task
@@ -88,10 +73,8 @@ interface TaskDao {
     @Delete
     suspend fun delete(taskEntity: TaskEntity)
 
-
     @Query("SELECT * FROM task")
     fun getTasksList(): List<TaskEntity>
-
 
     @Transaction
     @Query("SELECT * FROM task ORDER BY priority DESC")

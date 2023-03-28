@@ -59,9 +59,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query(
-        "SELECT * FROM goal"
-    )
+    @Query("SELECT * FROM goal")
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**
