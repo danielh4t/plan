@@ -12,6 +12,8 @@ interface TaskLocalDataSource {
 
     suspend fun delete(taskEntity: TaskEntity)
 
+    suspend fun archive(taskId: String)
+
     suspend fun updateCompletion(taskEntity: TaskEntity)
 
     suspend fun updateTimerFinish(taskEntity: TaskEntity)

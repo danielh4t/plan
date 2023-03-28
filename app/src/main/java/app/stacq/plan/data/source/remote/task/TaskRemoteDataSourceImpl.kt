@@ -33,6 +33,7 @@ TaskRemoteDataSourceImpl(
             "timerAlarm" to taskDocument.timerAlarm,
             "priority" to taskDocument.priority,
             "goalId" to taskDocument.goalId,
+            "archived" to taskDocument.archived,
         )
 
         firestore.collection(uid)
@@ -60,6 +61,7 @@ TaskRemoteDataSourceImpl(
             "timerAlarm" to taskDocument.timerAlarm,
             "priority" to taskDocument.priority,
             "goalId" to taskDocument.goalId,
+            "archived" to taskDocument.archived,
         )
 
         firestore.collection(uid)
@@ -96,6 +98,7 @@ TaskRemoteDataSourceImpl(
                 "timerAlarm" to taskDocument.timerAlarm,
                 "priority" to taskDocument.priority,
                 "goalId" to taskDocument.goalId,
+                "archived" to taskDocument.archived,
             )
 
             firestore.collection(uid)

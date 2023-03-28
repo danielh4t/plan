@@ -5,8 +5,6 @@ import androidx.room.*
 
 @Dao
 interface TaskDao {
-
-
     /**
      * Insert a task.
      * If the task already exists, ignore it.
@@ -15,7 +13,6 @@ interface TaskDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(taskEntity: TaskEntity)
-
 
     /**
      * Select all tasks from the task.
@@ -26,18 +23,6 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :taskId")
     suspend fun read(taskId: String): TaskEntity?
 
-
-    /**
-     * When updating a row with a value already set in a column,
-     * replaces the old value with the new one.
-     *
-     * @param taskId task id
-     * @param name new task name
-     * @param categoryId new task category id
-     */
-    @Query("UPDATE task SET name = :name, category_id = :categoryId WHERE id = :taskId")
-    suspend fun updateNameAndCategoryById(taskId: String, name: String, categoryId: Int)
-
     /**
      * Update a task
      *
@@ -45,6 +30,22 @@ interface TaskDao {
      */
     @Update
     suspend fun update(taskEntity: TaskEntity)
+
+    /**
+     * Delete a task
+     *
+     * @param taskEntity to be delete
+     */
+    @Delete
+    suspend fun delete(taskEntity: TaskEntity)
+
+    /**
+     * Update the archive of a task
+     *
+     * @param taskId of the task
+     */
+    @Query("UPDATE task SET archived = true WHERE id = :taskId")
+    suspend fun archive(taskId: String)
 
     /**
      * Update the completed and completed_at of a task
@@ -80,21 +81,11 @@ interface TaskDao {
     @Query("UPDATE task SET priority = :priority WHERE id = :taskId")
     suspend fun updatePriority(taskId: String, priority: Int)
 
-    /**
-     * Delete a task
-     *
-     * @param taskEntity to be delete
-     */
-    @Delete
-    suspend fun delete(taskEntity: TaskEntity)
-
-
     @Query("SELECT * FROM task")
     fun getTasksList(): List<TaskEntity>
 
-
     @Transaction
-    @Query("SELECT * FROM task ORDER BY priority DESC")
+    @Query("SELECT * FROM task WHERE NOT archived ORDER BY priority DESC")
     fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 
     @Transaction

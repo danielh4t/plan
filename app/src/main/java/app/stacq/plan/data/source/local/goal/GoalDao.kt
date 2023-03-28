@@ -40,15 +40,6 @@ interface GoalDao {
     @Delete
     suspend fun delete(goalEntity: GoalEntity)
 
-//    @Query(
-//        "SELECT count(*) " +
-//                "FROM goal AS g " +
-//                "JOIN task AS t ON goal.id = task.goal_id " +
-//                "WHERE g.id = :goalId " +
-//                "AND t.completed " +
-//                "GROUP BY strftime('%j',DATE(t.completed_at, 'unixepoch'))"
-//    )
-
     @Query(
             "WITH cte AS ( " +
                 "SELECT  count(t.completed) as completed_days " +
@@ -68,9 +59,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query(
-        "SELECT * FROM goal"
-    )
+    @Query("SELECT * FROM goal")
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**

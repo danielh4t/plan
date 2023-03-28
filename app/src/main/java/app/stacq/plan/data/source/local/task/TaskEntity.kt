@@ -40,4 +40,6 @@ data class TaskEntity(
 
     @ColumnInfo(name = "goal_id")
     var goalId: String?,
+
+    var archived: Boolean = false,
 )
