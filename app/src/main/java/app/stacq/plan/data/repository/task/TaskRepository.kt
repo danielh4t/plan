@@ -12,6 +12,8 @@ interface TaskRepository {
 
     suspend fun delete(task: Task)
 
+    suspend fun archive(taskId: String)
+
     suspend fun updateCategory(task: Task, previousCategoryId: String)
 
     suspend fun updateCompletion(task: Task)
