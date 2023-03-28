@@ -64,13 +64,17 @@ class TaskViewModel(
         }
     }
 
-
-        fun delete() {
-            val task: Task? = task.value
-            val bites: List<Bite>? = bites.value
-            task?.let {
+    fun delete() {
+        val task: Task? = task.value
+        val bites: List<Bite>? = bites.value
+        task?.let {
+            if (task.goalId != null) {
                 viewModelScope.launch {
-                    taskRepository.delete(it)
+                    taskRepository.archive(task.id)
+                }
+            } else {
+                viewModelScope.launch {
+                    taskRepository.delete(task)
                     bites?.let {
                         it.forEach { bite ->
                             bitesRepository.delete(bite)
@@ -79,52 +83,53 @@ class TaskViewModel(
                 }
             }
         }
+    }
 
-        fun undoDelete() {
-            val task: Task? = task.value
-            val bites: List<Bite>? = bites.value
-            task?.let {
-                viewModelScope.launch {
-                    taskRepository.create(it)
-                    bites?.let {
-                        it.forEach { bite ->
-                            bitesRepository.create(bite)
-                        }
+    fun undoDelete() {
+        val task: Task? = task.value
+        val bites: List<Bite>? = bites.value
+        task?.let {
+            viewModelScope.launch {
+                taskRepository.create(it)
+                bites?.let {
+                    it.forEach { bite ->
+                        bitesRepository.create(bite)
                     }
                 }
             }
         }
+    }
 
-        fun updatePriority(priority: Float) {
-            val task: Task? = task.value
-            task?.let {
-                it.priority = priority.toInt()
-                viewModelScope.launch {
-                    taskRepository.updatePriority(it)
-                }
-            }
-        }
-
-        fun completeBite(bite: Bite) {
-            bite.completed = !bite.completed
-            bite.completedAt = TimeUtil().nowInSeconds()
+    fun updatePriority(priority: Float) {
+        val task: Task? = task.value
+        task?.let {
+            it.priority = priority.toInt()
             viewModelScope.launch {
-                bitesRepository.update(bite)
+                taskRepository.updatePriority(it)
             }
-        }
-
-        fun deleteBite(bite: Bite) {
-            viewModelScope.launch {
-                bitesRepository.delete(bite)
-            }
-        }
-
-        fun hasAlarm(): Boolean {
-            val task: Task? = task.value
-            task?.let {
-                if (it.timerAlarm && it.timerFinishAt > TimeUtil().nowInSeconds())
-                    return true
-            }
-            return false
         }
     }
+
+    fun completeBite(bite: Bite) {
+        bite.completed = !bite.completed
+        bite.completedAt = TimeUtil().nowInSeconds()
+        viewModelScope.launch {
+            bitesRepository.update(bite)
+        }
+    }
+
+    fun deleteBite(bite: Bite) {
+        viewModelScope.launch {
+            bitesRepository.delete(bite)
+        }
+    }
+
+    fun hasAlarm(): Boolean {
+        val task: Task? = task.value
+        task?.let {
+            if (it.timerAlarm && it.timerFinishAt > TimeUtil().nowInSeconds())
+                return true
+        }
+        return false
+    }
+}

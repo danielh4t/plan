@@ -32,6 +32,22 @@ interface TaskDao {
     suspend fun update(taskEntity: TaskEntity)
 
     /**
+     * Delete a task
+     *
+     * @param taskEntity to be delete
+     */
+    @Delete
+    suspend fun delete(taskEntity: TaskEntity)
+
+    /**
+     * Update the archive of a task
+     *
+     * @param taskId of the task
+     */
+    @Query("UPDATE task SET archived = true WHERE id = :taskId")
+    suspend fun archive(taskId: String)
+
+    /**
      * Update the completed and completed_at of a task
      *
      * @param taskId of the task
@@ -65,19 +81,11 @@ interface TaskDao {
     @Query("UPDATE task SET priority = :priority WHERE id = :taskId")
     suspend fun updatePriority(taskId: String, priority: Int)
 
-    /**
-     * Delete a task
-     *
-     * @param taskEntity to be delete
-     */
-    @Delete
-    suspend fun delete(taskEntity: TaskEntity)
-
     @Query("SELECT * FROM task")
     fun getTasksList(): List<TaskEntity>
 
     @Transaction
-    @Query("SELECT * FROM task ORDER BY priority DESC")
+    @Query("SELECT * FROM task WHERE NOT archived ORDER BY priority DESC")
     fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 
     @Transaction

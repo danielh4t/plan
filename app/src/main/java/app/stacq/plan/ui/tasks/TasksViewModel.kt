@@ -26,10 +26,4 @@ class TasksViewModel(
             taskRepository.updateCompletion(task)
         }
     }
-
-    fun delete(task: Task) {
-        viewModelScope.launch {
-            taskRepository.delete(task)
-        }
-    }
 }
