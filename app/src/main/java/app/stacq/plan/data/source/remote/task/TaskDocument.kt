@@ -14,4 +14,5 @@ data class TaskDocument(
     var timerFinishAt: Long? = null,
     var priority: Int? = null,
     var goalId: String? = null,
+    var archived: Boolean? = null,
 )
