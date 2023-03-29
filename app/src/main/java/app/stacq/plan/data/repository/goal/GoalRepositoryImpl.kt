@@ -1,7 +1,7 @@
 package app.stacq.plan.data.repository.goal
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSource
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSource
 import app.stacq.plan.domain.Goal
@@ -48,17 +48,17 @@ class GoalRepositoryImpl(
     }
 
     override fun getGoals(): LiveData<List<Goal>> =
-        Transformations.map(goalLocalDataSource.getGoals()) {
-            it?.map { goalEntity -> goalEntity.asGoal() }
+        goalLocalDataSource.getGoals().map {
+            it.map { goalEntity -> goalEntity.asGoal() }
         }
 
     override fun getGoal(goalId: String): LiveData<Goal> =
-        Transformations.map(goalLocalDataSource.getGoal(goalId)) {
-            it?.asGoal()
+        goalLocalDataSource.getGoal(goalId).map {
+            it.asGoal()
         }
 
     override fun getActiveGoals(): LiveData<List<Goal>> =
-        Transformations.map(goalLocalDataSource.getActiveGoals()) {
-            it?.map { goalEntity -> goalEntity.asGoal() }
+        goalLocalDataSource.getActiveGoals().map {
+            it.map { goalEntity -> goalEntity.asGoal() }
         }
 }

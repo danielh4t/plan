@@ -1,7 +1,7 @@
 package app.stacq.plan.data.repository.task
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import app.stacq.plan.data.source.local.task.TaskLocalDataSource
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSource
 import app.stacq.plan.domain.Task
@@ -66,12 +66,12 @@ class TaskRepositoryImpl(
     }
 
     override fun getTasks(): LiveData<List<Task>> =
-        Transformations.map(taskLocalDataSource.getTasks()) {
-            it?.map { it1 -> it1.asTask() }
+        taskLocalDataSource.getTasks().map {
+            it.map { it1 -> it1.asTask() }
         }
 
     override fun getTask(taskId: String): LiveData<Task> =
-        Transformations.map(taskLocalDataSource.getTask(taskId)) {
-            it?.asTask()
+        taskLocalDataSource.getTask(taskId).map {
+            it.asTask()
         }
 }
