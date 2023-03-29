@@ -38,11 +38,11 @@ interface CategoryDao {
     suspend fun updateEnabledById(categoryId: String)
 
     /**
-     * Soft delete a category or reverts it.
+     * Soft delete a category and disable.
      *
      * @param categoryId to be delete
      */
-    @Query("UPDATE category SET deleted = NOT deleted WHERE id = :categoryId")
+    @Query("UPDATE category SET deleted = 1, enabled = 0 WHERE id = :categoryId")
     suspend fun delete(categoryId: String)
 
     /**
