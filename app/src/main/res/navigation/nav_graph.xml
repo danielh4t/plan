@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_tasks_to_nav_task_modify"
             app:destination="@id/nav_task_modify" />
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_categories"
+            app:destination="@id/nav_categories" />
     </fragment>
 
     <fragment
