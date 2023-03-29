@@ -148,8 +148,7 @@ class TasksFragment : Fragment() {
                 Snackbar.make(it, R.string.no_categories, Snackbar.LENGTH_LONG)
                     .setAnchorView(it)
                     .setAction(R.string.create) {
-                        val action = TasksFragmentDirections.actionNavTasksToNavCategories()
-                        navController.navigate(action)
+                        navController.navigate(R.id.nav_categories)
                     }
                     .show()
             }
