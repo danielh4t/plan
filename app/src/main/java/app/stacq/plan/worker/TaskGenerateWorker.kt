@@ -15,6 +15,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
+const val TASK_GENERATE_NAME = "task_generate"
+const val TASK_GENERATE_TAG = "task_generator"
+
 class TaskGenerateWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 

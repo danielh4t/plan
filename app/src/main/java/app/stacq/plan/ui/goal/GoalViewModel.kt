@@ -4,16 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.goal.GoalRepository
-import app.stacq.plan.data.repository.task.TaskRepository
-import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.domain.Goal
-import app.stacq.plan.domain.asTask
 import kotlinx.coroutines.launch
 
 
 class GoalViewModel(
     private val goalRepository: GoalRepository,
-    private val taskRepository: TaskRepository,
     goalId: String
 ) : ViewModel() {
 
@@ -47,16 +43,6 @@ class GoalViewModel(
                     it.generate = !it.generate
                     goalRepository.update(it)
                 }
-            }
-        }
-    }
-
-    fun generate() {
-        val goal: Goal? = goal.value
-        goal?.let {
-            val task = TaskEntity(name=it.name, categoryId = it.categoryId, goalId = it.id)
-            viewModelScope.launch {
-                taskRepository.create(task.asTask())
             }
         }
     }
