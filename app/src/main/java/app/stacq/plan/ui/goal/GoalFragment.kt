@@ -12,6 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.goal.GoalRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
@@ -21,11 +25,15 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
+import app.stacq.plan.worker.TASK_GENERATE_NAME
+import app.stacq.plan.worker.TASK_GENERATE_TAG
+import app.stacq.plan.worker.TaskGenerateWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.concurrent.TimeUnit
 
 
 class GoalFragment : Fragment() {
@@ -59,11 +67,7 @@ class GoalFragment : Fragment() {
         val goalRemoteDataSource = GoalRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val goalRepository = GoalRepositoryImpl(goalLocalDataSource, goalRemoteDataSource)
 
-        val taskLocalDataSource = TaskLocalDataSourceImpl(database.taskDao())
-        val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
-
-        viewModelFactory = GoalViewModelFactory(goalRepository, taskRepository, goalId)
+        viewModelFactory = GoalViewModelFactory(goalRepository, goalId)
         viewModel = ViewModelProvider(this, viewModelFactory)[GoalViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -80,10 +84,6 @@ class GoalFragment : Fragment() {
                 R.id.edit -> {
                     val action = GoalFragmentDirections.actionNavGoalToNavGoalModify(goalId)
                     navController.navigate(action)
-                    true
-                }
-                R.id.generate -> {
-                    viewModel.generate()
                     true
                 }
                 R.id.delete -> {
@@ -124,6 +124,8 @@ class GoalFragment : Fragment() {
                 }
             }
         }
+
+        worker()
     }
 
     override fun onDestroyView() {
@@ -160,5 +162,21 @@ class GoalFragment : Fragment() {
 
         imageView.layoutParams = layoutParams
         binding.goalDaysGrid.addView(imageView)
+    }
+
+    private fun worker() {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .build()
+
+        val workRequest = PeriodicWorkRequestBuilder<TaskGenerateWorker>(1, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .addTag(TASK_GENERATE_TAG)
+            .build()
+
+        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+            TASK_GENERATE_NAME,
+            ExistingPeriodicWorkPolicy.UPDATE, workRequest
+        )
     }
 }
