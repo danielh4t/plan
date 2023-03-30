@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.data.repository.goal.GoalRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
+import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
+import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalsBinding
 import app.stacq.plan.util.ui.MarginItemDecoration
@@ -40,7 +43,6 @@ class GoalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
@@ -48,7 +50,13 @@ class GoalsFragment : Fragment() {
         val goalRemoteDataSource = GoalRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val goalRepository = GoalRepositoryImpl(goalLocalDataSource, goalRemoteDataSource)
 
-        viewModelFactory = GoalsViewModelFactory(goalRepository)
+        val categoryLocalDataSource = CategoryLocalDataSourceImpl(database.categoryDao())
+        val categoryRemoteDataSource =
+            CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val categoryRepository =
+            CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
+
+        viewModelFactory = GoalsViewModelFactory(goalRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[GoalsViewModel::class.java]
 
         binding.lifecycleOwner = viewLifecycleOwner
