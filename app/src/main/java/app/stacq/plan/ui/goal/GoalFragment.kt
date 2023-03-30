@@ -12,18 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.goal.GoalRepositoryImpl
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
-import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
-import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
 import app.stacq.plan.worker.TASK_GENERATE_NAME
 import app.stacq.plan.worker.TASK_GENERATE_TAG
@@ -102,6 +96,29 @@ class GoalFragment : Fragment() {
             }
         }
 
+        binding.goalGenerateSwitch.setOnCheckedChangeListener { _, isChecked ->
+            // Responds to switch being checked/unchecked
+            viewModel.updateGenerate(isChecked)
+            val workManager = WorkManager.getInstance(requireContext())
+            if (isChecked) {
+                val constraints = Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.UNMETERED)
+                    .build()
+
+                val workRequest =
+                    PeriodicWorkRequestBuilder<TaskGenerateWorker>(1, TimeUnit.MINUTES)
+                        .setConstraints(constraints)
+                        .addTag(TASK_GENERATE_TAG)
+                        .build()
+
+                workManager.enqueueUniquePeriodicWork(
+                    TASK_GENERATE_NAME, ExistingPeriodicWorkPolicy.UPDATE, workRequest
+                )
+            } else {
+                workManager.cancelUniqueWork(TASK_GENERATE_NAME)
+            }
+        }
+
 
         viewModel.goal.observe(viewLifecycleOwner) {
             it?.let {
@@ -124,8 +141,6 @@ class GoalFragment : Fragment() {
                 }
             }
         }
-
-        worker()
     }
 
     override fun onDestroyView() {
@@ -162,21 +177,5 @@ class GoalFragment : Fragment() {
 
         imageView.layoutParams = layoutParams
         binding.goalDaysGrid.addView(imageView)
-    }
-
-    private fun worker() {
-        val constraints = Constraints.Builder()
-            .setRequiresCharging(true)
-            .build()
-
-        val workRequest = PeriodicWorkRequestBuilder<TaskGenerateWorker>(1, TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .addTag(TASK_GENERATE_TAG)
-            .build()
-
-        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-            TASK_GENERATE_NAME,
-            ExistingPeriodicWorkPolicy.UPDATE, workRequest
-        )
     }
 }
