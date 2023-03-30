@@ -61,6 +61,10 @@ class TaskLocalDataSourceImpl (
             taskDao.getTasksList()
         }
 
+    override suspend fun hasGeneratedTask(goalId: String): Boolean = withContext(ioDispatcher) {
+        taskDao.hasGeneratedTask(goalId)
+    }
+
     override fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> {
         return taskDao.getTasksAndCategory()
     }

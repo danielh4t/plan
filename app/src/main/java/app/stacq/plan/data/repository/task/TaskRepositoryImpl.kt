@@ -65,6 +65,10 @@ class TaskRepositoryImpl(
         taskRemoteDataSource.updatePriority(task.asTaskDocument())
     }
 
+    override suspend fun hasGeneratedTask(goalId: String): Boolean = withContext(ioDispatcher) {
+        return@withContext taskLocalDataSource.hasGeneratedTask(goalId)
+    }
+
     override fun getTasks(): LiveData<List<Task>> =
         taskLocalDataSource.getTasks().map {
             it.map { it1 -> it1.asTask() }

@@ -24,6 +24,8 @@ interface TaskRepository {
 
     suspend fun updatePriority(task: Task)
 
+    suspend fun hasGeneratedTask(goalId: String): Boolean
+
     fun getTasks(): LiveData<List<Task>>
 
     fun getTask(taskId: String): LiveData<Task>
