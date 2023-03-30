@@ -43,4 +43,8 @@ class GoalLocalDataSourceImpl(
     override fun getActiveGoals(): LiveData<List<GoalEntityAndCategoryEntity>> {
         return goalDao.getActiveGoals()
     }
+
+    override fun getGenerateGoals(): List<GoalEntity> {
+        return goalDao.getGenerateGoals()
+    }
 }
