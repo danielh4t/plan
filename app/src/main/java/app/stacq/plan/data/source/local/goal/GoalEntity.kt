@@ -31,5 +31,5 @@ data class GoalEntity(
 
     var completedAt: Long = 0,
 
-    var generate: Boolean = true,
+    var generate: Boolean = false,
 )

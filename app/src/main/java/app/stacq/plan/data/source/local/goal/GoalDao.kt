@@ -83,4 +83,15 @@ interface GoalDao {
         "SELECT * FROM goal WHERE NOT completed"
     )
     fun getActiveGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
+
+    /**
+     * Select all active(completed = false) goals that generate is true.
+     *
+     * @return goals.
+     */
+    @Transaction
+    @Query(
+        "SELECT * FROM goal WHERE generate AND  NOT completed"
+    )
+    fun getGenerateGoals(): List<GoalEntity>
 }

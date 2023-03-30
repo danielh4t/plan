@@ -19,4 +19,5 @@ interface GoalLocalDataSource {
     fun getGoal(goalId: String): LiveData<GoalEntityAndCategoryEntity>
 
     fun getActiveGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
+    fun getGenerateGoals(): List<GoalEntity>
 }

@@ -24,6 +24,8 @@ interface TaskLocalDataSource {
 
     suspend fun getTasksList(): List<TaskEntity>
 
+    suspend fun hasGeneratedTask(goalId: String): Boolean
+
     fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 
     fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity>
