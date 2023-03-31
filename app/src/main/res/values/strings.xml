@@ -63,7 +63,7 @@
     <string name="content_timer">Open Timer</string>
     <string name="content_create_bite">Create Bite</string>
     <string name="task_deleted">Task deleted</string>
-    <string name="task_creation_icon">task creation icon</string>
+    <string name="content_task_creation_icon">Circle with plus icon</string>
     <string name="content_create_task">Create Task</string>
     <string name="task_cloned">Task cloned and bites moved</string>
 
@@ -123,7 +123,7 @@
     <string name="select_completed_time">Select Completion Time</string>
     <string name="content_task_completion_label">Task completion</string>
     <string name="content_task_completion">Task completion</string>
-    <string name="content_task_completion_icon">Clock icon</string>
+    <string name="content_task_completion_icon">Circle with checkmark icon</string>
     <string name="completion">Completion</string>
     <string name="set_category">Set Category</string>
     <string name="content_category_modify_fab">Modify category</string>
