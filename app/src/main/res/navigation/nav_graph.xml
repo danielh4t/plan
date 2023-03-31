@@ -2,6 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
     app:startDestination="@+id/nav_tasks">
 
     <fragment
@@ -14,8 +15,8 @@
             app:destination="@id/nav_task" />
         <argument
             android:name="ShowBottomNav"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_nav_tasks_to_nav_task_modify"
             app:destination="@id/nav_task_modify" />
@@ -31,8 +32,8 @@
             app:destination="@id/nav_category_modify" />
         <argument
             android:name="ShowBottomNav"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_nav_categories_to_nav_category"
             app:destination="@id/nav_category" />
@@ -42,11 +43,11 @@
         android:id="@+id/nav_goals"
         android:name="app.stacq.plan.ui.goals.GoalsFragment"
         android:label="@string/goals"
-        tools:layout="@layout/fragment_goals" >
+        tools:layout="@layout/fragment_goals">
         <argument
             android:name="ShowBottomNav"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_nav_goals_to_nav_goal"
             app:destination="@id/nav_goal" />
@@ -143,7 +144,7 @@
         android:id="@+id/nav_goal_modify"
         android:name="app.stacq.plan.ui.goalModify.GoalModifyFragment"
         android:label="@string/goal"
-        tools:layout="@layout/fragment_goal_modify" >
+        tools:layout="@layout/fragment_goal_modify">
         <argument
             android:name="goalId"
             app:argType="string"
@@ -175,7 +176,7 @@
         android:id="@+id/nav_category"
         android:name="app.stacq.plan.ui.category.CategoryFragment"
         android:label="@string/category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_nav_category_to_nav_category_modify"
             app:destination="@id/nav_category_modify" />
@@ -188,5 +189,11 @@
             android:name="categoryId"
             app:argType="string" />
     </fragment>
+    <action
+        android:id="@+id/action_global_nav_categories"
+        app:destination="@id/nav_categories"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/nav_tasks"
+        app:popUpToInclusive="true" />
 
 </navigation>

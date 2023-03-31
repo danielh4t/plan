@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.stacq.plan.MainNavDirections
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
@@ -148,7 +149,8 @@ class TasksFragment : Fragment() {
                 Snackbar.make(it, R.string.no_categories, Snackbar.LENGTH_LONG)
                     .setAnchorView(it)
                     .setAction(R.string.create) {
-                        navController.navigate(R.id.nav_categories)
+                        val action = MainNavDirections.actionGlobalNavCategories()
+                        navController.navigate(action)
                     }
                     .show()
             }
