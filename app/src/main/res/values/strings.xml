@@ -14,7 +14,7 @@
     <string name="bite_name_required">Bite name is required</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
-    <string name="no_categories">Create a category first</string>
+    <string name="no_categories">Create or enable category</string>
     <string name="empty_category_details">Create or select a category</string>
 
     <!-- Goals fragment -->
