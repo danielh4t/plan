@@ -164,6 +164,10 @@
     <string name="category_deleted">Category Deleted</string>
     <string name="content_days_image">Sun icon</string>
     <string name="create">CREATE</string>
+    <string name="content_task_timer_label">Timer</string>
+    <string name="content_task_timer_icon">Clock icon</string>
+    <string name="content_task_timer">Task timer complete time</string>
+    <string name="category_creation_icon">Circle with plus symbol</string>
 
     <plurals name="numberOfMinutes">
         <item quantity="zero">%d minute</item>
