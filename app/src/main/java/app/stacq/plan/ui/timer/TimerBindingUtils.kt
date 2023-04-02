@@ -6,7 +6,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.google.android.material.button.MaterialButtonToggleGroup
+
 
 @BindingAdapter("timerAlarmCheckBoxVisibility")
 fun CheckBox.setVisibility(time: Long) {
@@ -33,14 +33,5 @@ fun ImageView.setTimerText(time: Long) {
     } else {
         visibility = View.VISIBLE
         (drawable as Animatable).start()
-    }
-}
-
-@BindingAdapter("timerButtonsVisibility")
-fun MaterialButtonToggleGroup.setVisibility(time: Long) {
-    visibility = if (time > 0L) {
-        View.VISIBLE
-    } else {
-        View.INVISIBLE
     }
 }
