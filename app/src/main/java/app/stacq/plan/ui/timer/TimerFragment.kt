@@ -3,7 +3,6 @@ package app.stacq.plan.ui.timer
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.format.DateFormat.is24HourFormat
@@ -38,7 +37,6 @@ import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
 
 class TimerFragment : Fragment() {
 
@@ -143,9 +141,6 @@ class TimerFragment : Fragment() {
                         } else {
                             cancelAlarm(requireActivity(), requestCode, task.name)
                         }
-                    } else {
-                        // timer finished
-                        (binding.timerImage.drawable as Animatable).start()
                     }
                 }
             }

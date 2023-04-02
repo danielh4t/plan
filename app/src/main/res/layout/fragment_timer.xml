@@ -42,7 +42,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timer_app_bar_layout"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:timerButtonsVisibility="@{viewModel.time}">
             <Button
                 style="?attr/materialButtonOutlinedStyle"
                 android:id="@+id/twenty_five_minutes_button"
