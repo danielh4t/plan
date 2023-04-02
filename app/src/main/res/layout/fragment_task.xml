@@ -166,7 +166,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/task_timer_image"
             app:layout_constraintTop_toBottomOf="@id/task_timer_label_text"
-            app:taskCreationDateTime="@{task.timerFinishAt}"
+            app:taskTimerFinishDateTime="@{task.timerFinishAt}"
             tools:text="@string/tools_creation" />
 
         <ImageView
