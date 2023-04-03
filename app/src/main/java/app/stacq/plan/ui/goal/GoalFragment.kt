@@ -19,8 +19,8 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
-import app.stacq.plan.worker.TASK_GENERATE_NAME
-import app.stacq.plan.worker.TASK_GENERATE_TAG
+import app.stacq.plan.worker.GENERATE_TASK
+import app.stacq.plan.worker.GENERATE_TASK_TAG
 import app.stacq.plan.worker.TaskGenerateWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -108,14 +108,14 @@ class GoalFragment : Fragment() {
                 val workRequest =
                     PeriodicWorkRequestBuilder<TaskGenerateWorker>(1, TimeUnit.MINUTES)
                         .setConstraints(constraints)
-                        .addTag(TASK_GENERATE_TAG)
+                        .addTag(GENERATE_TASK_TAG)
                         .build()
 
                 workManager.enqueueUniquePeriodicWork(
-                    TASK_GENERATE_NAME, ExistingPeriodicWorkPolicy.UPDATE, workRequest
+                    GENERATE_TASK, ExistingPeriodicWorkPolicy.UPDATE, workRequest
                 )
             } else {
-                workManager.cancelUniqueWork(TASK_GENERATE_NAME)
+                workManager.cancelUniqueWork(GENERATE_TASK)
             }
         }
 
