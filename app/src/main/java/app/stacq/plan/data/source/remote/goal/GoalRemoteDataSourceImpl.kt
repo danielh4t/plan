@@ -27,6 +27,7 @@ class GoalRemoteDataSourceImpl(
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
             "days" to goalDocument.days,
+            "progress" to goalDocument.progress,
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
@@ -52,6 +53,7 @@ class GoalRemoteDataSourceImpl(
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
             "days" to goalDocument.days,
+            "progress" to goalDocument.progress,
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
@@ -85,11 +87,11 @@ class GoalRemoteDataSourceImpl(
                 "createdAt" to goalDocument.createdAt,
                 "categoryId" to goalDocument.categoryId,
                 "days" to goalDocument.days,
+                "progress" to goalDocument.progress,
                 "completed" to goalDocument.completed,
                 "completedAt" to goalDocument.completedAt,
                 "generate" to goalDocument.generate,
             )
-
 
             firestore.collection(uid)
                 .document(categoryId)

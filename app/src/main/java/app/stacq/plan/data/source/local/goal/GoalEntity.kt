@@ -27,6 +27,8 @@ data class GoalEntity(
     @ColumnInfo(name = "days")
     var days: Int,
 
+    var progress: Int = 0,
+
     var completed: Boolean = false,
 
     var completedAt: Long = 0,

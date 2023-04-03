@@ -9,6 +9,7 @@ data class GoalDocument(
     val createdAt: Long? = null,
     var categoryId: String? = null,
     var days: Int? = null,
+    var progress: Int? = null,
     var completed: Boolean? = null,
     var completedAt: Long? = null,
     var generate: Boolean? = null,
