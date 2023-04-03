@@ -102,12 +102,13 @@ class GoalRemoteDataSourceImpl(
                 .set(fields)
         }
 
-    override suspend fun getGoalDocuments(): List<GoalDocument> {
+    override suspend fun getGoalDocuments(categoryId: String): List<GoalDocument> {
 
         val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
 
         return firestore.collection(uid)
-            .whereEqualTo("enabled", true)
+            .document(categoryId)
+            .collection(GOALS)
             .get()
             .await()
             .toObjects(GoalDocument::class.java)

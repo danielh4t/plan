@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.work.*
 import app.stacq.plan.MainNavDirections
 import app.stacq.plan.R
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
@@ -22,9 +23,12 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
+import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
 import app.stacq.plan.util.ui.MarginItemDecoration
+import app.stacq.plan.worker.CategorySyncWorker
+import app.stacq.plan.worker.GoalSyncWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -167,12 +171,44 @@ class TasksFragment : Fragment() {
                 hasCategories = it.isNotEmpty()
             }
         }
+
+        // sync worker
+        val user = Firebase.auth.currentUser
+        if (user !== null) {
+            handleSync()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         Firebase.auth.removeAuthStateListener(authStateListener)
+    }
+
+    private fun handleSync() {
+        val workManager = WorkManager.getInstance(requireNotNull(this.activity).application)
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val syncCategory = OneTimeWorkRequestBuilder<CategorySyncWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAG.CATEGORY)
+            .build()
+
+        val syncGoal = OneTimeWorkRequestBuilder<GoalSyncWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAG.GOAL)
+            .build()
+
+        val continuation = workManager.beginUniqueWork(
+            WorkerConstants.SYNC,
+            ExistingWorkPolicy.KEEP,
+            syncCategory
+        ).then(syncGoal)
+
+        continuation.enqueue()
     }
 
     private fun handleAuthentication() {

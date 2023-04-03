@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.work.*
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentCategoriesBinding
-import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.ui.MarginItemDecoration
-import app.stacq.plan.worker.CategorySyncWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -90,35 +87,10 @@ class CategoriesFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
-
-        // sync worker
-        val user = Firebase.auth.currentUser
-        if (user !== null) {
-            handleSync()
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun handleSync() {
-        val workManager = WorkManager.getInstance(requireNotNull(this.activity).application)
-
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
-            .build()
-
-        val syncCategory = OneTimeWorkRequestBuilder<CategorySyncWorker>()
-            .setConstraints(constraints)
-            .addTag(WorkerConstants.TAG.CATEGORY)
-            .build()
-
-        workManager.beginUniqueWork(
-            WorkerConstants.SYNC_CATEGORY,
-            ExistingWorkPolicy.KEEP,
-            syncCategory
-        ).enqueue()
     }
 }
