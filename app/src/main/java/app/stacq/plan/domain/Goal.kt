@@ -7,7 +7,6 @@ import app.stacq.plan.data.source.local.goal.GoalEntityAndCategoryEntity
 import app.stacq.plan.data.source.remote.goal.GoalDocument
 import kotlinx.parcelize.Parcelize
 
-
 @Keep
 @Parcelize
 data class Goal(
@@ -16,6 +15,7 @@ data class Goal(
     var name: String,
     var categoryId: String,
     var days: Int,
+    var progress: Int,
     var completed: Boolean,
     var completedAt: Long,
     var generate: Boolean,
@@ -23,13 +23,13 @@ data class Goal(
     var categoryColor: String? = null,
 ) : Parcelable
 
-
 fun Goal.asEntity() = GoalEntity(
     id = id,
     createdAt = createdAt,
     name = name,
     categoryId = categoryId,
     days = days,
+    progress = progress,
     completed = completed,
     completedAt = completedAt,
     generate = generate,
@@ -41,6 +41,7 @@ fun Goal.asDocument() = GoalDocument(
     name = name,
     categoryId = categoryId,
     days = days,
+    progress = progress,
     completed = completed,
     completedAt = completedAt,
     generate = generate,
@@ -52,6 +53,7 @@ fun GoalEntity.asGoal() = Goal(
     name = name,
     categoryId = categoryId,
     days = days,
+    progress = progress,
     completed = completed,
     completedAt = completedAt,
     generate = generate,
@@ -63,6 +65,7 @@ fun GoalEntityAndCategoryEntity.asGoal() = Goal(
     name = goalEntity.name,
     categoryId = goalEntity.categoryId,
     days = goalEntity.days,
+    progress = goalEntity.progress,
     completed = goalEntity.completed,
     completedAt = goalEntity.completedAt,
     generate = goalEntity.generate,
