@@ -2,6 +2,7 @@ package app.stacq.plan.data.source.local.goal
 
 
 import androidx.lifecycle.LiveData
+import app.stacq.plan.data.source.local.category.CategoryEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,6 +27,10 @@ class GoalLocalDataSourceImpl(
 
     override suspend fun delete(goalEntity: GoalEntity) = withContext(ioDispatcher) {
         goalDao.delete(goalEntity)
+    }
+
+    override suspend fun getGoalEntities(): List<GoalEntity> = withContext(ioDispatcher) {
+        goalDao.getGoalEntities()
     }
 
     override fun getCountGoalCompletedDays(goalId: String): LiveData<Int> {

@@ -2,6 +2,7 @@ package app.stacq.plan.data.source.local.goal
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import app.stacq.plan.data.source.local.category.CategoryEntity
 
 @Dao
 interface GoalDao {
@@ -52,6 +53,14 @@ interface GoalDao {
             "FROM cte"
     )
     fun getCountGoalCompletedDays(goalId: String): LiveData<Int>
+
+    /**
+     * Select all goal entities from the goal table as a list.
+     *
+     * @return all goal.
+     */
+    @Query("SELECT * FROM goal")
+    fun getGoalEntities(): List<GoalEntity>
 
     /**
      * Select all goals.
