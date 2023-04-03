@@ -14,6 +14,18 @@ fun TextView.creationTimestampToDateTime(timestamp: Long) {
     text = dateFormat.format(date)
 }
 
+@BindingAdapter("taskTimerFinishDateTime")
+fun TextView.timerFinishTimestampToDateTime(timestamp: Long) {
+    text= if (timestamp == 0L) {
+        resources.getString(R.string.timer_not_set)
+    }else {
+        val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
+        val date = Date(timestamp * 1000)
+        dateFormat.format(date)
+    }
+}
+
+
 @BindingAdapter("taskCompletionDateTime")
 fun TextView.completionTimestampToDateTime(timestamp: Long) {
     text= if (timestamp == 0L) {
