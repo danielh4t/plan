@@ -2,7 +2,6 @@ package app.stacq.plan.data.source.local.goal
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import app.stacq.plan.data.source.local.category.CategoryEntity
 
 @Dao
 interface GoalDao {
@@ -40,6 +39,9 @@ interface GoalDao {
      */
     @Delete
     suspend fun delete(goalEntity: GoalEntity)
+
+    @Upsert
+    suspend fun upsert(goalEntity: GoalEntity)
 
     @Query(
             "WITH cte AS ( " +

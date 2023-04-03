@@ -29,6 +29,10 @@ class GoalLocalDataSourceImpl(
         goalDao.delete(goalEntity)
     }
 
+    override suspend fun upsert(goalEntity: GoalEntity) {
+        goalDao.upsert(goalEntity)
+    }
+
     override suspend fun getGoalEntities(): List<GoalEntity> = withContext(ioDispatcher) {
         goalDao.getGoalEntities()
     }
