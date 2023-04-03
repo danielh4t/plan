@@ -72,3 +72,15 @@ fun GoalEntityAndCategoryEntity.asGoal() = Goal(
     categoryName = categoryEntity.name,
     categoryColor = categoryEntity.color,
 )
+
+fun GoalDocument.asGoal() =  Goal(
+    id = id ?: "",
+    createdAt = createdAt ?: 0L,
+    name = name ?: "",
+    categoryId = categoryId ?: "",
+    days = days ?: 0,
+    progress = progress ?: 0,
+    completed = completed ?: false,
+    completedAt = completedAt ?: 0L,
+    generate = generate ?: false,
+)

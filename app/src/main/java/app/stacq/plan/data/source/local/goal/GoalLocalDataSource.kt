@@ -12,6 +12,8 @@ interface GoalLocalDataSource {
 
     suspend fun delete(goalEntity: GoalEntity)
 
+    suspend fun upsert(goalEntity: GoalEntity)
+
     suspend fun getGoalEntities(): List<GoalEntity>
 
     fun getCountGoalCompletedDays(goalId: String): LiveData<Int>

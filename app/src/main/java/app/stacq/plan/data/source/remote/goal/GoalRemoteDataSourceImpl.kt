@@ -1,10 +1,12 @@
 package app.stacq.plan.data.source.remote.goal
 
+import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.util.constants.FirestoreConstants.GOALS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
@@ -99,4 +101,16 @@ class GoalRemoteDataSourceImpl(
                 .document(goalId)
                 .set(fields)
         }
+
+    override suspend fun getGoalDocuments(): List<GoalDocument> {
+
+        val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
+
+        return firestore.collection(uid)
+            .whereEqualTo("enabled", true)
+            .get()
+            .await()
+            .toObjects(GoalDocument::class.java)
+            .toList()
+    }
 }
