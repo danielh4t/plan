@@ -194,12 +194,12 @@ class TasksFragment : Fragment() {
 
         val syncCategory = OneTimeWorkRequestBuilder<CategorySyncWorker>()
             .setConstraints(constraints)
-            .addTag(WorkerConstants.TAG.CATEGORY)
+            .addTag(WorkerConstants.TAG.CATEGORY_SYNC)
             .build()
 
         val syncGoal = OneTimeWorkRequestBuilder<GoalSyncWorker>()
             .setConstraints(constraints)
-            .addTag(WorkerConstants.TAG.GOAL)
+            .addTag(WorkerConstants.TAG.GOAL_SYNC)
             .build()
 
         val continuation = workManager.beginUniqueWork(
