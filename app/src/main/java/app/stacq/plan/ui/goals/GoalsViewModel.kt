@@ -7,8 +7,8 @@ import app.stacq.plan.data.repository.category.CategoryRepository
 import app.stacq.plan.data.repository.goal.GoalRepository
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Goal
+import app.stacq.plan.util.time.TimeUtil
 import kotlinx.coroutines.launch
-import java.time.Instant
 
 
 class GoalsViewModel(
@@ -23,7 +23,11 @@ class GoalsViewModel(
     fun complete(goal: Goal) {
         viewModelScope.launch {
             goal.completed = !goal.completed
-            goal.completedAt = Instant.now().epochSecond
+            goal.completedAt = if(goal.completed) {
+                TimeUtil().nowInSeconds()
+            } else {
+                0L
+            }
             goalRepository.update(goal)
         }
     }
