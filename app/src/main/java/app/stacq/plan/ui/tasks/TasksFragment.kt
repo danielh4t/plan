@@ -28,6 +28,7 @@ import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
 import app.stacq.plan.util.ui.MarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
+import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -41,6 +42,7 @@ import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import java.util.concurrent.TimeUnit
 
 
 class TasksFragment : Fragment() {
@@ -177,6 +179,7 @@ class TasksFragment : Fragment() {
         if (user !== null) {
             handleSync()
         }
+        handleGoalProgress()
     }
 
     override fun onDestroyView() {
@@ -186,7 +189,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun handleSync() {
-        val workManager = WorkManager.getInstance(requireNotNull(this.activity).application)
+        val workManager = WorkManager.getInstance(requireContext())
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
@@ -209,6 +212,24 @@ class TasksFragment : Fragment() {
         ).then(syncGoal)
 
         continuation.enqueue()
+    }
+
+    private fun handleGoalProgress() {
+        val workManager = WorkManager.getInstance(requireContext())
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val workRequest =
+            PeriodicWorkRequestBuilder<GoalProgressWorker>(6, TimeUnit.HOURS)
+                .setConstraints(constraints)
+                .addTag(WorkerConstants.TAG.GOAL_PROGRESS)
+                .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            WorkerConstants.UPDATE_GOAL_PROGRESS, ExistingPeriodicWorkPolicy.UPDATE, workRequest
+        )
     }
 
     private fun handleAuthentication() {
