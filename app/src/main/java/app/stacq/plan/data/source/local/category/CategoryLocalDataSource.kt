@@ -14,7 +14,7 @@ interface CategoryLocalDataSource {
 
     suspend fun updateEnabled(categoryId: String)
 
-    suspend fun getCategoriesEntities(): List<CategoryEntity>
+    suspend fun getCategoryEntities(): List<CategoryEntity>
 
     fun getEnabledCategories(): LiveData<List<CategoryEntity>>
 

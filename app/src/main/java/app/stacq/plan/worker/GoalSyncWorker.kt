@@ -29,7 +29,7 @@ class GoalSyncWorker(context: Context, params: WorkerParameters) :
         val categoryLocalDataSource = CategoryLocalDataSourceImpl(database.categoryDao())
 
         return try {
-            categoryLocalDataSource.getCategoriesEntities().map { category ->
+            categoryLocalDataSource.getCategoryEntities().map { category ->
                 if (category.enabled && !category.deleted) {
                     goalRemoteDataSource.getGoalDocuments(category.id).map {
                         val goalEntity = it.asGoal().asEntity()

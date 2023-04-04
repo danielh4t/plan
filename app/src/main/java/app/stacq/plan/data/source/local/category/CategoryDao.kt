@@ -60,7 +60,7 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query("SELECT * FROM category")
-    fun getCategoriesEntities(): List<CategoryEntity>
+    fun getCategoryEntities(): List<CategoryEntity>
 
 
     /**

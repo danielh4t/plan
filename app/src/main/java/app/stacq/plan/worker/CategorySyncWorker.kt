@@ -27,12 +27,12 @@ class CategorySyncWorker(context: Context, params: WorkerParameters) :
             CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
 
         return try {
-            categoryLocalDataSource.getCategoriesEntities().map {
+            categoryLocalDataSource.getCategoryEntities().map {
                 val categoryDocument = it.asCategory().asDocument()
                 categoryRemoteDataSource.update(categoryDocument)
             }
 
-            categoryRemoteDataSource.getCategoriesDocuments().map {
+            categoryRemoteDataSource.getCategoryDocuments().map {
                 val categoryEntity = it.asCategory().asEntity()
                 // Ignore deleted categories
                 if(!it.deleted) {

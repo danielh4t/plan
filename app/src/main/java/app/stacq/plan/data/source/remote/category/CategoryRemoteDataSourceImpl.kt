@@ -70,7 +70,7 @@ class CategoryRemoteDataSourceImpl(
             .update(fields)
     }
 
-    override suspend fun getCategoriesDocuments(): List<CategoryDocument> {
+    override suspend fun getCategoryDocuments(): List<CategoryDocument> {
 
         val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
 
