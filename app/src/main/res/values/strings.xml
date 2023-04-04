@@ -164,5 +164,6 @@
     <string name="content_task_timer">Task timer complete time</string>
     <string name="category_creation_icon">Circle with plus symbol</string>
     <string name="timer_not_set">Timer not set</string>
+    <string name="no_backup">No backup</string>
 
 </resources>
