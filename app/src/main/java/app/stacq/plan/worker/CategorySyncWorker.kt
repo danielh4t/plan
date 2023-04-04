@@ -36,7 +36,7 @@ class CategorySyncWorker(context: Context, params: WorkerParameters) :
                 val categoryEntity = it.asCategory().asEntity()
                 // Ignore deleted categories
                 it.deleted?.let { deleted ->
-                    if (deleted) {
+                    if (!deleted) {
                         categoryLocalDataSource.upsert(categoryEntity)
                     }
                 }
