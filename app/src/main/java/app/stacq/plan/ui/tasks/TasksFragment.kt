@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -125,7 +126,7 @@ class TasksFragment : Fragment() {
                 .setMessage(message)
                 .setNegativeButton(resources.getString(R.string.no_thanks)) { _, _ ->
                     // Respond to negative button press
-
+                    Toast.makeText(requireContext(), R.string.no_backup, Toast.LENGTH_SHORT).show()
                 }
                 .setPositiveButton(resources.getString(R.string.yes_please)) { _, _ ->
                     // Respond to positive button press
