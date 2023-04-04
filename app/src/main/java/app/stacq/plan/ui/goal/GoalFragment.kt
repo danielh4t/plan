@@ -106,7 +106,7 @@ class GoalFragment : Fragment() {
                     .build()
 
                 val workRequest =
-                    PeriodicWorkRequestBuilder<TaskGenerateWorker>(1, TimeUnit.MINUTES)
+                    PeriodicWorkRequestBuilder<TaskGenerateWorker>(8, TimeUnit.HOURS)
                         .setConstraints(constraints)
                         .addTag(WorkerConstants.TAG.GOAL_GENERATE_TASK)
                         .build()
@@ -118,7 +118,6 @@ class GoalFragment : Fragment() {
                 workManager.cancelUniqueWork(WorkerConstants.GENERATE_TASK)
             }
         }
-
 
         viewModel.goal.observe(viewLifecycleOwner) {
             it?.let {
@@ -134,6 +133,7 @@ class GoalFragment : Fragment() {
     }
 
     private fun progress(goal: Goal) {
+        binding.goalDaysGrid.removeAllViews()
         for (day in 1..goal.days) {
             val color = if (day <= goal.progress) {
                 R.color.color_plan_green_85
