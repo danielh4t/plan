@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -74,7 +75,6 @@ class TaskFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-
         binding.taskAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
 
@@ -125,34 +125,6 @@ class TaskFragment : Fragment() {
             }
         }
 
-        // Handles the user's response to the system permissions dialog.
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission granted.
-                    viewModel.logPermission(true)
-                    Snackbar.make(
-                        binding.createBiteFab,
-                        R.string.yes_notification,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                } else {
-                    // Permission denied.
-                    viewModel.logPermission(false)
-                    // Explain to the user that the notification feature unavailable.
-                    Snackbar.make(
-                        binding.createBiteFab,
-                        R.string.no_notification,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-                // Navigate to timer.
-                val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
-                navController.navigate(action)
-            }
-
         val biteCompleteListener = BiteCompleteListener { viewModel.completeBite(it) }
         val biteDeleteListener = BiteDeleteListener {
             viewModel.deleteBite(it)
@@ -192,39 +164,46 @@ class TaskFragment : Fragment() {
                     requireContext(),
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
+                    // Permission is granted
                     // You can use the API that requires the permission.
                     val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
                     navController.navigate(action)
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                    // Additional rationale should be displayed
                     // Explain to the user why your app requires this permission
                     MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(resources.getString(R.string.timer_notification))
+                        .setTitle(resources.getString(R.string.timer_complete_notification))
                         .setMessage(resources.getString(R.string.timer_notification_message))
                         .setNegativeButton(resources.getString(R.string.no_thanks)) { _, _ ->
                             // Respond to negative button press
-                            Snackbar.make(
-                                binding.createBiteFab,
+                            Toast.makeText(
+                                requireContext(),
                                 R.string.no_notification,
-                                Snackbar.LENGTH_SHORT
+                                Toast.LENGTH_SHORT
                             ).show()
                             val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
                             navController.navigate(action)
                         }
                         .setPositiveButton(resources.getString(R.string.yes_please)) { _, _ ->
+                            // Create Channel
+                            createTimerChannel(requireNotNull(this.activity).application.applicationContext)
                             // Respond to positive button press
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                             }
-                            createTimerChannel(requireNotNull(this.activity).application)
                         }
                         .show()
-                } else -> {
-                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
-                    navController.navigate(action)
+                }
+                else -> {
+                    // Create Channel
+                    createTimerChannel(requireNotNull(this.activity).application.applicationContext)
+                    // Permission has not be requested yet
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
                 }
             }
-
         }
 
         binding.createBiteFab.setOnClickListener {
@@ -237,4 +216,31 @@ class TaskFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    // Handles the user's response to the system permissions dialog.
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // Permission granted.
+                viewModel.logPermission(true)
+                Snackbar.make(
+                    binding.createBiteFab,
+                    R.string.timer_complete_yes_notification,
+                    Snackbar.LENGTH_SHORT
+                ).setAnchorView(binding.timerFab)
+                    .show()
+            } else {
+                // Permission denied.
+                viewModel.logPermission(false)
+                // Explain to the user that the notification feature unavailable.
+                Snackbar.make(
+                    binding.createBiteFab,
+                    R.string.timer_complete_no_notification,
+                    Snackbar.LENGTH_SHORT
+                ).setAnchorView(binding.timerFab)
+                    .show()
+            }
+        }
 }
