@@ -43,10 +43,6 @@ class GoalRepositoryImpl(
             goalRemoteDataSource.updateCategory(goal.asDocument(), previousCategoryId)
         }
 
-    override fun getCountGoalCompletedDays(goalId: String): LiveData<Int> {
-        return goalLocalDataSource.getCountGoalCompletedDays(goalId)
-    }
-
     override fun getGoals(): LiveData<List<Goal>> =
         goalLocalDataSource.getGoals().map {
             it.map { goalEntity -> goalEntity.asGoal() }

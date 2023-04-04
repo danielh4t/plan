@@ -15,8 +15,6 @@ class GoalViewModel(
 
     val goal: LiveData<Goal> = goalRepository.getGoal(goalId)
 
-    val completedDays: LiveData<Int> = goalRepository.getCountGoalCompletedDays(goalId)
-
     fun delete() {
         val goal: Goal? = goal.value
         goal?.let {

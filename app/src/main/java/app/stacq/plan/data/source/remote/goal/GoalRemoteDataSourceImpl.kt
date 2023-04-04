@@ -1,6 +1,5 @@
 package app.stacq.plan.data.source.remote.goal
 
-import app.stacq.plan.data.source.remote.category.CategoryDocument
 import app.stacq.plan.util.constants.FirestoreConstants.GOALS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,6 +24,7 @@ class GoalRemoteDataSourceImpl(
         if (uid == null || categoryId == null || goalId == null) return@withContext
 
         val fields = hashMapOf(
+            "id" to goalDocument.id,
             "name" to goalDocument.name,
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
@@ -51,6 +51,7 @@ class GoalRemoteDataSourceImpl(
         if (uid == null || categoryId == null || goalId == null) return@withContext
 
         val fields = hashMapOf(
+            "id" to goalDocument.id,
             "name" to goalDocument.name,
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
@@ -85,14 +86,7 @@ class GoalRemoteDataSourceImpl(
                 .delete()
 
             val fields = hashMapOf(
-                "name" to goalDocument.name,
-                "createdAt" to goalDocument.createdAt,
                 "categoryId" to goalDocument.categoryId,
-                "days" to goalDocument.days,
-                "progress" to goalDocument.progress,
-                "completed" to goalDocument.completed,
-                "completedAt" to goalDocument.completedAt,
-                "generate" to goalDocument.generate,
             )
 
             firestore.collection(uid)
