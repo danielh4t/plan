@@ -49,6 +49,6 @@ fun CategoryDocument.asCategory() = Category(
     createdAt = createdAt ?: 0L,
     name = name ?: "",
     color = color ?: "",
-    enabled = enabled,
-    deleted = deleted,
+    enabled = enabled ?: false,
+    deleted = deleted ?: false,
 )
