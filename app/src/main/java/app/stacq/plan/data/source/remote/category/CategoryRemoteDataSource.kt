@@ -6,5 +6,5 @@ interface CategoryRemoteDataSource {
     suspend fun update(categoryDocument: CategoryDocument)
 
     suspend fun delete(categoryDocument: CategoryDocument)
-    suspend fun getCategoriesDocuments(): List<CategoryDocument>
+    suspend fun getCategoryDocuments(): List<CategoryDocument>
 }

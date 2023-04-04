@@ -30,8 +30,8 @@ class CategoryLocalDataSourceImpl (
     override suspend fun updateEnabled(categoryId: String) = withContext(ioDispatcher) {
         categoryDao.updateEnabledById(categoryId)
     }
-    override suspend fun getCategoriesEntities(): List<CategoryEntity> = withContext(ioDispatcher) {
-        categoryDao.getCategoriesEntities()
+    override suspend fun getCategoryEntities(): List<CategoryEntity> = withContext(ioDispatcher) {
+        categoryDao.getCategoryEntities()
     }
 
     override fun getEnabledCategories(): LiveData<List<CategoryEntity>> {
