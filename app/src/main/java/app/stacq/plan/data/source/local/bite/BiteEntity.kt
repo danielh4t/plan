@@ -4,8 +4,8 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.Instant
-import java.util.*
+import app.stacq.plan.util.time.TimeUtil
+import java.util.UUID
 
 @Keep
 @Entity(tableName = "bite")
@@ -15,7 +15,7 @@ data class BiteEntity(
     val id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_at")
-    val createdAt: Long = Instant.now().epochSecond,
+    val createdAt: Long = TimeUtil().nowInSeconds(),
 
     var name: String,
 
