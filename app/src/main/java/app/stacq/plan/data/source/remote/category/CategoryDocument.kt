@@ -8,6 +8,6 @@ data class CategoryDocument(
     val createdAt: Long? = null,
     val name: String? = null,
     var color: String? = null,
-    var enabled: Boolean = true,
-    var deleted: Boolean = false,
+    var enabled: Boolean? = null,
+    var deleted: Boolean? = null,
 )
