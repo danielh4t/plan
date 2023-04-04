@@ -118,7 +118,6 @@
     <string name="tools_days">10 days</string>
     <string name="content_goal_days_label">Goal days</string>
     <string name="content_goal_days">Number of goal days</string>
-    <string name="completion_date">Completion date</string>
     <string name="content_task_date_start_icon">Calendar icon</string>
     <string name="select_completed_time">Select Completion Time</string>
     <string name="content_task_completion_label">Task completion</string>
@@ -148,7 +147,6 @@
     <string name="sign_in_sync">Sign in with Google to backup and sync task, goals and categories.</string>
     <string name="sign_out_sync">Sign out to stop backup and sync</string>
     <string name="content_name_image">Brush icon</string>
-    <string name="content_task_modify_date_time">Modify task completion date and time</string>
     <string name="not_completed">Not completed</string>
     <string name="goal_deleted">Goal deleted</string>
     <string name="goal_days_required">Goal days is required</string>
@@ -156,7 +154,6 @@
     <string name="generate">Generate</string>
     <string name="content_goal_generate_icon">Circular arrows</string>
     <string name="content_edit_goal">Edit Goal</string>
-    <string name="content_generate_goal_task">Generate Goal Task</string>
     <string name="content_delete_goal">Delete GOal</string>
     <string name="content_delete_bite">Delete bite</string>
     <string name="content_delete_category">Delete Category</string>
@@ -169,11 +166,5 @@
     <string name="content_task_timer">Task timer complete time</string>
     <string name="category_creation_icon">Circle with plus symbol</string>
     <string name="timer_not_set">Timer not set</string>
-
-    <plurals name="numberOfMinutes">
-        <item quantity="zero">%d minute</item>
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
 
 </resources>
