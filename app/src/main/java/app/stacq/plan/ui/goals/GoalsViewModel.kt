@@ -10,7 +10,6 @@ import app.stacq.plan.domain.Goal
 import app.stacq.plan.util.time.TimeUtil
 import kotlinx.coroutines.launch
 
-
 class GoalsViewModel(
     private val goalRepository: GoalRepository,
     categoryRepository: CategoryRepository
