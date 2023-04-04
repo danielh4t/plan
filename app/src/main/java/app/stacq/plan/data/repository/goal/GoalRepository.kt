@@ -15,8 +15,6 @@ interface GoalRepository {
 
     suspend fun updateCategory(goal: Goal, previousCategoryId: String)
 
-    fun getCountGoalCompletedDays(goalId: String): LiveData<Int>
-
     fun getGoals(): LiveData<List<Goal>>
 
     fun getGoal(goalId: String): LiveData<Goal>

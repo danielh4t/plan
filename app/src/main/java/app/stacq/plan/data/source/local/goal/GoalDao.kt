@@ -45,16 +45,16 @@ interface GoalDao {
 
     @Query(
             "WITH cte AS ( " +
-                "SELECT  count(t.completed) as completed_days " +
+                "SELECT count(t.completed) as completed_days " +
                 "FROM goal AS g " +
                 "JOIN task AS t ON g.id = t.goal_id " +
                 "WHERE g.id = :goalId " +
                     "AND t.completed " +
                 "GROUP BY strftime('%j',DATE(t.completed_at, 'unixepoch'))) " +
-            "SELECT  count(completed_days) "+
+            "SELECT count(completed_days) "+
             "FROM cte"
     )
-    fun getCountGoalCompletedDays(goalId: String): LiveData<Int>
+    suspend fun getCountGoalCompletedDays(goalId: String): Int
 
     /**
      * Select all goal entities from the goal table as a list.

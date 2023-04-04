@@ -16,7 +16,7 @@ interface GoalLocalDataSource {
 
     suspend fun getGoalEntities(): List<GoalEntity>
 
-    fun getCountGoalCompletedDays(goalId: String): LiveData<Int>
+    suspend fun getCountGoalCompletedDays(goalId: String): Int
 
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 

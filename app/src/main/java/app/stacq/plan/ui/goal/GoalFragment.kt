@@ -19,6 +19,7 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
+import app.stacq.plan.domain.Goal
 import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.worker.TaskGenerateWorker
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -122,22 +123,7 @@ class GoalFragment : Fragment() {
         viewModel.goal.observe(viewLifecycleOwner) {
             it?.let {
                 binding.goal = it
-            }
-        }
-
-        viewModel.completedDays.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.completedDays = it
-                binding.goalDaysGrid.removeAllViews()
-                viewModel.goal.value?.days?.let { days ->
-                    for (day in 1..days) {
-                        if (day <= it) {
-                            progress(true)
-                        } else {
-                            progress(false)
-                        }
-                    }
-                }
+                progress(it)
             }
         }
     }
@@ -147,34 +133,36 @@ class GoalFragment : Fragment() {
         _binding = null
     }
 
-    private fun progress(completedDay: Boolean) {
-        val color = if (completedDay) {
-            R.color.color_plan_green_85
-        } else {
-            R.color.color_plan_green_75
-        }
+    private fun progress(goal: Goal) {
+        for (day in 1..goal.days) {
+            val color = if (day <= goal.progress) {
+                R.color.color_plan_green_85
+            } else {
+                R.color.color_plan_green_75
+            }
 
-        val image = if (completedDay) {
-            R.drawable.ic_circle
-        } else {
-            R.drawable.ic_circle_outline
-        }
+            val image = if (day <= goal.progress) {
+                R.drawable.ic_circle
+            } else {
+                R.drawable.ic_circle_outline
+            }
 
-        val imageView = ImageView(context)
-        imageView.setImageResource(image)
-        imageView.setColorFilter(
-            ContextCompat.getColor(requireContext(), color),
-            android.graphics.PorterDuff.Mode.SRC_IN
-        )
-        val layoutParams = GridLayout.LayoutParams().apply {
-            width = resources.getDimensionPixelSize(R.dimen.goal_image)
-            height = resources.getDimensionPixelSize(R.dimen.goal_image)
-            bottomMargin = (resources.getDimensionPixelSize(R.dimen.goal_image_bottom_margin))
-            columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
-            rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
-        }
+            val imageView = ImageView(context)
+            imageView.setImageResource(image)
+            imageView.setColorFilter(
+                ContextCompat.getColor(requireContext(), color),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+            val layoutParams = GridLayout.LayoutParams().apply {
+                width = resources.getDimensionPixelSize(R.dimen.goal_image)
+                height = resources.getDimensionPixelSize(R.dimen.goal_image)
+                bottomMargin = (resources.getDimensionPixelSize(R.dimen.goal_image_bottom_margin))
+                columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+            }
 
-        imageView.layoutParams = layoutParams
-        binding.goalDaysGrid.addView(imageView)
+            imageView.layoutParams = layoutParams
+            binding.goalDaysGrid.addView(imageView)
+        }
     }
 }
