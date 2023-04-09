@@ -58,7 +58,9 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bite_modify_name_image"
-            app:layout_constraintTop_toBottomOf="@+id/bite_modify_app_bar_layout">
+            app:layout_constraintTop_toBottomOf="@+id/bite_modify_app_bar_layout"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bite_modify_name_edit_text"
