@@ -15,9 +15,9 @@ fun TextView.timestampToDateTime(timestamp: Long) {
     text = dateFormat.format(date)
 }
 
-@BindingAdapter("goalDays", "goalCompletedDays")
-fun TextView.setGoalDays(days: Int, completedDays: Int) {
-    text = completedDays.toString()
+@BindingAdapter("goalProgress", "goalDays")
+fun TextView.setGoalDays(progress: Int, days: Int) {
+    text = resources.getQuantityString(R.plurals.numberOfDays, progress, progress)
         .plus(" ")
         .plus(resources.getString(R.string.out_of))
         .plus(" ")
