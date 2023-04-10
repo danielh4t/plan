@@ -72,12 +72,6 @@ class TaskViewModel(
         }
     }
 
-    fun unarchive(taskId: String) {
-        scope.launch {
-            taskRepository.unarchive(taskId)
-        }
-    }
-
     fun updatePriority(priority: Float) {
         val task: Task? = task.value
         task?.let {
