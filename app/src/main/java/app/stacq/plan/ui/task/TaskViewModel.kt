@@ -66,12 +66,9 @@ class TaskViewModel(
         }
     }
 
-    fun archive() {
-        val task: Task? = task.value
-        task?.let {
-            scope.launch {
-                taskRepository.archive(task.id)
-            }
+    fun archive(taskId: String) {
+        scope.launch {
+            taskRepository.archive(taskId)
         }
     }
 

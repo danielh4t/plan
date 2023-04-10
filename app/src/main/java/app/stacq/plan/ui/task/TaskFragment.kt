@@ -108,7 +108,7 @@ class TaskFragment : Fragment() {
                         }
                     }
 
-                    viewModel.archive()
+                    viewModel.archive(taskId)
 
                     Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.createBiteFab)
