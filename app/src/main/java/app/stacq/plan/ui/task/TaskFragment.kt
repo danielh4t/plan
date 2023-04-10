@@ -84,12 +84,12 @@ class TaskFragment : Fragment() {
 
         binding.taskAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.edit -> {
+                R.id.edit_task -> {
                     val action = TaskFragmentDirections.actionNavTaskToNavEdit(taskId)
                     navController.navigate(action)
                     true
                 }
-                R.id.clone -> {
+                R.id.clone_task -> {
                     viewModel.clone()
                     Snackbar.make(view, R.string.task_cloned, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.timerFab)
@@ -97,7 +97,7 @@ class TaskFragment : Fragment() {
 
                     true
                 }
-                R.id.delete -> {
+                R.id.delete_task -> {
                     viewModel.delete()
                     // cancel alarm
                     val hasAlarm = viewModel.hasAlarm()
