@@ -21,7 +21,7 @@ import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
 import app.stacq.plan.domain.Goal
 import app.stacq.plan.util.constants.WorkerConstants
-import app.stacq.plan.worker.TaskGenerateWorker
+import app.stacq.plan.worker.TaskGenerateFromGoalWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -106,7 +106,7 @@ class GoalFragment : Fragment() {
                     .build()
 
                 val workRequest =
-                    PeriodicWorkRequestBuilder<TaskGenerateWorker>(6, TimeUnit.HOURS)
+                    PeriodicWorkRequestBuilder<TaskGenerateFromGoalWorker>(6, TimeUnit.HOURS)
                         .setConstraints(constraints)
                         .addTag(WorkerConstants.TAG.GOAL_GENERATE_TASK)
                         .build()
