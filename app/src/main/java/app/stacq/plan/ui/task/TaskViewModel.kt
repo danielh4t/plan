@@ -15,7 +15,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class TaskViewModel(
@@ -29,6 +29,8 @@ class TaskViewModel(
     val bites: LiveData<List<Bite>> = bitesRepository.getBites(taskId)
 
     private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+
+    private val scope = CoroutineScope(	Dispatchers.IO + Job())
 
     fun logPermission(isGranted: Boolean) {
         firebaseAnalytics.logEvent(AnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
@@ -69,11 +71,12 @@ class TaskViewModel(
         val bites: List<Bite>? = bites.value
         task?.let {
             if (task.goalId != null) {
-                viewModelScope.launch {
+                scope.launch {
                     taskRepository.archive(task.id)
                 }
+
             } else {
-                viewModelScope.launch {
+                scope.launch {
                     taskRepository.delete(task)
                     bites?.let {
                         it.forEach { bite ->
@@ -89,7 +92,7 @@ class TaskViewModel(
         val task: Task? = task.value
         val bites: List<Bite>? = bites.value
         task?.let {
-            viewModelScope.launch {
+            scope.launch {
                 taskRepository.create(it)
                 bites?.let {
                     it.forEach { bite ->
@@ -131,5 +134,10 @@ class TaskViewModel(
                 return true
         }
         return false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        scope.cancel()
     }
 }
