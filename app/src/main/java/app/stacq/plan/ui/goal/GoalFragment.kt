@@ -75,12 +75,12 @@ class GoalFragment : Fragment() {
 
         binding.goalAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.edit -> {
+                R.id.edit_goal -> {
                     val action = GoalFragmentDirections.actionNavGoalToNavGoalModify(goalId)
                     navController.navigate(action)
                     true
                 }
-                R.id.delete -> {
+                R.id.delete_goal -> {
                     viewModel.delete()
                     Snackbar.make(view, R.string.goal_deleted, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.root)

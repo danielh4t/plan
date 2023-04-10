@@ -152,7 +152,7 @@
     <string name="generate">Generate</string>
     <string name="content_goal_generate_icon">Circular arrows</string>
     <string name="content_edit_goal">Edit Goal</string>
-    <string name="content_delete_goal">Delete GOal</string>
+    <string name="content_delete_goal">Delete Goal</string>
     <string name="content_delete_bite">Delete bite</string>
     <string name="content_delete_category">Delete Category</string>
     <string name="content_edit_category">Edit Category</string>
