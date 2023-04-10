@@ -11,6 +11,7 @@ import app.stacq.plan.domain.asGoal
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.math.max
 
 
 class GoalProgressWorker(context: Context, params: WorkerParameters) :
@@ -27,7 +28,8 @@ class GoalProgressWorker(context: Context, params: WorkerParameters) :
 
         return try {
             goalLocalDataSource.getGoalEntities().map {
-                it.progress = goalLocalDataSource.getCountGoalCompletedDays(it.id)
+                // update progress with maximum value to prevent overwrite of remote synced data
+                it.progress = max(it.progress, goalLocalDataSource.getCountGoalCompletedDays(it.id))
                 goalRepository.update(it.asGoal())
             }
             Result.success()
