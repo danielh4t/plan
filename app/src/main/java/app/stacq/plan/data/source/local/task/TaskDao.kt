@@ -93,7 +93,7 @@ interface TaskDao {
     fun getTasksList(): List<TaskEntity>
 
 
-    @Query("SELECT COUNT(*) > 0 FROM task WHERE goal_id = :goalId AND NOT completed")
+    @Query("SELECT COUNT(*) > 0 FROM task WHERE goal_id = :goalId AND NOT completed AND NOT archived")
     fun hasGeneratedTask(goalId: String): Boolean
 
     @Transaction
