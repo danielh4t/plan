@@ -96,7 +96,7 @@ class TaskFragment : Fragment() {
                         .show()
                     true
                 }
-                R.id.delete_task -> {
+                R.id.archive_task -> {
                     // cancel alarm
                     val hasAlarm = viewModel.hasAlarm()
                     if (hasAlarm) {
@@ -108,12 +108,12 @@ class TaskFragment : Fragment() {
                         }
                     }
 
-                    viewModel.delete()
+                    viewModel.archive()
 
-                    Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.createBiteFab)
                         .setAction(R.string.undo) {
-                            viewModel.undoDelete()
+                            viewModel.unarchive(taskId)
                         }
                         .show()
 

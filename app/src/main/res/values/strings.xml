@@ -49,7 +49,6 @@
     <string name="clone">Clone</string>
     <string name="content_task_clone">Task Completion</string>
     <string name="delete">Delete</string>
-    <string name="content_delete_task">Delete Task</string>
     <string name="content_category_image">Color palette icon</string>
     <string name="content_task_category">Task category name</string>
     <string name="content_task_creation_label">Task creation</string>
@@ -62,7 +61,7 @@
     <string name="content_list_bites">List of task bites</string>
     <string name="content_timer">Open Timer</string>
     <string name="content_create_bite">Create Bite</string>
-    <string name="task_deleted">Task deleted</string>
+    <string name="task_archived">Task archived</string>
     <string name="content_task_creation_icon">Circle with plus icon</string>
     <string name="content_create_task">Create Task</string>
     <string name="task_cloned">Task cloned and bites moved</string>
@@ -165,5 +164,7 @@
     <string name="category_creation_icon">Circle with plus symbol</string>
     <string name="timer_not_set">Timer not set</string>
     <string name="no_backup">No backup</string>
+    <string name="content_archive_task">Archive task</string>
+    <string name="archive">Archive</string>
 
 </resources>
