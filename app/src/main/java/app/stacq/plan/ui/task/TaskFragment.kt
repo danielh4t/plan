@@ -94,11 +94,9 @@ class TaskFragment : Fragment() {
                     Snackbar.make(view, R.string.task_cloned, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.timerFab)
                         .show()
-
                     true
                 }
                 R.id.delete_task -> {
-                    viewModel.delete()
                     // cancel alarm
                     val hasAlarm = viewModel.hasAlarm()
                     if (hasAlarm) {
@@ -109,6 +107,8 @@ class TaskFragment : Fragment() {
                             cancelAlarm(application, requestCode, name)
                         }
                     }
+
+                    viewModel.delete()
 
                     Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.timerFab)
