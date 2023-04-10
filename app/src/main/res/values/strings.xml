@@ -45,9 +45,9 @@
     <!-- Task fragment -->
     <string name="task">Task</string>
     <string name="edit">Edit</string>
-    <string name="content_edit_task">Edit Task </string>
+    <string name="content_edit_task">Edit Task</string>
     <string name="clone">Clone</string>
-    <string name="content_task_clone">Task Completion</string>
+    <string name="content_task_clone">Clone Task</string>
     <string name="delete">Delete</string>
     <string name="content_category_image">Color palette icon</string>
     <string name="content_task_category">Task category name</string>
