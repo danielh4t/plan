@@ -111,7 +111,7 @@ class TaskFragment : Fragment() {
                     viewModel.delete()
 
                     Snackbar.make(view, R.string.task_deleted, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.timerFab)
+                        .setAnchorView(binding.createBiteFab)
                         .setAction(R.string.undo) {
                             viewModel.undoDelete()
                         }
