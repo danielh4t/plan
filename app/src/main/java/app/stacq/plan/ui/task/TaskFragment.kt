@@ -112,9 +112,6 @@ class TaskFragment : Fragment() {
 
                     Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.createBiteFab)
-                        .setAction(R.string.undo) {
-                            viewModel.unarchive(taskId)
-                        }
                         .show()
 
                     val action = TaskFragmentDirections.actionNavTaskToNavTasks()
