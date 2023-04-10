@@ -13,10 +13,6 @@
         <variable
             name="viewModel"
             type="app.stacq.plan.ui.goal.GoalViewModel" />
-
-        <variable
-            name="completedDays"
-            type="int" />
     </data>
 
 
@@ -208,7 +204,7 @@
             android:contentDescription="@string/content_goal_days"
             android:fontFamily="@font/roboto"
             android:textSize="18sp"
-            app:goalCompletedDays="@{completedDays}"
+            app:goalProgress="@{goal.progress}"
             app:goalDays="@{goal.days}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/goal_days_image"
