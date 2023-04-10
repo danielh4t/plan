@@ -135,6 +135,7 @@ class TaskModifyFragment : Fragment() {
                 .setHour(CalendarUtil().localHour())
                 .setMinute(CalendarUtil().localMinute())
                 .setTitleText(getString(R.string.select_completed_time))
+                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                 .build()
 
         timePicker.addOnPositiveButtonClickListener {
