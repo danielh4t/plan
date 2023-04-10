@@ -40,12 +40,20 @@ interface TaskDao {
     suspend fun delete(taskEntity: TaskEntity)
 
     /**
-     * Update the archive of a task
+     * Update the archive of a task to true
      *
      * @param taskId of the task
      */
     @Query("UPDATE task SET archived = true WHERE id = :taskId")
     suspend fun archive(taskId: String)
+
+    /**
+     * Update the archive of a task to false
+     *
+     * @param taskId of the task
+     */
+    @Query("UPDATE task SET archived = false WHERE id = :taskId")
+    suspend fun unarchive(taskId: String)
 
     /**
      * Update the completed and completed_at of a task

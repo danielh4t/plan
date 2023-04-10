@@ -17,10 +17,10 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/delete_task"
-        android:title="@string/delete"
-        android:contentDescription="@string/content_delete_task"
-        android:icon="@drawable/ic_trash_outline"
+        android:id="@+id/archive_task"
+        android:title="@string/archive"
+        android:contentDescription="@string/content_archive_task"
+        android:icon="@drawable/ic_archive"
         app:showAsAction="ifRoom" />
 
 </menu>

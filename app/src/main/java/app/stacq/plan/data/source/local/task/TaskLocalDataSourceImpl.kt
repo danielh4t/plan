@@ -33,6 +33,10 @@ class TaskLocalDataSourceImpl (
         taskDao.archive(taskId)
     }
 
+    override suspend fun unarchive(taskId: String) {
+        taskDao.unarchive(taskId)
+    }
+
     override suspend fun updateCompletion(taskEntity: TaskEntity) =
         withContext(ioDispatcher) {
             taskDao.updateCompletionById(

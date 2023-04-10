@@ -30,7 +30,7 @@ class TaskViewModel(
 
     private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
-    private val scope = CoroutineScope(	Dispatchers.IO + Job())
+    private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     fun logPermission(isGranted: Boolean) {
         firebaseAnalytics.logEvent(AnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
@@ -66,40 +66,18 @@ class TaskViewModel(
         }
     }
 
-    fun delete() {
+    fun archive() {
         val task: Task? = task.value
-        val bites: List<Bite>? = bites.value
         task?.let {
-            if (task.goalId != null) {
-                scope.launch {
-                    taskRepository.archive(task.id)
-                }
-
-            } else {
-                scope.launch {
-                    taskRepository.delete(task)
-                    bites?.let {
-                        it.forEach { bite ->
-                            bitesRepository.delete(bite)
-                        }
-                    }
-                }
+            scope.launch {
+                taskRepository.archive(task.id)
             }
         }
     }
 
-    fun undoDelete() {
-        val task: Task? = task.value
-        val bites: List<Bite>? = bites.value
-        task?.let {
-            scope.launch {
-                taskRepository.create(it)
-                bites?.let {
-                    it.forEach { bite ->
-                        bitesRepository.create(bite)
-                    }
-                }
-            }
+    fun unarchive(taskId: String) {
+        scope.launch {
+            taskRepository.unarchive(taskId)
         }
     }
 

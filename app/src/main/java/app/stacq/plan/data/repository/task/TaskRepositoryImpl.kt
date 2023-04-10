@@ -41,6 +41,10 @@ class TaskRepositoryImpl(
         taskLocalDataSource.archive(taskId)
     }
 
+    override suspend fun unarchive(taskId: String) = withContext(ioDispatcher) {
+        taskLocalDataSource.unarchive(taskId)
+    }
+
     override suspend fun updateCategory(task: Task, previousCategoryId: String) =
         withContext(ioDispatcher) {
             taskLocalDataSource.update(task.asTaskEntity())
