@@ -107,7 +107,7 @@
 
 
     <string name="select_completed_date">Select completed date</string>
-    <string name="undo">Undo</string>
+    <string name="undo">UNDO</string>
 
     <string name="task_priority_icon">Compass icon</string>
     <string name="created">Creation</string>
