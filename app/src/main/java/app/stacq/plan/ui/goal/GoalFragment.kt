@@ -15,9 +15,12 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.goal.GoalRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
+import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
+import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
 import app.stacq.plan.domain.Goal
 import app.stacq.plan.util.constants.WorkerConstants
@@ -57,11 +60,15 @@ class GoalFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
+        val taskLocalDataSource = TaskLocalDataSourceImpl(database.taskDao())
+        val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
+
         val goalLocalDataSource = GoalLocalDataSourceImpl(database.goalDao())
         val goalRemoteDataSource = GoalRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val goalRepository = GoalRepositoryImpl(goalLocalDataSource, goalRemoteDataSource)
 
-        viewModelFactory = GoalViewModelFactory(goalRepository, goalId)
+        viewModelFactory = GoalViewModelFactory(goalRepository, taskRepository,goalId)
         viewModel = ViewModelProvider(this, viewModelFactory)[GoalViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -78,6 +85,10 @@ class GoalFragment : Fragment() {
                 R.id.edit_goal -> {
                     val action = GoalFragmentDirections.actionNavGoalToNavGoalModify(goalId)
                     navController.navigate(action)
+                    true
+                }
+                R.id.generate_goal_task -> {
+                    viewModel.generateTask()
                     true
                 }
                 R.id.delete_goal -> {
