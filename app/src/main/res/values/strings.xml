@@ -166,5 +166,6 @@
     <string name="no_backup">No backup</string>
     <string name="content_archive_task">Archive task</string>
     <string name="archive">Archive</string>
+    <string name="content_generate_goal_task">Generate task</string>
 
 </resources>

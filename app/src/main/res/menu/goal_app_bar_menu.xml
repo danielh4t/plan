@@ -10,6 +10,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/generate_goal_task"
+        android:title="@string/generate"
+        android:contentDescription="@string/content_generate_goal_task"
+        android:icon="@drawable/ic_circle_outline"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/delete_goal"
         android:title="@string/delete"
         android:contentDescription="@string/content_delete_goal"
