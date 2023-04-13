@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -89,6 +90,7 @@ class GoalFragment : Fragment() {
                 }
                 R.id.generate_goal_task -> {
                     viewModel.generateTask()
+                    Toast.makeText(requireContext(), R.string.task_generated, Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.delete_goal -> {

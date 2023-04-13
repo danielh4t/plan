@@ -167,5 +167,6 @@
     <string name="content_archive_task">Archive task</string>
     <string name="archive">Archive</string>
     <string name="content_generate_goal_task">Generate task</string>
+    <string name="task_generated">Task generated</string>
 
 </resources>

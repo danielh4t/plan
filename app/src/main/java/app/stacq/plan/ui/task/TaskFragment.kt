@@ -91,9 +91,7 @@ class TaskFragment : Fragment() {
                 }
                 R.id.clone_task -> {
                     viewModel.clone()
-                    Snackbar.make(view, R.string.task_cloned, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.timerFab)
-                        .show()
+                    Toast.makeText(requireContext(), R.string.task_cloned, Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.archive_task -> {
@@ -110,9 +108,7 @@ class TaskFragment : Fragment() {
 
                     viewModel.archive(taskId)
 
-                    Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.createBiteFab)
-                        .show()
+                    Toast.makeText(requireContext(), R.string.task_archived, Toast.LENGTH_SHORT).show()
 
                     val action = TaskFragmentDirections.actionNavTaskToNavTasks()
                     navController.navigate(action)
