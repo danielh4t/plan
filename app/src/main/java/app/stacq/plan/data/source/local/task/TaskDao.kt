@@ -91,9 +91,9 @@ interface TaskDao {
 
     @Query("SELECT * FROM task")
     fun getTasksList(): List<TaskEntity>
-
-
-    @Query("SELECT COUNT(*) > 0 FROM task WHERE goal_id = :goalId AND NOT completed AND NOT archived")
+    
+    @Query("SELECT COUNT(*) > 0 FROM task WHERE goal_id = :goalId " +
+            "AND strftime('%Y-%m-%d', datetime(created_at, 'unixepoch')) = strftime('%Y-%m-%d', 'now')")
     fun hasGeneratedTask(goalId: String): Boolean
 
     @Transaction
