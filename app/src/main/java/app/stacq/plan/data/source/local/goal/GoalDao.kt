@@ -44,15 +44,15 @@ interface GoalDao {
     suspend fun upsert(goalEntity: GoalEntity)
 
     @Query(
-            "WITH cte AS ( " +
+        "WITH cte AS ( " +
                 "SELECT count(t.completed) as completed_days " +
                 "FROM goal AS g " +
                 "JOIN task AS t ON g.id = t.goal_id " +
                 "WHERE g.id = :goalId " +
-                    "AND t.completed " +
+                "AND t.completed " +
                 "GROUP BY strftime('%j',DATE(t.completed_at, 'unixepoch'))) " +
-            "SELECT count(completed_days) "+
-            "FROM cte"
+                "SELECT count(completed_days) " +
+                "FROM cte"
     )
     suspend fun getCountGoalCompletedDays(goalId: String): Int
 
@@ -70,7 +70,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query("SELECT * FROM goal")
+    @Query("SELECT * FROM goal ORDER BY name")
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**
@@ -79,9 +79,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query(
-        "SELECT * FROM goal  WHERE id = :goalId"
-    )
+    @Query("SELECT * FROM goal  WHERE id = :goalId")
     fun getGoal(goalId: String): LiveData<GoalEntityAndCategoryEntity>
 
     /**
@@ -90,9 +88,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query(
-        "SELECT * FROM goal WHERE NOT completed"
-    )
+    @Query("SELECT * FROM goal WHERE NOT completed")
     fun getActiveGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**
@@ -101,8 +97,6 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query(
-        "SELECT * FROM goal WHERE generate AND  NOT completed"
-    )
+    @Query("SELECT * FROM goal WHERE generate AND  NOT completed")
     fun getGenerateGoals(): List<GoalEntity>
 }
