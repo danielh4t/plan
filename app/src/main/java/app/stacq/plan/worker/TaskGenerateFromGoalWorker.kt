@@ -5,15 +5,10 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.domain.asCategory
-import app.stacq.plan.domain.asDocument
-import app.stacq.plan.domain.asEntity
 import app.stacq.plan.domain.asTask
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore

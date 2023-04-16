@@ -119,7 +119,7 @@ class GoalFragment : Fragment() {
                     .build()
 
                 val workRequest =
-                    PeriodicWorkRequestBuilder<TaskGenerateFromGoalWorker>(6, TimeUnit.HOURS)
+                    PeriodicWorkRequestBuilder<TaskGenerateFromGoalWorker>(1, TimeUnit.MINUTES)
                         .setConstraints(constraints)
                         .addTag(WorkerConstants.TAG.GOAL_GENERATE_TASK)
                         .build()
