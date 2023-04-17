@@ -93,13 +93,20 @@ interface TaskDao {
     fun getTasksList(): List<TaskEntity>
 
     @Query(
-        "SELECT COUNT(*) > 0 " +
-                "FROM task " +
-                "WHERE goal_id = :goalId AND (completed " +
-                "AND strftime('%Y-%m-%d', datetime(created_at, 'unixepoch')) = strftime('%Y-%m-%d', 'now')) " +
-                "OR (NOT archived AND NOT completed)"
+        "SELECT COUNT(*) > 0 FROM task " +
+                "WHERE goal_id = :goalId " +
+                "AND NOT archived"
     )
     fun hasGeneratedTask(goalId: String): Boolean
+
+    @Query(
+        "SELECT COUNT(*) > 0 " +
+                "FROM task " +
+                "WHERE goal_id = :goalId " +
+                "AND strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch')) = strftime('%Y-%m-%d', 'now') " +
+                "AND completed"
+    )
+    fun hasCompletedTaskGoalToday(goalId: String): Boolean
 
     @Transaction
     @Query("SELECT * FROM task WHERE NOT archived ORDER BY priority DESC")

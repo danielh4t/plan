@@ -30,13 +30,18 @@ class GenerateTaskWorker(context: Context, params: WorkerParameters) :
         val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
 
         return try {
-            goalLocalDataSource.getGenerateGoals().map {
-                val hasGenerated = taskRepository.hasGeneratedTask(it.id)
-                if(!hasGenerated) {
-                    val task =
-                        TaskEntity(name = it.name, categoryId = it.categoryId, goalId = it.id)
-                    taskRepository.create(task.asTask())
+            for (goal in goalLocalDataSource.getGenerateGoals()) {
+
+                val completedToday = taskRepository.hasCompletedTaskGoalToday(goal.id)
+                val hasGenerated = taskRepository.hasGeneratedTask(goal.id)
+                if (completedToday || hasGenerated) {
+                    continue
                 }
+
+                val task =
+                    TaskEntity(name = goal.name, categoryId = goal.categoryId, goalId = goal.id)
+                taskRepository.create(task.asTask())
+
             }
             Result.success()
         } catch (throwable: Throwable) {

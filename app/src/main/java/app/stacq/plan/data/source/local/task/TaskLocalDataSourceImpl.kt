@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class TaskLocalDataSourceImpl (
+class TaskLocalDataSourceImpl(
     private val taskDao: TaskDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskLocalDataSource {
@@ -68,6 +68,11 @@ class TaskLocalDataSourceImpl (
     override suspend fun hasGeneratedTask(goalId: String): Boolean = withContext(ioDispatcher) {
         taskDao.hasGeneratedTask(goalId)
     }
+
+    override suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean =
+        withContext(ioDispatcher) {
+            taskDao.hasCompletedTaskGoalToday(goalId)
+        }
 
     override fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>> {
         return taskDao.getTasksAndCategory()

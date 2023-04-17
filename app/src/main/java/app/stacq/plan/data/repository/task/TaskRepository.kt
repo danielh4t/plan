@@ -28,6 +28,8 @@ interface TaskRepository {
 
     suspend fun hasGeneratedTask(goalId: String): Boolean
 
+    suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean
+
     fun getTasks(): LiveData<List<Task>>
 
     fun getTask(taskId: String): LiveData<Task>
