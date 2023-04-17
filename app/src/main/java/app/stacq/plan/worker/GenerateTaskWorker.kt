@@ -15,7 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class TaskGenerateFromGoalWorker(context: Context, params: WorkerParameters) :
+class GenerateTaskWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 
     private val appContext = applicationContext

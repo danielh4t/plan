@@ -31,6 +31,7 @@ import app.stacq.plan.util.ui.MarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
+import app.stacq.plan.worker.GenerateTaskWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -180,7 +181,8 @@ class TasksFragment : Fragment() {
         if (user !== null) {
             handleSync()
         }
-        handleGoalProgress()
+
+        handlePeriodicWork()
     }
 
     override fun onDestroyView() {
@@ -215,21 +217,33 @@ class TasksFragment : Fragment() {
         continuation.enqueue()
     }
 
-    private fun handleGoalProgress() {
+    private fun handlePeriodicWork() {
         val workManager = WorkManager.getInstance(requireContext())
 
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
             .build()
 
-        val workRequest =
-            PeriodicWorkRequestBuilder<GoalProgressWorker>(6, TimeUnit.HOURS)
+        val updateGoalProgress =
+            PeriodicWorkRequestBuilder<GoalProgressWorker>(15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
-                .addTag(WorkerConstants.TAG.GOAL_PROGRESS)
+                .build()
+
+        val generateTask =
+            PeriodicWorkRequestBuilder<GenerateTaskWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
                 .build()
 
         workManager.enqueueUniquePeriodicWork(
-            WorkerConstants.UPDATE_GOAL_PROGRESS, ExistingPeriodicWorkPolicy.UPDATE, workRequest
+            WorkerConstants.UPDATE_GOAL_PROGRESS,
+            ExistingPeriodicWorkPolicy.KEEP,
+            updateGoalProgress
+        )
+
+        workManager.enqueueUniquePeriodicWork(
+            WorkerConstants.GENERATE_TASK,
+            ExistingPeriodicWorkPolicy.KEEP,
+            generateTask
         )
     }
 

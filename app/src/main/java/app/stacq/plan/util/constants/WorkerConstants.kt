@@ -8,7 +8,5 @@ object WorkerConstants {
     object TAG {
         const val CATEGORY_SYNC: String = "category_sync"
         const val GOAL_SYNC: String = "goal_sync"
-        const val GOAL_GENERATE_TASK: String = "goal_generate_task"
-        const val GOAL_PROGRESS: String = "goal_progress"
     }
 }
