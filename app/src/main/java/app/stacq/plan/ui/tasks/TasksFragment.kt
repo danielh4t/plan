@@ -225,24 +225,24 @@ class TasksFragment : Fragment() {
             .build()
 
         val updateGoalProgress =
-            PeriodicWorkRequestBuilder<GoalProgressWorker>(15, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<GoalProgressWorker>(3, TimeUnit.HOURS)
                 .setConstraints(constraints)
                 .build()
 
         val generateTask =
-            PeriodicWorkRequestBuilder<GenerateTaskWorker>(15, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<GenerateTaskWorker>(3, TimeUnit.HOURS)
                 .setConstraints(constraints)
                 .build()
 
         workManager.enqueueUniquePeriodicWork(
             WorkerConstants.UPDATE_GOAL_PROGRESS,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.UPDATE,
             updateGoalProgress
         )
 
         workManager.enqueueUniquePeriodicWork(
             WorkerConstants.GENERATE_TASK,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.UPDATE,
             generateTask
         )
     }
