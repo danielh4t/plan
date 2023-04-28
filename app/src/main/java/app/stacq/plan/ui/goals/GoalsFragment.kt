@@ -30,7 +30,7 @@ import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalsBinding
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
-import app.stacq.plan.util.ui.MarginItemDecoration
+import app.stacq.plan.util.ui.VerticalMarginItemDecoration
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
@@ -209,9 +209,9 @@ class GoalsFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.goalsList)
 
         binding.goalsList.addItemDecoration(
-            MarginItemDecoration(
+            VerticalMarginItemDecoration(
                 resources.getDimensionPixelSize(
-                    R.dimen.list_margin
+                    R.dimen.vertica_list_margin
                 )
             )
         )

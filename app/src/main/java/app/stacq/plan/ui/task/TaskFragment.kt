@@ -26,7 +26,7 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.createTimerChannel
-import app.stacq.plan.util.ui.MarginItemDecoration
+import app.stacq.plan.util.ui.VerticalMarginItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
@@ -132,7 +132,7 @@ class TaskFragment : Fragment() {
             BitesAdapter(biteCompleteListener, biteDeleteListener, biteNavigateListener)
         binding.taskBitesList.adapter = bitesAdapter
         binding.taskBitesList.addItemDecoration(
-            MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
+            VerticalMarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
         )
 
         viewModel.task.observe(viewLifecycleOwner) {

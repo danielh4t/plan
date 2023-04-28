@@ -27,7 +27,7 @@ import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
-import app.stacq.plan.util.ui.MarginItemDecoration
+import app.stacq.plan.util.ui.VerticalMarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
@@ -146,7 +146,7 @@ class TasksFragment : Fragment() {
         val tasksAdapter = TasksAdapter(taskNavigateListener, taskCompleteListener)
 
         binding.tasksList.adapter = tasksAdapter
-        binding.tasksList.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin)))
+        binding.tasksList.addItemDecoration(VerticalMarginItemDecoration(resources.getDimensionPixelSize(R.dimen.vertica_list_margin)))
 
         binding.createTaskFab.setOnClickListener {
             if (hasCategories) {

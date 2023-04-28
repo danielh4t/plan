@@ -21,7 +21,7 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentCategoriesBinding
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
-import app.stacq.plan.util.ui.MarginItemDecoration
+import app.stacq.plan.util.ui.VerticalMarginItemDecoration
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.firebase.auth.FirebaseAuth
@@ -129,9 +129,9 @@ class CategoriesFragment : Fragment() {
 
         binding.categoriesList.adapter = adapter
         binding.categoriesList.addItemDecoration(
-            MarginItemDecoration(
+            VerticalMarginItemDecoration(
                 resources.getDimensionPixelSize(
-                    R.dimen.list_margin
+                    R.dimen.vertica_list_margin
                 )
             )
         )

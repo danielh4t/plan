@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="list_margin">16dp</dimen>
+    <dimen name="vertica_list_margin">8dp</dimen>
     <dimen name="list_margin_compact">8dp</dimen>
     <dimen name="goal_image_bottom_margin">8dp</dimen>
     <dimen name="goal_image">24dp</dimen>
