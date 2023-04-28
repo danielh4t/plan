@@ -34,7 +34,7 @@ import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
 import app.stacq.plan.util.time.TimeUtil
-import app.stacq.plan.util.ui.VerticalMarginItemDecoration
+import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
@@ -226,7 +226,7 @@ class TasksFragment : Fragment() {
 
 
         binding.tasksList.addItemDecoration(
-            VerticalMarginItemDecoration(
+            BottomMarginItemDecoration(
                 resources.getDimensionPixelSize(
                     R.dimen.vertica_list_margin
                 )

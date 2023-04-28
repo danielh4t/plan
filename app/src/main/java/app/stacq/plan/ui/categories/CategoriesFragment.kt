@@ -26,7 +26,7 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentCategoriesBinding
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
-import app.stacq.plan.util.ui.VerticalMarginItemDecoration
+import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.firebase.auth.FirebaseAuth
@@ -200,7 +200,7 @@ class CategoriesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.categoriesList)
 
         binding.categoriesList.addItemDecoration(
-            VerticalMarginItemDecoration(
+            BottomMarginItemDecoration(
                 resources.getDimensionPixelSize(
                     R.dimen.vertica_list_margin
                 )
