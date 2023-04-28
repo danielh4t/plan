@@ -32,18 +32,14 @@
             android:checked="@{goal.completed}"
             android:onClick="@{() -> goalCompletedListener.onClick(goal)}"
             app:goalCategoryColor="@{goal.categoryColor}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/goal_name_text"
-            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/goal_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:paddingTop="4dp"
             android:autoSizeTextType="uniform"
             android:contentDescription="@string/content_goal_name"
             android:text="@{goal.name}"
@@ -58,8 +54,6 @@
             android:id="@+id/goal_category_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:paddingBottom="4dp"
             android:contentDescription="@string/content_goal_category"
             android:text="@{goal.categoryName}"
             android:textColor="?android:attr/textColorTertiary"

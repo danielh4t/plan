@@ -32,10 +32,7 @@
             android:checked="@{category.enabled}"
             android:contentDescription="@string/content_category_checkbox"
             android:onClick="@{() -> categoryEnableListener.onClick(category.id)}"
-            android:padding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/category_name"
-            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:categoryColor="@{category.color}" />
