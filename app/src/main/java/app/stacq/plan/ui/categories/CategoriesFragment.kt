@@ -2,6 +2,9 @@ package app.stacq.plan.ui.categories
 
 import android.app.Activity
 import android.content.IntentSender
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
@@ -33,6 +38,7 @@ import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class CategoriesFragment : Fragment() {
 
@@ -126,8 +132,73 @@ class CategoriesFragment : Fragment() {
         }
 
         val adapter = CategoriesAdapter(categoryEnableListener, categoryNavigateListener)
-
         binding.categoriesList.adapter = adapter
+
+        val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val category = adapter.getCategory(position)
+                viewModel.delete(category)
+                Snackbar.make(view, R.string.category_deleted, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.addCategoryFab)
+                    .setAction(R.string.undo) {
+                        viewModel.undoDelete(category)
+                    }
+                    .show()
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+
+                    // Set the background color to red
+                    val background = ColorDrawable(Color.RED)
+
+                    // Set the bounds of the background
+                    background.setBounds(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+
+                    // Draw the background
+                    background.draw(c)
+                }
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.categoriesList)
+
         binding.categoriesList.addItemDecoration(
             VerticalMarginItemDecoration(
                 resources.getDimensionPixelSize(

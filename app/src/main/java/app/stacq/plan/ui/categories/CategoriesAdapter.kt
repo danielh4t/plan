@@ -23,6 +23,10 @@ class CategoriesAdapter(
         holder.bind(category, categoryEnableListener, categoryNavigateListener)
     }
 
+    fun getCategory(position: Int): Category {
+        return getItem(position)
+    }
+
     class ViewHolder private constructor(private val binding: ListItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

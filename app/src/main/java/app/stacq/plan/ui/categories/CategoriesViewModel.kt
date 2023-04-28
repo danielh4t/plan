@@ -22,4 +22,16 @@ class CategoriesViewModel(
             categoryRepository.updateEnabled(categoryId)
         }
     }
+
+    fun delete(category: Category) {
+        viewModelScope.launch {
+            categoryRepository.delete(category)
+        }
+    }
+
+    fun undoDelete(category: Category) {
+        viewModelScope.launch {
+            categoryRepository.create(category)
+        }
+    }
 }
