@@ -20,7 +20,11 @@ class GoalsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val goal = getItem(position)
-        holder.bind(goal, goalNavigateListener,goalCompletedListener)
+        holder.bind(goal, goalNavigateListener, goalCompletedListener)
+    }
+
+    fun getGoal(position: Int): Goal {
+        return getItem(position)
     }
 
     class ViewHolder private constructor(private val binding: ListItemGoalBinding) :
