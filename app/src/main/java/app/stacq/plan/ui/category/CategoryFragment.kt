@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -71,14 +70,6 @@ class CategoryFragment : Fragment() {
                 R.id.edit_category -> {
                     val action =
                         CategoryFragmentDirections.actionNavCategoryToNavCategoryModify(categoryId)
-                    navController.navigate(action)
-                    true
-                }
-                R.id.delete_category -> {
-                    viewModel.delete()
-                    Toast.makeText(requireContext(), R.string.category_deleted, Toast.LENGTH_SHORT)
-                        .show()
-                    val action = CategoryFragmentDirections.actionNavCategoryToNavCategories()
                     navController.navigate(action)
                     true
                 }

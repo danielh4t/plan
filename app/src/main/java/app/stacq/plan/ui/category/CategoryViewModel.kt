@@ -2,10 +2,8 @@ package app.stacq.plan.ui.category
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.category.CategoryRepository
 import app.stacq.plan.domain.Category
-import kotlinx.coroutines.launch
 
 
 class CategoryViewModel(
@@ -14,12 +12,4 @@ class CategoryViewModel(
 ) : ViewModel() {
 
     val category: LiveData<Category> = categoryRepository.getCategory(categoryId)
-
-    fun delete() {
-        category.value?.let {
-            viewModelScope.launch {
-                categoryRepository.delete(it)
-            }
-        }
-    }
 }

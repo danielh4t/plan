@@ -9,11 +9,4 @@
         android:title="@string/edit"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/delete_category"
-        android:contentDescription="@string/content_delete_category"
-        android:icon="@drawable/ic_trash_outline"
-        android:title="@string/delete"
-        app:showAsAction="ifRoom" />
-
 </menu>
