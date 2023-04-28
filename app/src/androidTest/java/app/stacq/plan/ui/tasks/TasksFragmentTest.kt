@@ -36,7 +36,7 @@ class TasksFragmentTest {
         }
 
         // Verify that performing a click changes the NavController’s state
-        onView(withId(R.id.create_task_fab)).perform(click())
+        onView(withId(R.id.add_task_fab)).perform(click())
         assertThat(
             navController.currentDestination?.id,
             either(`is`(R.id.nav_create_category)).or(`is`(R.id.nav_create_task))

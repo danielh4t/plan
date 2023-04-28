@@ -24,7 +24,6 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskBinding
-import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.createTimerChannel
 import app.stacq.plan.util.ui.VerticalMarginItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -89,31 +88,14 @@ class TaskFragment : Fragment() {
                     navController.navigate(action)
                     true
                 }
+
                 R.id.clone_task -> {
                     viewModel.clone()
-                    Toast.makeText(requireContext(), R.string.task_cloned, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.task_cloned, Toast.LENGTH_SHORT)
+                        .show()
                     true
                 }
-                R.id.archive_task -> {
-                    // cancel alarm
-                    val hasAlarm = viewModel.hasAlarm()
-                    if (hasAlarm) {
-                        // finish_at
-                        viewModel.task.value?.let {
-                            val name = it.name
-                            val requestCode: Int = it.timerFinishAt.toInt()
-                            cancelAlarm(application, requestCode, name)
-                        }
-                    }
 
-                    viewModel.archive(taskId)
-
-                    Toast.makeText(requireContext(), R.string.task_archived, Toast.LENGTH_SHORT).show()
-
-                    val action = TaskFragmentDirections.actionNavTaskToNavTasks()
-                    navController.navigate(action)
-                    true
-                }
                 else -> false
             }
         }
@@ -162,6 +144,7 @@ class TaskFragment : Fragment() {
                     val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
                     navController.navigate(action)
                 }
+
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                     // Additional rationale should be displayed
                     // Explain to the user why your app requires this permission
@@ -188,6 +171,7 @@ class TaskFragment : Fragment() {
                         }
                         .show()
                 }
+
                 else -> {
                     // Create Channel
                     createTimerChannel(requireNotNull(this.activity).application.applicationContext)

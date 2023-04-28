@@ -60,7 +60,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_task_fab"
+            android:id="@+id/add_task_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

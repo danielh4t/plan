@@ -4,23 +4,16 @@
 
     <item
         android:id="@+id/edit_task"
-        android:title="@string/edit"
         android:contentDescription="@string/content_edit_task"
         android:icon="@drawable/ic_edit_outline"
+        android:title="@string/edit"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/clone_task"
-        android:title="@string/clone"
         android:contentDescription="@string/content_task_clone"
         android:icon="@drawable/ic_copy"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/archive_task"
-        android:title="@string/archive"
-        android:contentDescription="@string/content_archive_task"
-        android:icon="@drawable/ic_archive"
+        android:title="@string/clone"
         app:showAsAction="ifRoom" />
 
 </menu>

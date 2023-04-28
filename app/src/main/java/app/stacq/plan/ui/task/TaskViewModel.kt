@@ -66,12 +66,6 @@ class TaskViewModel(
         }
     }
 
-    fun archive(taskId: String) {
-        scope.launch {
-            taskRepository.archive(taskId)
-        }
-    }
-
     fun updatePriority(priority: Float) {
         val task: Task? = task.value
         task?.let {
@@ -94,15 +88,6 @@ class TaskViewModel(
         viewModelScope.launch {
             bitesRepository.delete(bite)
         }
-    }
-
-    fun hasAlarm(): Boolean {
-        val task: Task? = task.value
-        task?.let {
-            if (it.timerAlarm && it.timerFinishAt > TimeUtil().nowInSeconds())
-                return true
-        }
-        return false
     }
 
     override fun onCleared() {

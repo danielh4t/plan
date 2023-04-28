@@ -32,4 +32,16 @@ class TasksViewModel(
             taskRepository.updateCompletion(task)
         }
     }
+
+    fun archive(task: Task) {
+        viewModelScope.launch {
+            taskRepository.archive(task.id)
+        }
+    }
+
+    fun unarchive(task: Task) {
+        viewModelScope.launch {
+            taskRepository.unarchive(task.id)
+        }
+    }
 }
