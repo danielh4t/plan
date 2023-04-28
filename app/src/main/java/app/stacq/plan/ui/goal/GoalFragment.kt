@@ -24,7 +24,6 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalBinding
 import app.stacq.plan.domain.Goal
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -87,18 +86,6 @@ class GoalFragment : Fragment() {
                 R.id.generate_goal_task -> {
                     viewModel.generateTask()
                     Toast.makeText(requireContext(), R.string.task_generated, Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.delete_goal -> {
-                    viewModel.delete()
-                    Snackbar.make(view, R.string.goal_deleted, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.root)
-                        .setAction(R.string.undo) {
-                            viewModel.undoDelete()
-                        }
-                        .show()
-                    val action = GoalFragmentDirections.actionNavGoalToNavGoals()
-                    navController.navigate(action)
                     true
                 }
                 else -> false

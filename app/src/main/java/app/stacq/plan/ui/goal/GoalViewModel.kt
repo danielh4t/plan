@@ -19,24 +19,6 @@ class GoalViewModel(
 
     val goal: LiveData<Goal> = goalRepository.getGoal(goalId)
 
-    fun delete() {
-        val goal: Goal? = goal.value
-        goal?.let {
-            viewModelScope.launch {
-                goalRepository.delete(it)
-            }
-        }
-    }
-
-    fun undoDelete() {
-        val goal: Goal? = goal.value
-        goal?.let {
-            viewModelScope.launch {
-                goalRepository.create(it)
-            }
-        }
-    }
-
     fun updateGenerate(isChecked: Boolean) {
         val goal: Goal? = goal.value
         goal?.let {
