@@ -5,8 +5,10 @@ import androidx.annotation.Keep
 @Keep
 data class GoalDocument(
     val id: String? = null,
-    val name: String? = null,
     val createdAt: Long? = null,
+    val name: String? = null,
+    val measure: String? = null,
+    var result: String? = null,
     var categoryId: String? = null,
     var days: Int? = null,
     var progress: Int? = null,

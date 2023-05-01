@@ -20,6 +20,10 @@ data class GoalEntity(
 
     var name: String,
 
+    var measure: String,
+
+    var result: String,
+
     @ColumnInfo(name = "category_id")
     var categoryId: String,
 
