@@ -174,5 +174,7 @@
     <string name="measure">Measure</string>
     <string name="content_result_image">Result\n</string>
     <string name="result">Result</string>
+    <string name="goal_measure_required">Goal measure is required</string>
+    <string name="goal_result_required">Goal result is required</string>
 
 </resources>
