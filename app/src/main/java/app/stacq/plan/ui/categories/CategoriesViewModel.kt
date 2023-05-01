@@ -24,12 +24,14 @@ class CategoriesViewModel(
     }
 
     fun delete(category: Category) {
+        category.deleted = true
         viewModelScope.launch {
             categoryRepository.delete(category)
         }
     }
 
     fun undoDelete(category: Category) {
+        category.deleted = false
         viewModelScope.launch {
             categoryRepository.create(category)
         }
