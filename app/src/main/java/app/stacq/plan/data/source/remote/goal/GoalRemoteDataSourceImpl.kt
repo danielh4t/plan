@@ -26,6 +26,8 @@ class GoalRemoteDataSourceImpl(
         val fields = hashMapOf(
             "id" to goalDocument.id,
             "name" to goalDocument.name,
+            "measure" to goalDocument.measure,
+            "result" to goalDocument.result,
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
             "days" to goalDocument.days,
@@ -54,6 +56,8 @@ class GoalRemoteDataSourceImpl(
         val fields = hashMapOf(
             "id" to goalDocument.id,
             "name" to goalDocument.name,
+            "measure" to goalDocument.measure,
+            "result" to goalDocument.result,
             "createdAt" to goalDocument.createdAt,
             "categoryId" to goalDocument.categoryId,
             "days" to goalDocument.days,
