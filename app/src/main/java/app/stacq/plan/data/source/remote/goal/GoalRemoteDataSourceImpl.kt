@@ -13,7 +13,7 @@ class GoalRemoteDataSourceImpl(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): GoalRemoteDataSource {
+) : GoalRemoteDataSource {
 
     override suspend fun create(goalDocument: GoalDocument) = withContext(ioDispatcher) {
 
@@ -42,7 +42,7 @@ class GoalRemoteDataSourceImpl(
             .set(fields)
     }
 
-    override  suspend fun update(goalDocument: GoalDocument) = withContext(ioDispatcher) {
+    override suspend fun update(goalDocument: GoalDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         val categoryId = goalDocument.categoryId
@@ -67,6 +67,22 @@ class GoalRemoteDataSourceImpl(
             .collection(GOALS)
             .document(goalId)
             .set(fields)
+    }
+
+    override suspend fun delete(goalDocument: GoalDocument) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        val categoryId = goalDocument.categoryId
+        val goalId = goalDocument.id
+
+        if (uid == null || categoryId == null || goalId == null) return@withContext
+
+        // flips deleted
+        val fields = mapOf("deleted" to goalDocument.deleted)
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .update(fields)
     }
 
     override suspend fun updateCategory(goalDocument: GoalDocument, previousCategoryId: String) =
