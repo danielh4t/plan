@@ -176,5 +176,11 @@
     <string name="result">Result</string>
     <string name="goal_measure_required">Goal measure is required</string>
     <string name="goal_result_required">Goal result is required</string>
+    <string name="content_goal_pantone_icon">Pantone icon</string>
+    <string name="content_goal_measure_label">Measure of goal</string>
+    <string name="content_goal_measure">Measure</string>
+    <string name="content_goal_result_icon">Award icon</string>
+    <string name="content_goal_result">Goal result</string>
+    <string name="content_goal_result_label">Goal result label\n</string>
 
 </resources>

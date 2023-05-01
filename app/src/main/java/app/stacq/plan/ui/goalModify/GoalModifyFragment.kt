@@ -95,6 +95,8 @@ class GoalModifyFragment : Fragment() {
         viewModel.goal.observe(viewLifecycleOwner) { it ->
             it?.let {
                 binding.goalModifyNameEditText.setText(it.name)
+                binding.goalModifyMeasureEditText.setText(it.measure)
+                binding.goalModifyResultEditText.setText(it.result)
                 binding.goalModifyDaysEditText.setText(it.days.toString())
                 val categoryChip =
                     binding.goalModifyCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
