@@ -170,5 +170,9 @@
     <string name="archive">Archive</string>
     <string name="content_generate_goal_task">Generate task</string>
     <string name="task_generated">Task generated</string>
+    <string name="content_measure_image">Pantone icon</string>
+    <string name="measure">Measure</string>
+    <string name="content_result_image">Result\n</string>
+    <string name="result">Result</string>
 
 </resources>
