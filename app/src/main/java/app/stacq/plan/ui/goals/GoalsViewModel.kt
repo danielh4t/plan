@@ -32,12 +32,14 @@ class GoalsViewModel(
     }
 
     fun delete(goal: Goal) {
+        goal.deleted = true
         viewModelScope.launch {
             goalRepository.delete(goal)
         }
     }
 
     fun undoDelete(goal: Goal) {
+        goal.deleted = false
         viewModelScope.launch {
             goalRepository.create(goal)
         }

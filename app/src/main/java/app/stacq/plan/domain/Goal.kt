@@ -19,6 +19,7 @@ data class Goal(
     var completed: Boolean,
     var completedAt: Long,
     var generate: Boolean,
+    var deleted: Boolean,
     var categoryName: String?  = null,
     var categoryColor: String? = null,
 ) : Parcelable
@@ -33,6 +34,7 @@ fun Goal.asEntity() = GoalEntity(
     completed = completed,
     completedAt = completedAt,
     generate = generate,
+    deleted = deleted,
 )
 
 fun Goal.asDocument() = GoalDocument(
@@ -45,6 +47,7 @@ fun Goal.asDocument() = GoalDocument(
     completed = completed,
     completedAt = completedAt,
     generate = generate,
+    deleted = deleted,
 )
 
 fun GoalEntity.asGoal() = Goal(
@@ -57,6 +60,7 @@ fun GoalEntity.asGoal() = Goal(
     completed = completed,
     completedAt = completedAt,
     generate = generate,
+    deleted = deleted,
 )
 
 fun GoalEntityAndCategoryEntity.asGoal() = Goal(
@@ -69,6 +73,7 @@ fun GoalEntityAndCategoryEntity.asGoal() = Goal(
     completed = goalEntity.completed,
     completedAt = goalEntity.completedAt,
     generate = goalEntity.generate,
+    deleted = goalEntity.deleted,
     categoryName = categoryEntity.name,
     categoryColor = categoryEntity.color,
 )
@@ -83,4 +88,5 @@ fun GoalDocument.asGoal() =  Goal(
     completed = completed ?: false,
     completedAt = completedAt ?: 0L,
     generate = generate ?: false,
+    deleted = deleted ?: false,
 )

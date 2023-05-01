@@ -13,4 +13,5 @@ data class GoalDocument(
     var completed: Boolean? = null,
     var completedAt: Long? = null,
     var generate: Boolean? = null,
+    var deleted: Boolean? = null,
 )

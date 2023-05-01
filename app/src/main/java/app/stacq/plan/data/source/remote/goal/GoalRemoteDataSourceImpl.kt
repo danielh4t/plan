@@ -13,7 +13,7 @@ class GoalRemoteDataSourceImpl(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): GoalRemoteDataSource {
+) : GoalRemoteDataSource {
 
     override suspend fun create(goalDocument: GoalDocument) = withContext(ioDispatcher) {
 
@@ -33,6 +33,7 @@ class GoalRemoteDataSourceImpl(
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
+            "deleted" to goalDocument.deleted,
         )
 
         firestore.collection(uid)
@@ -42,7 +43,7 @@ class GoalRemoteDataSourceImpl(
             .set(fields)
     }
 
-    override  suspend fun update(goalDocument: GoalDocument) = withContext(ioDispatcher) {
+    override suspend fun update(goalDocument: GoalDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         val categoryId = goalDocument.categoryId
@@ -60,6 +61,7 @@ class GoalRemoteDataSourceImpl(
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
+            "deleted" to goalDocument.deleted,
         )
 
         firestore.collection(uid)
@@ -67,6 +69,23 @@ class GoalRemoteDataSourceImpl(
             .collection(GOALS)
             .document(goalId)
             .set(fields)
+    }
+
+    override suspend fun delete(goalDocument: GoalDocument) = withContext(ioDispatcher) {
+
+        val uid = firebaseAuth.currentUser?.uid
+        val categoryId = goalDocument.categoryId
+        val goalId = goalDocument.id
+
+        if (uid == null || categoryId == null || goalId == null) return@withContext
+
+        val fields = mapOf("deleted" to goalDocument.deleted)
+
+        firestore.collection(uid)
+            .document(categoryId)
+            .collection(GOALS)
+            .document(goalId)
+            .update(fields)
     }
 
     override suspend fun updateCategory(goalDocument: GoalDocument, previousCategoryId: String) =

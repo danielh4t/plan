@@ -6,6 +6,8 @@ interface GoalRemoteDataSource {
 
     suspend fun update(goalDocument: GoalDocument)
 
+    suspend fun delete(goalDocument: GoalDocument)
+
     suspend fun updateCategory(goalDocument: GoalDocument, previousCategoryId: String)
 
     suspend fun getGoalDocuments(categoryId: String): List<GoalDocument>
