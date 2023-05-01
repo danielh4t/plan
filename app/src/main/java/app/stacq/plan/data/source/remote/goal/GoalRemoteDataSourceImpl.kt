@@ -79,11 +79,12 @@ class GoalRemoteDataSourceImpl(
 
         if (uid == null || categoryId == null || goalId == null) return@withContext
 
-        // flips deleted
         val fields = mapOf("deleted" to goalDocument.deleted)
 
         firestore.collection(uid)
             .document(categoryId)
+            .collection(GOALS)
+            .document(goalId)
             .update(fields)
     }
 
