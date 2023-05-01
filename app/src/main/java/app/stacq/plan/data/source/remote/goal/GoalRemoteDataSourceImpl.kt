@@ -33,6 +33,7 @@ class GoalRemoteDataSourceImpl(
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
+            "deleted" to goalDocument.deleted,
         )
 
         firestore.collection(uid)
@@ -60,6 +61,7 @@ class GoalRemoteDataSourceImpl(
             "completed" to goalDocument.completed,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
+            "deleted" to goalDocument.deleted,
         )
 
         firestore.collection(uid)
