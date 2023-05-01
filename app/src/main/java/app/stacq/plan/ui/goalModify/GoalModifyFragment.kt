@@ -111,6 +111,22 @@ class GoalModifyFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val measure: String = binding.goalModifyNameEditText.text.toString().trim()
+            if (measure.isEmpty()) {
+                Snackbar.make(clickedView, R.string.goal_measure_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(clickedView)
+                    .show()
+                return@setOnClickListener
+            }
+
+            val result: String = binding.goalModifyNameEditText.text.toString().trim()
+            if (result.isEmpty()) {
+                Snackbar.make(clickedView, R.string.goal_result_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(clickedView)
+                    .show()
+                return@setOnClickListener
+            }
+
             val checkedId: Int = binding.goalModifyCategoryChipGroup.checkedChipId
             if (checkedId == View.NO_ID) {
                 Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_SHORT)
@@ -132,9 +148,9 @@ class GoalModifyFragment : Fragment() {
             }
 
             val id = if (goalId == null) {
-                viewModel.create(name, categoryId, days)
+                viewModel.create(name, measure, result, categoryId, days)
             } else {
-                viewModel.update(name, categoryId, days)
+                viewModel.update(name, measure, result, categoryId, days)
                 goalId
             }
 

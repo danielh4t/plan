@@ -26,8 +26,20 @@ class GoalModifyViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
-    fun create(name: String, categoryId: String, days: Int): String {
-        val goalEntity = GoalEntity(name = name, categoryId = categoryId, days = days)
+    fun create(
+        name: String,
+        measure: String,
+        result: String,
+        categoryId: String,
+        days: Int
+    ): String {
+        val goalEntity = GoalEntity(
+            name = name,
+            measure = measure,
+            result = result,
+            categoryId = categoryId,
+            days = days
+        )
         viewModelScope.launch {
             val goal = goalEntity.asGoal()
             goalRepository.create(goal)
@@ -35,17 +47,19 @@ class GoalModifyViewModel(
         return goalEntity.id
     }
 
-    fun update(name: String, categoryId: String, days: Int) {
+    fun update(name: String, measure: String, result: String, categoryId: String, days: Int) {
         viewModelScope.launch {
             goal.value?.let {
                 if (it.categoryId == categoryId) {
                     it.name = name
+                    it.measure = measure
                     it.days = days
                     goalRepository.update(it)
                 } else {
                     // update category
                     val previousCategoryId = it.categoryId
                     it.name = name
+                    it.result = result
                     it.days = days
                     it.categoryId = categoryId
                     goalRepository.updateCategory(it, previousCategoryId)
