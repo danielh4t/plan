@@ -113,7 +113,7 @@ class GoalModifyFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val measure: String = binding.goalModifyNameEditText.text.toString().trim()
+            val measure: String = binding.goalModifyMeasureEditText.text.toString().trim()
             if (measure.isEmpty()) {
                 Snackbar.make(clickedView, R.string.goal_measure_required, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
@@ -121,7 +121,7 @@ class GoalModifyFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val result: String = binding.goalModifyNameEditText.text.toString().trim()
+            val result: String = binding.goalModifyResultEditText.text.toString().trim()
             if (result.isEmpty()) {
                 Snackbar.make(clickedView, R.string.goal_result_required, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
