@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,18 +26,19 @@ import app.stacq.plan.databinding.FragmentCategoriesBinding
 import app.stacq.plan.util.handleSignInWithFirebase
 import app.stacq.plan.util.launchSignIn
 import app.stacq.plan.util.ui.BottomMarginItemDecoration
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.android.gms.auth.api.identity.SignInClient
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CategoriesFragment : Fragment() {
 
@@ -237,13 +237,13 @@ class CategoriesFragment : Fragment() {
                         signInLauncher.launch(intentSenderRequest)
 
                     } catch (e: IntentSender.SendIntentException) {
-                        Log.e("Plan", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                        Firebase.crashlytics.log("One Tap Failure: ${e.localizedMessage}")
                     }
                 }
                 .addOnFailureListener { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
-                    Log.d("Plan", "Failure: ${e.localizedMessage}")
+                    Firebase.crashlytics.log("Auth Failure: ${e.localizedMessage}")
                 }
             // don't
             showOneTapUI = false

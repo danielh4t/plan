@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +40,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -266,13 +266,13 @@ class GoalsFragment : Fragment() {
                         signInLauncher.launch(intentSenderRequest)
 
                     } catch (e: IntentSender.SendIntentException) {
-                        Log.e("Plan", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                        Firebase.crashlytics.log("One Tap Failure: ${e.localizedMessage}")
                     }
                 }
                 .addOnFailureListener { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
-                    Log.d("Plan", "Failure: ${e.localizedMessage}")
+                    Firebase.crashlytics.log("Auth Failure: ${e.localizedMessage}")
                 }
             // don't
             showOneTapUI = false

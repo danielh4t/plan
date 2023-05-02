@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,16 +17,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import app.stacq.plan.MainNavDirections
 import app.stacq.plan.R
+import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
+import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
-import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
-import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.constants.WorkerConstants
@@ -36,21 +41,22 @@ import app.stacq.plan.util.launchSignIn
 import app.stacq.plan.util.time.TimeUtil
 import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
+import app.stacq.plan.worker.GenerateTaskWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
-import app.stacq.plan.worker.GenerateTaskWorker
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.CircleCropTransformation
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import coil.load
-import coil.size.ViewSizeResolver
-import coil.transform.CircleCropTransformation
 import java.util.concurrent.TimeUnit
 
 
@@ -344,13 +350,13 @@ class TasksFragment : Fragment() {
                         signInLauncher.launch(intentSenderRequest)
 
                     } catch (e: IntentSender.SendIntentException) {
-                        Log.e("Plan", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                        Firebase.crashlytics.log("One Tap Failure: ${e.localizedMessage}")
                     }
                 }
                 .addOnFailureListener { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
-                    Log.d("Plan", "Failure: ${e.localizedMessage}")
+                    Firebase.crashlytics.log("Auth Failure: ${e.localizedMessage}")
                 }
             // don't
             showOneTapUI = false
