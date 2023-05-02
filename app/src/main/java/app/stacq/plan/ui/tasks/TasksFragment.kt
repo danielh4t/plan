@@ -351,12 +351,14 @@ class TasksFragment : Fragment() {
 
                     } catch (e: IntentSender.SendIntentException) {
                         Firebase.crashlytics.log("One Tap Failure: ${e.localizedMessage}")
+                        Toast.makeText(context, e.stackTraceToString(), Toast.LENGTH_LONG).show()
                     }
                 }
                 .addOnFailureListener { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
                     Firebase.crashlytics.log("Auth Failure: ${e.localizedMessage}")
+                    Toast.makeText(context, e.stackTraceToString(), Toast.LENGTH_LONG).show()
                 }
             // don't
             showOneTapUI = false
