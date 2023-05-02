@@ -95,6 +95,8 @@ class GoalModifyFragment : Fragment() {
         viewModel.goal.observe(viewLifecycleOwner) { it ->
             it?.let {
                 binding.goalModifyNameEditText.setText(it.name)
+                binding.goalModifyMeasureEditText.setText(it.measure)
+                binding.goalModifyResultEditText.setText(it.result)
                 binding.goalModifyDaysEditText.setText(it.days.toString())
                 val categoryChip =
                     binding.goalModifyCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
@@ -106,6 +108,22 @@ class GoalModifyFragment : Fragment() {
             val name: String = binding.goalModifyNameEditText.text.toString().trim()
             if (name.isEmpty()) {
                 Snackbar.make(clickedView, R.string.goal_name_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(clickedView)
+                    .show()
+                return@setOnClickListener
+            }
+
+            val measure: String = binding.goalModifyNameEditText.text.toString().trim()
+            if (measure.isEmpty()) {
+                Snackbar.make(clickedView, R.string.goal_measure_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(clickedView)
+                    .show()
+                return@setOnClickListener
+            }
+
+            val result: String = binding.goalModifyNameEditText.text.toString().trim()
+            if (result.isEmpty()) {
+                Snackbar.make(clickedView, R.string.goal_result_required, Snackbar.LENGTH_SHORT)
                     .setAnchorView(clickedView)
                     .show()
                 return@setOnClickListener
@@ -132,9 +150,9 @@ class GoalModifyFragment : Fragment() {
             }
 
             val id = if (goalId == null) {
-                viewModel.create(name, categoryId, days)
+                viewModel.create(name, measure, result, categoryId, days)
             } else {
-                viewModel.update(name, categoryId, days)
+                viewModel.update(name, measure, result, categoryId, days)
                 goalId
             }
 
