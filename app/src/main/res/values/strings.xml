@@ -182,5 +182,7 @@
     <string name="content_goal_result_icon">Award icon</string>
     <string name="content_goal_result">Goal result</string>
     <string name="content_goal_result_label">Goal result label\n</string>
+    <string name="email_address">Email address</string>
+    <string name="content_envelope_image">Envelope icon</string>
 
 </resources>
