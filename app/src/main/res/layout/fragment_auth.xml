@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/auth_image"
+            android:layout_width="wrap_content"
+            android:layout_height="480dp"
+            android:contentDescription="@string/content_envelope_image"
+            android:src="@drawable/il_sync"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/auth_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_sign_in_sync"
+            android:fontFamily="@font/roboto"
+            android:textSize="20sp"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_image"
+            />
+
+        <ImageView
+            android:id="@+id/auth_email_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_envelope_image"
+            android:src="@drawable/ic_email"
+            app:layout_constraintBottom_toBottomOf="@+id/auth_email_layout"
+            app:layout_constraintEnd_toStartOf="@+id/auth_email_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/auth_email_layout"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/auth_email_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/email_address"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/auth_email_image"
+            app:layout_constraintTop_toBottomOf="@id/auth_label_text"
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/auth_email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <ImageView
+            android:id="@+id/auth_password_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_lock_image"
+            android:src="@drawable/ic_lock"
+            app:layout_constraintBottom_toBottomOf="@+id/auth_password_layout"
+            app:layout_constraintEnd_toStartOf="@+id/auth_password_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/auth_password_layout"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/auth_password_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/password"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/auth_password_image"
+            app:layout_constraintTop_toBottomOf="@id/auth_email_layout"
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/auth_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/sign_up_button"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toStartOf="@+id/sign_in_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
+
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sign_up_button"
+            app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -10,13 +10,14 @@
         android:name="app.stacq.plan.ui.tasks.TasksFragment"
         android:label="@string/tasks"
         tools:layout="@layout/fragment_tasks">
-        <action
-            android:id="@+id/action_nav_tasks_to_nav_task"
-            app:destination="@id/nav_task" />
         <argument
             android:name="ShowBottomNav"
             android:defaultValue="true"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_nav_tasks_to_nav_task"
+            app:destination="@id/nav_task" />
+
         <action
             android:id="@+id/action_nav_tasks_to_nav_task_modify"
             app:destination="@id/nav_task_modify" />
@@ -27,13 +28,13 @@
         android:name="app.stacq.plan.ui.categories.CategoriesFragment"
         android:label="@string/categories"
         tools:layout="@layout/fragment_categories">
-        <action
-            android:id="@+id/action_nav_categories_to_nav_category_modify"
-            app:destination="@id/nav_category_modify" />
         <argument
             android:name="ShowBottomNav"
             android:defaultValue="true"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_nav_categories_to_nav_category_modify"
+            app:destination="@id/nav_category_modify" />
         <action
             android:id="@+id/action_nav_categories_to_nav_category"
             app:destination="@id/nav_category" />
@@ -195,5 +196,29 @@
         app:launchSingleTop="true"
         app:popUpTo="@id/nav_tasks"
         app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="app.stacq.plan.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="ShowBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_nav_profile_to_nav_auth"
+            app:destination="@id/nav_auth" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_auth"
+        android:name="app.stacq.plan.ui.auth.AuthFragment"
+        android:label="@string/authentication"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_nav_auth_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
 
 </navigation>

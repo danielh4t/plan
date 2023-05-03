@@ -21,5 +21,11 @@
             android:contentDescription="@string/content_categories_menu"
             android:icon="@drawable/ic_color_palette_outline"
             android:title="@string/title_categories" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:contentDescription="@string/content_profile_menu"
+            android:icon="@drawable/ic_person"
+            android:title="@string/title_profile" />
     </group>
 </menu>

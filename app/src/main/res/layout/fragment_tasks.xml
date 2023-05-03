@@ -27,26 +27,6 @@
                 app:liftOnScroll="true"
                 app:title="@string/tasks">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/tasks_account_image_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/content_account_image"
-                        android:src="@drawable/ic_account_circle"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>

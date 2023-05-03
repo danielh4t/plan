@@ -32,6 +32,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'benchmark-rules.pro'
             matchingFallbacks = ['release']
             debuggable false
+
         }
         release {
             minifyEnabled true
@@ -84,12 +85,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-appcheck-debug:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
     implementation 'io.coil-kt:coil:2.3.0'
     testImplementation 'androidx.arch.core:core-testing:2.2.0'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
