@@ -43,13 +43,4 @@ class BiteModifyViewModel(
             }
         }
     }
-
-    fun delete() {
-        val bite: Bite? = bite.value
-        viewModelScope.launch {
-            bite?.let {
-                biteRepository.delete(it)
-            }
-        }
-    }
 }

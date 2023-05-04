@@ -11,7 +11,6 @@ import app.stacq.plan.domain.Bite
 
 class BitesAdapter(
     private val biteCompleteListener: BiteCompleteListener,
-    private val biteDeleteListener: BiteDeleteListener,
     private val biteNavigateListener: BiteNavigateListener,
 ) : ListAdapter<Bite, BitesAdapter.ViewHolder>(BiteDiffCallback()) {
 
@@ -21,7 +20,11 @@ class BitesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bite = getItem(position)
-        holder.bind(bite, biteCompleteListener, biteDeleteListener, biteNavigateListener)
+        holder.bind(bite, biteCompleteListener, biteNavigateListener)
+    }
+
+    fun getBite(position: Int): Bite {
+        return getBite(position)
     }
 
     class ViewHolder private constructor(private val binding: ListItemBiteBinding) :
@@ -38,12 +41,10 @@ class BitesAdapter(
         fun bind(
             bite: Bite,
             biteCompleteListener: BiteCompleteListener,
-            biteDeleteListener: BiteDeleteListener,
             biteNavigateListener: BiteNavigateListener
         ) {
             binding.bite = bite
             binding.biteCompleteListener = biteCompleteListener
-            binding.biteDeleteListener = biteDeleteListener
             binding.biteNavigateListener = biteNavigateListener
             binding.executePendingBindings()
         }
@@ -63,10 +64,6 @@ class BiteDiffCallback : DiffUtil.ItemCallback<Bite>() {
 
 class BiteCompleteListener(val biteCompleteListener: (bite: Bite) -> Unit) {
     fun onClick(bite: Bite) = biteCompleteListener(bite)
-}
-
-class BiteDeleteListener(val biteDeleteListener: (bite: Bite) -> Boolean) {
-    fun onLongClick(bite: Bite) = biteDeleteListener(bite)
 }
 
 class BiteNavigateListener(val biteNavigateListener: (biteId: String) -> Unit) {

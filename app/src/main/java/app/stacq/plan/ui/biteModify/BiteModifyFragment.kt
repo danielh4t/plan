@@ -3,8 +3,9 @@ package app.stacq.plan.ui.biteModify
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import androidx.core.view.MenuProvider
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -72,32 +73,6 @@ class BiteModifyFragment : Fragment() {
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.biteModifyAppBar.setupWithNavController(navController, appBarConfiguration)
-
-        binding.biteModifyAppBar.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.bite_app_bar_menu, menu)
-                val deleteBite = menu.findItem(R.id.delete_bite)
-                deleteBite?.let {
-                    if (biteId == null) {
-                        it.isVisible = false
-                    }
-                }
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.delete_bite -> {
-                        viewModel.delete()
-                        val action =
-                            BiteModifyFragmentDirections.actionNavBiteModifyToNavTask(taskId)
-                        navController.navigate(action)
-                        true
-                    }
-                    else -> false
-                }
-            }
-        })
-
 
         viewModel.bite.observe(viewLifecycleOwner) { it ->
             it?.let {

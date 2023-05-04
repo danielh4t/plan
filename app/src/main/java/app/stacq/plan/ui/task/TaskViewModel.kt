@@ -84,6 +84,12 @@ class TaskViewModel(
         }
     }
 
+    fun createBite(bite: Bite) {
+        viewModelScope.launch {
+            bitesRepository.create(bite)
+        }
+    }
+
     fun deleteBite(bite: Bite) {
         viewModelScope.launch {
             bitesRepository.delete(bite)
