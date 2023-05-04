@@ -9,7 +9,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTask
-import app.stacq.plan.util.constants.AnalyticsConstants
+import app.stacq.plan.util.constants.FirebaseAnalyticsConstants
 import app.stacq.plan.util.time.TimeUtil
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -33,7 +33,7 @@ class TaskViewModel(
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     fun logPermission(isGranted: Boolean) {
-        firebaseAnalytics.logEvent(AnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
+        firebaseAnalytics.logEvent(FirebaseAnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
             param("notifications", if (isGranted) "true" else "false")
         }
     }
