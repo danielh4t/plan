@@ -199,4 +199,5 @@
     <string name="sign_in_failed">Sign In failed</string>
     <string name="sign_up_failed">Sign Up failed</string>
     <string name="email_password_required">Email and password are required</string>
+    <string name="bite_deleted">Bite deleted\n</string>
 </resources>

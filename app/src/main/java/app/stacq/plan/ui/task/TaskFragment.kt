@@ -2,6 +2,9 @@ package app.stacq.plan.ui.task
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
 import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
@@ -101,18 +106,81 @@ class TaskFragment : Fragment() {
         }
 
         val biteCompleteListener = BiteCompleteListener { viewModel.completeBite(it) }
-        val biteDeleteListener = BiteDeleteListener {
-            viewModel.deleteBite(it)
-            true
-        }
+
         val biteNavigateListener = BiteNavigateListener {
             val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, it)
             navController.navigate(action)
         }
 
-        val bitesAdapter =
-            BitesAdapter(biteCompleteListener, biteDeleteListener, biteNavigateListener)
-        binding.taskBitesList.adapter = bitesAdapter
+        val adapter =
+            BitesAdapter(biteCompleteListener, biteNavigateListener)
+
+        val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val bite = adapter.getBite(position)
+                viewModel.deleteBite(bite)
+                Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.timerFab)
+                    .setAction(R.string.undo) {
+                        viewModel.createBite(bite)
+                    }
+                    .show()
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+
+                    // Set the background color to red
+                    val background = ColorDrawable(Color.RED)
+
+                    // Set the bounds of the background
+                    background.setBounds(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+
+                    // Draw the background
+                    background.draw(c)
+                }
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.taskBitesList)
+
+        binding.taskBitesList.adapter = adapter
         binding.taskBitesList.addItemDecoration(
             BottomMarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
         )
@@ -125,7 +193,7 @@ class TaskFragment : Fragment() {
 
         viewModel.bites.observe(viewLifecycleOwner) {
             it?.let {
-                bitesAdapter.submitList(it)
+                adapter.submitList(it)
             }
         }
 
