@@ -196,4 +196,6 @@
     <string name="no_media_selected">No media selected</string>
     <string name="profile_picture_updated">Profile picture updated</string>
     <string name="profile_picture_upload_failed">Profile picture upload failed\n</string>
+    <string name="sign_in_failed">Sign In failed</string>
+    <string name="sign_up_failed">Sign Up failed</string>
 </resources>
