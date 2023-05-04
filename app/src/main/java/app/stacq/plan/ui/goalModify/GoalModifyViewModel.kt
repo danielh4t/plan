@@ -50,17 +50,15 @@ class GoalModifyViewModel(
     fun update(name: String, measure: String, result: String, categoryId: String, days: Int) {
         viewModelScope.launch {
             goal.value?.let {
+                it.name = name
+                it.measure = measure
+                it.result = result
+                it.days = days
                 if (it.categoryId == categoryId) {
-                    it.name = name
-                    it.measure = measure
-                    it.days = days
                     goalRepository.update(it)
                 } else {
                     // update category
                     val previousCategoryId = it.categoryId
-                    it.name = name
-                    it.result = result
-                    it.days = days
                     it.categoryId = categoryId
                     goalRepository.updateCategory(it, previousCategoryId)
                 }
