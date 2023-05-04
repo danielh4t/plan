@@ -14,8 +14,8 @@ android {
         applicationId 'app.stacq.plan'
         minSdk 28
         targetSdk 33
-        versionCode 57
-        versionName '1.57'
+        versionCode 58
+        versionName '1.58'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         proguardFiles 'proguard-rules.pro'
