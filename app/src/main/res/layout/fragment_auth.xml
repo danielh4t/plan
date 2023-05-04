@@ -13,8 +13,9 @@
 
         <ImageView
             android:id="@+id/auth_image"
-            android:layout_width="wrap_content"
-            android:layout_height="480dp"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:layout_margin="48dp"
             android:contentDescription="@string/content_envelope_image"
             android:src="@drawable/il_sync"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,14 +26,13 @@
             android:id="@+id/auth_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up_sign_in_sync"
-            android:fontFamily="@font/roboto"
-            android:textSize="20sp"
             android:layout_margin="16dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/roboto"
+            android:text="@string/sign_up_sign_in_sync"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/auth_image"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_image" />
 
         <ImageView
             android:id="@+id/auth_email_image"
@@ -129,7 +129,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/sign_up_button"
             app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -192,10 +192,11 @@
     <string name="title_profile">Profile tab</string>
     <string name="profile">Profile</string>
     <string name="authentication_failed">Authentication failed</string>
-    <string name="sign_up_sign_in">Sign up / Sign In</string>
+    <string name="sign_up_sign_in">Sign Up / Sign In</string>
     <string name="no_media_selected">No media selected</string>
     <string name="profile_picture_updated">Profile picture updated</string>
     <string name="profile_picture_upload_failed">Profile picture upload failed\n</string>
     <string name="sign_in_failed">Sign In failed</string>
     <string name="sign_up_failed">Sign Up failed</string>
+    <string name="email_password_required">Email and password are required</string>
 </resources>

@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
  * Run this benchmark from Studio to see startup measurements, and captured system traces
  * for investigating your app's performance.d
  * for investigating your app's performance.d
- * for investigating your app's performance.d                                                                                                                              ddaas
+ * for investigating your app's performance.d
  */
 @RunWith(AndroidJUnit4::class)
 class StartupBenchmark {

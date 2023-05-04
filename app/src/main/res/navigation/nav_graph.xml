@@ -216,9 +216,6 @@
         android:name="app.stacq.plan.ui.auth.AuthFragment"
         android:label="@string/authentication"
         tools:layout="@layout/fragment_auth">
-        <action
-            android:id="@+id/action_nav_auth_to_nav_profile"
-            app:destination="@id/nav_profile" />
     </fragment>
 
 </navigation>

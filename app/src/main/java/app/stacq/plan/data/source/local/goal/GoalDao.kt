@@ -88,7 +88,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query("SELECT * FROM goal WHERE NOT completed")
+    @Query("SELECT * FROM goal WHERE NOT completed ORDER BY category_id DESC")
     fun getActiveGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**
