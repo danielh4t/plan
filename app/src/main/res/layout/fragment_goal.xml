@@ -307,24 +307,37 @@
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/content_goal_generate_icon"
                 android:src="@drawable/ic_sync"
-                app:layout_constraintBottom_toBottomOf="@id/goal_generate_switch"
+                app:layout_constraintBottom_toBottomOf="@+id/goal_generate_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/goal_generate_switch"
+                app:layout_constraintTop_toTopOf="@+id/goal_generate_text"
                 app:tint="?attr/colorPrimary" />
 
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/goal_generate_switch"
+            <TextView
+                android:id="@+id/goal_generate_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:checked="@{goal.generate}"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/generate"
                 android:fontFamily="@font/roboto"
                 android:text="@string/generate"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/goal_generate_switch"
+                app:layout_constraintStart_toEndOf="@id/goal_generate_image"
+                app:layout_constraintTop_toBottomOf="@+id/goal_days_text" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/goal_generate_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:checked="@{goal.generate}"
+                android:fontFamily="@font/roboto"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/goal_generate_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/goal_generate_image"
-                app:layout_constraintTop_toBottomOf="@+id/goal_days_text"
-                app:layout_constraintWidth_max="@dimen/material_switch_max" />
+                app:layout_constraintTop_toTopOf="@+id/goal_generate_text" />
 
             <TextView
                 android:id="@+id/goal_progress_text"
