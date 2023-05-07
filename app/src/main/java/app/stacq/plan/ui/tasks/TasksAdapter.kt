@@ -71,3 +71,7 @@ class TaskNavigateListener(val navigateListener: (taskId: String) -> Unit) {
 class TaskCompleteListener(val completeListener: (task: Task) -> Unit) {
     fun onClick(task: Task) = completeListener(task)
 }
+
+class TaskArchiveListener(val taskArchiveListener: (task: Task) -> Unit) {
+    fun onClick(task: Task) = taskArchiveListener(task)
+}

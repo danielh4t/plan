@@ -98,6 +98,8 @@ class TasksFragment : Fragment() {
 
         val taskCompleteListener = TaskCompleteListener { viewModel.complete(it) }
 
+        val taskArchiveListener = TaskArchiveListener { viewModel.archive(it) }
+
         val adapter = TasksAdapter(taskNavigateListener, taskCompleteListener)
 
         binding.tasksList.adapter = adapter
