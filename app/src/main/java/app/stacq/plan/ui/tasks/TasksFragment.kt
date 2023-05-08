@@ -98,9 +98,17 @@ class TasksFragment : Fragment() {
 
         val taskCompleteListener = TaskCompleteListener { viewModel.complete(it) }
 
-        val taskArchiveListener = TaskArchiveListener { viewModel.archive(it) }
+        val taskArchiveListener = TaskArchiveListener { task ->
+            viewModel.archive(task)
+            Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.addTaskFab)
+                .setAction(R.string.undo) {
+                    viewModel.unarchive(task)
+                }
+                .show()
+        }
 
-        val adapter = TasksAdapter(taskNavigateListener, taskCompleteListener)
+        val adapter = TasksAdapter(taskNavigateListener, taskCompleteListener, taskArchiveListener)
 
         binding.tasksList.adapter = adapter
 
@@ -117,7 +125,7 @@ class TasksFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val task = adapter.getTask(position)
-                if (task.timerAlarm && task.timerFinishAt > TimeUtil().nowInSeconds()){
+                if (task.timerAlarm && task.timerFinishAt > TimeUtil().nowInSeconds()) {
                     val name = task.name
                     val requestCode: Int = task.timerFinishAt.toInt()
                     cancelAlarm(application, requestCode, name)
