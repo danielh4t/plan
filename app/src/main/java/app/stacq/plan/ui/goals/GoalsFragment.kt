@@ -81,7 +81,17 @@ class GoalsFragment : Fragment() {
 
         val goalCompletedListener = GoalCompletedListener { viewModel.complete(it) }
 
-        val adapter = GoalsAdapter(goalNavigateListener, goalCompletedListener)
+        val goalDeleteListener = GoalDeleteListener { goal ->
+            viewModel.delete(goal)
+            Snackbar.make(view, R.string.goal_deleted, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.addGoalFab)
+                .setAction(R.string.undo) {
+                    viewModel.undoDelete(goal)
+                }
+                .show()
+        }
+
+        val adapter = GoalsAdapter(goalNavigateListener, goalCompletedListener, goalDeleteListener)
         binding.goalsList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
