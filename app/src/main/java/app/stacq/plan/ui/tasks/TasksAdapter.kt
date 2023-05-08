@@ -2,16 +2,19 @@ package app.stacq.plan.ui.tasks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.stacq.plan.R
 import app.stacq.plan.domain.Task
 import app.stacq.plan.databinding.ListItemTaskBinding
 
 
 class TasksAdapter(
     private val taskNavigateListener: TaskNavigateListener,
-    private val taskCompleteListener: TaskCompleteListener
+    private val taskCompleteListener: TaskCompleteListener,
+    private val taskArchiveListener: TaskArchiveListener,
 ) : ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +23,7 @@ class TasksAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, taskNavigateListener, taskCompleteListener)
+        holder.bind(task, taskNavigateListener, taskCompleteListener, taskArchiveListener)
     }
 
     fun getTask(position: Int): Task {
@@ -41,12 +44,21 @@ class TasksAdapter(
         fun bind(
             task: Task,
             taskNavigateListener: TaskNavigateListener,
-            taskCompleteListener: TaskCompleteListener
+            taskCompleteListener: TaskCompleteListener,
+            taskArchiveListener: TaskArchiveListener,
         ) {
             binding.task = task
             binding.taskNavigateListener = taskNavigateListener
             binding.taskCompleteListener = taskCompleteListener
             binding.taskName.contentDescription = "${task.name} name"
+            ViewCompat.addAccessibilityAction(
+                itemView,
+                binding.root.context.getString(R.string.archive)
+            ) { _, _ ->
+                taskArchiveListener.onClick(task)
+                true
+            }
+
             binding.executePendingBindings()
         }
     }
