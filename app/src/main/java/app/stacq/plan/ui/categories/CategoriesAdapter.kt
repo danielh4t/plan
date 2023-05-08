@@ -2,9 +2,11 @@ package app.stacq.plan.ui.categories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.stacq.plan.R
 import app.stacq.plan.databinding.ListItemCategoryBinding
 import app.stacq.plan.domain.Category
 
@@ -12,6 +14,7 @@ import app.stacq.plan.domain.Category
 class CategoriesAdapter(
     private val categoryEnableListener: CategoryEnableListener,
     private val categoryNavigateListener: CategoryNavigateListener,
+    private val categoryDeletedListener: CategoryDeleteListener,
 ) : ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +23,7 @@ class CategoriesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = getItem(position)
-        holder.bind(category, categoryEnableListener, categoryNavigateListener)
+        holder.bind(category, categoryEnableListener, categoryNavigateListener, categoryDeletedListener)
     }
 
     fun getCategory(position: Int): Category {
@@ -38,12 +41,22 @@ class CategoriesAdapter(
             }
         }
 
-        fun bind(category: Category, categoryEnableListener: CategoryEnableListener, categoryNavigateListener: CategoryNavigateListener,) {
+        fun bind(category: Category,
+                 categoryEnableListener: CategoryEnableListener,
+                 categoryNavigateListener: CategoryNavigateListener,
+                 categoryDeletedListener: CategoryDeleteListener) {
             binding.category = category
             binding.categoryEnableListener = categoryEnableListener
             binding.categoryNavigateListener = categoryNavigateListener
             binding.categoryEnabled.contentDescription = "${category.name} is ${category.enabled}"
             binding.categoryName.contentDescription = "${category.name} category"
+            ViewCompat.addAccessibilityAction(
+                itemView,
+                binding.root.context.getString(R.string.archive)
+            ) { _, _ ->
+                categoryDeletedListener.onClick(category)
+                true
+            }
             binding.executePendingBindings()
         }
     }
@@ -66,4 +79,8 @@ class CategoryEnableListener(val categoryEnableListener: (categoryId: String) ->
 
 class CategoryNavigateListener(val categoryNavigateListener: (categoryId: String) -> Unit) {
     fun onClick(categoryId: String) = categoryNavigateListener(categoryId)
+}
+
+class CategoryDeleteListener(val categoryDeletedListener: (category: Category) -> Unit) {
+    fun onClick(category: Category) = categoryDeletedListener(category)
 }
