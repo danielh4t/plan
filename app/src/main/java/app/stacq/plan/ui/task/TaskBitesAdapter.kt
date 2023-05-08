@@ -2,9 +2,11 @@ package app.stacq.plan.ui.task
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.stacq.plan.R
 import app.stacq.plan.databinding.ListItemBiteBinding
 import app.stacq.plan.domain.Bite
 
@@ -12,6 +14,7 @@ import app.stacq.plan.domain.Bite
 class BitesAdapter(
     private val biteCompleteListener: BiteCompleteListener,
     private val biteNavigateListener: BiteNavigateListener,
+    private val biteDeleteListener: BiteDeleteListener,
 ) : ListAdapter<Bite, BitesAdapter.ViewHolder>(BiteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +23,7 @@ class BitesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bite = getItem(position)
-        holder.bind(bite, biteCompleteListener, biteNavigateListener)
+        holder.bind(bite, biteCompleteListener, biteNavigateListener, biteDeleteListener)
     }
 
     fun getBite(position: Int): Bite {
@@ -41,11 +44,19 @@ class BitesAdapter(
         fun bind(
             bite: Bite,
             biteCompleteListener: BiteCompleteListener,
-            biteNavigateListener: BiteNavigateListener
+            biteNavigateListener: BiteNavigateListener,
+            biteDeleteListener: BiteDeleteListener,
         ) {
             binding.bite = bite
             binding.biteCompleteListener = biteCompleteListener
             binding.biteNavigateListener = biteNavigateListener
+            ViewCompat.addAccessibilityAction(
+                itemView,
+                binding.root.context.getString(R.string.delete)
+            ) { _, _ ->
+                biteDeleteListener.onClick(bite)
+                true
+            }
             binding.executePendingBindings()
         }
     }
@@ -68,4 +79,8 @@ class BiteCompleteListener(val biteCompleteListener: (bite: Bite) -> Unit) {
 
 class BiteNavigateListener(val biteNavigateListener: (biteId: String) -> Unit) {
     fun onClick(biteId: String) = biteNavigateListener(biteId)
+}
+
+class BiteDeleteListener(val biteDeleteListener: (bite: Bite) -> Unit) {
+    fun onClick(bite: Bite) = biteDeleteListener(bite)
 }
