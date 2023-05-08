@@ -71,7 +71,17 @@ class CategoriesFragment : Fragment() {
             navController.navigate(action)
         }
 
-        val adapter = CategoriesAdapter(categoryEnableListener, categoryNavigateListener)
+        val categoryDeleteListener = CategoryDeleteListener { category ->
+            viewModel.delete(category)
+            Snackbar.make(view, R.string.category_deleted, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.addCategoryFab)
+                .setAction(R.string.undo) {
+                    viewModel.undoDelete(category)
+                }
+                .show()
+        }
+
+        val adapter = CategoriesAdapter(categoryEnableListener, categoryNavigateListener, categoryDeleteListener)
         binding.categoriesList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
