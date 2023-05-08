@@ -112,8 +112,17 @@ class TaskFragment : Fragment() {
             navController.navigate(action)
         }
 
-        val adapter =
-            BitesAdapter(biteCompleteListener, biteNavigateListener)
+        val biteDeleteListener = BiteDeleteListener { bite ->
+            viewModel.deleteBite(bite)
+            Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.timerFab)
+                .setAction(R.string.undo) {
+                    viewModel.createBite(bite)
+                }
+                .show()
+        }
+
+        val adapter = BitesAdapter(biteCompleteListener, biteNavigateListener, biteDeleteListener)
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
