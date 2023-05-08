@@ -52,7 +52,7 @@ class CategoriesAdapter(
             binding.categoryName.contentDescription = "${category.name} category"
             ViewCompat.addAccessibilityAction(
                 itemView,
-                binding.root.context.getString(R.string.archive)
+                binding.root.context.getString(R.string.delete)
             ) { _, _ ->
                 categoryDeletedListener.onClick(category)
                 true
