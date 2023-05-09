@@ -29,8 +29,9 @@ class TaskModifyViewModel(
 
     val calendar = CalendarUtil()
 
-    fun create(name: String, categoryId: String): String {
-        val taskEntity = TaskEntity(name = name, categoryId = categoryId, goalId = null)
+    fun create(name: String, categoryId: String, notes: String?): String {
+        val taskEntity =
+            TaskEntity(name = name, categoryId = categoryId, goalId = null, notes = notes)
         viewModelScope.launch {
             val task = taskEntity.asTask()
             taskRepository.create(task)
@@ -38,12 +39,15 @@ class TaskModifyViewModel(
         return taskEntity.id
     }
 
-    fun update(name: String, categoryId: String, completedAt: Long?) {
+    fun update(name: String, categoryId: String, completedAt: Long?, notes: String?) {
         viewModelScope.launch {
             task.value?.let {
                 completedAt?.let { timestamp ->
                     it.completed = true
                     it.completedAt = timestamp
+                }
+                notes?.let { notes ->
+                    it.notes = notes
                 }
                 if (it.categoryId == categoryId) {
                     it.name = name

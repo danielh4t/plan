@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="task"
+            type="app.stacq.plan.domain.Task" />
     </data>
 
 
@@ -64,6 +67,7 @@
                 android:id="@+id/task_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{task.name}"
                 android:imeOptions="actionNext"
                 android:inputType="textCapSentences"
                 tools:ignore="TextContrastCheck" />
@@ -129,6 +133,7 @@
                 android:id="@+id/task_modify_date_time_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:taskCompletionText="@{task.completedAt}"
                 android:inputType="date"
                 android:focusable="false"
                 android:clickable="true"
@@ -171,6 +176,7 @@
                 android:id="@+id/task_notes_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{task.notes}"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
                 tools:ignore="TextContrastCheck" />
