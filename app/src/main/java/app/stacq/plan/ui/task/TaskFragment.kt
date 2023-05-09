@@ -33,6 +33,7 @@ import app.stacq.plan.util.createTimerChannel
 import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -206,9 +207,14 @@ class TaskFragment : Fragment() {
             }
         }
 
-        binding.taskPrioritySlider.addOnChangeListener { _, value, _ ->
-            viewModel.updatePriority(value)
-        }
+        binding.taskPrioritySlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: Slider) {
+            }
+
+            override fun onStopTrackingTouch(slider: Slider) {
+                viewModel.updatePriority(slider.value)
+            }
+        })
 
         binding.timerFab.setOnClickListener {
             when {
