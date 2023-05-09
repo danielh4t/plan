@@ -24,7 +24,7 @@ data class Task(
     var categoryColor: String? = null,
     var goalId: String? = null,
     var archived: Boolean = false,
-    val notes: String? = null,
+    var notes: String? = null,
 ) : Parcelable
 
 fun Task.asTaskEntity() = TaskEntity(
