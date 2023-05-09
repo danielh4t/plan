@@ -90,7 +90,7 @@ class TaskModifyFragment : Fragment() {
 
         viewModel.task.observe(viewLifecycleOwner) { it ->
             it?.let {
-                binding.taskNameEditText.setText(it.name)
+                binding.task = it
                 val categoryChip =
                     binding.taskCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
                 categoryChip?.isChecked = true
@@ -197,10 +197,12 @@ class TaskModifyFragment : Fragment() {
                 completedAt = viewModel.calendar.getLocalTimeUTC()
             }
 
+            val notes: String = binding.taskNotesEditText.text.toString().trim()
+
             val id = if (taskId == null) {
-                viewModel.create(name, categoryId)
+                viewModel.create(name, categoryId, notes)
             } else {
-                viewModel.update(name, categoryId, completedAt)
+                viewModel.update(name, categoryId, completedAt, notes)
                 taskId
             }
 
