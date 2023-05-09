@@ -184,6 +184,32 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <Button
+            android:id="@+id/task_modify_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_image_icon"
+            app:icon="@drawable/ic_image"
+            app:iconTint="?attr/colorPrimary"
+            app:taskImageButtonVisibility="@{task}"
+            app:layout_constraintBottom_toTopOf="@+id/task_modify_fab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_notes_layout"
+            style="?attr/materialIconButtonFilledTonalStyle"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/task_modify_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_task_image"
+            app:taskImageViewVisibility="@{task}"
+            app:layout_constraintBottom_toTopOf="@+id/task_modify_fab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_notes_layout"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/task_modify_fab"
             android:layout_width="wrap_content"

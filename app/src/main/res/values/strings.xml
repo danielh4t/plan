@@ -171,7 +171,7 @@
     <string name="task_generated">Task generated</string>
     <string name="content_measure_image">Pantone icon</string>
     <string name="measure">Measure</string>
-    <string name="content_result_image">Result\n</string>
+    <string name="content_result_image">Result</string>
     <string name="result">Result</string>
     <string name="goal_measure_required">Goal measure is required</string>
     <string name="goal_result_required">Goal result is required</string>
@@ -180,7 +180,7 @@
     <string name="content_goal_measure">Measure</string>
     <string name="content_goal_result_icon">Award icon</string>
     <string name="content_goal_result">Goal result</string>
-    <string name="content_goal_result_label">Goal result label\n</string>
+    <string name="content_goal_result_label">Goal result label</string>
     <string name="email_address">Email address</string>
     <string name="content_envelope_image">Envelope icon</string>
     <string name="content_lock_image">lock</string>
@@ -195,11 +195,16 @@
     <string name="sign_up_sign_in">Sign Up / Sign In</string>
     <string name="no_media_selected">No media selected</string>
     <string name="profile_picture_updated">Profile picture updated</string>
-    <string name="profile_picture_upload_failed">Profile picture upload failed\n</string>
+    <string name="profile_picture_upload_failed">Profile picture upload failed</string>
     <string name="sign_in_failed">Sign In failed</string>
     <string name="sign_up_failed">Sign Up failed</string>
     <string name="email_password_required">Email and password are required</string>
-    <string name="bite_deleted">Bite deleted\n</string>
+    <string name="bite_deleted">Bite deleted</string>
     <string name="notes">Notes</string>
     <string name="content_book_icon">Book icon</string>
+    <string name="content_task_image">Task image</string>
+    <string name="content_image_icon">Image icon</string>
+    <string name="task_picture_updated">Task image updated</string>
+    <string name="task_picture_upload_failed">Task picture upload failed</string>
+    <string name="sign_in_up_required">Sign In or Sign Up required</string>
 </resources>
