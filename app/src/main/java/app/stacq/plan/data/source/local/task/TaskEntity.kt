@@ -38,7 +38,9 @@ data class TaskEntity(
     var priority: Int = 0,
 
     @ColumnInfo(name = "goal_id")
-    var goalId: String?,
+    var goalId: String? = null,
 
     var archived: Boolean = false,
+
+    var notes: String? = null,
 )
