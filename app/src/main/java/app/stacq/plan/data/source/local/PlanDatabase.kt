@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.stacq.plan.data.source.local.bite.BiteDao
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.category.CategoryDao
@@ -16,7 +18,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 
 @Database(
     entities = [TaskEntity::class, CategoryEntity::class, BiteEntity::class, GoalEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class PlanDatabase : RoomDatabase() {
@@ -41,7 +43,8 @@ abstract class PlanDatabase : RoomDatabase() {
                         context.applicationContext,
                         PlanDatabase::class.java,
                         PLAN_DATABASE
-                    ).build()
+                    ).addMigrations(MIGRATION_2_3)
+                        .build()
                     INSTANCE = instance
                 }
                 return instance
@@ -51,3 +54,9 @@ abstract class PlanDatabase : RoomDatabase() {
 }
 
 private const val PLAN_DATABASE = "plan_database"
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE task ADD COLUMN notes TEXT DEFAULT ''")
+    }
+}
