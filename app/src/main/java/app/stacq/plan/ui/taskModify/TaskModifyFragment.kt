@@ -5,6 +5,9 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +23,9 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskModifyBinding
 import app.stacq.plan.util.CalendarUtil
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.CircleCropTransformation
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
@@ -28,11 +34,13 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 
 class TaskModifyFragment : Fragment() {
@@ -42,6 +50,8 @@ class TaskModifyFragment : Fragment() {
 
     private lateinit var viewModelFactory: TaskModifyViewModelFactory
     private lateinit var viewModel: TaskModifyViewModel
+
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +69,76 @@ class TaskModifyFragment : Fragment() {
         val args = TaskModifyFragmentArgs.fromBundle(requireArguments())
         val taskId: String? = args.taskId
 
+        val navController = findNavController()
+
+        // Registers a photo picker activity launcher in single-select mode.
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                // Callback is invoked after the user selects a media item or closes the
+                // photo picker.
+                if (uri != null) {
+                    // selected
+                    val uid = Firebase.auth.uid
+                    if (uid != null && taskId != null) {
+                        val imageRef = Firebase.storage.reference.child("$uid/$taskId")
+                        val uploadTask = imageRef.putFile(uri)
+                        uploadTask.addOnSuccessListener {
+                            // Handle successful upload
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.task_picture_updated,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+                                binding.taskModifyImageView.load(imageUri) {
+                                    crossfade(true)
+                                    size(ViewSizeResolver(binding.taskModifyImageView))
+                                    transformations(CircleCropTransformation())
+                                }
+                            }
+                            binding.taskModifyImageButton.visibility = View.INVISIBLE
+                        }.addOnFailureListener {
+                            // Handle failed upload
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.task_picture_upload_failed,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_media_selected,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        authStateListener = FirebaseAuth.AuthStateListener {
+            val uid = Firebase.auth.uid
+            if (uid != null && taskId != null) {
+                // signed in
+                val imageRef = Firebase.storage.reference.child("$uid/$taskId")
+                // Create a reference with an initial file path and name
+                imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+                    binding.taskModifyImageView.load(imageUri) {
+                        crossfade(true)
+                        size(ViewSizeResolver(binding.taskModifyImageView))
+                        transformations(CircleCropTransformation())
+                    }
+
+                    binding.taskModifyImageButton.visibility = View.INVISIBLE
+
+                    binding.taskModifyImageView.setOnClickListener {
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    }
+                }
+            }
+        }
+
+        Firebase.auth.addAuthStateListener(authStateListener)
+
         val application = requireNotNull(this.activity).application
         val database = PlanDatabase.getDatabase(application)
 
@@ -67,8 +147,10 @@ class TaskModifyFragment : Fragment() {
         val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
 
         val categoryLocalDataSource = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource = CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val categoryRepository = CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
+        val categoryRemoteDataSource =
+            CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
+        val categoryRepository =
+            CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
 
         viewModelFactory =
             TaskModifyViewModelFactory(taskRepository, categoryRepository, taskId)
@@ -78,12 +160,12 @@ class TaskModifyFragment : Fragment() {
         binding.taskModifyAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
 
-        val navController = findNavController()
+
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
         // creating a new task
-        if(taskId == null) {
+        if (taskId == null) {
             binding.taskModifyDateTimeLayout.visibility = View.GONE
             binding.taskModifyDateTimeImage.visibility = View.GONE
         }
@@ -158,6 +240,20 @@ class TaskModifyFragment : Fragment() {
             }
         }
 
+        binding.taskModifyImageButton.setOnClickListener {
+            // only select picture for
+            val uid = Firebase.auth.uid
+            if (uid != null && taskId != null) {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.sign_in_up_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         binding.taskModifyDateTimeEditText.setOnClickListener {
             if (!datePicker.isAdded) {
                 datePicker.show(requireActivity().supportFragmentManager, "date_picker")
@@ -214,5 +310,6 @@ class TaskModifyFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Firebase.auth.removeAuthStateListener(authStateListener)
     }
 }
