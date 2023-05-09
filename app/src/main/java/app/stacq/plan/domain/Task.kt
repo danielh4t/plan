@@ -24,6 +24,7 @@ data class Task(
     var categoryColor: String? = null,
     var goalId: String? = null,
     var archived: Boolean = false,
+    val notes: String? = null,
 ) : Parcelable
 
 fun Task.asTaskEntity() = TaskEntity(
@@ -38,6 +39,7 @@ fun Task.asTaskEntity() = TaskEntity(
     priority = priority,
     goalId = goalId,
     archived = archived,
+    notes = notes,
 )
 
 fun Task.asTaskDocument() = TaskDocument(
@@ -52,6 +54,7 @@ fun Task.asTaskDocument() = TaskDocument(
     priority = priority,
     goalId = goalId,
     archived = archived,
+    notes = notes,
 )
 
 fun TaskEntity.asTask() = Task(
@@ -66,6 +69,7 @@ fun TaskEntity.asTask() = Task(
     priority = priority,
     goalId = goalId,
     archived = archived,
+    notes = notes,
 )
 
 fun TaskEntityAndCategoryEntity.asTask() = Task(
@@ -82,4 +86,5 @@ fun TaskEntityAndCategoryEntity.asTask() = Task(
     categoryColor = categoryEntity.color,
     goalId = taskEntity.goalId,
     archived = taskEntity.archived,
+    notes = taskEntity.notes,
 )

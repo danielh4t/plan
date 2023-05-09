@@ -15,4 +15,5 @@ data class TaskDocument(
     var priority: Int? = null,
     var goalId: String? = null,
     var archived: Boolean? = null,
+    var notes: String? = null,
 )
