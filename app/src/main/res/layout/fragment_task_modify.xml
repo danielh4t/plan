@@ -64,7 +64,7 @@
                 android:id="@+id/task_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:inputType="textCapSentences"
                 tools:ignore="TextContrastCheck" />
 
@@ -138,6 +138,45 @@
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/task_modify_notes_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_book_icon"
+            android:src="@drawable/ic_book"
+            app:layout_constraintTop_toTopOf="@+id/task_notes_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/task_notes_layout"
+            app:layout_constraintEnd_toStartOf="@+id/task_notes_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_notes_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/notes"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/task_modify_notes_image"
+            app:layout_constraintTop_toBottomOf="@id/task_modify_date_time_layout"
+            app:layout_constraintWidth_min="@dimen/input_layout_min"
+            app:layout_constraintWidth_max="@dimen/input_layout_max">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/task_notes_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/task_modify_fab"
