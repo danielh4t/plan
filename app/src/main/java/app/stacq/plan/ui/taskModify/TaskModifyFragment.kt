@@ -27,7 +27,6 @@ import app.stacq.plan.databinding.FragmentTaskModifyBinding
 import app.stacq.plan.util.CalendarUtil
 import coil.load
 import coil.size.ViewSizeResolver
-import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
@@ -96,7 +95,12 @@ class TaskModifyFragment : Fragment() {
                                 binding.taskModifyImageView.load(imageUri) {
                                     crossfade(true)
                                     size(ViewSizeResolver(binding.taskModifyImageView))
-                                    transformations(CircleCropTransformation())
+                                    transformations(RoundedCornersTransformation())
+                                }
+                                binding.taskModifyImageView.setOnClickListener {
+                                    val intent = Intent(Intent.ACTION_VIEW)
+                                    intent.data = Uri.parse(imageUri.toString())
+                                    startActivity(intent)
                                 }
                             }
                         }.addOnFailureListener {
