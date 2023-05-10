@@ -1,5 +1,7 @@
 package app.stacq.plan.ui.taskModify
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -26,6 +28,7 @@ import app.stacq.plan.util.CalendarUtil
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
@@ -96,7 +99,6 @@ class TaskModifyFragment : Fragment() {
                                     transformations(CircleCropTransformation())
                                 }
                             }
-                            binding.taskModifyImageButton.visibility = View.INVISIBLE
                         }.addOnFailureListener {
                             // Handle failed upload
                             Toast.makeText(
@@ -122,16 +124,17 @@ class TaskModifyFragment : Fragment() {
                 val imageRef = Firebase.storage.reference.child("$uid/$taskId")
                 // Create a reference with an initial file path and name
                 imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+
                     binding.taskModifyImageView.load(imageUri) {
                         crossfade(true)
                         size(ViewSizeResolver(binding.taskModifyImageView))
-                        transformations(CircleCropTransformation())
+                        transformations(RoundedCornersTransformation())
                     }
 
-                    binding.taskModifyImageButton.visibility = View.INVISIBLE
-
                     binding.taskModifyImageView.setOnClickListener {
-                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(imageUri.toString())
+                        startActivity(intent)
                     }
                 }
             }
@@ -240,7 +243,7 @@ class TaskModifyFragment : Fragment() {
             }
         }
 
-        binding.taskModifyImageButton.setOnClickListener {
+        binding.taskModifyImageFab.setOnClickListener {
             // only select picture for
             val uid = Firebase.auth.uid
             if (uid != null && taskId != null) {
