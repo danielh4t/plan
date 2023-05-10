@@ -208,4 +208,6 @@
     <string name="task_picture_upload_failed">Task picture upload failed</string>
     <string name="sign_in_up_required">Sign In or Sign Up required</string>
     <string name="image_fab">Modify task image</string>
+    <string name="weak_password">Weak password</string>
+    <string name="invalid_credentials">Invalid credential email or password is incorrect</string>
 </resources>
