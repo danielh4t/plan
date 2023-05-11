@@ -34,6 +34,7 @@ TaskRemoteDataSourceImpl(
             "priority" to taskDocument.priority,
             "goalId" to taskDocument.goalId,
             "archived" to taskDocument.archived,
+            "notes" to taskDocument.notes,
         )
 
         firestore.collection(uid)
@@ -62,6 +63,7 @@ TaskRemoteDataSourceImpl(
             "priority" to taskDocument.priority,
             "goalId" to taskDocument.goalId,
             "archived" to taskDocument.archived,
+            "notes" to taskDocument.notes,
         )
 
         firestore.collection(uid)
@@ -99,6 +101,7 @@ TaskRemoteDataSourceImpl(
                 "priority" to taskDocument.priority,
                 "goalId" to taskDocument.goalId,
                 "archived" to taskDocument.archived,
+                "notes" to taskDocument.notes,
             )
 
             firestore.collection(uid)
