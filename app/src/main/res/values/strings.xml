@@ -211,4 +211,6 @@
     <string name="weak_password">Weak password</string>
     <string name="invalid_credentials">Invalid credential email or password is incorrect</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="email_required">Email required</string>
+    <string name="password_reset_email_sent">Link to reset password sent to email</string>
 </resources>

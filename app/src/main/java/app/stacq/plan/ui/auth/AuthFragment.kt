@@ -36,6 +36,35 @@ class AuthFragment : Fragment() {
 
         val navController = findNavController()
 
+        binding.forgotPasswordText.setOnClickListener {
+            val email = binding.authEmailEditText.text.toString()
+
+            if (TextUtils.isEmpty(email)) {
+                // Handle the error here
+                Toast.makeText(
+                    requireContext(),
+                    R.string.email_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Firebase.auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.password_reset_email_sent,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            it.localizedMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+        }
+
         binding.signUpButton.setOnClickListener {
             val email = binding.authEmailEditText.text.toString()
             val password = binding.authPasswordEditText.text.toString()
@@ -120,4 +149,3 @@ class AuthFragment : Fragment() {
         _binding = null
     }
 }
-
