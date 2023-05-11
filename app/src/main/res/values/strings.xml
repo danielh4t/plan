@@ -210,4 +210,5 @@
     <string name="image_fab">Modify task image</string>
     <string name="weak_password">Weak password</string>
     <string name="invalid_credentials">Invalid credential email or password is incorrect</string>
+    <string name="forgot_password">Forgot Password</string>
 </resources>
