@@ -12,8 +12,6 @@ import app.stacq.plan.R
 import app.stacq.plan.databinding.FragmentAuthBinding
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -69,7 +67,6 @@ class AuthFragment : Fragment() {
                         }
                     }
                     .addOnFailureListener { e ->
-                        Firebase.crashlytics.recordException(e)
                         Toast.makeText(
                             requireContext(),
                             e.localizedMessage,
@@ -109,38 +106,16 @@ class AuthFragment : Fragment() {
                         }
                     }
                     .addOnFailureListener { e ->
-
-                        when (e) {
-                            is FirebaseAuthWeakPasswordException -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    R.string.weak_password,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                            is FirebaseAuthInvalidCredentialsException -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    R.string.invalid_credentials,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                            else -> {
-                                Firebase.crashlytics.recordException(e)
-                                Toast.makeText(
-                                    requireContext(),
-                                    e.localizedMessage,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+                        Toast.makeText(
+                            requireContext(),
+                            e.localizedMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
             }
         }
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
