@@ -14,7 +14,7 @@ class GoalLocalDataSourceImpl(
         goalDao.create(goalEntity)
     }
 
-    override suspend fun read(goalId: String): GoalEntity?  = withContext(ioDispatcher) {
+    override suspend fun read(goalId: String): GoalEntity? = withContext(ioDispatcher) {
         return@withContext goalDao.read(goalId)
     }
 
@@ -34,8 +34,13 @@ class GoalLocalDataSourceImpl(
         goalDao.getGoalEntities()
     }
 
-    override suspend fun getCountGoalCompletedDays(goalId: String): Int = withContext(ioDispatcher) {
-        return@withContext goalDao.getCountGoalCompletedDays(goalId)
+    override suspend fun getCountGoalCompletedDays(goalId: String): Int =
+        withContext(ioDispatcher) {
+            return@withContext goalDao.getCountGoalCompletedDays(goalId)
+        }
+
+    override fun getCount(): LiveData<Int> {
+        return goalDao.getCount()
     }
 
     override fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>> {

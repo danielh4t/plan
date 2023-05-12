@@ -64,6 +64,9 @@ interface GoalDao {
     @Query("SELECT * FROM goal")
     fun getGoalEntities(): List<GoalEntity>
 
+    @Query("SELECT COUNT(*) FROM goal WHERE NOT completed")
+    fun getCount(): LiveData<Int>
+
     /**
      * Select all goals.
      *
@@ -79,7 +82,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query("SELECT * FROM goal  WHERE id = :goalId")
+    @Query("SELECT * FROM goal WHERE id = :goalId")
     fun getGoal(goalId: String): LiveData<GoalEntityAndCategoryEntity>
 
     /**
