@@ -9,46 +9,36 @@
             name="category"
             type="app.stacq.plan.domain.Category" />
 
-        <variable
-            name="categoryEnableListener"
-            type="app.stacq.plan.ui.categories.CategoryEnableListener" />
-
-        <variable
-            name="categoryNavigateListener"
-            type="app.stacq.plan.ui.categories.CategoryNavigateListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{()-> categoryNavigateListener.onClick(category.id)}">
+        android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/category_enabled"
+        <ImageView
+            android:id="@+id/category_color_dropdown_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:button="@drawable/enabled_disabled_checkbox"
-            android:checked="@{category.enabled}"
-            android:contentDescription="@string/content_category_checkbox"
-            android:onClick="@{() -> categoryEnableListener.onClick(category.id)}"
+            android:src="@drawable/ic_circle"
+            android:padding="8dp"
+            android:contentDescription="@string/content_category_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:categoryColor="@{category.color}" />
+            app:categoryDropdownColor="@{category.color}" />
 
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/category_name_dropdown_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/content_category_name"
             android:fontFamily="@font/roboto"
             android:text="@{category.name}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/category_enabled"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/category_enabled"
-            app:layout_constraintTop_toTopOf="@+id/category_enabled"
+            app:layout_constraintStart_toEndOf="@+id/category_color_dropdown_image"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/category" />
 
 

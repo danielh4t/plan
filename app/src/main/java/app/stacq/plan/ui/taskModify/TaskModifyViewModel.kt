@@ -27,6 +27,13 @@ class TaskModifyViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
+    private val _selectedCategoryId = MutableLiveData<String>()
+    val selectedCategoryId: LiveData<String> = _selectedCategoryId
+
+    fun setSelectedCategoryId(categoryId: String) {
+        _selectedCategoryId.value = categoryId
+    }
+
     val calendar = CalendarUtil()
 
     fun create(name: String, categoryId: String, notes: String?): String {

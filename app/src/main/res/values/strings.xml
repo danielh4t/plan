@@ -213,4 +213,11 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="email_required">Email required</string>
     <string name="password_reset_email_sent">Link to reset password sent to email</string>
+    <string name="save">Save</string>
+    <string name="content_save_task">Save Task</string>
+    <string name="task_category_required">Task category required</string>
+    <string name="content_category_color">Category color</string>
+    <string name="content_add_image">Add Image</string>
+    <string name="image">Image</string>
+    <string name="uploading_image">Uploading image</string>
 </resources>
