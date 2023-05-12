@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/edit_task"
-        android:contentDescription="@string/content_edit_task"
-        android:icon="@drawable/ic_edit_outline"
-        android:title="@string/edit"
+        android:id="@+id/add_image"
+        android:contentDescription="@string/content_add_image"
+        android:icon="@drawable/ic_image"
+        android:iconTint="?attr/colorControlNormal"
+        android:title="@string/image"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/clone_task"
-        android:contentDescription="@string/content_task_clone"
-        android:icon="@drawable/ic_copy"
-        android:title="@string/clone"
+        android:id="@+id/save_task"
+        android:contentDescription="@string/content_save_task"
+        android:icon="@drawable/ic_save"
+        android:iconTint="?attr/colorControlNormal"
+        android:title="@string/save"
         app:showAsAction="ifRoom" />
 
 </menu>
