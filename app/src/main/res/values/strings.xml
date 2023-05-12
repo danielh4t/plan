@@ -141,9 +141,36 @@
     <string name="yes_please">Yes, please</string>
     <string name="no_thanks">No, thanks</string>
 
-    <!-- Backup Dialog -->
+    <!-- Profile -->
+    <string name="sign_in_sign_up">Sign In or Sign Up</string>
+    <string name="tasks_count">%d Tasks</string>
+    <string name="tools_tasks_count">10 Tasks</string>
+    <string name="goals_count">%d Goals</string>
+    <string name="tools_goals_count">5 Goals</string>
+    <string name="categories_count">%d Categories</string>
+    <string name="tools_categories_count">4 Categories</string>
+    <plurals name="numberOfTasks">
+        <item quantity="zero">%d Tasks</item>
+        <item quantity="one">%d Task</item>
+        <item quantity="other">%d Tasks</item>
+    </plurals>
+    <plurals name="numberOfGoals">
+        <item quantity="zero">%d Goals</item>
+        <item quantity="one">%d Task</item>
+        <item quantity="other">%d Goals</item>
+    </plurals>
+    <plurals name="numberOfCategory">
+        <item quantity="zero">%d Categories</item>
+        <item quantity="one">%d Category</item>
+        <item quantity="other">%d Categories</item>
+    </plurals>
+
+    <!-- Auth -->
     <string name="sign_up_sign_in_sync">Sign Up or Sign In to backup and sync</string>
     <string name="sign_out">Sign Out</string>
+
+    <!-- shared -->
+
     <string name="content_name_image">Brush icon</string>
     <string name="not_completed">Not completed</string>
     <string name="goal_deleted">Goal deleted</string>
@@ -192,7 +219,7 @@
     <string name="title_profile">Profile tab</string>
     <string name="profile">Profile</string>
     <string name="authentication_failed">Authentication failed</string>
-    <string name="sign_up_sign_in">Sign Up / Sign In</string>
+
     <string name="no_media_selected">No media selected</string>
     <string name="profile_picture_updated">Profile picture updated</string>
     <string name="profile_picture_upload_failed">Profile picture upload failed</string>

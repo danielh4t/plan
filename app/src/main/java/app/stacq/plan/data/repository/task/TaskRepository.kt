@@ -30,6 +30,8 @@ interface TaskRepository {
 
     suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean
 
+    fun getCount():  LiveData<Int>
+
     fun getTasks(): LiveData<List<Task>>
 
     fun getTask(taskId: String): LiveData<Task>

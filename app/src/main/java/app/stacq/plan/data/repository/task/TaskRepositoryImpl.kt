@@ -77,6 +77,8 @@ class TaskRepositoryImpl(
         return@withContext taskLocalDataSource.hasCompletedTaskGoalToday(goalId)
     }
 
+    override fun getCount(): LiveData<Int> = taskLocalDataSource.getCount()
+
     override fun getTasks(): LiveData<List<Task>> =
         taskLocalDataSource.getTasks().map {
             it.map { it1 -> it1.asTask() }

@@ -108,6 +108,9 @@ interface TaskDao {
     )
     fun hasCompletedTaskGoalToday(goalId: String): Boolean
 
+    @Query("SELECT COUNT(*) FROM task WHERE NOT archived")
+    fun getCount(): LiveData<Int>
+
     @Transaction
     @Query("SELECT * FROM task WHERE NOT archived ORDER BY priority DESC")
     fun getTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
