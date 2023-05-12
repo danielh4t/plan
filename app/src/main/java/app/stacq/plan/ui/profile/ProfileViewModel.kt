@@ -8,8 +8,8 @@ import app.stacq.plan.data.repository.task.TaskRepository
 
 class ProfileViewModel(
     taskRepository: TaskRepository,
-    categoryRepository: CategoryRepository,
     goalRepository: GoalRepository,
+    categoryRepository: CategoryRepository,
 ) : ViewModel() {
 
     val taskCount: LiveData<Int> = taskRepository.getCount()

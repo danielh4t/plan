@@ -72,7 +72,7 @@ class ProfileFragment : Fragment() {
         val categoryRepository =
             CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = ProfileViewModelFactory(taskRepository, categoryRepository, goalRepository)
+        viewModelFactory = ProfileViewModelFactory(taskRepository, goalRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
 
         val navController = findNavController()
