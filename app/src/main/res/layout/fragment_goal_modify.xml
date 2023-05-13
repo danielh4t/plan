@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
+                app:menu="@menu/goal_modify_app_bar_menu"
                 app:title="@string/goal">
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -73,6 +74,80 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
+            android:id="@+id/goal_modify_category_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_category_image"
+            android:src="@drawable/ic_color_palette_outline"
+            app:layout_constraintBottom_toBottomOf="@id/goal_modify_category_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goal_modify_category_menu"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/goal_modify_category_menu"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/category"
+            android:labelFor="@+id/categories_auto_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_modify_category_image"
+            app:layout_constraintTop_toBottomOf="@+id/goal_modify_name_layout"
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
+
+            <AutoCompleteTextView
+                android:id="@+id/categories_auto_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/goal_modify_days_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_days_image"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintBottom_toBottomOf="@+id/goal_modify_days_layout"
+            app:layout_constraintEnd_toStartOf="@+id/goal_modify_days_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/goal_modify_days_layout"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/goal_modify_days_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/days"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_modify_days_image"
+            app:layout_constraintTop_toBottomOf="@id/goal_modify_category_menu"
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/goal_modify_days_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
             android:id="@+id/goal_modify_measure_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +171,7 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/goal_modify_measure_image"
-            app:layout_constraintTop_toBottomOf="@id/goal_modify_name_layout"
+            app:layout_constraintTop_toBottomOf="@id/goal_modify_days_layout"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
             app:layout_constraintWidth_min="@dimen/input_layout_min">
 
@@ -147,83 +222,6 @@
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/goal_modify_days_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/content_days_image"
-            android:src="@drawable/ic_sun"
-            app:layout_constraintBottom_toBottomOf="@+id/goal_modify_days_layout"
-            app:layout_constraintEnd_toStartOf="@+id/goal_modify_days_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/goal_modify_days_layout"
-            app:tint="?attr/colorPrimary" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/goal_modify_days_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/days"
-            app:endIconMode="clear_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/goal_modify_days_image"
-            app:layout_constraintTop_toBottomOf="@id/goal_modify_result_layout"
-            app:layout_constraintWidth_max="@dimen/input_layout_max"
-            app:layout_constraintWidth_min="@dimen/input_layout_min">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/goal_modify_days_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/goal_modify_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:contentDescription="@string/content_goal_modify_action"
-            android:text="@string/set_goal"
-            app:icon="@drawable/ic_flash"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/goal_modify_categories_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/categories"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goal_modify_days_layout" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/goal_modify_category_chip_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goal_modify_categories_text"
-            app:singleSelection="true">
-
-            <!-- added dynamically. -->
-
-        </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

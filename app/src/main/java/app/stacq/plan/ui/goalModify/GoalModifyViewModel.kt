@@ -26,6 +26,13 @@ class GoalModifyViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
+    private val _selectedCategoryId = MutableLiveData<String>()
+    val selectedCategoryId: LiveData<String> = _selectedCategoryId
+
+    fun setSelectedCategoryId(categoryId: String) {
+        _selectedCategoryId.value = categoryId
+    }
+
     fun create(
         name: String,
         measure: String,

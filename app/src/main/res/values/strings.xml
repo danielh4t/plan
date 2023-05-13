@@ -251,5 +251,8 @@
     <string name="image">Image</string>
     <string name="uploading_image">Uploading image</string>
     <string name="day_progress">Day progress</string>
+    <string name="content_save_goal">Save Goal</string>
+    <string name="goal_category_required">Goal category required</string>
+    <string name="content_save_category">Save Category</string>
 
 </resources>

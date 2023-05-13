@@ -82,19 +82,19 @@
             android:contentDescription="@string/content_category_image"
             android:src="@drawable/ic_color_palette_outline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/task_modify_categories_menu"
-            app:layout_constraintBottom_toBottomOf="@id/task_modify_categories_menu"
+            app:layout_constraintTop_toTopOf="@id/task_modify_category_menu"
+            app:layout_constraintBottom_toBottomOf="@id/task_modify_category_menu"
             app:tint="?attr/colorPrimary" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_modify_categories_menu"
+            android:id="@+id/task_modify_category_menu"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/categories"
+            android:hint="@string/category"
             android:labelFor="@+id/categories_auto_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_modify_category_image"
@@ -134,7 +134,7 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_modify_date_time_image"
-            app:layout_constraintTop_toBottomOf="@+id/task_modify_categories_menu"
+            app:layout_constraintTop_toBottomOf="@+id/task_modify_category_menu"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
             app:layout_constraintWidth_min="@dimen/input_layout_min"
             app:startIconContentDescription="@string/content_task_date_start_icon">
