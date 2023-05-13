@@ -1,4 +1,4 @@
-package app.stacq.plan.util.time
+package app.stacq.plan.util
 
 import android.os.SystemClock
 import app.stacq.plan.util.constants.TimerConstants

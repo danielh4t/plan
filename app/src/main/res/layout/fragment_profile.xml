@@ -57,17 +57,20 @@
             app:layout_constraintBottom_toTopOf="@+id/goal_count_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_image_view" />
+            app:layout_constraintTop_toBottomOf="@+id/account_image_view"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
             android:id="@+id/task_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/roboto"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/goal_count_text"
             app:layout_constraintEnd_toStartOf="@+id/goal_count_text"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/goal_count_text"
             tools:text="@string/tools_tasks_count" />
@@ -89,6 +92,7 @@
             android:id="@+id/category_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/goal_count_text"
@@ -129,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:contentDescription="@string/content_task_timer_label"
             android:fontFamily="@font/roboto"
@@ -203,6 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/auth_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -247,7 +252,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/day_progress_label_text"
-                    app:trackThickness="8dp"
+                    app:trackColor="?attr/colorSurface"
+                    app:trackCornerRadius="8dp"
+                    app:trackThickness="16dp"
                     tools:progress="25" />
 
                 <TextView
@@ -275,6 +282,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/sign_in_sign_up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

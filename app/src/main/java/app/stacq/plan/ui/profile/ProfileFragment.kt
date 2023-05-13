@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +28,7 @@ import app.stacq.plan.databinding.FragmentProfileBinding
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -100,6 +100,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
 
+                binding.profileText.text = user.email
                 binding.authButton.setText(R.string.sign_out)
                 binding.authButton.setOnClickListener {
                     Firebase.auth.signOut()
@@ -107,9 +108,11 @@ class ProfileFragment : Fragment() {
             } else {
                 // signed out
                 binding.authButton.setText(R.string.sign_in_sign_up)
-                binding.authButton.setOnClickListener {
-                    val action = ProfileFragmentDirections.actionNavProfileToNavAuth()
-                    navController.navigate(action)
+                binding.authButton.setOnClickListener {view ->
+                    view?.let {
+                        val action = ProfileFragmentDirections.actionNavProfileToNavAuth()
+                        navController.navigate(action)
+                    }
                 }
                 binding.accountImageView.setImageResource(R.drawable.ic_account_circle)
             }
@@ -168,7 +171,11 @@ class ProfileFragment : Fragment() {
                     )
                 )
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    MaterialColors.getColor(
+                        requireContext(),
+                        androidx.appcompat.R.attr.colorPrimary,
+                        Color.GREEN
+                    ),
                     0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -186,7 +193,11 @@ class ProfileFragment : Fragment() {
                     )
                 )
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    MaterialColors.getColor(
+                        requireContext(),
+                        androidx.appcompat.R.attr.colorPrimary,
+                        Color.GREEN
+                    ),
                     0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -204,7 +215,11 @@ class ProfileFragment : Fragment() {
                     )
                 )
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    MaterialColors.getColor(
+                        requireContext(),
+                        androidx.appcompat.R.attr.colorPrimary,
+                        Color.GREEN
+                    ),
                     0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -222,7 +237,11 @@ class ProfileFragment : Fragment() {
                     )
                 )
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    MaterialColors.getColor(
+                        requireContext(),
+                        androidx.appcompat.R.attr.colorPrimary,
+                        Color.GREEN
+                    ),
                     0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -240,13 +259,20 @@ class ProfileFragment : Fragment() {
                     )
                 )
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    MaterialColors.getColor(
+                        requireContext(),
+                        androidx.appcompat.R.attr.colorPrimary,
+                        Color.GREEN
+                    ),
                     0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 binding.taskGoalTodayText.text = spannable
             }
         }
+
+        binding.dayProgressIndicator.progress = viewModel.getDayProgress()
+        binding.dayProgressText.text = String.format("%d%%", viewModel.getDayProgress())
     }
 
     override fun onDestroyView() {

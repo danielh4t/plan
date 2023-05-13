@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import app.stacq.plan.util.time.TimeUtil
+import app.stacq.plan.util.TimeUtil
 import java.util.UUID
 
 @Keep
