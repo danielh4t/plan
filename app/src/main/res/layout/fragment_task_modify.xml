@@ -117,6 +117,7 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_task_date_start_icon"
             android:src="@drawable/ic_calendar"
+            app:taskImageIconVisibility="@{task}"
             app:layout_constraintTop_toTopOf="@+id/task_modify_date_time_layout"
             app:layout_constraintBottom_toBottomOf="@+id/task_modify_date_time_layout"
             app:layout_constraintEnd_toStartOf="@+id/task_modify_date_time_layout"

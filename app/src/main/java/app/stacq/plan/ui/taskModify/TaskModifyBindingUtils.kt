@@ -1,6 +1,7 @@
 package app.stacq.plan.ui.taskModify
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.domain.Task
@@ -30,6 +31,15 @@ fun ShapeableImageView.imageViewVisibility(task: Task?) {
 
 @BindingAdapter("taskTextLayoutVisibility")
 fun TextInputLayout.textLayoutVisibility(task: Task?) {
+    visibility = if (task == null) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
+@BindingAdapter("taskImageIconVisibility")
+fun ImageView.imageVisibility(task: Task?) {
     visibility = if (task == null) {
         View.GONE
     } else {
