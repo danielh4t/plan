@@ -38,6 +38,10 @@ class CategoryRepositoryImpl(
         categoryLocalDataSource.updateEnabled(categoryId)
     }
 
+    override fun getCount(): LiveData<Int> {
+        return categoryLocalDataSource.getCount()
+    }
+
     override fun getEnabledCategories(): LiveData<List<Category>> {
         return categoryLocalDataSource.getEnabledCategories().map { categoryEntities ->
             categoryEntities.map { categoryEntity -> categoryEntity.asCategory() }

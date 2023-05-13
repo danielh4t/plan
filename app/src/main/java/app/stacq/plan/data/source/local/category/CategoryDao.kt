@@ -62,6 +62,8 @@ interface CategoryDao {
     @Query("SELECT * FROM category")
     fun getCategoryEntities(): List<CategoryEntity>
 
+    @Query("SELECT COUNT(*) FROM category WHERE enabled AND NOT deleted")
+    fun getCount(): LiveData<Int>
 
     /**
      * Select enabled categories from the category.

@@ -15,4 +15,6 @@ class ProfileViewModel(
     val taskCount: LiveData<Int> = taskRepository.getCount()
 
     val goalCount: LiveData<Int> = goalRepository.getCount()
+
+    val categoryCount: LiveData<Int> = categoryRepository.getCount()
 }

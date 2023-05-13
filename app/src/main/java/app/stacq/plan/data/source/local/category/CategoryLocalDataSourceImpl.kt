@@ -34,6 +34,10 @@ class CategoryLocalDataSourceImpl (
         categoryDao.getCategoryEntities()
     }
 
+    override fun getCount(): LiveData<Int> {
+        return categoryDao.getCount()
+    }
+
     override fun getEnabledCategories(): LiveData<List<CategoryEntity>> {
         return categoryDao.getEnabledCategories()
     }
