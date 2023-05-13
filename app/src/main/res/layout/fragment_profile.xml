@@ -9,34 +9,66 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/profile_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/profile_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/profile">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/account_image_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
+            android:layout_margin="24dp"
             android:contentDescription="@string/content_account_image"
             android:src="@drawable/ic_account_circle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="320dp"
+            app:layout_constraintHeight="240dp"
+            app:layout_constraintWidth="240dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            app:layout_constraintTop_toBottomOf="@id/profile_app_bar_layout"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
-        <Button
-            android:id="@+id/auth_button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/profile_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/sign_in_sign_up"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/sign_in_sign_up_sync"
+            android:textAlignment="center"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/goal_count_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_image_view"
-            style="@style/Widget.Material3.Button.TonalButton" />
+            app:layout_constraintTop_toBottomOf="@+id/account_image_view" />
+
+        <Button
+            android:id="@+id/auth_button"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="@string/sign_in_sign_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/task_count_text"
@@ -55,13 +87,13 @@
             android:id="@+id/goal_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/roboto"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/category_count_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/task_count_text"
-            app:layout_constraintTop_toBottomOf="@+id/auth_button"
+            app:layout_constraintTop_toBottomOf="@+id/profile_text"
             tools:text="@string/tools_goals_count" />
 
         <TextView

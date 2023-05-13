@@ -29,6 +29,7 @@ import app.stacq.plan.databinding.FragmentProfileBinding
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.CircleCropTransformation
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -79,6 +80,9 @@ class ProfileFragment : Fragment() {
         viewModelFactory =
             ProfileViewModelFactory(taskRepository, goalRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
+
+        binding.profileAppBarLayout.statusBarForeground =
+            MaterialShapeDrawable.createWithElevationOverlay(context)
 
         val navController = findNavController()
 
@@ -149,8 +153,6 @@ class ProfileFragment : Fragment() {
                     ).show()
                 }
             }
-
-
 
         binding.accountImageView.setOnClickListener {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

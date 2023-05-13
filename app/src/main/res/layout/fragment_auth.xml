@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/sign_up_sign_in_sync"
+            android:text="@string/sign_in_sign_up_sync"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
