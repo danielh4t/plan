@@ -1,6 +1,10 @@
 package app.stacq.plan.ui.profile
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +76,8 @@ class ProfileFragment : Fragment() {
         val categoryRepository =
             CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
 
-        viewModelFactory = ProfileViewModelFactory(taskRepository, goalRepository, categoryRepository)
+        viewModelFactory =
+            ProfileViewModelFactory(taskRepository, goalRepository, categoryRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
 
         val navController = findNavController()
@@ -151,7 +156,59 @@ class ProfileFragment : Fragment() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
+        viewModel.taskCount.observe(viewLifecycleOwner) {
+            it?.let { tasks ->
+                val spannable = SpannableString(
+                    resources.getQuantityString(
+                        R.plurals.numberOfTasks,
+                        tasks,
+                        tasks
+                    )
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    0, tasks.toString().count(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.taskCountText.text = spannable
+            }
+        }
 
+        viewModel.goalCount.observe(viewLifecycleOwner) {
+            it?.let { goals ->
+                val spannable = SpannableString(
+                    resources.getQuantityString(
+                        R.plurals.numberOfGoals,
+                        goals,
+                        goals
+                    )
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    0, goals.toString().count(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.goalCountText.text = spannable
+            }
+        }
+
+        viewModel.categoryCount.observe(viewLifecycleOwner) {
+            it?.let { category ->
+                val spannable = SpannableString(
+                    resources.getQuantityString(
+                        R.plurals.numberOfCategories,
+                        category,
+                        category
+                    )
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    0, category.toString().count(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.categoryCountText.text = spannable
+            }
+        }
     }
 
     override fun onDestroyView() {

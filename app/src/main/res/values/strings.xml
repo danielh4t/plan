@@ -159,7 +159,7 @@
         <item quantity="one">%d Task</item>
         <item quantity="other">%d Goals</item>
     </plurals>
-    <plurals name="numberOfCategory">
+    <plurals name="numberOfCategories">
         <item quantity="zero">%d Categories</item>
         <item quantity="one">%d Category</item>
         <item quantity="other">%d Categories</item>
