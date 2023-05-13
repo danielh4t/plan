@@ -31,7 +31,7 @@ import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.constants.WorkerConstants
-import app.stacq.plan.util.time.TimeUtil
+import app.stacq.plan.util.TimeUtil
 import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GenerateTaskWorker

@@ -44,6 +44,8 @@ class GoalRepositoryImpl(
             goalRemoteDataSource.updateCategory(goal.asDocument(), previousCategoryId)
         }
 
+    override fun getCount(): LiveData<Int> = goalLocalDataSource.getCount()
+
     override fun getGoals(): LiveData<List<Goal>> =
         goalLocalDataSource.getGoals().map {
             it.map { goalEntity -> goalEntity.asGoal() }

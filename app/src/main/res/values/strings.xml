@@ -141,9 +141,39 @@
     <string name="yes_please">Yes, please</string>
     <string name="no_thanks">No, thanks</string>
 
-    <!-- Backup Dialog -->
-    <string name="sign_up_sign_in_sync">Sign Up or Sign In to backup and sync</string>
+    <!-- Profile -->
+    <string name="sign_in_sign_up">Sign In or Sign Up</string>
+    <string name="tasks_count">%d Tasks</string>
+    <string name="tools_tasks_count">10 Tasks</string>
+    <string name="goals_count">%d Goals</string>
+    <string name="tools_goals_count">5 Goals</string>
+    <string name="categories_count">%d Categories</string>
+    <string name="tools_categories_count">4 Categories</string>
+    <plurals name="numberOfTasks">
+        <item quantity="zero">%d Tasks</item>
+        <item quantity="one">%d Task</item>
+        <item quantity="other">%d Tasks</item>
+    </plurals>
+    <plurals name="numberOfGoals">
+        <item quantity="zero">%d Goals</item>
+        <item quantity="one">%d Goal</item>
+        <item quantity="other">%d Goals</item>
+    </plurals>
+    <plurals name="numberOfCategories">
+        <item quantity="zero">%d Categories</item>
+        <item quantity="one">%d Category</item>
+        <item quantity="other">%d Categories</item>
+    </plurals>
+    <string name="sign_in_sign_up_sync">Sign In or Sign Up to backup and sync</string>
+    <string name="tools_fifty_percent">50%</string>
+    <string name="content_goal_completion">Goals completed today</string>
+    <string name="today">Today</string>
+
+    <!-- Auth -->
     <string name="sign_out">Sign Out</string>
+
+    <!-- shared -->
+
     <string name="content_name_image">Brush icon</string>
     <string name="not_completed">Not completed</string>
     <string name="goal_deleted">Goal deleted</string>
@@ -192,7 +222,7 @@
     <string name="title_profile">Profile tab</string>
     <string name="profile">Profile</string>
     <string name="authentication_failed">Authentication failed</string>
-    <string name="sign_up_sign_in">Sign Up / Sign In</string>
+
     <string name="no_media_selected">No media selected</string>
     <string name="profile_picture_updated">Profile picture updated</string>
     <string name="profile_picture_upload_failed">Profile picture upload failed</string>
@@ -210,4 +240,19 @@
     <string name="image_fab">Modify task image</string>
     <string name="weak_password">Weak password</string>
     <string name="invalid_credentials">Invalid credential email or password is incorrect</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="email_required">Email required</string>
+    <string name="password_reset_email_sent">Link to reset password sent to email</string>
+    <string name="save">Save</string>
+    <string name="content_save_task">Save Task</string>
+    <string name="task_category_required">Task category required</string>
+    <string name="content_category_color">Category color</string>
+    <string name="content_add_image">Add Image</string>
+    <string name="image">Image</string>
+    <string name="uploading_image">Uploading image</string>
+    <string name="day_progress">Day progress</string>
+    <string name="content_save_goal">Save Goal</string>
+    <string name="goal_category_required">Goal category required</string>
+    <string name="content_save_category">Save Category</string>
+
 </resources>

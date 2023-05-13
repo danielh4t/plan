@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/sign_up_sign_in_sync"
+            android:text="@string/sign_in_sign_up_sync"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,24 +110,38 @@
         <Button
             android:id="@+id/sign_up_button"
             style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="@string/sign_up"
-            app:layout_constraintEnd_toStartOf="@+id/sign_in_button"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
+            app:layout_constraintWidth_max="@dimen/button_max"/>
 
         <Button
             android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/sign_up_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password_text"
+            app:layout_constraintWidth_max="@dimen/button_max" />
+
+        <TextView
+            android:id="@+id/forgot_password_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/forgot_password"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:textColor="?attr/colorControlNormal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

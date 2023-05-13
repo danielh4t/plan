@@ -127,19 +127,19 @@
 
 
         <ImageView
-            android:id="@+id/task_timer_image"
+            android:id="@+id/profile_task_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_task_timer_icon"
             android:src="@drawable/ic_clock_outline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/task_timer_label_text"
-            app:layout_constraintBottom_toBottomOf="@id/task_timer_text"
+            app:layout_constraintTop_toTopOf="@id/task_today_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/task_today_text"
             app:tint="?attr/colorPrimary" />
 
         <TextView
-            android:id="@+id/task_timer_label_text"
+            android:id="@+id/task_today_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -149,13 +149,13 @@
             android:fontFamily="@font/roboto"
             android:text="@string/timer"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/task_timer_text"
+            app:layout_constraintBottom_toTopOf="@id/task_today_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_timer_image"
+            app:layout_constraintStart_toEndOf="@id/profile_task_image"
             app:layout_constraintTop_toBottomOf="@id/task_creation_text" />
 
         <TextView
-            android:id="@+id/task_timer_text"
+            android:id="@+id/task_today_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -164,26 +164,26 @@
             android:fontFamily="@font/roboto"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_timer_image"
-            app:layout_constraintTop_toBottomOf="@id/task_timer_label_text"
+            app:layout_constraintStart_toEndOf="@id/profile_task_image"
+            app:layout_constraintTop_toBottomOf="@id/task_today_label_text"
             app:taskTimerFinishDateTime="@{task.timerFinishAt}"
             tools:text="@string/tools_creation" />
 
         <ImageView
-            android:id="@+id/task_completion_image"
+            android:id="@+id/goals_today_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_task_completion_icon"
             android:src="@drawable/ic_checkmark_circle_full"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/task_completion_label_text"
-            app:layout_constraintBottom_toBottomOf="@id/task_completion_text"
+            app:layout_constraintTop_toTopOf="@id/task_goal_today_label_text"
+            app:layout_constraintBottom_toBottomOf="@id/task_goal_today_text"
             app:tint="?attr/colorPrimary" />
 
 
         <TextView
-            android:id="@+id/task_completion_label_text"
+            android:id="@+id/task_goal_today_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -193,13 +193,13 @@
             android:fontFamily="@font/roboto"
             android:text="@string/completion"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/task_completion_text"
+            app:layout_constraintBottom_toTopOf="@id/task_goal_today_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_completion_image"
-            app:layout_constraintTop_toBottomOf="@id/task_timer_text" />
+            app:layout_constraintStart_toEndOf="@id/goals_today_image"
+            app:layout_constraintTop_toBottomOf="@id/task_today_text" />
 
         <TextView
-            android:id="@+id/task_completion_text"
+            android:id="@+id/task_goal_today_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -208,8 +208,8 @@
             android:fontFamily="@font/roboto"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_completion_image"
-            app:layout_constraintTop_toBottomOf="@id/task_completion_label_text"
+            app:layout_constraintStart_toEndOf="@id/goals_today_image"
+            app:layout_constraintTop_toBottomOf="@id/task_goal_today_label_text"
             app:taskCompletionDateTime="@{task.completedAt}"
             tools:text="@string/tools_creation" />
 
@@ -239,7 +239,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/task_priority_image"
-            app:layout_constraintTop_toBottomOf="@id/task_completion_text" />
+            app:layout_constraintTop_toBottomOf="@id/task_goal_today_text" />
 
 
         <com.google.android.material.slider.Slider

@@ -73,9 +73,18 @@ class TaskRepositoryImpl(
         return@withContext taskLocalDataSource.hasGeneratedTask(goalId)
     }
 
-    override suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean = withContext(ioDispatcher) {
-        return@withContext taskLocalDataSource.hasCompletedTaskGoalToday(goalId)
-    }
+    override suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean =
+        withContext(ioDispatcher) {
+            return@withContext taskLocalDataSource.hasCompletedTaskGoalToday(goalId)
+        }
+
+    override fun getCompletedToday(): LiveData<Int> = taskLocalDataSource.getCompletedToday()
+
+    override fun getCompletedTaskGoalToday(): LiveData<Int> =
+        taskLocalDataSource.getCompletedTaskGoalToday()
+
+    override fun getCount(): LiveData<Int> = taskLocalDataSource.getCount()
+
 
     override fun getTasks(): LiveData<List<Task>> =
         taskLocalDataSource.getTasks().map {

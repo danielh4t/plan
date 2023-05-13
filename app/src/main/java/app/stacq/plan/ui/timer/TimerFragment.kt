@@ -30,7 +30,7 @@ import app.stacq.plan.util.constants.TimerConstants.TIME_MILLIS_TO_SECONDS
 import app.stacq.plan.util.constants.TimerConstants.TIME_MINUTES_TO_HOURS
 import app.stacq.plan.util.constants.TimerConstants.TIME_ONE_HOUR_MINUTES
 import app.stacq.plan.util.constants.TimerConstants.TIME_ONE_MINUTE_MINUTES
-import app.stacq.plan.util.time.TimeUtil
+import app.stacq.plan.util.TimeUtil
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK

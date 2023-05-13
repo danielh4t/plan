@@ -8,4 +8,5 @@
     <dimen name="input_layout_min">300dp</dimen>
     <dimen name="input_layout_max">480dp</dimen>
     <dimen name="material_switch_max">320dp</dimen>
+    <dimen name="button_max">300dp</dimen>
 </resources>

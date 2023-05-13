@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,9 +19,8 @@ import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentGoalModifyBinding
-import com.google.android.material.chip.Chip
+import app.stacq.plan.util.ui.CategoryMenuAdapter
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -74,20 +74,88 @@ class GoalModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.goalModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        binding.goalModifyAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.save_goal -> {
+                    val name: String = binding.goalModifyNameEditText.text.toString().trim()
+                    if (name.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.goal_name_required,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val measure: String = binding.goalModifyMeasureEditText.text.toString().trim()
+                    if (measure.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.goal_measure_required,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val result: String = binding.goalModifyResultEditText.text.toString().trim()
+                    if (result.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.goal_result_required,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val categoryId = viewModel.selectedCategoryId.value
+                    if (categoryId == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.goal_category_required,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val daysText = binding.goalModifyDaysEditText.text.toString()
+                    val days = daysText.toIntOrNull()
+                    if (days == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.goal_days_required,
+                            Toast.LENGTH_SHORT
+                        )
+
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val id = if (goalId == null) {
+                        viewModel.create(name, measure, result, categoryId, days)
+                    } else {
+                        viewModel.update(name, measure, result, categoryId, days)
+                        goalId
+                    }
+
+                    val action = GoalModifyFragmentDirections.actionNavGoalModifyToNavGoal(id)
+                    navController.navigate(action)
+                    true
+                }
+
+                else -> false
+            }
+        }
+
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            binding.goalModifyCategoryChipGroup.removeAllViews()
-            categories?.let {
-                it.map { category ->
-                    val chip = layoutInflater.inflate(
-                        R.layout.chip_layout,
-                        binding.goalModifyCategoryChipGroup,
-                        false
-                    ) as Chip
-                    chip.text = category.name
-                    chip.contentDescription =
-                        getString(R.string.content_category_chip, category.name)
-                    chip.tag = category.id
-                    binding.goalModifyCategoryChipGroup.addView(chip)
+            val adapter = CategoryMenuAdapter(requireContext(), categories)
+            binding.categoriesAutoText.setAdapter(adapter)
+            binding.categoriesAutoText.setOnItemClickListener { _, _, position, _ ->
+                adapter.getItem(position)?.let { category ->
+                    binding.categoriesAutoText.setText(category.name, false)
+                    viewModel.setSelectedCategoryId(category.id)
                 }
             }
         }
@@ -98,66 +166,8 @@ class GoalModifyFragment : Fragment() {
                 binding.goalModifyMeasureEditText.setText(it.measure)
                 binding.goalModifyResultEditText.setText(it.result)
                 binding.goalModifyDaysEditText.setText(it.days.toString())
-                val categoryChip =
-                    binding.goalModifyCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
-                categoryChip?.isChecked = true
+                binding.categoriesAutoText.setText(it.categoryName, false)
             }
-        }
-
-        binding.goalModifyFab.setOnClickListener { clickedView ->
-            val name: String = binding.goalModifyNameEditText.text.toString().trim()
-            if (name.isEmpty()) {
-                Snackbar.make(clickedView, R.string.goal_name_required, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val measure: String = binding.goalModifyMeasureEditText.text.toString().trim()
-            if (measure.isEmpty()) {
-                Snackbar.make(clickedView, R.string.goal_measure_required, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val result: String = binding.goalModifyResultEditText.text.toString().trim()
-            if (result.isEmpty()) {
-                Snackbar.make(clickedView, R.string.goal_result_required, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val checkedId: Int = binding.goalModifyCategoryChipGroup.checkedChipId
-            if (checkedId == View.NO_ID) {
-                Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val checkedChip = binding.goalModifyCategoryChipGroup.findViewById<Chip>(checkedId)
-            val categoryId = checkedChip.tag as String
-
-            val daysText = binding.goalModifyDaysEditText.text.toString()
-            val days = daysText.toIntOrNull()
-            if (days == null) {
-                Snackbar.make(clickedView, R.string.goal_days_required, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val id = if (goalId == null) {
-                viewModel.create(name, measure, result, categoryId, days)
-            } else {
-                viewModel.update(name, measure, result, categoryId, days)
-                goalId
-            }
-
-            val action = GoalModifyFragmentDirections.actionNavGoalModifyToNavGoal(id)
-            navController.navigate(action)
         }
     }
 

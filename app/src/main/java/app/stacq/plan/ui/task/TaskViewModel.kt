@@ -10,7 +10,7 @@ import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTask
 import app.stacq.plan.util.constants.FirebaseAnalyticsConstants
-import app.stacq.plan.util.time.TimeUtil
+import app.stacq.plan.util.TimeUtil
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent

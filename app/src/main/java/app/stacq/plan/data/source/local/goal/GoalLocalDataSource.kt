@@ -18,6 +18,8 @@ interface GoalLocalDataSource {
 
     suspend fun getCountGoalCompletedDays(goalId: String): Int
 
+    fun getCount(): LiveData<Int>
+
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     fun getGoal(goalId: String): LiveData<GoalEntityAndCategoryEntity>

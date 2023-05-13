@@ -25,15 +25,14 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskModifyBinding
 import app.stacq.plan.util.CalendarUtil
+import app.stacq.plan.util.ui.CategoryMenuAdapter
 import coil.load
 import coil.size.ViewSizeResolver
 import coil.transform.RoundedCornersTransformation
-import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
@@ -84,33 +83,40 @@ class TaskModifyFragment : Fragment() {
                     if (uid != null && taskId != null) {
                         val imageRef = Firebase.storage.reference.child("$uid/$taskId")
                         val uploadTask = imageRef.putFile(uri)
-                        uploadTask.addOnSuccessListener {
-                            // Handle successful upload
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.task_picture_updated,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            imageRef.downloadUrl.addOnSuccessListener { imageUri ->
-                                binding.taskModifyImageView.load(imageUri) {
-                                    crossfade(true)
-                                    size(ViewSizeResolver(binding.taskModifyImageView))
-                                    transformations(RoundedCornersTransformation())
-                                }
-                                binding.taskModifyImageView.setOnClickListener {
-                                    val intent = Intent(Intent.ACTION_VIEW)
-                                    intent.data = Uri.parse(imageUri.toString())
-                                    startActivity(intent)
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.uploading_image,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        uploadTask
+                            .addOnSuccessListener {
+                                // Handle successful upload
+                                Toast.makeText(
+                                    requireContext(),
+                                    R.string.task_picture_updated,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+                                    binding.taskModifyImageView.load(imageUri) {
+                                        crossfade(true)
+                                        size(ViewSizeResolver(binding.taskModifyImageView))
+                                        transformations(RoundedCornersTransformation())
+                                    }
+                                    binding.taskModifyImageView.setOnClickListener {
+                                        val intent = Intent(Intent.ACTION_VIEW)
+                                        intent.data = Uri.parse(imageUri.toString())
+                                        startActivity(intent)
+                                    }
                                 }
                             }
-                        }.addOnFailureListener {
-                            // Handle failed upload
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.task_picture_upload_failed,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                            .addOnFailureListener {
+                                // Handle failed upload
+                                Toast.makeText(
+                                    requireContext(),
+                                    R.string.task_picture_upload_failed,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                     }
                 } else {
                     Toast.makeText(
@@ -167,40 +173,71 @@ class TaskModifyFragment : Fragment() {
         binding.taskModifyAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
 
+        binding.taskModifyAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.add_image -> {
+                    val uid = Firebase.auth.uid
+                    if (uid != null && taskId != null) {
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.sign_in_up_required,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    true
+                }
+
+                R.id.save_task -> {
+
+                    // name
+                    val name: String = binding.taskNameEditText.text.toString().trim()
+                    if (name.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.task_name_required,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val categoryId = viewModel.selectedCategoryId.value
+                    if (categoryId == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.task_category_required,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    var completedAt: Long? = null
+                    val dateTimeText = binding.taskModifyDateTimeEditText.text.toString()
+                    if (dateTimeText.isNotEmpty()) {
+                        completedAt = viewModel.calendar.getLocalTimeUTC()
+                    }
+
+                    val notes: String = binding.taskNotesEditText.text.toString().trim()
+
+                    val id = if (taskId == null) {
+                        viewModel.create(name, categoryId, notes)
+                    } else {
+                        viewModel.update(name, categoryId, completedAt, notes)
+                        taskId
+                    }
+
+                    val action = TaskModifyFragmentDirections.actionNavEditToNavTask(id)
+                    navController.navigate(action)
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
-
-        // creating a new task
-        if (taskId == null) {
-            binding.taskModifyDateTimeLayout.visibility = View.GONE
-            binding.taskModifyDateTimeImage.visibility = View.GONE
-        }
-
-        viewModel.task.observe(viewLifecycleOwner) { it ->
-            it?.let {
-                binding.task = it
-                val categoryChip =
-                    binding.taskCategoryChipGroup.findViewWithTag(it.categoryId) as Chip?
-                categoryChip?.isChecked = true
-            }
-        }
-
-        viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            binding.taskCategoryChipGroup.removeAllViews()
-            categories?.let {
-                it.map { category ->
-                    val chip = layoutInflater.inflate(
-                        R.layout.chip_layout,
-                        binding.taskCategoryChipGroup,
-                        false
-                    ) as Chip
-                    chip.text = category.name
-                    chip.tag = category.id
-                    binding.taskCategoryChipGroup.addView(chip)
-                }
-            }
-        }
 
         val constraintsBuilder =
             CalendarConstraints.Builder()
@@ -247,70 +284,29 @@ class TaskModifyFragment : Fragment() {
             }
         }
 
-        binding.taskModifyImageFab.setOnClickListener {
-            // only select picture for
-            val uid = Firebase.auth.uid
-            if (uid != null && taskId != null) {
-                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.sign_in_up_required,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
         binding.taskModifyDateTimeEditText.setOnClickListener {
             if (!datePicker.isAdded) {
                 datePicker.show(requireActivity().supportFragmentManager, "date_picker")
             }
         }
 
-        binding.taskModifyFab.setOnClickListener { clickedView ->
-
-            val name: String = binding.taskNameEditText.text.toString().trim()
-            if (name.isEmpty()) {
-                Snackbar.make(clickedView, R.string.task_name_required, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
+        viewModel.task.observe(viewLifecycleOwner) {
+            binding.task = it
+            it?.let {
+                viewModel.setSelectedCategoryId(it.categoryId)
+                binding.categoriesAutoText.setText(it.categoryName, false)
             }
+        }
 
-            // get checked chip
-            val checkedId: Int = binding.taskCategoryChipGroup.checkedChipId
-            if (checkedId == View.NO_ID) {
-                Snackbar.make(
-                    clickedView,
-                    R.string.empty_category_details,
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            val adapter = CategoryMenuAdapter(requireContext(), categories)
+            binding.categoriesAutoText.setAdapter(adapter)
+            binding.categoriesAutoText.setOnItemClickListener { _, _, position, _ ->
+                adapter.getItem(position)?.let { category ->
+                    binding.categoriesAutoText.setText(category.name, false)
+                    viewModel.setSelectedCategoryId(category.id)
+                }
             }
-
-            val checkedChip = binding.taskCategoryChipGroup.findViewById<Chip>(checkedId)
-            // get category id from chip tag
-            val categoryId = checkedChip.tag as String
-
-            var completedAt: Long? = null
-            val dateTimeText = binding.taskModifyDateTimeEditText.text.toString()
-            if (dateTimeText.isNotEmpty()) {
-                completedAt = viewModel.calendar.getLocalTimeUTC()
-            }
-
-            val notes: String = binding.taskNotesEditText.text.toString().trim()
-
-            val id = if (taskId == null) {
-                viewModel.create(name, categoryId, notes)
-            } else {
-                viewModel.update(name, categoryId, completedAt, notes)
-                taskId
-            }
-
-            val action = TaskModifyFragmentDirections.actionNavEditToNavTask(id)
-            navController.navigate(action)
         }
     }
 

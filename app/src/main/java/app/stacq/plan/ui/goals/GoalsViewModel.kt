@@ -7,7 +7,7 @@ import app.stacq.plan.data.repository.category.CategoryRepository
 import app.stacq.plan.data.repository.goal.GoalRepository
 import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Goal
-import app.stacq.plan.util.time.TimeUtil
+import app.stacq.plan.util.TimeUtil
 import kotlinx.coroutines.launch
 
 class GoalsViewModel(

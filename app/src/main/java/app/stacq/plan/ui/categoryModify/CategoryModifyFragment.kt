@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,7 +18,6 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentCategoryModifyBinding
 import app.stacq.plan.util.defaultColors
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -66,32 +66,43 @@ class CategoryModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.categoryModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        binding.categoryModifyAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.save_category -> {
+                    val name: String = binding.categoryModifyNameEditText.text.toString().trim()
+                    if (name.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.empty_category_details, Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    val color = getString(defaultColors(name))
+
+                    val id = if (categoryId == null) {
+                        viewModel.create(name, color)
+                    } else {
+                        viewModel.update(name)
+                        categoryId
+                    }
+
+                    val action =
+                        CategoryModifyFragmentDirections.actionNavCategoryModifyToNavCategory(id)
+                    navController.navigate(action)
+
+                    true
+                }
+
+                else -> false
+            }
+        }
+
         viewModel.category.observe(viewLifecycleOwner) { it ->
             it?.let {
                 binding.categoryModifyNameEditText.setText(it.name)
             }
-        }
-
-        binding.categoryModifyFab.setOnClickListener { clickedView ->
-            val name: String = binding.categoryModifyNameEditText.text.toString().trim()
-            if (name.isEmpty()) {
-                Snackbar.make(clickedView, R.string.empty_category_details, Snackbar.LENGTH_LONG)
-                    .setAnchorView(clickedView)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val color = getString(defaultColors(name))
-
-            val id = if (categoryId == null) {
-                viewModel.create(name, color)
-            } else {
-                viewModel.update(name)
-                categoryId
-            }
-
-            val action = CategoryModifyFragmentDirections.actionNavCategoryModifyToNavCategory(id)
-            navController.navigate(action)
         }
     }
 
