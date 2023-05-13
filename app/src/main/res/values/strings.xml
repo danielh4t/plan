@@ -156,7 +156,7 @@
     </plurals>
     <plurals name="numberOfGoals">
         <item quantity="zero">%d Goals</item>
-        <item quantity="one">%d Task</item>
+        <item quantity="one">%d Goal</item>
         <item quantity="other">%d Goals</item>
     </plurals>
     <plurals name="numberOfCategories">

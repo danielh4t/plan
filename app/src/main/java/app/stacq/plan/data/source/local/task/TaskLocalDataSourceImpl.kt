@@ -74,6 +74,14 @@ class TaskLocalDataSourceImpl(
             taskDao.hasCompletedTaskGoalToday(goalId)
         }
 
+    override fun getCompletedToday(): LiveData<Int> {
+        return taskDao.getCompletedToday()
+    }
+
+    override fun getCompletedTaskGoalToday(): LiveData<Int> {
+        return taskDao.getCompletedTaskGoalToday()
+    }
+
     override fun getCount(): LiveData<Int> {
         return taskDao.getCount()
     }

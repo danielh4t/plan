@@ -30,6 +30,10 @@ interface TaskLocalDataSource {
 
     suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean
 
+    fun getCompletedToday(): LiveData<Int>
+
+    fun getCompletedTaskGoalToday(): LiveData<Int>
+
     fun getCount(): LiveData<Int>
 
     fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>

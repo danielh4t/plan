@@ -159,17 +159,17 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.taskCount.observe(viewLifecycleOwner) {
-            it?.let { tasks ->
+            it?.let {
                 val spannable = SpannableString(
                     resources.getQuantityString(
                         R.plurals.numberOfTasks,
-                        tasks,
-                        tasks
+                        it,
+                        it
                     )
                 )
                 spannable.setSpan(
                     ForegroundColorSpan(Color.GREEN),
-                    0, tasks.toString().count(),
+                    0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 binding.taskCountText.text = spannable
@@ -177,17 +177,17 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.goalCount.observe(viewLifecycleOwner) {
-            it?.let { goals ->
+            it?.let {
                 val spannable = SpannableString(
                     resources.getQuantityString(
                         R.plurals.numberOfGoals,
-                        goals,
-                        goals
+                        it,
+                        it
                     )
                 )
                 spannable.setSpan(
                     ForegroundColorSpan(Color.GREEN),
-                    0, goals.toString().count(),
+                    0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 binding.goalCountText.text = spannable
@@ -195,20 +195,56 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.categoryCount.observe(viewLifecycleOwner) {
-            it?.let { category ->
+            it?.let {
                 val spannable = SpannableString(
                     resources.getQuantityString(
                         R.plurals.numberOfCategories,
-                        category,
-                        category
+                        it,
+                        it
                     )
                 )
                 spannable.setSpan(
                     ForegroundColorSpan(Color.GREEN),
-                    0, category.toString().count(),
+                    0, it.toString().count(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 binding.categoryCountText.text = spannable
+            }
+        }
+
+        viewModel.taskCompletedToday.observe(viewLifecycleOwner) {
+            it?.let {
+                val spannable = SpannableString(
+                    resources.getQuantityString(
+                        R.plurals.numberOfTasks,
+                        it,
+                        it
+                    )
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    0, it.toString().count(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.taskTodayText.text = spannable
+            }
+        }
+
+        viewModel.taskGoalCompletedToday.observe(viewLifecycleOwner) {
+            it?.let {
+                val spannable = SpannableString(
+                    resources.getQuantityString(
+                        R.plurals.numberOfTasks,
+                        it,
+                        it
+                    )
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    0, it.toString().count(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.taskGoalTodayText.text = spannable
             }
         }
     }
