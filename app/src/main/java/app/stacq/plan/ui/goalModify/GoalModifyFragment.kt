@@ -77,22 +77,20 @@ class GoalModifyFragment : Fragment() {
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             val adapter = CategoryMenuAdapter(requireContext(), categories)
-            binding.categoriesAutoText.setAdapter(adapter)
-            binding.categoriesAutoText.setOnItemClickListener { _, _, position, _ ->
+            binding.goalModifyCategoryAutocomplete.setAdapter(adapter)
+            binding.goalModifyCategoryAutocomplete.setOnItemClickListener { _, _, position, _ ->
                 adapter.getItem(position)?.let { category ->
-                    binding.categoriesAutoText.setText(category.name, false)
+                    binding.goalModifyCategoryAutocomplete.setText(category.name, false)
                     viewModel.setSelectedCategoryId(category.id)
                 }
             }
         }
 
-        viewModel.goal.observe(viewLifecycleOwner) { it ->
+        viewModel.goal.observe(viewLifecycleOwner) {
+            binding.goal = it
             it?.let {
-                binding.goalModifyNameEditText.setText(it.name)
-                binding.goalModifyMeasureEditText.setText(it.measure)
-                binding.goalModifyResultEditText.setText(it.result)
-                binding.goalModifyDaysEditText.setText(it.days.toString())
-                binding.categoriesAutoText.setText(it.categoryName, false)
+                viewModel.setSelectedCategoryId(it.categoryId)
+                binding.goalModifyCategoryAutocomplete.setText(it.categoryName, false)
             }
         }
 
