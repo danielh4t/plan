@@ -29,6 +29,14 @@
                 android:minHeight="?attr/actionBarSize"
                 app:title="@string/bite">
 
+                <Button
+                    android:id="@+id/bite_modify_save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/save" />
+
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -40,10 +48,10 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_name_image"
             android:src="@drawable/ic_brush"
-            app:layout_constraintTop_toTopOf="@+id/bite_modify_name_layout"
             app:layout_constraintBottom_toBottomOf="@+id/bite_modify_name_layout"
             app:layout_constraintEnd_toStartOf="@+id/bite_modify_name_layout"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bite_modify_name_layout"
             app:tint="?attr/colorPrimary" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +66,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bite_modify_name_image"
             app:layout_constraintTop_toBottomOf="@+id/bite_modify_app_bar_layout"
-            app:layout_constraintWidth_min="@dimen/input_layout_min"
-            app:layout_constraintWidth_max="@dimen/input_layout_max">
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bite_modify_name_edit_text"
@@ -78,8 +86,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/category"
             android:fontFamily="@font/roboto"
+            android:text="@string/category"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,23 +100,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:padding="4dp"
             android:clickable="false"
+            android:padding="4dp"
             app:chipIcon="@drawable/ic_circle_checkmark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/bite_modify_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:contentDescription="@string/content_bite_modify_fab"
-            android:text="@string/set_bite"
-            app:icon="@drawable/ic_flash"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
