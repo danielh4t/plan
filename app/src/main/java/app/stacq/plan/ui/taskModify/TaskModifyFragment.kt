@@ -173,69 +173,6 @@ class TaskModifyFragment : Fragment() {
         binding.taskModifyAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
 
-        binding.taskModifyAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.add_image -> {
-                    val uid = Firebase.auth.uid
-                    if (uid != null && taskId != null) {
-                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.sign_in_up_required,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    true
-                }
-
-                R.id.save_task -> {
-
-                    // name
-                    val name: String = binding.taskNameEditText.text.toString().trim()
-                    if (name.isEmpty()) {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.task_name_required,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    val categoryId = viewModel.selectedCategoryId.value
-                    if (categoryId == null) {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.task_category_required,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    var completedAt: Long? = null
-                    val dateTimeText = binding.taskModifyDateTimeEditText.text.toString()
-                    if (dateTimeText.isNotEmpty()) {
-                        completedAt = viewModel.calendar.getLocalTimeUTC()
-                    }
-
-                    val notes: String = binding.taskNotesEditText.text.toString().trim()
-
-                    val id = if (taskId == null) {
-                        viewModel.create(name, categoryId, notes)
-                    } else {
-                        viewModel.update(name, categoryId, completedAt, notes)
-                        taskId
-                    }
-
-                    val action = TaskModifyFragmentDirections.actionNavEditToNavTask(id)
-                    navController.navigate(action)
-                    true
-                }
-
-                else -> false
-            }
-        }
-
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
@@ -287,6 +224,60 @@ class TaskModifyFragment : Fragment() {
         binding.taskModifyDateTimeEditText.setOnClickListener {
             if (!datePicker.isAdded) {
                 datePicker.show(requireActivity().supportFragmentManager, "date_picker")
+            }
+        }
+
+        binding.taskModifySaveButton.setOnClickListener {
+            // name
+            val name: String = binding.taskNameEditText.text.toString().trim()
+            if (name.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.task_name_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            val categoryId = viewModel.selectedCategoryId.value
+            if (categoryId == null) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.task_category_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            var completedAt: Long? = null
+            val dateTimeText = binding.taskModifyDateTimeEditText.text.toString()
+            if (dateTimeText.isNotEmpty()) {
+                completedAt = viewModel.calendar.getLocalTimeUTC()
+            }
+
+            val notes: String = binding.taskNotesEditText.text.toString().trim()
+
+            val id = if (taskId == null) {
+                viewModel.create(name, categoryId, notes)
+            } else {
+                viewModel.update(name, categoryId, completedAt, notes)
+                taskId
+            }
+
+            val action = TaskModifyFragmentDirections.actionNavEditToNavTask(id)
+            navController.navigate(action)
+        }
+
+        binding.taskModifyAddImageFab.setOnClickListener {
+            val uid = Firebase.auth.uid
+            if (uid != null) {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.sign_in_up_required,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import app.stacq.plan.domain.Task
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
@@ -46,3 +47,13 @@ fun ImageView.imageVisibility(task: Task?) {
         View.VISIBLE
     }
 }
+
+@BindingAdapter("taskImageFabVisibility")
+fun ExtendedFloatingActionButton.imageFabVisibility(task: Task?) {
+    visibility = if (task == null) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
