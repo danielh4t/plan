@@ -66,43 +66,31 @@ class CategoryModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.categoryModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
-        binding.categoryModifyAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.save_category -> {
-                    val name: String = binding.categoryModifyNameEditText.text.toString().trim()
-                    if (name.isEmpty()) {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.empty_category_details, Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    val color = getString(defaultColors(name))
-
-                    val id = if (categoryId == null) {
-                        viewModel.create(name, color)
-                    } else {
-                        viewModel.update(name)
-                        categoryId
-                    }
-
-                    val action =
-                        CategoryModifyFragmentDirections.actionNavCategoryModifyToNavCategory(id)
-                    navController.navigate(action)
-
-                    true
-                }
-
-                else -> false
+        binding.categoryModifySaveButton.setOnClickListener {
+            val name: String = binding.categoryModifyNameEditText.text.toString().trim()
+            if (name.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.empty_category_details, Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
+
+            val color = getString(defaultColors(name))
+
+            val id = if (categoryId == null) {
+                viewModel.create(name, color)
+            } else {
+                viewModel.update(name)
+                categoryId
+            }
+
+            val action = CategoryModifyFragmentDirections.actionNavCategoryModifyToNavCategory(id)
+            navController.navigate(action)
         }
 
-        viewModel.category.observe(viewLifecycleOwner) { it ->
-            it?.let {
-                binding.categoryModifyNameEditText.setText(it.name)
-            }
+        viewModel.category.observe(viewLifecycleOwner) {
+            binding.category = it
         }
     }
 

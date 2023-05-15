@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="category"
+            type="app.stacq.plan.domain.Category" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,8 +28,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:menu="@menu/category_modify_app_bar_menu"
                 app:title="@string/category">
+
+                <Button
+                    android:id="@+id/category_modify_save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/save" />
 
             </com.google.android.material.appbar.MaterialToolbar>
 
@@ -39,10 +49,10 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_name_image"
             android:src="@drawable/ic_brush"
-            app:layout_constraintTop_toTopOf="@+id/category_modify_name_layout"
             app:layout_constraintBottom_toBottomOf="@+id/category_modify_name_layout"
             app:layout_constraintEnd_toStartOf="@+id/category_modify_name_layout"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/category_modify_name_layout"
             app:tint="?attr/colorPrimary" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,8 +68,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/category_modify_name_image"
             app:layout_constraintTop_toBottomOf="@+id/category_modify_app_bar_layout"
-            app:layout_constraintWidth_min="@dimen/input_layout_min"
-            app:layout_constraintWidth_max="@dimen/input_layout_max">
+            app:layout_constraintWidth_max="@dimen/input_layout_max"
+            app:layout_constraintWidth_min="@dimen/input_layout_min">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/category_modify_name_edit_text"
@@ -67,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
+                android:text="@{category.name}"
                 tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
