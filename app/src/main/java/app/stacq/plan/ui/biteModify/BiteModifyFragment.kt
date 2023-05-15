@@ -74,10 +74,8 @@ class BiteModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.biteModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
-        viewModel.bite.observe(viewLifecycleOwner) { it ->
-            it?.let {
-                binding.biteModifyNameEditText.setText(it.name)
-            }
+        viewModel.bite.observe(viewLifecycleOwner) {
+            binding.bite = it
         }
 
         viewModel.task.observe(viewLifecycleOwner) { it ->
