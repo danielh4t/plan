@@ -102,7 +102,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/category"
-            android:labelFor="@+id/categories_auto_text"
+            android:labelFor="@+id/task_modify_category_autocomplete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_modify_category_image"
             app:layout_constraintTop_toBottomOf="@+id/task_name_layout"
@@ -110,7 +110,7 @@
             app:layout_constraintWidth_min="@dimen/input_layout_min">
 
             <AutoCompleteTextView
-                android:id="@+id/categories_auto_text"
+                android:id="@+id/task_modify_category_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />

@@ -285,16 +285,16 @@ class TaskModifyFragment : Fragment() {
             binding.task = it
             it?.let {
                 viewModel.setSelectedCategoryId(it.categoryId)
-                binding.categoriesAutoText.setText(it.categoryName, false)
+                binding.taskModifyCategoryAutocomplete.setText(it.categoryName, false)
             }
         }
 
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             val adapter = CategoryMenuAdapter(requireContext(), categories)
-            binding.categoriesAutoText.setAdapter(adapter)
-            binding.categoriesAutoText.setOnItemClickListener { _, _, position, _ ->
+            binding.taskModifyCategoryAutocomplete.setAdapter(adapter)
+            binding.taskModifyCategoryAutocomplete.setOnItemClickListener { _, _, position, _ ->
                 adapter.getItem(position)?.let { category ->
-                    binding.categoriesAutoText.setText(category.name, false)
+                    binding.taskModifyCategoryAutocomplete.setText(category.name, false)
                     viewModel.setSelectedCategoryId(category.id)
                 }
             }
