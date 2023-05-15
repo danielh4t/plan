@@ -1,7 +1,5 @@
 package app.stacq.plan.ui.biteModify
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -78,15 +76,6 @@ class BiteModifyFragment : Fragment() {
             binding.bite = it
         }
 
-        viewModel.task.observe(viewLifecycleOwner) { it ->
-            it?.let {
-                binding.biteCategoryChip.text = it.categoryName
-                binding.biteCategoryChip.chipIconTint =
-                    ColorStateList.valueOf(Color.parseColor(it.categoryColor))
-                binding.biteCategoryChip.tag = it.categoryId
-            }
-        }
-
         binding.biteModifySaveButton.setOnClickListener {
             val name: String = binding.biteModifyNameEditText.text.toString().trim()
             if (name.isEmpty()) {
@@ -95,10 +84,8 @@ class BiteModifyFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val categoryId: String = binding.biteCategoryChip.tag as String
-
             if (biteId == null) {
-                viewModel.create(name, taskId, categoryId)
+                viewModel.create(name)
             } else {
                 viewModel.update(name)
             }
