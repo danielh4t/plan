@@ -6,6 +6,9 @@
 
     <data>
 
+        <variable
+            name="bite"
+            type="app.stacq.plan.domain.Bite" />
     </data>
 
 
@@ -73,6 +76,7 @@
                 android:id="@+id/bite_modify_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{bite.name}"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
                 tools:ignore="TextContrastCheck" />
