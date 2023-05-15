@@ -27,11 +27,13 @@ class BiteModifyViewModel(
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
 
-    fun create(name: String, taskId: String, categoryId: String) {
+    fun create(name: String) {
         viewModelScope.launch {
-            val biteEntity = BiteEntity(name = name, taskId = taskId, categoryId = categoryId)
-            val bite = biteEntity.asBite()
-            biteRepository.create(bite)
+            task.value?.let { task ->
+                val biteEntity = BiteEntity(name = name, taskId = task.id, categoryId = task.categoryId)
+                val bite = biteEntity.asBite()
+                biteRepository.create(bite)
+            }
         }
     }
 
