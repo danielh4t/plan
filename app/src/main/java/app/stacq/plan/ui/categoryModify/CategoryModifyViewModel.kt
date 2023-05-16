@@ -24,7 +24,6 @@ class CategoryModifyViewModel(
     fun create(name: String, color: String): String {
         val categoryEntity = CategoryEntity(name = name, color = color)
         viewModelScope.launch {
-
             val category = categoryEntity.asCategory()
             categoryRepository.create(category)
         }

@@ -3,19 +3,21 @@ package app.stacq.plan.ui.biteModify
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.bite.BiteRepository
 import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.domain.Bite
-import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asBite
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class BiteModifyViewModel(
     private val biteRepository: BiteRepository,
-    taskRepository: TaskRepository,
-    taskId: String,
+    private val taskRepository: TaskRepository,
+    private val taskId: String,
     biteId: String?
 ) : ViewModel() {
 
@@ -25,12 +27,14 @@ class BiteModifyViewModel(
         MutableLiveData()
     }
 
-    val task: LiveData<Task> = taskRepository.getTask(taskId)
+    private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     fun create(name: String) {
-        viewModelScope.launch {
-            task.value?.let { task ->
-                val biteEntity = BiteEntity(name = name, taskId = task.id, categoryId = task.categoryId)
+        scope.launch {
+            val task = taskRepository.read(taskId)
+            task?.let {
+                val biteEntity =
+                    BiteEntity(name = name, taskId = it.id, categoryId = it.categoryId)
                 val bite = biteEntity.asBite()
                 biteRepository.create(bite)
             }
@@ -38,11 +42,16 @@ class BiteModifyViewModel(
     }
 
     fun update(name: String) {
-        viewModelScope.launch {
+        scope.launch {
             bite.value?.let {
                 it.name = name
                 biteRepository.update(it)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        scope.cancel()
     }
 }
