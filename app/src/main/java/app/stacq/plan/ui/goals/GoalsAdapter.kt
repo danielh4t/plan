@@ -26,10 +26,6 @@ class GoalsAdapter(
         holder.bind(goal, goalNavigateListener, goalCompletedListener, goalDeleteListener)
     }
 
-    fun getGoal(position: Int): Goal {
-        return getItem(position)
-    }
-
     class ViewHolder private constructor(private val binding: ListItemGoalBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
