@@ -135,16 +135,21 @@ class TaskFragment : Fragment() {
                 return false
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
                 val position = viewHolder.adapterPosition
-                val bite = adapter.getBite(position)
-                viewModel.deleteBite(bite)
-                Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.timerFab)
-                    .setAction(R.string.undo) {
-                        viewModel.createBite(bite)
-                    }
-                    .show()
+                val bite = adapter.currentList[position]
+                bite?.let {
+                    viewModel.deleteBite(bite)
+                    Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.timerFab)
+                        .setAction(R.string.undo) {
+                            viewModel.createBite(bite)
+                        }
+                        .show()
+                }
             }
 
             override fun onChildDraw(
@@ -191,6 +196,7 @@ class TaskFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.taskBitesList)
 
         binding.taskBitesList.adapter = adapter
+
         binding.taskBitesList.addItemDecoration(
             BottomMarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
         )
