@@ -81,7 +81,11 @@ class CategoriesFragment : Fragment() {
                 .show()
         }
 
-        val adapter = CategoriesAdapter(categoryEnableListener, categoryNavigateListener, categoryDeleteListener)
+        val adapter = CategoriesAdapter(
+            categoryEnableListener,
+            categoryNavigateListener,
+            categoryDeleteListener
+        )
         binding.categoriesList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
@@ -96,14 +100,16 @@ class CategoriesFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val category = adapter.getCategory(position)
-                viewModel.delete(category)
-                Snackbar.make(view, R.string.category_deleted, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.addCategoryFab)
-                    .setAction(R.string.undo) {
-                        viewModel.undoDelete(category)
-                    }
-                    .show()
+                val item = adapter.currentList[position]
+                item?.let { category ->
+                    viewModel.delete(category)
+                    Snackbar.make(view, R.string.category_deleted, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.addCategoryFab)
+                        .setAction(R.string.undo) {
+                            viewModel.undoDelete(category)
+                        }
+                        .show()
+                }
             }
 
             override fun onChildDraw(
