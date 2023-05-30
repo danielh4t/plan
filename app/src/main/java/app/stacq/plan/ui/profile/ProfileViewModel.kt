@@ -2,6 +2,7 @@ package app.stacq.plan.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import app.stacq.plan.data.repository.category.CategoryRepository
 import app.stacq.plan.data.repository.goal.GoalRepository
 import app.stacq.plan.data.repository.task.TaskRepository
@@ -23,11 +24,12 @@ class ProfileViewModel(
 
     val taskGoalCompletedToday: LiveData<Int> = taskRepository.getCompletedTaskGoalToday()
 
-    fun getDayProgress(): Int {
+    val dayProgress: LiveData<Int> = liveData {
         val totalMinutesInDay = 24 * 60 // 1440
         val minutes = CalendarUtil().getDayElapsedMinutes()
         // Calculate the progress value as a percentage of the total number of minutes in a day
         val progress = minutes.toFloat() / totalMinutesInDay
-        return (progress * 100).toInt()
+        val day = (progress * 100).toInt()
+        emit(day)
     }
 }
