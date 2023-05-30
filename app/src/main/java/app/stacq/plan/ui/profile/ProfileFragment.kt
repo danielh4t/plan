@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
             } else {
                 // signed out
                 binding.authButton.setText(R.string.sign_in_sign_up)
-                binding.authButton.setOnClickListener {view ->
+                binding.authButton.setOnClickListener { view ->
                     view?.let {
                         val action = ProfileFragmentDirections.actionNavProfileToNavAuth()
                         navController.navigate(action)
@@ -271,8 +271,12 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        binding.dayProgressIndicator.progress = viewModel.getDayProgress()
-        binding.dayProgressText.text = String.format("%d%%", viewModel.getDayProgress())
+        viewModel.dayProgress.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.dayProgressIndicator.progress = it
+                binding.dayProgressText.text = String.format("%d%%", it)
+            }
+        }
     }
 
     override fun onDestroyView() {
