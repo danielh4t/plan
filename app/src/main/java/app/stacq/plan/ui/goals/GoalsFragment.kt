@@ -106,14 +106,16 @@ class GoalsFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val goal = adapter.getGoal(position)
-                viewModel.delete(goal)
-                Snackbar.make(view, R.string.goal_deleted, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.addGoalFab)
-                    .setAction(R.string.undo) {
-                        viewModel.undoDelete(goal)
-                    }
-                    .show()
+                val item = adapter.currentList[position]
+                item?.let { goal ->
+                    viewModel.delete(goal)
+                    Snackbar.make(view, R.string.goal_deleted, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.addGoalFab)
+                        .setAction(R.string.undo) {
+                            viewModel.undoDelete(goal)
+                        }
+                        .show()
+                }
             }
 
             override fun onChildDraw(
