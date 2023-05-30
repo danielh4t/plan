@@ -124,19 +124,21 @@ class TasksFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val task = adapter.getTask(position)
-                if (task.timerAlarm && task.timerFinishAt > TimeUtil().nowInSeconds()) {
-                    val name = task.name
-                    val requestCode: Int = task.timerFinishAt.toInt()
-                    cancelAlarm(application, requestCode, name)
-                }
-                viewModel.archive(task)
-                Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.addTaskFab)
-                    .setAction(R.string.undo) {
-                        viewModel.unarchive(task)
+                val item = adapter.currentList[position]
+                item?.let { task ->
+                    if (task.timerAlarm && task.timerFinishAt > TimeUtil().nowInSeconds()) {
+                        val name = task.name
+                        val requestCode: Int = task.timerFinishAt.toInt()
+                        cancelAlarm(application, requestCode, name)
                     }
-                    .show()
+                    viewModel.archive(task)
+                    Snackbar.make(view, R.string.task_archived, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.addTaskFab)
+                        .setAction(R.string.undo) {
+                            viewModel.unarchive(task)
+                        }
+                        .show()
+                }
             }
 
             override fun onChildDraw(

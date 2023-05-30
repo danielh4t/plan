@@ -26,10 +26,6 @@ class TasksAdapter(
         holder.bind(task, taskNavigateListener, taskCompleteListener, taskArchiveListener)
     }
 
-    fun getTask(position: Int): Task {
-        return getItem(position)
-    }
-
     class ViewHolder constructor(private val binding: ListItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
