@@ -140,8 +140,8 @@ class TaskFragment : Fragment() {
                 direction: Int
             ) {
                 val position = viewHolder.adapterPosition
-                val bite = adapter.currentList[position]
-                bite?.let {
+                val item = adapter.currentList[position]
+                item?.let { bite ->
                     viewModel.deleteBite(bite)
                     Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.timerFab)
