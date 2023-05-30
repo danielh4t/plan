@@ -25,11 +25,7 @@ class BitesAdapter(
         val bite = getItem(position)
         holder.bind(bite, biteCompleteListener, biteNavigateListener, biteDeleteListener)
     }
-
-    fun getBite(position: Int): Bite {
-        return getBite(position)
-    }
-
+    
     class ViewHolder private constructor(private val binding: ListItemBiteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
