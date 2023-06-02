@@ -112,7 +112,7 @@ interface TaskDao {
             "strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch', 'localtime')) = date('now', 'localtime')")
     fun getCompletedToday(): LiveData<Int>
 
-    @Query("SELECT COUNT(*) FROM task WHERE completed AND goal_id NOT NULL AND " +
+    @Query("SELECT COUNT(distinct goal_id) FROM task WHERE completed AND goal_id NOT NULL AND " +
             "strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch', 'localtime')) = date('now', 'localtime')")
     fun getCompletedTaskGoalToday(): LiveData<Int>
 
