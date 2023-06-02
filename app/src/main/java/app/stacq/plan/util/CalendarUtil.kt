@@ -7,20 +7,12 @@ class CalendarUtil {
     private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     private val localCalendar = Calendar.getInstance()
 
-    fun hour(): Int {
-        return calendar.get(Calendar.HOUR_OF_DAY)
-    }
-
     fun setLocalHour(hour: Int) {
         localCalendar.set(Calendar.HOUR_OF_DAY, hour)
     }
 
     fun localHour(): Int {
         return localCalendar.get(Calendar.HOUR_OF_DAY)
-    }
-
-    fun minute(): Int {
-        return calendar.get(Calendar.MINUTE)
     }
 
     fun setLocalMinute(minute: Int) {

@@ -1,12 +1,15 @@
 package app.stacq.plan.ui.profile
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import app.stacq.plan.data.repository.category.CategoryRepository
 import app.stacq.plan.data.repository.goal.GoalRepository
 import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.util.CalendarUtil
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     taskRepository: TaskRepository,
@@ -24,12 +27,24 @@ class ProfileViewModel(
 
     val taskGoalCompletedToday: LiveData<Int> = taskRepository.getCompletedTaskGoalToday()
 
-    val dayProgress: LiveData<Int> = liveData {
-        val totalMinutesInDay = 24 * 60 // 1440
-        val minutes = CalendarUtil().getDayElapsedMinutes()
-        // Calculate the progress value as a percentage of the total number of minutes in a day
-        val progress = minutes.toFloat() / totalMinutesInDay
-        val day = (progress * 100).toInt()
-        emit(day)
+    private val _dayProgress = MutableLiveData<Int>()
+    val dayProgress: LiveData<Int>
+        get() = _dayProgress
+
+    init {
+        updateDayProgress()
+    }
+
+    private fun updateDayProgress() {
+        viewModelScope.launch {
+            while (true) {
+                val totalMinutesInDay = 24 * 60 // 1440
+                val elapsedMinutes = CalendarUtil().getDayElapsedMinutes()
+                // Calculate the progress value as a percentage of the total number of minutes in a day
+                val progress = ((elapsedMinutes.toFloat() / totalMinutesInDay) * 100).toInt()
+                _dayProgress.postValue(progress)
+                delay(1000)
+            }
+        }
     }
 }
