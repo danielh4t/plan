@@ -100,7 +100,6 @@ class ProfileFragment : Fragment() {
                     }
                 }
 
-                binding.profileText.text = user.email
                 binding.authButton.setText(R.string.sign_out)
                 binding.authButton.setOnClickListener {
                     Firebase.auth.signOut()
