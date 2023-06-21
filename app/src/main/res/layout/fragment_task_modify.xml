@@ -10,18 +10,17 @@
             type="app.stacq.plan.domain.Task" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
+
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/task_modify_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/task_modify_app_bar"
@@ -42,6 +41,17 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/task_modify_name_image"
             android:layout_width="wrap_content"
@@ -51,6 +61,8 @@
             android:src="@drawable/ic_brush"
             app:layout_constraintBottom_toBottomOf="@+id/task_name_layout"
             app:layout_constraintEnd_toStartOf="@+id/task_name_layout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/task_name_layout"
             app:tint="?attr/colorPrimary" />
@@ -65,8 +77,9 @@
             android:hint="@string/name"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/task_modify_name_image"
-            app:layout_constraintTop_toBottomOf="@id/task_modify_app_bar_layout"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
             app:layout_constraintWidth_min="@dimen/input_layout_min">
 
@@ -89,6 +102,9 @@
             android:contentDescription="@string/content_category_image"
             android:src="@drawable/ic_color_palette_outline"
             app:layout_constraintBottom_toBottomOf="@id/task_modify_category_menu"
+            app:layout_constraintEnd_toStartOf="@+id/task_modify_category_menu"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/task_modify_category_menu"
             app:tint="?attr/colorPrimary" />
@@ -104,6 +120,7 @@
             android:hint="@string/category"
             android:labelFor="@+id/task_modify_category_autocomplete"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/task_modify_category_image"
             app:layout_constraintTop_toBottomOf="@+id/task_name_layout"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
@@ -126,6 +143,8 @@
             android:src="@drawable/ic_calendar"
             app:layout_constraintBottom_toBottomOf="@+id/task_modify_date_time_layout"
             app:layout_constraintEnd_toStartOf="@+id/task_modify_date_time_layout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/task_modify_date_time_layout"
             app:taskImageIconVisibility="@{task}"
@@ -136,9 +155,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:hint="@string/completion"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/task_modify_date_time_image"
             app:layout_constraintTop_toBottomOf="@+id/task_modify_category_menu"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
@@ -170,6 +193,8 @@
             android:src="@drawable/ic_book"
             app:layout_constraintBottom_toBottomOf="@+id/task_notes_layout"
             app:layout_constraintEnd_toStartOf="@+id/task_notes_layout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/task_notes_layout"
             app:tint="?attr/colorPrimary" />
@@ -184,6 +209,7 @@
             android:hint="@string/notes"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/task_modify_notes_image"
             app:layout_constraintTop_toBottomOf="@id/task_modify_date_time_layout"
             app:layout_constraintWidth_max="@dimen/input_layout_max"
@@ -200,34 +226,43 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/task_modify_image_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/content_task_image"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="320dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_notes_layout"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
-            app:taskImageViewVisibility="@{task}"
-            tools:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/task_modify_image_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/content_task_image"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_max="320dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/task_notes_layout"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+                app:taskImageViewVisibility="@{task}"
+                tools:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/task_modify_add_image_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:layout_gravity="end|bottom"
             android:contentDescription="@string/content_add_image"
             android:text="@string/add_image"
             app:icon="@drawable/ic_image"
-            app:taskImageFabVisibility="@{task}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:taskImageFabVisibility="@{task}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
