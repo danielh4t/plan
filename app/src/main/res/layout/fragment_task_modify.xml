@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="task"
             type="app.stacq.plan.domain.Task" />
@@ -14,7 +13,6 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/task_modify_app_bar_layout"
@@ -41,10 +39,10 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -246,18 +244,20 @@
                 tools:scaleType="centerCrop"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/task_modify_add_image_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_gravity="end|bottom"
-            android:contentDescription="@string/content_add_image"
-            android:text="@string/add_image"
-            app:icon="@drawable/ic_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:taskImageFabVisibility="@{task}" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/task_modify_add_image_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/content_add_image"
+                android:text="@string/add_image"
+                app:icon="@drawable/ic_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/task_modify_image_view"
+                app:taskImageFabVisibility="@{task}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
