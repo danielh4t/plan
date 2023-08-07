@@ -16,4 +16,11 @@
         android:title="@string/clone"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/timer_task"
+        android:contentDescription="@string/content_task_timer"
+        android:icon="@drawable/ic_clock_outline"
+        android:title="@string/timer"
+        app:showAsAction="ifRoom" />
+
 </menu>

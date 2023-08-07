@@ -102,6 +102,58 @@ class TaskFragment : Fragment() {
                     true
                 }
 
+                R.id.timer_task -> {
+                    when {
+                        ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED -> {
+                            // Permission is granted
+                            // You can use the API that requires the permission.
+                            val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                            navController.navigate(action)
+                        }
+
+                        shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                            // Additional rationale should be displayed
+                            // Explain to the user why your app requires this permission
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(resources.getString(R.string.timer_complete_notification))
+                                .setMessage(resources.getString(R.string.timer_notification_message))
+                                .setNegativeButton(resources.getString(R.string.no_thanks)) { _, _ ->
+                                    // Respond to negative button press
+                                    Toast.makeText(
+                                        requireContext(),
+                                        R.string.no_notification,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    val action =
+                                        TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
+                                    navController.navigate(action)
+                                }
+                                .setPositiveButton(resources.getString(R.string.yes_please)) { _, _ ->
+                                    // Create Channel
+                                    createTimerChannel(requireNotNull(this.activity).application.applicationContext)
+                                    // Respond to positive button press
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                    }
+                                }
+                                .show()
+                        }
+
+                        else -> {
+                            // Create Channel
+                            createTimerChannel(requireNotNull(this.activity).application.applicationContext)
+                            // Permission has not be requested yet
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            }
+                        }
+                    }
+                    true
+                }
+
                 else -> false
             }
         }
@@ -116,7 +168,7 @@ class TaskFragment : Fragment() {
         val biteDeleteListener = BiteDeleteListener { bite ->
             viewModel.deleteBite(bite)
             Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.timerFab)
+                .setAnchorView(binding.createBiteFab)
                 .setAction(R.string.undo) {
                     viewModel.createBite(bite)
                 }
@@ -144,7 +196,7 @@ class TaskFragment : Fragment() {
                 item?.let { bite ->
                     viewModel.deleteBite(bite)
                     Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.timerFab)
+                        .setAnchorView(binding.createBiteFab)
                         .setAction(R.string.undo) {
                             viewModel.createBite(bite)
                         }
@@ -210,6 +262,7 @@ class TaskFragment : Fragment() {
         viewModel.bites.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
+                binding.bitesCount = it.count()
             }
         }
 
@@ -222,55 +275,6 @@ class TaskFragment : Fragment() {
             }
         })
 
-        binding.timerFab.setOnClickListener {
-            when {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission is granted
-                    // You can use the API that requires the permission.
-                    val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
-                    navController.navigate(action)
-                }
-
-                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    // Additional rationale should be displayed
-                    // Explain to the user why your app requires this permission
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(resources.getString(R.string.timer_complete_notification))
-                        .setMessage(resources.getString(R.string.timer_notification_message))
-                        .setNegativeButton(resources.getString(R.string.no_thanks)) { _, _ ->
-                            // Respond to negative button press
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.no_notification,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val action = TaskFragmentDirections.actionNavTaskToNavTimer(taskId)
-                            navController.navigate(action)
-                        }
-                        .setPositiveButton(resources.getString(R.string.yes_please)) { _, _ ->
-                            // Create Channel
-                            createTimerChannel(requireNotNull(this.activity).application.applicationContext)
-                            // Respond to positive button press
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            }
-                        }
-                        .show()
-                }
-
-                else -> {
-                    // Create Channel
-                    createTimerChannel(requireNotNull(this.activity).application.applicationContext)
-                    // Permission has not be requested yet
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                    }
-                }
-            }
-        }
 
         binding.createBiteFab.setOnClickListener {
             val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, null)
@@ -295,7 +299,7 @@ class TaskFragment : Fragment() {
                     binding.createBiteFab,
                     R.string.timer_complete_yes_notification,
                     Snackbar.LENGTH_SHORT
-                ).setAnchorView(binding.timerFab)
+                ).setAnchorView(binding.createBiteFab)
                     .show()
             } else {
                 // Permission denied.
@@ -305,7 +309,7 @@ class TaskFragment : Fragment() {
                     binding.createBiteFab,
                     R.string.timer_complete_no_notification,
                     Snackbar.LENGTH_SHORT
-                ).setAnchorView(binding.timerFab)
+                ).setAnchorView(binding.createBiteFab)
                     .show()
             }
         }

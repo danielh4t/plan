@@ -67,18 +67,7 @@ class ProfileFragment : Fragment() {
         val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
 
-        val goalLocalDataSource = GoalLocalDataSourceImpl(database.goalDao())
-        val goalRemoteDataSource = GoalRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val goalRepository = GoalRepositoryImpl(goalLocalDataSource, goalRemoteDataSource)
-
-        val categoryLocalDataSource = CategoryLocalDataSourceImpl(database.categoryDao())
-        val categoryRemoteDataSource =
-            CategoryRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val categoryRepository =
-            CategoryRepositoryImpl(categoryLocalDataSource, categoryRemoteDataSource)
-
-        viewModelFactory =
-            ProfileViewModelFactory(taskRepository, goalRepository, categoryRepository)
+        viewModelFactory = ProfileViewModelFactory(taskRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[ProfileViewModel::class.java]
 
         binding.profileAppBarLayout.statusBarForeground =
@@ -95,6 +84,7 @@ class ProfileFragment : Fragment() {
                 profileRef.downloadUrl.addOnSuccessListener { imageUri ->
                     binding.accountImageView.load(imageUri) {
                         crossfade(true)
+                        placeholder(R.drawable.ic_account_circle)
                         size(ViewSizeResolver(binding.accountImageView))
                         transformations(CircleCropTransformation())
                     }
@@ -160,72 +150,6 @@ class ProfileFragment : Fragment() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-        viewModel.taskCount.observe(viewLifecycleOwner) {
-            it?.let {
-                val spannable = SpannableString(
-                    resources.getQuantityString(
-                        R.plurals.numberOfTasks,
-                        it,
-                        it
-                    )
-                )
-                spannable.setSpan(
-                    MaterialColors.getColor(
-                        requireContext(),
-                        androidx.appcompat.R.attr.colorPrimary,
-                        Color.GREEN
-                    ),
-                    0, it.toString().count(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                binding.taskCountText.text = spannable
-            }
-        }
-
-        viewModel.goalCount.observe(viewLifecycleOwner) {
-            it?.let {
-                val spannable = SpannableString(
-                    resources.getQuantityString(
-                        R.plurals.numberOfGoals,
-                        it,
-                        it
-                    )
-                )
-                spannable.setSpan(
-                    MaterialColors.getColor(
-                        requireContext(),
-                        androidx.appcompat.R.attr.colorPrimary,
-                        Color.GREEN
-                    ),
-                    0, it.toString().count(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                binding.goalCountText.text = spannable
-            }
-        }
-
-        viewModel.categoryCount.observe(viewLifecycleOwner) {
-            it?.let {
-                val spannable = SpannableString(
-                    resources.getQuantityString(
-                        R.plurals.numberOfCategories,
-                        it,
-                        it
-                    )
-                )
-                spannable.setSpan(
-                    MaterialColors.getColor(
-                        requireContext(),
-                        androidx.appcompat.R.attr.colorPrimary,
-                        Color.GREEN
-                    ),
-                    0, it.toString().count(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                binding.categoryCountText.text = spannable
-            }
-        }
-
         viewModel.taskCompletedToday.observe(viewLifecycleOwner) {
             it?.let {
                 val spannable = SpannableString(
@@ -267,13 +191,6 @@ class ProfileFragment : Fragment() {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 binding.taskGoalTodayText.text = spannable
-            }
-        }
-
-        viewModel.dayProgress.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.dayProgressIndicator.progress = it
-                binding.dayProgressText.text = String.format("%d%%", it)
             }
         }
     }
