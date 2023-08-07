@@ -255,5 +255,7 @@
     <string name="goal_category_required">Goal category required</string>
     <string name="content_save_category">Save Category</string>
     <string name="add_image">Add Image</string>
+    <string name="content_task_notes_label">Task notes</string>
+    <string name="take_notes">Take notes</string>
 
 </resources>

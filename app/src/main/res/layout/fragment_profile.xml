@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/auth_button" />
 
                 <ImageView
-                    android:id="@+id/profile_task_image"
+                    android:id="@+id/task_timer_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -100,7 +100,7 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/task_today_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/profile_task_image"
+                    app:layout_constraintStart_toEndOf="@id/task_timer_image"
                     app:layout_constraintTop_toBottomOf="@id/profile_today_label_text" />
 
                 <TextView
@@ -113,7 +113,7 @@
                     android:fontFamily="@font/roboto"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/profile_task_image"
+                    app:layout_constraintStart_toEndOf="@id/task_timer_image"
                     app:layout_constraintTop_toBottomOf="@id/task_today_label_text"
                     tools:text="@string/tools_tasks_count" />
 

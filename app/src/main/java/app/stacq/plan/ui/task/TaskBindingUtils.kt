@@ -39,6 +39,15 @@ fun TextView.completionTimestampToDateTime(timestamp: Long) {
     }
 }
 
+@BindingAdapter("taskNotes")
+fun TextView.setNotes(note: String?) {
+    text = if(note.isNullOrBlank()) {
+        resources.getString(R.string.take_notes)
+    } else {
+        note
+    }
+}
+
 @BindingAdapter("taskBitesCountLabel")
 fun TextView.hideBitesLabelOnCount(bitesCount: Int) {
     if (bitesCount > 0) {
