@@ -54,10 +54,4 @@ class CalendarUtil {
         // Convert the difference in milliseconds to days
         return differenceInMillis / (24 * 60 * 60 * 1000)
     }
-
-    fun getDayElapsedMinutes(): Int {
-        val hour = localCalendar.get(Calendar.HOUR_OF_DAY)
-        val minute = localCalendar.get(Calendar.MINUTE)
-        return (hour * 60 + minute)
-    }
 }

@@ -53,6 +53,7 @@
             android:src="@drawable/ic_brush"
             app:layout_constraintBottom_toBottomOf="@+id/bite_modify_name_layout"
             app:layout_constraintEnd_toStartOf="@+id/bite_modify_name_layout"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bite_modify_name_layout"
             app:tint="?attr/colorPrimary" />

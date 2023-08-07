@@ -1,7 +1,9 @@
 package app.stacq.plan.ui.task
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,4 +37,29 @@ fun TextView.completionTimestampToDateTime(timestamp: Long) {
         val date = Date(timestamp * 1000)
         dateFormat.format(date)
     }
+}
+
+@BindingAdapter("taskNotes")
+fun TextView.setNotes(note: String?) {
+    text = if(note.isNullOrBlank()) {
+        resources.getString(R.string.take_notes)
+    } else {
+        note
+    }
+}
+
+@BindingAdapter("taskBitesCountLabel")
+fun TextView.hideBitesLabelOnCount(bitesCount: Int) {
+    if (bitesCount > 0) {
+        visibility = View.VISIBLE
+    }
+    visibility = View.GONE
+}
+
+@BindingAdapter("taskBitesCountList")
+fun RecyclerView.hideBitesListOnCount(bitesCount: Int) {
+    if (bitesCount > 0) {
+        visibility = View.VISIBLE
+    }
+    visibility = View.GONE
 }
