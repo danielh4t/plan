@@ -31,8 +31,25 @@ class CalendarUtil {
         return localCalendar.time
     }
 
-    fun setLocalTime(millis: Long) {
-        localCalendar.timeInMillis = millis
+    fun setLocalTimeSeconds(seconds: Long) {
+        localCalendar.timeInMillis = seconds * 1000L
+    }
+
+    fun setLocalDate(millis: Long) {
+        val calendarToUpdate = Calendar.getInstance()
+        calendarToUpdate.timeInMillis = millis
+
+        // Extract year, month, and day from the selected date
+        val year = calendarToUpdate.get(Calendar.YEAR)
+        val month = calendarToUpdate.get(Calendar.MONTH)
+        val dayOfMonth = calendarToUpdate.get(Calendar.DAY_OF_MONTH)
+
+        localCalendar.set(Calendar.YEAR, year)
+        localCalendar.set(Calendar.MONTH, month)
+        localCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+    }
+    fun getLocalTimeInMillis(): Long {
+        return localCalendar.timeInMillis
     }
 
     fun getLocalTimeUTC(): Long {

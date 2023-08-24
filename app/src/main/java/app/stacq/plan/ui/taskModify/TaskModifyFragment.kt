@@ -241,6 +241,7 @@ class TaskModifyFragment : Fragment() {
             binding.task = it
             it?.let {
                 viewModel.setSelectedCategoryId(it.categoryId)
+                viewModel.completionCalendar.setLocalTimeSeconds(it.completedAt)
                 binding.taskModifyCategoryAutocomplete.setText(it.categoryName, false)
             }
         }
@@ -266,7 +267,7 @@ class TaskModifyFragment : Fragment() {
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText(getString(R.string.select_completed_date))
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setSelection(viewModel.completionCalendar.getLocalTimeInMillis())
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build()
 
@@ -277,26 +278,27 @@ class TaskModifyFragment : Fragment() {
         val timePicker =
             MaterialTimePicker.Builder()
                 .setTimeFormat(clockFormat)
-                .setHour(CalendarUtil().localHour())
-                .setMinute(CalendarUtil().localMinute())
+                .setHour(viewModel.completionCalendar.localHour())
+                .setMinute(viewModel.completionCalendar.localMinute())
                 .setTitleText(getString(R.string.select_completed_time))
                 .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                 .build()
 
         timePicker.addOnPositiveButtonClickListener {
-
             viewModel.completionCalendar.setLocalHour(timePicker.hour)
             viewModel.completionCalendar.setLocalMinute(timePicker.minute)
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
             val time = viewModel.completionCalendar.localTime()
-            val dateTimeString = sdf.format(time)
-            binding.taskModifyCompletionEditText.setText(dateTimeString)
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+            binding.taskModifyCompletionEditText.setText(sdf)
         }
 
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
-                viewModel.completionCalendar.setLocalTime(it)
+                viewModel.completionCalendar.setLocalDate(it)
+                val time = viewModel.completionCalendar.localTime()
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+                binding.taskModifyCompletionEditText.setText(sdf)
                 if (!timePicker.isAdded) {
                     timePicker.show(requireActivity().supportFragmentManager, "time_picker")
                 }
