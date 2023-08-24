@@ -6,8 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import app.stacq.plan.data.source.local.bite.BiteDao
-import app.stacq.plan.data.source.local.bite.BiteEntity
 import app.stacq.plan.data.source.local.category.CategoryDao
 import app.stacq.plan.data.source.local.category.CategoryEntity
 import app.stacq.plan.data.source.local.goal.GoalDao
@@ -17,8 +15,8 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 
 
 @Database(
-    entities = [TaskEntity::class, CategoryEntity::class, BiteEntity::class, GoalEntity::class],
-    version = 3,
+    entities = [TaskEntity::class, CategoryEntity::class, GoalEntity::class],
+    version = 4,
     exportSchema = false
 )
 abstract class PlanDatabase : RoomDatabase() {
@@ -26,8 +24,6 @@ abstract class PlanDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
 
     abstract fun categoryDao(): CategoryDao
-
-    abstract fun biteDao(): BiteDao
 
     abstract fun goalDao(): GoalDao
 
@@ -43,7 +39,9 @@ abstract class PlanDatabase : RoomDatabase() {
                         context.applicationContext,
                         PlanDatabase::class.java,
                         PLAN_DATABASE
-                    ).addMigrations(MIGRATION_2_3)
+                    )
+                        .addMigrations(MIGRATION_2_3)
+                        .addMigrations(MIGRATION_3_4)
                         .build()
                     INSTANCE = instance
                 }
@@ -58,5 +56,11 @@ private const val PLAN_DATABASE = "plan_database"
 val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE task ADD COLUMN notes TEXT DEFAULT ''")
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("DROP TABLE IF EXISTS bite")
     }
 }

@@ -1,16 +1,16 @@
 package app.stacq.plan.ui.task
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,26 +18,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
-import app.stacq.plan.data.repository.bite.BiteRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.bite.BiteLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.bite.BiteRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskBinding
 import app.stacq.plan.util.createTimerChannel
-import app.stacq.plan.util.ui.BottomMarginItemDecoration
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.RoundedCornersTransformation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 
 class TaskFragment : Fragment() {
@@ -47,6 +46,8 @@ class TaskFragment : Fragment() {
 
     private lateinit var viewModelFactory: TaskViewModelFactory
     private lateinit var viewModel: TaskViewModel
+
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,11 +72,7 @@ class TaskFragment : Fragment() {
         val taskRemoteDataSource = TaskRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
         val taskRepository = TaskRepositoryImpl(taskLocalDataSource, taskRemoteDataSource)
 
-        val biteLocalDataSource = BiteLocalDataSourceImpl(database.biteDao())
-        val biteRemoteDataSource = BiteRemoteDataSourceImpl(Firebase.auth, Firebase.firestore)
-        val biteRepository = BiteRepositoryImpl(biteLocalDataSource, biteRemoteDataSource)
-
-        viewModelFactory = TaskViewModelFactory(taskRepository, biteRepository, taskId)
+        viewModelFactory = TaskViewModelFactory(taskRepository, taskId)
         viewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -85,6 +82,86 @@ class TaskFragment : Fragment() {
 
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                // Callback is invoked after the user selects a media item or closes the
+                // photo picker.
+                if (uri != null) {
+                    // selected
+                    val uid = Firebase.auth.uid
+                    if (uid != null) {
+                        val imageRef = Firebase.storage.reference.child("$uid/$taskId")
+                        val uploadTask = imageRef.putFile(uri)
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.uploading_image,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        uploadTask
+                            .addOnSuccessListener {
+                                // Handle successful upload
+                                Toast.makeText(
+                                    requireContext(),
+                                    R.string.task_picture_updated,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+                                    binding.taskImageView.load(imageUri) {
+                                        crossfade(true)
+                                        size(ViewSizeResolver(binding.taskImageView))
+                                        transformations(RoundedCornersTransformation())
+                                    }
+                                    binding.taskImageView.setOnClickListener {
+                                        val intent = Intent(Intent.ACTION_VIEW)
+                                        intent.data = Uri.parse(imageUri.toString())
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                            .addOnFailureListener {
+                                // Handle failed upload
+                                Toast.makeText(
+                                    requireContext(),
+                                    R.string.task_picture_upload_failed,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_media_selected,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        authStateListener = FirebaseAuth.AuthStateListener {
+            val uid = Firebase.auth.uid
+            if (uid != null) {
+                // signed in
+                val imageRef = Firebase.storage.reference.child("$uid/$taskId")
+                // Create a reference with an initial file path and name
+                imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+
+                    binding.taskImageView.load(imageUri) {
+                        crossfade(true)
+                        size(ViewSizeResolver(binding.taskImageView))
+                        transformations(RoundedCornersTransformation())
+                    }
+
+                    binding.taskImageView.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(imageUri.toString())
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+
+        Firebase.auth.addAuthStateListener(authStateListener)
+
         binding.taskAppBar.setupWithNavController(navController, appBarConfiguration)
 
         binding.taskAppBar.setOnMenuItemClickListener { menuItem ->
@@ -158,111 +235,9 @@ class TaskFragment : Fragment() {
             }
         }
 
-        val biteCompleteListener = BiteCompleteListener { viewModel.completeBite(it) }
-
-        val biteNavigateListener = BiteNavigateListener {
-            val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, it)
-            navController.navigate(action)
-        }
-
-        val biteDeleteListener = BiteDeleteListener { bite ->
-            viewModel.deleteBite(bite)
-            Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.createBiteFab)
-                .setAction(R.string.undo) {
-                    viewModel.createBite(bite)
-                }
-                .show()
-        }
-
-        val adapter = BitesAdapter(biteCompleteListener, biteNavigateListener, biteDeleteListener)
-
-        val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(
-                viewHolder: RecyclerView.ViewHolder,
-                direction: Int
-            ) {
-                val position = viewHolder.adapterPosition
-                val item = adapter.currentList[position]
-                item?.let { bite ->
-                    viewModel.deleteBite(bite)
-                    Snackbar.make(view, R.string.bite_deleted, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(binding.createBiteFab)
-                        .setAction(R.string.undo) {
-                            viewModel.createBite(bite)
-                        }
-                        .show()
-                }
-            }
-
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                val itemView = viewHolder.itemView
-
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
-
-                    // Set the background color to red
-                    val background = ColorDrawable(Color.RED)
-
-                    // Set the bounds of the background
-                    background.setBounds(
-                        itemView.right + dX.toInt(),
-                        itemView.top,
-                        itemView.right,
-                        itemView.bottom
-                    )
-
-                    // Draw the background
-                    background.draw(c)
-                }
-
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(binding.taskBitesList)
-
-        binding.taskBitesList.adapter = adapter
-
-        binding.taskBitesList.addItemDecoration(
-            BottomMarginItemDecoration(resources.getDimensionPixelSize(R.dimen.list_margin_compact))
-        )
-
         viewModel.task.observe(viewLifecycleOwner) {
             it?.let {
                 binding.task = it
-            }
-        }
-
-        viewModel.bites.observe(viewLifecycleOwner) {
-            it?.let {
-                adapter.submitList(it)
-                binding.bitesCount = it.count()
             }
         }
 
@@ -276,15 +251,24 @@ class TaskFragment : Fragment() {
         })
 
 
-        binding.createBiteFab.setOnClickListener {
-            val action = TaskFragmentDirections.actionNavTaskToNavBiteModify(taskId, null)
-            navController.navigate(action)
+        binding.taskAddImageFab.setOnClickListener {
+            val uid = Firebase.auth.uid
+            if (uid != null) {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.sign_in_up_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Firebase.auth.removeAuthStateListener(authStateListener)
     }
 
     // Handles the user's response to the system permissions dialog.
@@ -296,20 +280,20 @@ class TaskFragment : Fragment() {
                 // Permission granted.
                 viewModel.logPermission(true)
                 Snackbar.make(
-                    binding.createBiteFab,
+                    binding.taskAddImageFab,
                     R.string.timer_complete_yes_notification,
                     Snackbar.LENGTH_SHORT
-                ).setAnchorView(binding.createBiteFab)
+                ).setAnchorView(binding.taskAddImageFab)
                     .show()
             } else {
                 // Permission denied.
                 viewModel.logPermission(false)
                 // Explain to the user that the notification feature unavailable.
                 Snackbar.make(
-                    binding.createBiteFab,
+                    binding.taskAddImageFab,
                     R.string.timer_complete_no_notification,
                     Snackbar.LENGTH_SHORT
-                ).setAnchorView(binding.createBiteFab)
+                ).setAnchorView(binding.taskAddImageFab)
                     .show()
             }
         }
