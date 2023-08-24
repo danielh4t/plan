@@ -34,7 +34,6 @@ class TaskModifyViewModel(
         _selectedCategoryId.value = categoryId
     }
 
-    val creationCalendar = CalendarUtil()
     val completionCalendar = CalendarUtil()
 
     fun create(name: String, categoryId: String, notes: String?): String {
