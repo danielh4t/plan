@@ -1,9 +1,7 @@
 package app.stacq.plan.ui.task
 
-import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import app.stacq.plan.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,20 +44,4 @@ fun TextView.setNotes(note: String?) {
     } else {
         note
     }
-}
-
-@BindingAdapter("taskBitesCountLabel")
-fun TextView.hideBitesLabelOnCount(bitesCount: Int) {
-    if (bitesCount > 0) {
-        visibility = View.VISIBLE
-    }
-    visibility = View.GONE
-}
-
-@BindingAdapter("taskBitesCountList")
-fun RecyclerView.hideBitesListOnCount(bitesCount: Int) {
-    if (bitesCount > 0) {
-        visibility = View.VISIBLE
-    }
-    visibility = View.GONE
 }

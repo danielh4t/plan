@@ -3,14 +3,11 @@ package app.stacq.plan.ui.task
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.stacq.plan.data.repository.bite.BiteRepository
 import app.stacq.plan.data.repository.task.TaskRepository
 import app.stacq.plan.data.source.local.task.TaskEntity
-import app.stacq.plan.domain.Bite
 import app.stacq.plan.domain.Task
 import app.stacq.plan.domain.asTask
 import app.stacq.plan.util.constants.FirebaseAnalyticsConstants
-import app.stacq.plan.util.TimeUtil
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -20,13 +17,10 @@ import kotlinx.coroutines.*
 
 class TaskViewModel(
     private val taskRepository: TaskRepository,
-    private val bitesRepository: BiteRepository,
     taskId: String
 ) : ViewModel() {
 
     val task: LiveData<Task> = taskRepository.getTask(taskId)
-
-    val bites: LiveData<List<Bite>> = bitesRepository.getBites(taskId)
 
     private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
@@ -48,20 +42,10 @@ class TaskViewModel(
             clonedTask = taskEntity.asTask()
         }
 
-        val bites = bites.value
         viewModelScope.launch {
             if (clonedTask != null) {
                 // clone task
                 taskRepository.create(clonedTask)
-                if (bites != null) {
-                    // move incomplete bites
-                    val incompleteBites = bites.filter { !it.completed }.map {
-                        it.copy(taskId = clonedTask.id)
-                    }
-                    incompleteBites.map {
-                        bitesRepository.update(it)
-                    }
-                }
             }
         }
     }
@@ -73,26 +57,6 @@ class TaskViewModel(
             viewModelScope.launch {
                 taskRepository.updatePriority(it)
             }
-        }
-    }
-
-    fun completeBite(bite: Bite) {
-        bite.completed = !bite.completed
-        bite.completedAt = TimeUtil().nowInSeconds()
-        viewModelScope.launch {
-            bitesRepository.update(bite)
-        }
-    }
-
-    fun createBite(bite: Bite) {
-        viewModelScope.launch {
-            bitesRepository.create(bite)
-        }
-    }
-
-    fun deleteBite(bite: Bite) {
-        viewModelScope.launch {
-            bitesRepository.delete(bite)
         }
     }
 

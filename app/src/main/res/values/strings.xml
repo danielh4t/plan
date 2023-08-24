@@ -11,7 +11,6 @@
     <string name="name">Name</string>
     <string name="create_fab">create action</string>
     <string name="task_name_required">Task name is required</string>
-    <string name="bite_name_required">Bite name is required</string>
     <!-- Category fragment -->
     <string name="create_category">Create Category</string>
     <string name="no_categories">Create or enable category</string>
@@ -56,21 +55,12 @@
     <string name="tools_creation">01 January 1970 00:00</string>
     <string name="priority">Priority</string>
     <string name="content_task_priority_slider">Priority slider</string>
-    <string name="bites">Bites</string>
-    <string name="content_task_bites_label">Bites label</string>
-    <string name="content_list_bites">List of task bites</string>
     <string name="content_timer">Open Timer</string>
-    <string name="content_create_bite">Create Bite</string>
+
     <string name="task_archived">Task archived</string>
     <string name="content_task_creation_icon">Circle with plus icon</string>
     <string name="content_create_task">Create Task</string>
-    <string name="task_cloned">Task cloned and bites moved</string>
-
-    <!-- Create Bite Fragment -->
-
-    <string name="timer">Timer</string>
-    <string name="bite">Bite</string>
-
+        <string name="timer">Timer</string>
     <!-- Notifications -->
     <string name="timer_channel_id" translatable="false">timer_channel</string>
     <string name="timer_channel_name" translatable="true">Timer</string>
@@ -129,8 +119,6 @@
     <string name="content_goal_category">Goal category</string>
     <string name="content_goal_creation_label">Goal creation label</string>
     <string name="set_task">Set Task</string>
-    <string name="set_bite">Set Bite</string>
-    <string name="content_bite_modify_fab">Modify Bite</string>
     <string name="progress">Progress</string>
     <!-- Timer -->
     <string name="twenty_five_minutes">25 minutes</string>
@@ -183,7 +171,6 @@
     <string name="content_goal_generate_icon">Circular arrows</string>
     <string name="content_edit_goal">Edit Goal</string>
     <string name="content_delete_goal">Delete Goal</string>
-    <string name="content_delete_bite">Delete bite</string>
     <string name="content_delete_category">Delete Category</string>
     <string name="content_edit_category">Edit Category</string>
 
@@ -229,7 +216,6 @@
     <string name="sign_in_failed">Sign In failed</string>
     <string name="sign_up_failed">Sign Up failed</string>
     <string name="email_password_required">Email and password are required</string>
-    <string name="bite_deleted">Bite deleted</string>
     <string name="notes">Notes</string>
     <string name="content_book_icon">Book icon</string>
     <string name="content_task_image">Task image</string>
@@ -257,5 +243,6 @@
     <string name="add_image">Add Image</string>
     <string name="content_task_notes_label">Task notes</string>
     <string name="take_notes">Take notes</string>
+    <string name="task_cloned">Task cloned</string>
 
 </resources>

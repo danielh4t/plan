@@ -74,9 +74,6 @@
             android:id="@+id/action_nav_task_to_nav_edit"
             app:destination="@id/nav_task_modify" />
         <action
-            android:id="@+id/action_nav_task_to_nav_bite_modify"
-            app:destination="@id/nav_bite_modify" />
-        <action
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
     </fragment>
@@ -120,25 +117,6 @@
         <argument
             android:name="taskId"
             app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_bite_modify"
-        android:name="app.stacq.plan.ui.biteModify.BiteModifyFragment"
-        android:label="@string/bite"
-        tools:layout="@layout/fragment_bite_modify">
-        <action
-            android:id="@+id/action_nav_bite_modify_to_nav_task"
-            app:destination="@id/nav_task"
-            app:popUpTo="@id/nav_task"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="taskId"
-            app:argType="string" />
-        <argument
-            android:name="biteId"
-            app:argType="string"
-            app:nullable="true" />
     </fragment>
 
     <fragment
