@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'app.stacq.plan.macrobenchmark'
-    compileSdk 33
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,11 +40,11 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.test.ext:junit:1.1.5'
     implementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'androidx.test.uiautomator:uiautomator:2.2.0'
-    implementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha13'
+    implementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-beta04'
 }
 
 androidComponents {
