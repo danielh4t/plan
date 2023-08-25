@@ -264,6 +264,9 @@ class TaskModifyFragment : Fragment() {
                 .setEnd(CalendarUtil().getTodayTimeInMillis())
                 .setValidator(DateValidatorPointBackward.now())
 
+        if (viewModel.completionCalendar.getLocalTimeInMillis() == 0L)
+            viewModel.completionCalendar.setTodayTimeInMillis()
+
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText(getString(R.string.select_completed_date))

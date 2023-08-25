@@ -61,6 +61,11 @@ class CalendarUtil {
         return Calendar.getInstance().timeInMillis
     }
 
+    fun setTodayTimeInMillis() {
+        localCalendar.timeInMillis = Calendar.getInstance().timeInMillis
+    }
+
+
     fun differenceInDays(epochTimeInSeconds: Long): Long {
         val differenceCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
         differenceCalendar.timeInMillis = epochTimeInSeconds * 1000L
