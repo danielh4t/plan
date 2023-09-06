@@ -50,8 +50,11 @@ class TaskModifyViewModel(
         viewModelScope.launch {
             task.value?.let {
                 completedAt?.let { timestamp ->
-                    it.completed = true
-                    it.completedAt = timestamp
+                    // update completed at if changed
+                    if(timestamp != 0L) {
+                        it.completed = true
+                        it.completedAt = timestamp
+                    }
                 }
                 notes?.let { notes ->
                     it.notes = notes
