@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 
 class FakeTaskRepository: TaskRepository {
 
-    var tasksList = mutableListOf<Task>()
+    private var tasksList = mutableListOf<Task>()
 
     private val tasks = MutableLiveData<List<Task>>()
     override suspend fun create(task: Task) {
@@ -48,7 +48,31 @@ class FakeTaskRepository: TaskRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getCategoryProfileCompleted(categoryId: String): MutableMap<String, Any>? {
+    override suspend fun archive(taskId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun unarchive(taskId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun hasGeneratedTask(goalId: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCompletedToday(): LiveData<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCompletedTaskGoalToday(): LiveData<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCount(): LiveData<Int> {
         TODO("Not yet implemented")
     }
 

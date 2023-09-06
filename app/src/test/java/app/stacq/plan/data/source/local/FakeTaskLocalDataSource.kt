@@ -13,8 +13,8 @@ class FakeTaskLocalDataSource(private val tasks: MutableList<TaskEntity>? = muta
         tasks?.add(taskEntity)
     }
 
-    override suspend fun read(id: String): TaskEntity? {
-        return tasks?.find { task -> task.id === id}
+    override suspend fun read(taskId: String): TaskEntity? {
+        return tasks?.find { task -> task.id === taskId}
     }
 
     override suspend fun update(taskEntity: TaskEntity) {
@@ -33,7 +33,7 @@ class FakeTaskLocalDataSource(private val tasks: MutableList<TaskEntity>? = muta
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateTimerAlarmById(id: String) {
+    override suspend fun updateTimerAlarmById(taskId: String) {
         TODO("Not yet implemented")
     }
 
@@ -53,7 +53,31 @@ class FakeTaskLocalDataSource(private val tasks: MutableList<TaskEntity>? = muta
         TODO("Not yet implemented")
     }
 
-    override fun getTaskAnalysis(yearStartAt: Long): LiveData<List<Int>> {
+    override suspend fun archive(taskId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun unarchive(taskId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun hasGeneratedTask(goalId: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCompletedToday(): LiveData<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCompletedTaskGoalToday(): LiveData<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCount(): LiveData<Int> {
         TODO("Not yet implemented")
     }
 }

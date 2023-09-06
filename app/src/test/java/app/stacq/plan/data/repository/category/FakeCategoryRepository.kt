@@ -28,7 +28,7 @@ class FakeCategoryRepository: CategoryRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun syncCategories() {
+    override fun getCount(): LiveData<Int> {
         TODO("Not yet implemented")
     }
 

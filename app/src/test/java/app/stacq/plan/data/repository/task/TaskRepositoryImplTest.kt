@@ -1,6 +1,5 @@
 package app.stacq.plan.data.repository.task
 
-
 import app.stacq.plan.data.source.local.FakeTaskLocalDataSource
 import app.stacq.plan.data.source.remote.FakeTaskRemoteDataSource
 import app.stacq.plan.domain.Task
@@ -18,7 +17,7 @@ import org.junit.Test
 
 class TaskRepositoryImplTest {
 
-    private val task = Task(name = "Task", categoryId = "1")
+    private val task = Task("206e71f1-199f-4403-83e2-e2cba5f69771", 1693063778, "Task", "1")
     private val localTasks = listOf(task.asTaskEntity())
     private val remoteTasks = listOf(task.asTaskDocument())
 

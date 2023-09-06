@@ -48,11 +48,11 @@ class TasksViewModelTest {
     fun singleTask_deleteTask_emptyTasksOnLocalDataSource() =
         runTest(UnconfinedTestDispatcher()) {
             // Given a task to delete
-            val task = Task(name = "Task", categoryId = "1")
+            val task = Task("206e71f1-199f-4403-83e2-e2cba5f69771", 1693063778, "Task", "1")
             launch { taskRepository.create(task) }
 
             // When a task is delete
-            viewModel.delete(task)
+            viewModel.archive(task)
 
             // Then the task is delete on local data source
 
@@ -64,13 +64,13 @@ class TasksViewModelTest {
     fun doubleTasks_deleteTask_singleTaskDeletedOnLocalDataSource() =
         runTest(UnconfinedTestDispatcher()) {
             // Given a task to delete
-            val taskOne = Task(name = "Task", categoryId = "1")
-            val taskTwo = Task(name = "Task", categoryId = "2")
+            val taskOne = Task("206e71f1-199f-4403-83e2-e2cba5f69771", 1693063778, "Task", "1")
+            val taskTwo = Task("206e71f1-199f-4403-83e2-e2cba5f69772", 1693063778, "Task", "2")
             launch { taskRepository.create(taskOne) }
             launch { taskRepository.create(taskTwo) }
 
             // When a task is delete
-            viewModel.delete(taskOne)
+            viewModel.archive(taskOne)
 
             // Then the task is delete on local data source
             assertThat(taskRepository.getTasks().getOrAwaitValue(), IsEqual(listOf(taskTwo)))
