@@ -15,8 +15,8 @@ android {
         applicationId 'app.stacq.plan'
         minSdk 28
         targetSdk 34
-        versionCode 69
-        versionName '1.69'
+        versionCode 70
+        versionName '1.70'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         proguardFiles 'proguard-rules.pro'
@@ -69,13 +69,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.activity:activity-ktx:1.8.0'
-    implementation 'androidx.fragment:fragment-ktx:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation 'androidx.databinding:databinding-common:8.1.2'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.room:room-runtime:2.5.2'
     implementation 'androidx.room:room-ktx:2.5.2'
@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
-    implementation 'com.google.firebase:firebase-appcheck-debug:17.0.1'
+    implementation 'com.google.firebase:firebase-appcheck-debug:17.1.1'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
@@ -107,10 +107,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
-    androidTestImplementation 'androidx.navigation:navigation-testing:2.7.3'
-    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0-rc01'
-    androidTestImplementation 'androidx.fragment:fragment-testing:1.7.0-alpha05'
-    debugImplementation 'androidx.fragment:fragment-testing-manifest:1.7.0-alpha05'
+    androidTestImplementation 'androidx.navigation:navigation-testing:2.7.5'
+    androidTestImplementation 'androidx.benchmark:benchmark-macro-junit4:1.2.0'
+    androidTestImplementation 'androidx.fragment:fragment-testing:1.7.0-alpha06'
+    debugImplementation 'androidx.fragment:fragment-testing-manifest:1.7.0-alpha06'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 }
 
