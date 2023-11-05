@@ -10,6 +10,7 @@ data class TaskDocument(
     var categoryId: String? = null,
     var completed: Boolean = false,
     var completedAt: Long? = null,
+    var startedAt: Long? = null,
     var timerAlarm: Boolean = false,
     var timerFinishAt: Long? = null,
     var priority: Int? = null,

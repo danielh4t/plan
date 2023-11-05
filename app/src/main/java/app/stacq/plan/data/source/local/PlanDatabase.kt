@@ -16,7 +16,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 
 @Database(
     entities = [TaskEntity::class, CategoryEntity::class, GoalEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class PlanDatabase : RoomDatabase() {
@@ -42,6 +42,7 @@ abstract class PlanDatabase : RoomDatabase() {
                     )
                         .addMigrations(MIGRATION_2_3)
                         .addMigrations(MIGRATION_3_4)
+                        .addMigrations(MIGRATION_4_5)
                         .build()
                     INSTANCE = instance
                 }
@@ -62,5 +63,11 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
 val MIGRATION_3_4 = object : Migration(3, 4) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE IF EXISTS bite")
+    }
+}
+
+val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE task ADD COLUMN started_at INTEGER DEFAULT 0")
     }
 }

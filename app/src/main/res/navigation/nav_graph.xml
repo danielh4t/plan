@@ -76,6 +76,11 @@
         <action
             android:id="@+id/action_nav_task_to_nav_timer"
             app:destination="@id/nav_timer" />
+        <action
+            android:id="@+id/action_nav_task_to_nav_timeline"
+            app:destination="@id/nav_timeline"
+            app:popUpTo="@id/nav_timeline"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -194,6 +199,20 @@
         android:name="app.stacq.plan.ui.auth.AuthFragment"
         android:label="@string/authentication"
         tools:layout="@layout/fragment_auth">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_timeline"
+        android:name="app.stacq.plan.ui.timeline.TimelineFragment"
+        android:label="@string/timeline"
+        tools:layout="@layout/fragment_timeline" >
+        <argument
+            android:name="ShowBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_nav_timeline_to_nav_task"
+            app:destination="@id/nav_task" />
     </fragment>
 
 </navigation>

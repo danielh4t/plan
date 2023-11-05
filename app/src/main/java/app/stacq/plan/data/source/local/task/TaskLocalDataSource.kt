@@ -39,4 +39,6 @@ interface TaskLocalDataSource {
     fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 
     fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity>
+
+    fun getCompletedTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
 }
