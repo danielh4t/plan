@@ -177,7 +177,7 @@
                         android:importantForAutofill="no"
                         android:inputType="date"
                         android:textSize="16sp"
-                        app:taskStartText="@{task.createdAt}"
+                        app:taskStartText="@{task.startedAt}"
                         tools:ignore="TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
