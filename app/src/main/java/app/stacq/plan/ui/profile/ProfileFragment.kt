@@ -14,15 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
-import app.stacq.plan.data.repository.category.CategoryRepositoryImpl
-import app.stacq.plan.data.repository.goal.GoalRepositoryImpl
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase
-import app.stacq.plan.data.source.local.category.CategoryLocalDataSourceImpl
-import app.stacq.plan.data.source.local.goal.GoalLocalDataSourceImpl
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
-import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
-import app.stacq.plan.data.source.remote.goal.GoalRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentProfileBinding
 import coil.load

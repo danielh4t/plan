@@ -254,6 +254,7 @@ class TaskModifyFragment : Fragment() {
             binding.task = it
             it?.let {
                 viewModel.setSelectedCategoryId(it.categoryId)
+                viewModel.startCalendar.setLocalTimeSeconds(it.startedAt)
                 viewModel.completionCalendar.setLocalTimeSeconds(it.completedAt)
                 binding.taskModifyCategoryAutocomplete.setText(it.categoryName, false)
             }
@@ -326,6 +327,7 @@ class TaskModifyFragment : Fragment() {
     private fun completionDatePicker(): MaterialDatePicker<Long> {
         val constraintsBuilder =
             CalendarConstraints.Builder()
+                .setStart(viewModel.startCalendar.getLocalTimeUTC())
                 .setEnd(CalendarUtil().getTodayTimeInMillis())
                 .setValidator(DateValidatorPointBackward.now())
 
@@ -363,12 +365,20 @@ class TaskModifyFragment : Fragment() {
 
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
-                viewModel.completionCalendar.setLocalDate(it)
-                val time = viewModel.completionCalendar.localTime()
-                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
-                binding.taskModifyCompletionEditText.setText(sdf)
-                if (!timePicker.isAdded) {
-                    timePicker.show(requireActivity().supportFragmentManager, "completion_time_picker")
+                if (it < viewModel.startCalendar.getLocalTimeInMillis()){
+                    Toast.makeText(requireContext(), R.string.completion_error, Toast.LENGTH_SHORT).show()
+                    datePicker.dismiss()
+                } else {
+                    viewModel.completionCalendar.setLocalDate(it)
+                    val time = viewModel.completionCalendar.localTime()
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+                    binding.taskModifyCompletionEditText.setText(sdf)
+                    if (!timePicker.isAdded) {
+                        timePicker.show(
+                            requireActivity().supportFragmentManager,
+                            "completion_time_picker"
+                        )
+                    }
                 }
             }
         }

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:onClick="@{()-> timelineNavigateListener.onClick(task.id)}">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/timeline_line"
             android:layout_width="8dp"
             android:layout_height="0dp"
@@ -82,8 +82,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/timeline_line"
             app:layout_constraintTop_toBottomOf="@id/timeline_task_category"
+            app:timelineStarted="@{task.startedAt}"
             app:timelineCompleted="@{task.completedAt}"
-            app:timelineCreated="@{task.createdAt}"
             tools:text="@string/tools_days" />
 
         <TextView

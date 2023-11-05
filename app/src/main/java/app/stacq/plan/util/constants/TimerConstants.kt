@@ -9,6 +9,9 @@ object TimerConstants {
     const val TIME_MINUTES_TO_HOURS: Long = 60L
     const val TIME_ONE_MINUTE_MINUTES: Long = 1L
     const val TIME_ONE_HOUR_MINUTES: Long = 60L
+    const val SECONDS_TO_MINUTES: Int = 60
+    const val SECONDS_TO_HOURS: Int = 3600
+    const val SECONDS_TO_DAYS: Int = 86400
     const val TIMER_RECEIVER_ID_KEY: String = "finish_at"
     const val TIMER_RECEIVER_TEXT_KEY: String = "name"
 }

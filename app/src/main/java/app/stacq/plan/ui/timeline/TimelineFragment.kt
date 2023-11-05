@@ -65,7 +65,7 @@ class TimelineFragment : Fragment() {
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
-                adapter.submitList(it)
+                adapter.addHeaderAndSubmitList(it)
             }
         }
     }
