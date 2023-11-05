@@ -9,23 +9,25 @@
             android:contentDescription="@string/content_tasks_menu"
             android:icon="@drawable/ic_circle_check"
             android:title="@string/title_tasks" />
-
         <item
             android:id="@+id/nav_goals"
             android:contentDescription="@string/content_goals_menu"
             android:icon="@drawable/ic_checkmark_circle"
             android:title="@string/title_goals" />
-
         <item
             android:id="@+id/nav_categories"
             android:contentDescription="@string/content_categories_menu"
             android:icon="@drawable/ic_color_palette_outline"
             android:title="@string/title_categories" />
-
         <item
             android:id="@+id/nav_profile"
             android:contentDescription="@string/content_profile_menu"
             android:icon="@drawable/ic_person"
             android:title="@string/title_profile" />
+        <item
+            android:id="@+id/nav_timeline"
+            android:contentDescription="@string/content_timeline_menu"
+            android:icon="@drawable/ic_activity_outline"
+            android:title="@string/timeline" />
     </group>
 </menu>

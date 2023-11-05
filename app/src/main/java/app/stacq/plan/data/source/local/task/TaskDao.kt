@@ -69,7 +69,8 @@ interface TaskDao {
      * @param taskId of the task
      * @param finishAt timer timer
      */
-    @Query("UPDATE task SET timer_finish_at = :finishAt WHERE id = :taskId")
+    @Query("UPDATE task SET timer_finish_at = :finishAt, " +
+            "started_at = strftime('%s', 'now') WHERE id = :taskId")
     suspend fun updateTimerFinishById(taskId: String, finishAt: Long)
 
     /**
@@ -126,4 +127,8 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM task WHERE id = :taskId")
     fun getTaskAndCategory(taskId: String): LiveData<TaskEntityAndCategoryEntity>
+
+    @Transaction
+    @Query("SELECT * FROM task WHERE completed ORDER BY completed_at")
+    fun getCompletedTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 }

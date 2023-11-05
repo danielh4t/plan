@@ -23,6 +23,9 @@ data class TaskEntity(
     @ColumnInfo(name = "category_id")
     var categoryId: String,
 
+    @ColumnInfo(name = "started_at")
+    var startedAt: Long = 0,
+
     var completed: Boolean = false,
 
     @ColumnInfo(name = "completed_at")

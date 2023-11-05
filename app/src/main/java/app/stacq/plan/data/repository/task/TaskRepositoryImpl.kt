@@ -85,7 +85,6 @@ class TaskRepositoryImpl(
 
     override fun getCount(): LiveData<Int> = taskLocalDataSource.getCount()
 
-
     override fun getTasks(): LiveData<List<Task>> =
         taskLocalDataSource.getTasks().map {
             it.map { it1 -> it1.asTask() }
@@ -94,5 +93,10 @@ class TaskRepositoryImpl(
     override fun getTask(taskId: String): LiveData<Task> =
         taskLocalDataSource.getTask(taskId).map {
             it.asTask()
+        }
+
+    override fun getCompletedTasks(): LiveData<List<Task>> =
+        taskLocalDataSource.getCompletedTasks().map {
+            it.map { it1 -> it1.asTask() }
         }
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="task"
+            type="app.stacq.plan.domain.Task" />
+
+        <variable
+            name="timelineNavigateListener"
+            type="app.stacq.plan.ui.timeline.TimelineNavigateListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> timelineNavigateListener.onClick(task.id)}">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/timeline_line"
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_vertical_bar"
+            android:contentDescription="@string/content_timeline_vertical_bar"
+            android:minHeight="128dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:timelineLineColor="@{task.categoryColor}" />
+
+        <TextView
+            android:id="@+id/timeline_task_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_name"
+            android:fontFamily="@font/roboto"
+            android:text="@{task.name}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/timeline_task_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timeline_line"
+            app:layout_constraintTop_toTopOf="@+id/timeline_line"
+            tools:text="@string/task" />
+
+        <TextView
+            android:id="@+id/timeline_task_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_task_name"
+            android:fontFamily="@font/roboto"
+            android:text="@{task.categoryName}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timeline_line"
+            app:layout_constraintTop_toBottomOf="@id/timeline_task_name"
+            tools:text="@string/category" />
+
+        <TextView
+            android:id="@+id/timeline_task_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="@string/content_task_name"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/timeline_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timeline_line"
+            app:layout_constraintTop_toBottomOf="@id/timeline_task_category"
+            app:timelineCompleted="@{task.completedAt}"
+            app:timelineCreated="@{task.createdAt}"
+            tools:text="@string/tools_days" />
+
+        <TextView
+            android:id="@+id/timeline_task_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/timeline_task_complete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/timeline_line"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:timelineStartTime="@{task.startedAt}"
+            tools:text="@string/time" />
+
+        <TextView
+            android:id="@+id/timeline_task_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/timeline_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeline_task_start"
+            app:timelineCompletionDateTime="@{task.completedAt}"
+            tools:text="@string/time" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

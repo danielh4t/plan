@@ -65,13 +65,26 @@ class CalendarUtil {
         localCalendar.timeInMillis = Calendar.getInstance().timeInMillis
     }
 
-
     fun differenceInDays(epochTimeInSeconds: Long): Long {
         val differenceCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
         differenceCalendar.timeInMillis = epochTimeInSeconds * 1000L
 
         // Calculate the difference in milliseconds between the current time and past epoch time
         val differenceInMillis = calendar.timeInMillis - differenceCalendar.timeInMillis
+
+        // Convert the difference in milliseconds to days
+        return differenceInMillis / (24 * 60 * 60 * 1000)
+    }
+
+    fun startToEndDifferenceInDays(startTimeInSeconds: Long, endTineInSeconds: Long): Long {
+        val startCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        startCalendar.timeInMillis = startTimeInSeconds * 1000L
+
+        val endCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        endCalendar.timeInMillis = endTineInSeconds * 1000L
+
+        // Calculate the difference in milliseconds between the current time and past epoch time
+        val differenceInMillis = endCalendar.timeInMillis - startCalendar.timeInMillis
 
         // Convert the difference in milliseconds to days
         return differenceInMillis / (24 * 60 * 60 * 1000)

@@ -86,7 +86,6 @@ class TasksFragment : Fragment() {
 
         val navController = findNavController()
 
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.tasksAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
@@ -109,7 +108,6 @@ class TasksFragment : Fragment() {
         }
 
         val adapter = TasksAdapter(taskNavigateListener, taskCompleteListener, taskArchiveListener)
-
         binding.tasksList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
@@ -188,7 +186,7 @@ class TasksFragment : Fragment() {
         binding.tasksList.addItemDecoration(
             BottomMarginItemDecoration(
                 resources.getDimensionPixelSize(
-                    R.dimen.vertica_list_margin
+                    R.dimen.vertical_list_margin
                 )
             )
         )

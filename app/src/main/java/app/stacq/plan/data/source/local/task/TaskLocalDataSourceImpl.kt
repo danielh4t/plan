@@ -93,4 +93,8 @@ class TaskLocalDataSourceImpl(
     override fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity> {
         return taskDao.getTaskAndCategory(taskId)
     }
+
+    override fun getCompletedTasks(): LiveData<List<TaskEntityAndCategoryEntity>> {
+        return taskDao.getCompletedTasksAndCategory()
+    }
 }

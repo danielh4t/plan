@@ -176,10 +176,17 @@ class TaskModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        binding.taskModifyStartEditText.setOnClickListener {
+            val startDatePicker = startDatePicker()
+            if (!startDatePicker.isAdded) {
+                startDatePicker.show(requireActivity().supportFragmentManager, "start_date_picker")
+            }
+        }
+
         binding.taskModifyCompletionEditText.setOnClickListener {
             val completionDatePicker = completionDatePicker()
             if (!completionDatePicker.isAdded) {
-                completionDatePicker.show(requireActivity().supportFragmentManager, "date_picker")
+                completionDatePicker.show(requireActivity().supportFragmentManager, "completion_date_picker")
             }
         }
 
@@ -205,6 +212,12 @@ class TaskModifyFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            var startedAt: Long = 0
+            val startText = binding.taskModifyStartEditText.text.toString()
+            if (startText.isNotEmpty()) {
+                startedAt = viewModel.startCalendar.getLocalTimeUTC()
+            }
+
             var completedAt: Long = 0
             val completionText = binding.taskModifyCompletionEditText.text.toString()
             if (completionText.isNotEmpty()) {
@@ -216,7 +229,7 @@ class TaskModifyFragment : Fragment() {
             val id = if (taskId == null) {
                 viewModel.create(name, categoryId, notes)
             } else {
-                viewModel.update(name, categoryId, completedAt, notes)
+                viewModel.update(name, categoryId, startedAt, completedAt, notes)
                 taskId
             }
 
@@ -256,6 +269,58 @@ class TaskModifyFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun startDatePicker(): MaterialDatePicker<Long> {
+        val constraintsBuilder =
+            CalendarConstraints.Builder()
+                .setEnd(CalendarUtil().getTodayTimeInMillis())
+                .setValidator(DateValidatorPointBackward.now())
+
+        if (viewModel.startCalendar.getLocalTimeInMillis() == 0L)
+            viewModel.startCalendar.setTodayTimeInMillis()
+
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText(getString(R.string.select_start_date))
+                .setSelection(viewModel.startCalendar.getLocalTimeInMillis())
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build()
+
+        val isSystem24Hour = DateFormat.is24HourFormat(context)
+        val clockFormat =
+            if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+
+        val timePicker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(clockFormat)
+                .setHour(viewModel.startCalendar.localHour())
+                .setMinute(viewModel.startCalendar.localMinute())
+                .setTitleText(getString(R.string.select_start_time))
+                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                .build()
+
+        timePicker.addOnPositiveButtonClickListener {
+            viewModel.startCalendar.setLocalHour(timePicker.hour)
+            viewModel.startCalendar.setLocalMinute(timePicker.minute)
+
+            val time = viewModel.startCalendar.localTime()
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+            binding.taskModifyStartEditText.setText(sdf)
+        }
+
+        datePicker.addOnPositiveButtonClickListener {
+            it?.let {
+                viewModel.startCalendar.setLocalDate(it)
+                val time = viewModel.startCalendar.localTime()
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+                binding.taskModifyStartEditText.setText(sdf)
+                if (!timePicker.isAdded) {
+                    timePicker.show(requireActivity().supportFragmentManager, "start_time_picker")
+                }
+            }
+        }
+        return datePicker
     }
 
     private fun completionDatePicker(): MaterialDatePicker<Long> {
@@ -303,7 +368,7 @@ class TaskModifyFragment : Fragment() {
                 val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
                 binding.taskModifyCompletionEditText.setText(sdf)
                 if (!timePicker.isAdded) {
-                    timePicker.show(requireActivity().supportFragmentManager, "time_picker")
+                    timePicker.show(requireActivity().supportFragmentManager, "completion_time_picker")
                 }
             }
         }

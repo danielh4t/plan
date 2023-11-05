@@ -164,7 +164,7 @@ class GoalsFragment : Fragment() {
         binding.goalsList.addItemDecoration(
             BottomMarginItemDecoration(
                 resources.getDimensionPixelSize(
-                    R.dimen.vertica_list_margin
+                    R.dimen.vertical_list_margin
                 )
             )
         )

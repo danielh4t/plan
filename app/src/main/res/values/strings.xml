@@ -244,5 +244,16 @@
     <string name="content_task_notes_label">Task notes</string>
     <string name="take_notes">Take notes</string>
     <string name="task_cloned">Task cloned</string>
+    <string name="timeline">Timeline</string>
+    <string name="content_timeline_menu">View tasks timeline</string>
+    <string name="content_timeline">Timeline of completed tasks</string>
+    <string name="time">00:00</string>
+    <string name="content_timeline_vertical_bar">Vertical bar</string>
+    <string name="start">Start</string>
+    <string name="content_task_start_label">task started</string>
+    <string name="content_task_start">Task start</string>
+    <string name="ellipsis">...</string>
+    <string name="select_start_date">Select start date</string>
+    <string name="select_start_time">Select start time</string>
 
 </resources>

@@ -131,6 +131,56 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- started -->
+                <ImageView
+                    android:id="@+id/task_modify_start_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@string/content_task_completion_icon"
+                    android:src="@drawable/ic_play_circle"
+                    app:layout_constraintBottom_toBottomOf="@+id/task_modify_start_layout"
+                    app:layout_constraintEnd_toStartOf="@+id/task_modify_start_layout"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/task_modify_start_layout"
+                    app:taskImageIconVisibility="@{task}"
+                    app:tint="?attr/colorPrimary" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/task_modify_start_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="@string/start"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/task_modify_start_image"
+                    app:layout_constraintTop_toBottomOf="@+id/task_modify_category_menu"
+                    app:layout_constraintWidth_max="@dimen/input_layout_max"
+                    app:layout_constraintWidth_min="@dimen/input_layout_min"
+                    app:startIconContentDescription="@string/content_task_date_start_icon"
+                    app:taskTextLayoutVisibility="@{task}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/task_modify_start_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:importantForAutofill="no"
+                        android:inputType="date"
+                        android:textSize="16sp"
+                        app:taskStartText="@{task.createdAt}"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/task_modify_completion_image"
@@ -161,7 +211,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/task_modify_completion_image"
-                    app:layout_constraintTop_toBottomOf="@+id/task_modify_category_menu"
+                    app:layout_constraintTop_toBottomOf="@+id/task_modify_start_layout"
                     app:layout_constraintWidth_max="@dimen/input_layout_max"
                     app:layout_constraintWidth_min="@dimen/input_layout_min"
                     app:startIconContentDescription="@string/content_task_date_start_icon"

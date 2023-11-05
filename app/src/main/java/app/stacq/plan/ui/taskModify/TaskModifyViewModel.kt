@@ -34,6 +34,8 @@ class TaskModifyViewModel(
         _selectedCategoryId.value = categoryId
     }
 
+    val startCalendar = CalendarUtil()
+
     val completionCalendar = CalendarUtil()
 
     fun create(name: String, categoryId: String, notes: String?): String {
@@ -46,9 +48,15 @@ class TaskModifyViewModel(
         return taskEntity.id
     }
 
-    fun update(name: String, categoryId: String, completedAt: Long?, notes: String?) {
+    fun update(name: String, categoryId: String, startedAt: Long?, completedAt: Long?, notes: String?) {
         viewModelScope.launch {
             task.value?.let {
+                startedAt?.let { timestamp ->
+                    // update start at if changed
+                    if(timestamp != 0L) {
+                        it.startedAt = timestamp
+                    }
+                }
                 completedAt?.let { timestamp ->
                     // update completed at if changed
                     if(timestamp != 0L) {

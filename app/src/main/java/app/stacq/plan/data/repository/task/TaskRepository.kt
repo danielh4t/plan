@@ -39,4 +39,6 @@ interface TaskRepository {
     fun getTasks(): LiveData<List<Task>>
 
     fun getTask(taskId: String): LiveData<Task>
+
+    fun getCompletedTasks(): LiveData<List<Task>>
 }
