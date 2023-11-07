@@ -37,6 +37,8 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/content_timeline"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/list_item_timeline" />
 

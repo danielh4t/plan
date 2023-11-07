@@ -62,7 +62,6 @@ class TimelineFragment : Fragment() {
         val adapter = TimelineAdapter(timelineNavigateListener)
         binding.timelineList.adapter = adapter
 
-
         viewModel.tasks.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.addHeaderAndSubmitList(it)

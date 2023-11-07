@@ -196,6 +196,7 @@
     <string name="content_task_timer">Task timer complete time</string>
     <string name="category_creation_icon">Circle with plus symbol</string>
     <string name="timer_not_set">Timer not set</string>
+    <string name="start_not_set">Start not set</string>
     <string name="no_backup">No backup</string>
     <string name="content_archive_task">Archive task</string>
     <string name="archive">Archive</string>
@@ -267,10 +268,11 @@
     <string name="start">Start</string>
     <string name="content_task_start_label">task started</string>
     <string name="content_task_start">Task start</string>
-    <string name="ellipsis">...</string>
     <string name="select_start_date">Select start date</string>
     <string name="select_start_time">Select start time</string>
     <string name="content_timeline_header">Day</string>
-    <string name="completion_error">Task completion can not be before started</string>
-
+    <string name="completion_before_start_error">Task completion is before started</string>
+    <string name="start_after_completion_error">Task start is after completion</string>
+    <string name="start_not_set_error">Set start first</string>
+    <string name="set_start">Set Start</string>
 </resources>
