@@ -87,22 +87,6 @@
             tools:text="@string/tools_days" />
 
         <TextView
-            android:id="@+id/timeline_task_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/roboto"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/timeline_task_complete"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/timeline_line"
-            app:layout_constraintVertical_chainStyle="spread_inside"
-            app:timelineStartTime="@{task.startedAt}"
-            tools:text="@string/time" />
-
-        <TextView
             android:id="@+id/timeline_task_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,12 +95,28 @@
             android:fontFamily="@font/roboto"
             android:textSize="16sp"
             android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/timeline_line"
+            app:layout_constraintBottom_toTopOf="@+id/timeline_task_start"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeline_task_start"
-            app:timelineCompletionDateTime="@{task.completedAt}"
+            app:layout_constraintTop_toTopOf="@+id/timeline_line"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+
             tools:text="@string/time" />
 
+        <TextView
+            android:id="@+id/timeline_task_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/timeline_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeline_task_complete"
+            app:timelineCompletionDateTime="@{task.completedAt}"
+            app:timelineStartTime="@{task.startedAt}"
+            tools:text="@string/time" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
