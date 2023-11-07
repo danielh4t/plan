@@ -52,8 +52,8 @@ class TaskRepositoryImpl(
         }
 
     override suspend fun updateCompletion(task: Task) = withContext(ioDispatcher) {
-        taskLocalDataSource.updateCompletion(task.asTaskEntity())
-        taskRemoteDataSource.updateCompletion(task.asTaskDocument())
+        taskLocalDataSource.updateStartCompletion(task.asTaskEntity())
+        taskRemoteDataSource.updateStartCompletion(task.asTaskDocument())
     }
 
     override suspend fun updateTimerFinish(task: Task) = withContext(ioDispatcher) {

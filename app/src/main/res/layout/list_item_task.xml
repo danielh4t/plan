@@ -14,8 +14,8 @@
             type="app.stacq.plan.ui.tasks.TaskNavigateListener" />
 
         <variable
-            name="taskCompleteListener"
-            type="app.stacq.plan.ui.tasks.TaskCompleteListener" />
+            name="taskStartCompleteListener"
+            type="app.stacq.plan.ui.tasks.TaskStartCompleteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,18 +23,18 @@
         android:layout_height="wrap_content"
         android:onClick="@{() -> taskNavigateListener.onClick(task.id)}">
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/task_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:button="@drawable/complete_incomplete_checkbox"
-            android:checked="@{task.completed}"
             android:contentDescription="@string/content_task_checkbox"
-            android:onClick="@{() -> taskCompleteListener.onClick(task)}"
+            android:button="@drawable/incomplete_start_complete_task_checkbox"
+            android:onClick="@{() -> taskStartCompleteListener.onClick(task)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:taskCheckState="@{task}"
             app:taskCategoryColor="@{task.categoryColor}" />
 
 

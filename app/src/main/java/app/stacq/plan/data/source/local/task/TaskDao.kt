@@ -44,7 +44,7 @@ interface TaskDao {
      *
      * @param taskId of the task
      */
-    @Query("UPDATE task SET archived = true WHERE id = :taskId")
+    @Query("UPDATE task SET archived = 1 WHERE id = :taskId")
     suspend fun archive(taskId: String)
 
     /**
@@ -52,7 +52,7 @@ interface TaskDao {
      *
      * @param taskId of the task
      */
-    @Query("UPDATE task SET archived = false WHERE id = :taskId")
+    @Query("UPDATE task SET archived = 0 WHERE id = :taskId")
     suspend fun unarchive(taskId: String)
 
     /**
@@ -60,8 +60,8 @@ interface TaskDao {
      *
      * @param taskId of the task
      */
-    @Query("UPDATE task SET completed = :completed, completed_at = :completedAt WHERE id = :taskId")
-    suspend fun updateCompletionById(taskId: String, completed: Boolean, completedAt: Long)
+    @Query("UPDATE task SET started_at = :startedAt, completed_at = :completedAt WHERE id = :taskId")
+    suspend fun updateStartCompletionById(taskId: String, startedAt: Long, completedAt: Long)
 
     /**
      * Update task timer finish at time
@@ -105,15 +105,15 @@ interface TaskDao {
                 "FROM task " +
                 "WHERE goal_id = :goalId " +
                 "AND strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch')) = strftime('%Y-%m-%d', 'now') " +
-                "AND completed"
+                "AND completed_at != 0"
     )
     fun hasCompletedTaskGoalToday(goalId: String): Boolean
 
-    @Query("SELECT COUNT(*) FROM task WHERE completed AND " +
+    @Query("SELECT COUNT(*) FROM task WHERE completed_at != 0 AND " +
             "strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch', 'localtime')) = date('now', 'localtime')")
     fun getCompletedToday(): LiveData<Int>
 
-    @Query("SELECT COUNT(distinct goal_id) FROM task WHERE completed AND goal_id NOT NULL AND " +
+    @Query("SELECT COUNT(distinct goal_id) FROM task WHERE completed_at != 0 AND goal_id NOT NULL AND " +
             "strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch', 'localtime')) = date('now', 'localtime')")
     fun getCompletedTaskGoalToday(): LiveData<Int>
 
@@ -129,6 +129,6 @@ interface TaskDao {
     fun getTaskAndCategory(taskId: String): LiveData<TaskEntityAndCategoryEntity>
 
     @Transaction
-    @Query("SELECT * FROM task WHERE completed ORDER BY completed_at")
+    @Query("SELECT * FROM task WHERE completed_at != 0 ORDER BY completed_at")
     fun getCompletedTasksAndCategory(): LiveData<List<TaskEntityAndCategoryEntity>>
 }

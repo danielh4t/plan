@@ -21,8 +21,7 @@ class GoalsViewModel(
 
     fun complete(goal: Goal) {
         viewModelScope.launch {
-            goal.completed = !goal.completed
-            goal.completedAt = if (goal.completed) {
+            goal.completedAt = if (goal.completedAt == 0L) {
                 TimeUtil().nowInSeconds()
             } else {
                 0L

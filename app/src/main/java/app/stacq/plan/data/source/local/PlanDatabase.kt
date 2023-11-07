@@ -16,7 +16,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 
 @Database(
     entities = [TaskEntity::class, CategoryEntity::class, GoalEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class PlanDatabase : RoomDatabase() {
@@ -43,6 +43,7 @@ abstract class PlanDatabase : RoomDatabase() {
                         .addMigrations(MIGRATION_2_3)
                         .addMigrations(MIGRATION_3_4)
                         .addMigrations(MIGRATION_4_5)
+                        .addMigrations(MIGRATION_5_6)
                         .build()
                     INSTANCE = instance
                 }
@@ -69,5 +70,13 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
 val MIGRATION_4_5 = object : Migration(4, 5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE task ADD COLUMN started_at INTEGER DEFAULT 0")
+    }
+}
+
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE task DROP COLUMN completed")
+        database.execSQL("ALTER TABLE goal DROP COLUMN completed")
+        database.execSQL("ALTER TABLE goal RENAME COLUMN completedAt TO completed_at")
     }
 }

@@ -81,7 +81,8 @@ class CalendarUtil {
 
     fun getUTCStartOfDayInMillis(): Long {
         // Set the time fields to zero
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val calendar = localCalendar.clone() as Calendar
+        calendar.timeZone = TimeZone.getTimeZone("UTC")
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)

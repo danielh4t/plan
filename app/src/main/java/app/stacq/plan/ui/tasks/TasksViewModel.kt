@@ -9,7 +9,6 @@ import app.stacq.plan.domain.Category
 import app.stacq.plan.domain.Task
 import app.stacq.plan.util.TimeUtil
 import kotlinx.coroutines.launch
-import java.time.Instant
 
 class TasksViewModel(
     private val taskRepository: TaskRepository,
@@ -20,13 +19,15 @@ class TasksViewModel(
 
     val categories: LiveData<List<Category>> = categoryRepository.getEnabledCategories()
 
-    fun complete(task: Task) {
-        task.completed = !task.completed
-        task.completedAt = Instant.now().epochSecond
-        task.completedAt = if(task.completed) {
-            TimeUtil().nowInSeconds()
+    fun startComplete(task: Task) {
+        if (task.startedAt == 0L) {
+            task.startedAt = TimeUtil().nowInSeconds()
         } else {
-            0L
+            task.completedAt = if (task.completedAt == 0L) {
+                TimeUtil().nowInSeconds()
+            } else {
+                0L
+            }
         }
         viewModelScope.launch {
             taskRepository.updateCompletion(task)

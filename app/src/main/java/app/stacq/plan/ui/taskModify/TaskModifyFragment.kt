@@ -354,7 +354,9 @@ class TaskModifyFragment : Fragment() {
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
                 val completion = if (viewModel.completionCalendar.getLocalTimeInMillis() == 0L) {
-                    viewModel.completionCalendar.getUTCStartOfDayInMillis()
+                    // completion is not set
+                    // max is current time
+                    viewModel.completionCalendar.getLocalCurrentTimeInMillis()
                 } else {
                     viewModel.completionCalendar.getLocalTimeInMillis()
                 }
@@ -458,6 +460,7 @@ class TaskModifyFragment : Fragment() {
                 }
                 // check if completion date is greater or equal to start and start is set
                 else if (it >= viewModel.startCalendar.getUTCStartOfDayInMillis()) {
+                    viewModel.completionCalendar.setLocalDate(it)
                     if (!timePicker.isAdded) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,

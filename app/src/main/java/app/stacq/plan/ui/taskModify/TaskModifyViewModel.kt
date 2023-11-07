@@ -60,7 +60,6 @@ class TaskModifyViewModel(
                 completedAt?.let { timestamp ->
                     // update completed at if changed
                     if(timestamp != 0L) {
-                        it.completed = true
                         it.completedAt = timestamp
                     }
                 }
