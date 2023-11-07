@@ -100,6 +100,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside"
+            app:timelineCompletionDateTime="@{task.completedAt}"
             tools:text="@string/time" />
 
         <TextView
@@ -114,7 +115,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/timeline_line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeline_task_complete"
-            app:timelineCompletionDateTime="@{task.completedAt}"
             app:timelineStartTime="@{task.startedAt}"
             tools:text="@string/time" />
 
