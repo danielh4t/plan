@@ -101,20 +101,35 @@ class TimelineAdapter(
         }
     }
 
-    private fun Long.toSimpleDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    private fun Long.toSimpleDate(difference: Long): String {
+        val dateFormat =
+            if (difference < 345600) SimpleDateFormat("EEEE", Locale.getDefault())
+            else  SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         val date = Date(this * 1000)
         return dateFormat.format(date)
     }
+
+    private fun Long.formatTimeAgo(): String {
+        val currentTime = System.currentTimeMillis() / 1000
+        val timestampDiff = currentTime - this
+        return when {
+            timestampDiff < 86400 -> "Today"
+            timestampDiff < 172800 -> "Yesterday"
+            else -> {
+                this.toSimpleDate(timestampDiff)
+            }
+        }
+    }
+
     private fun groupTasksByDate(tasks: List<Task>): List<Timeline> {
         val groupedItems = mutableListOf<Timeline>()
-        val groupedTasks = tasks.groupBy { it.completedAt.toSimpleDate() }
+        val groupedTasks = tasks.groupBy { it.completedAt.formatTimeAgo() }
 
         for ((date, taskList) in groupedTasks) {
-            groupedItems.add(Timeline.TimelineHeader(date))
-            taskList.forEach {task->
+            taskList.forEach { task ->
                 groupedItems.add(Timeline.TimelineTask(task))
             }
+            groupedItems.add(Timeline.TimelineHeader(date))
         }
 
         return groupedItems

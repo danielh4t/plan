@@ -14,11 +14,22 @@ fun TextView.creationTimestampToDateTime(timestamp: Long) {
     text = dateFormat.format(date)
 }
 
+@BindingAdapter("taskStartDateTime")
+fun TextView.startTimestampToDateTime(timestamp: Long) {
+    text = if (timestamp == 0L) {
+        resources.getString(R.string.start_not_set)
+    } else {
+        val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
+        val date = Date(timestamp * 1000)
+        dateFormat.format(date)
+    }
+}
+
 @BindingAdapter("taskTimerFinishDateTime")
 fun TextView.timerFinishTimestampToDateTime(timestamp: Long) {
-    text= if (timestamp == 0L) {
+    text = if (timestamp == 0L) {
         resources.getString(R.string.timer_not_set)
-    }else {
+    } else {
         val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
         val date = Date(timestamp * 1000)
         dateFormat.format(date)
@@ -28,9 +39,9 @@ fun TextView.timerFinishTimestampToDateTime(timestamp: Long) {
 
 @BindingAdapter("taskCompletionDateTime")
 fun TextView.completionTimestampToDateTime(timestamp: Long) {
-    text= if (timestamp == 0L) {
+    text = if (timestamp == 0L) {
         resources.getString(R.string.not_completed)
-    }else {
+    } else {
         val dateFormat = SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.getDefault())
         val date = Date(timestamp * 1000)
         dateFormat.format(date)
@@ -39,7 +50,7 @@ fun TextView.completionTimestampToDateTime(timestamp: Long) {
 
 @BindingAdapter("taskNotes")
 fun TextView.setNotes(note: String?) {
-    text = if(note.isNullOrBlank()) {
+    text = if (note.isNullOrBlank()) {
         resources.getString(R.string.take_notes)
     } else {
         note

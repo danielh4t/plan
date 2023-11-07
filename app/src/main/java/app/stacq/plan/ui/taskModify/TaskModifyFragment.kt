@@ -33,6 +33,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
@@ -91,11 +92,13 @@ class TaskModifyFragment : Fragment() {
                         uploadTask
                             .addOnSuccessListener {
                                 // Handle successful upload
-                                Toast.makeText(
-                                    requireContext(),
+                                Snackbar.make(
+                                    view,
                                     R.string.task_picture_updated,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                    .setAnchorView(binding.taskModifyAddImageFab)
+                                    .show()
                                 imageRef.downloadUrl.addOnSuccessListener { imageUri ->
                                     binding.taskModifyImageView.load(imageUri) {
                                         crossfade(true)
@@ -111,19 +114,19 @@ class TaskModifyFragment : Fragment() {
                             }
                             .addOnFailureListener {
                                 // Handle failed upload
-                                Toast.makeText(
-                                    requireContext(),
+                                Snackbar.make(
+                                    view,
                                     R.string.task_picture_upload_failed,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                    .setAnchorView(binding.taskModifyAddImageFab)
+                                    .show()
                             }
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.no_media_selected,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Snackbar.make(view, R.string.no_media_selected, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.taskModifyAddImageFab)
+                        .show()
                 }
             }
 
@@ -179,14 +182,35 @@ class TaskModifyFragment : Fragment() {
         binding.taskModifyStartEditText.setOnClickListener {
             val startDatePicker = startDatePicker()
             if (!startDatePicker.isAdded) {
-                startDatePicker.show(requireActivity().supportFragmentManager, "start_date_picker")
+                startDatePicker.show(
+                    requireActivity().supportFragmentManager,
+                    "start_date_picker"
+                )
             }
         }
 
         binding.taskModifyCompletionEditText.setOnClickListener {
-            val completionDatePicker = completionDatePicker()
-            if (!completionDatePicker.isAdded) {
-                completionDatePicker.show(requireActivity().supportFragmentManager, "completion_date_picker")
+            if (viewModel.startCalendar.getLocalTimeInMillis() == 0L) {
+                Snackbar.make(it, R.string.start_not_set_error, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.set_start) {
+                        val startDatePicker = startDatePicker()
+                        if (!startDatePicker.isAdded) {
+                            startDatePicker.show(
+                                requireActivity().supportFragmentManager,
+                                "start_date_picker"
+                            )
+                        }
+                    }
+                    .setAnchorView(binding.taskModifyAddImageFab)
+                    .show()
+            } else {
+                val completionDatePicker = completionDatePicker()
+                if (!completionDatePicker.isAdded) {
+                    completionDatePicker.show(
+                        requireActivity().supportFragmentManager,
+                        "completion_date_picker"
+                    )
+                }
             }
         }
 
@@ -194,34 +218,30 @@ class TaskModifyFragment : Fragment() {
             // name
             val name: String = binding.taskNameEditText.text.toString().trim()
             if (name.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.task_name_required,
-                    Toast.LENGTH_SHORT
-                ).show()
+                Snackbar.make(it, R.string.task_name_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.taskModifyAddImageFab)
+                    .show()
                 return@setOnClickListener
             }
 
             val categoryId = viewModel.selectedCategoryId.value
             if (categoryId == null) {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.task_category_required,
-                    Toast.LENGTH_SHORT
-                ).show()
+                Snackbar.make(it, R.string.task_category_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.taskModifyAddImageFab)
+                    .show()
                 return@setOnClickListener
             }
 
             var startedAt: Long = 0
             val startText = binding.taskModifyStartEditText.text.toString()
             if (startText.isNotEmpty()) {
-                startedAt = viewModel.startCalendar.getLocalTimeUTC()
+                startedAt = viewModel.startCalendar.getLocalTimeUTCInSeconds()
             }
 
             var completedAt: Long = 0
             val completionText = binding.taskModifyCompletionEditText.text.toString()
             if (completionText.isNotEmpty()) {
-                completedAt = viewModel.completionCalendar.getLocalTimeUTC()
+                completedAt = viewModel.completionCalendar.getLocalTimeUTCInSeconds()
             }
 
             val notes: String = binding.taskNotesEditText.text.toString().trim()
@@ -242,11 +262,9 @@ class TaskModifyFragment : Fragment() {
             if (uid != null) {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.sign_in_up_required,
-                    Toast.LENGTH_SHORT
-                ).show()
+                Snackbar.make(it, R.string.sign_in_up_required, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.taskModifyAddImageFab)
+                    .show()
             }
         }
 
@@ -302,44 +320,90 @@ class TaskModifyFragment : Fragment() {
                 .build()
 
         timePicker.addOnPositiveButtonClickListener {
+            // store current time
+            val hour = viewModel.startCalendar.localHour()
+            val minute = viewModel.startCalendar.localMinute()
+
+            // set start
             viewModel.startCalendar.setLocalHour(timePicker.hour)
             viewModel.startCalendar.setLocalMinute(timePicker.minute)
 
-            val time = viewModel.startCalendar.localTime()
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
-            binding.taskModifyStartEditText.setText(sdf)
+            val completion = if (viewModel.completionCalendar.getLocalTimeInMillis() == 0L) {
+                viewModel.completionCalendar.getUTCCurrentTimeInMillis()
+            } else {
+                viewModel.completionCalendar.getLocalTimeInMillis()
+            }
+            // check if start time is less than completion
+            if (viewModel.startCalendar.getLocalTimeInMillis() <= completion) {
+                val time = viewModel.startCalendar.localTime()
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+                binding.taskModifyStartEditText.setText(sdf)
+            } else {
+                // reset start to previous state
+                viewModel.startCalendar.setLocalHour(hour)
+                viewModel.startCalendar.setLocalMinute(minute)
+                Toast.makeText(
+                    requireContext(),
+                    R.string.start_after_completion_error,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
         }
 
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
-                viewModel.startCalendar.setLocalDate(it)
-                val time = viewModel.startCalendar.localTime()
-                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
-                binding.taskModifyStartEditText.setText(sdf)
-                if (!timePicker.isAdded) {
-                    timePicker.show(requireActivity().supportFragmentManager, "start_time_picker")
+                val completion = if (viewModel.completionCalendar.getLocalTimeInMillis() == 0L) {
+                    viewModel.completionCalendar.getUTCStartOfDayInMillis()
+                } else {
+                    viewModel.completionCalendar.getLocalTimeInMillis()
+                }
+                // check start date is less than or equal to completion
+                if (it <= completion) {
+                    viewModel.startCalendar.setLocalDate(it)
+                    if (!timePicker.isAdded) {
+                        timePicker.show(
+                            requireActivity().supportFragmentManager,
+                            "start_time_picker"
+                        )
+                    }
+                } else {
+                    // start is greater than completion
+                    Toast.makeText(
+                        requireContext(), R.string.start_after_completion_error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    datePicker.dismiss()
                 }
             }
         }
+
+        datePicker.addOnCancelListener {
+            viewModel.startCalendar.reset()
+        }
+
+        datePicker.addOnNegativeButtonClickListener {
+            viewModel.startCalendar.reset()
+        }
+
         return datePicker
     }
 
     private fun completionDatePicker(): MaterialDatePicker<Long> {
         val constraintsBuilder =
             CalendarConstraints.Builder()
-                .setStart(viewModel.startCalendar.getLocalTimeUTC())
+                .setStart(viewModel.completionCalendar.getLocalTimeUTCInSeconds())
                 .setEnd(CalendarUtil().getTodayTimeInMillis())
                 .setValidator(DateValidatorPointBackward.now())
 
         if (viewModel.completionCalendar.getLocalTimeInMillis() == 0L)
             viewModel.completionCalendar.setTodayTimeInMillis()
 
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText(getString(R.string.select_completed_date))
-                .setSelection(viewModel.completionCalendar.getLocalTimeInMillis())
-                .setCalendarConstraints(constraintsBuilder.build())
-                .build()
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.select_completed_date))
+            .setSelection(viewModel.completionCalendar.getLocalTimeInMillis())
+            .setCalendarConstraints(constraintsBuilder.build())
+            .build()
 
         val isSystem24Hour = DateFormat.is24HourFormat(context)
         val clockFormat =
@@ -355,30 +419,58 @@ class TaskModifyFragment : Fragment() {
                 .build()
 
         timePicker.addOnPositiveButtonClickListener {
+            val hour = viewModel.completionCalendar.localHour()
+            val minute = viewModel.completionCalendar.localMinute()
+
+            // set completion
             viewModel.completionCalendar.setLocalHour(timePicker.hour)
             viewModel.completionCalendar.setLocalMinute(timePicker.minute)
 
-            val time = viewModel.completionCalendar.localTime()
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
-            binding.taskModifyCompletionEditText.setText(sdf)
+            // check if completion time is greater than start and less than local time
+            if (viewModel.completionCalendar.getLocalTimeInMillis() >
+                viewModel.startCalendar.getLocalTimeInMillis() &&
+                viewModel.completionCalendar.getLocalTimeInMillis() <=
+                viewModel.completionCalendar.getLocalCurrentTimeInMillis()
+            ) {
+                val time = viewModel.completionCalendar.localTime()
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
+                binding.taskModifyCompletionEditText.setText(sdf)
+            } else {
+                // reset calendar to previous state
+                viewModel.completionCalendar.setLocalHour(hour)
+                viewModel.completionCalendar.setLocalMinute(minute)
+                Toast.makeText(
+                    requireContext(), R.string.completion_before_start_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         datePicker.addOnPositiveButtonClickListener {
             it?.let {
-                if (it < viewModel.startCalendar.getLocalTimeInMillis()){
-                    Toast.makeText(requireContext(), R.string.completion_error, Toast.LENGTH_SHORT).show()
+                // check start is set
+                if (viewModel.startCalendar.getLocalTimeInMillis() == 0L) {
+                    Toast.makeText(
+                        requireContext(), R.string.start_not_set_error,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     datePicker.dismiss()
-                } else {
-                    viewModel.completionCalendar.setLocalDate(it)
-                    val time = viewModel.completionCalendar.localTime()
-                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(time)
-                    binding.taskModifyCompletionEditText.setText(sdf)
+                }
+                // check if completion date is greater or equal to start and start is set
+                else if (it >= viewModel.startCalendar.getUTCStartOfDayInMillis()) {
                     if (!timePicker.isAdded) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,
                             "completion_time_picker"
                         )
                     }
+                } else {
+                    // completion is less than start
+                    Toast.makeText(
+                        requireContext(), R.string.completion_before_start_error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    datePicker.dismiss()
                 }
             }
         }
