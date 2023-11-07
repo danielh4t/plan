@@ -17,7 +17,7 @@
             android:layout_height="240dp"
             android:layout_margin="48dp"
             android:contentDescription="@string/content_envelope_image"
-            android:src="@drawable/il_sync"
+            android:src="@drawable/ic_sync"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

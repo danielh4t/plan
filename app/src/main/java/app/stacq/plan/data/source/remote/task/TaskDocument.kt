@@ -8,7 +8,6 @@ data class TaskDocument(
     val createdAt: Long? = null,
     val name: String? = null,
     var categoryId: String? = null,
-    var completed: Boolean = false,
     var completedAt: Long? = null,
     var startedAt: Long? = null,
     var timerAlarm: Boolean = false,

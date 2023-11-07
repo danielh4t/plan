@@ -10,5 +10,5 @@ interface TaskRemoteDataSource {
 
     suspend fun updatePriority(taskDocument: TaskDocument)
 
-    suspend fun updateCompletion(taskDocument: TaskDocument)
+    suspend fun updateStartCompletion(taskDocument: TaskDocument)
 }

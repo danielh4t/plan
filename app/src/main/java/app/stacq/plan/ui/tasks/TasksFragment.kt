@@ -95,7 +95,7 @@ class TasksFragment : Fragment() {
             navController.navigate(action)
         }
 
-        val taskCompleteListener = TaskCompleteListener { viewModel.complete(it) }
+        val taskStartCompleteListener = TaskStartCompleteListener { viewModel.startComplete(it) }
 
         val taskArchiveListener = TaskArchiveListener { task ->
             viewModel.archive(task)
@@ -107,7 +107,7 @@ class TasksFragment : Fragment() {
                 .show()
         }
 
-        val adapter = TasksAdapter(taskNavigateListener, taskCompleteListener, taskArchiveListener)
+        val adapter = TasksAdapter(taskNavigateListener, taskStartCompleteListener, taskArchiveListener)
         binding.tasksList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :

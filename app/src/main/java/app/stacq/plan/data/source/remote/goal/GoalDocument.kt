@@ -12,7 +12,6 @@ data class GoalDocument(
     var categoryId: String? = null,
     var days: Int? = null,
     var progress: Int? = null,
-    var completed: Boolean? = null,
     var completedAt: Long? = null,
     var generate: Boolean? = null,
     var deleted: Boolean? = null,

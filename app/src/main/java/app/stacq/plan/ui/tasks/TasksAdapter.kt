@@ -13,7 +13,7 @@ import app.stacq.plan.databinding.ListItemTaskBinding
 
 class TasksAdapter(
     private val taskNavigateListener: TaskNavigateListener,
-    private val taskCompleteListener: TaskCompleteListener,
+    private val taskStartCompleteListener: TaskStartCompleteListener,
     private val taskArchiveListener: TaskArchiveListener,
 ) : ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()) {
 
@@ -23,7 +23,7 @@ class TasksAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, taskNavigateListener, taskCompleteListener, taskArchiveListener)
+        holder.bind(task, taskNavigateListener, taskStartCompleteListener, taskArchiveListener)
     }
 
     class ViewHolder constructor(private val binding: ListItemTaskBinding) :
@@ -40,12 +40,12 @@ class TasksAdapter(
         fun bind(
             task: Task,
             taskNavigateListener: TaskNavigateListener,
-            taskCompleteListener: TaskCompleteListener,
+            taskStartCompleteListener: TaskStartCompleteListener,
             taskArchiveListener: TaskArchiveListener,
         ) {
             binding.task = task
             binding.taskNavigateListener = taskNavigateListener
-            binding.taskCompleteListener = taskCompleteListener
+            binding.taskStartCompleteListener = taskStartCompleteListener
             binding.taskName.contentDescription = "${task.name} name"
             ViewCompat.addAccessibilityAction(
                 itemView,
@@ -72,12 +72,12 @@ class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
 
 }
 
-class TaskNavigateListener(val navigateListener: (taskId: String) -> Unit) {
-    fun onClick(taskId: String) = navigateListener(taskId)
+class TaskNavigateListener(val taskNavigateListener: (taskId: String) -> Unit) {
+    fun onClick(taskId: String) = taskNavigateListener(taskId)
 }
 
-class TaskCompleteListener(val completeListener: (task: Task) -> Unit) {
-    fun onClick(task: Task) = completeListener(task)
+class TaskStartCompleteListener(val taskStartCompleteListener: (task: Task) -> Unit) {
+    fun onClick(task: Task) = taskStartCompleteListener(task)
 }
 
 class TaskArchiveListener(val taskArchiveListener: (task: Task) -> Unit) {

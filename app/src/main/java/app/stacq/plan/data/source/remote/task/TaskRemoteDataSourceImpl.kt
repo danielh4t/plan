@@ -27,7 +27,6 @@ TaskRemoteDataSourceImpl(
             "createdAt" to taskDocument.createdAt,
             "name" to taskDocument.name,
             "categoryId" to taskDocument.categoryId,
-            "completed" to taskDocument.completed,
             "completedAt" to taskDocument.completedAt,
             "startedAt" to taskDocument.startedAt,
             "timerFinishAt" to taskDocument.timerFinishAt,
@@ -57,7 +56,6 @@ TaskRemoteDataSourceImpl(
             "createdAt" to taskDocument.createdAt,
             "name" to taskDocument.name,
             "categoryId" to taskDocument.categoryId,
-            "completed" to taskDocument.completed,
             "completedAt" to taskDocument.completedAt,
             "startedAt" to taskDocument.startedAt,
             "timerFinishAt" to taskDocument.timerFinishAt,
@@ -96,7 +94,6 @@ TaskRemoteDataSourceImpl(
                 "createdAt" to taskDocument.createdAt,
                 "name" to taskDocument.name,
                 "categoryId" to taskDocument.categoryId,
-                "completed" to taskDocument.completed,
                 "completedAt" to taskDocument.completedAt,
                 "startedAt" to taskDocument.startedAt,
                 "timerFinishAt" to taskDocument.timerFinishAt,
@@ -133,7 +130,7 @@ TaskRemoteDataSourceImpl(
             .update(fields)
     }
 
-    override suspend fun updateCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
+    override suspend fun updateStartCompletion(taskDocument: TaskDocument) = withContext(ioDispatcher) {
 
         val uid = firebaseAuth.currentUser?.uid
         val taskId = taskDocument.id
@@ -142,7 +139,7 @@ TaskRemoteDataSourceImpl(
         if (uid == null || taskId == null || categoryId == null) return@withContext
 
         val fields = mapOf(
-            "completed" to taskDocument.completed,
+            "startedAt" to taskDocument.startedAt,
             "completedAt" to taskDocument.completedAt,
         )
 

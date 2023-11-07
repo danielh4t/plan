@@ -32,8 +32,7 @@ data class GoalEntity(
 
     var progress: Int = 0,
 
-    var completed: Boolean = false,
-
+    @ColumnInfo(name = "completed_at")
     var completedAt: Long = 0,
 
     var generate: Boolean = false,
