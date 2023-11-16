@@ -76,3 +76,20 @@ fun TextView.setDaysDifference(startedAt: Long, completedAt: Long) {
         }
     }
 }
+
+@BindingAdapter("timelineHeader")
+fun TextView.getTimelineHeader(dayOfWeek: String) {
+    text = when (dayOfWeek) {
+        "Sunday" -> resources.getString(R.string.day_sunday)
+        "Monday" -> resources.getString(R.string.day_monday)
+        "Tuesday" -> resources.getString(R.string.day_tuesday)
+        "Wednesday" -> resources.getString(R.string.day_wednesday)
+        "Thursday" -> resources.getString(R.string.day_thursday)
+        "Friday" -> resources.getString(R.string.day_friday)
+        "Saturday" -> resources.getString(R.string.day_saturday)
+        "Today" -> resources.getString(R.string.today)
+        "Yesterday" -> resources.getString(R.string.yesterday)
+        else -> dayOfWeek
+    }
+}
+
