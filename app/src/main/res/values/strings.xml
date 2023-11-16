@@ -170,7 +170,6 @@
     <string name="sign_in_sign_up_sync">Sign In or Sign Up to backup and sync</string>
     <string name="tools_fifty_percent">50%</string>
     <string name="content_goal_completion">Goals completed today</string>
-    <string name="today">Today</string>
 
     <!-- Auth -->
     <string name="sign_out">Sign Out</string>
@@ -275,4 +274,13 @@
     <string name="start_after_completion_error">Task start is after completion</string>
     <string name="start_not_set_error">Set start first</string>
     <string name="set_start">Set Start</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="day_sunday">Sunday</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
 </resources>

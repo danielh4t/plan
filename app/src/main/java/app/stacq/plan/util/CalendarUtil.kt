@@ -92,6 +92,20 @@ class CalendarUtil {
         return calendar.timeInMillis
     }
 
+    fun getUTCStartOfOtherDayInMillis(difference: Int): Long {
+        val calendar = localCalendar.clone() as Calendar
+        calendar.timeZone = TimeZone.getTimeZone("UTC")
+        calendar.add(Calendar.DAY_OF_MONTH, difference)
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        // Get the timestamp in milliseconds
+        return calendar.timeInMillis
+    }
+
     fun getUTCCurrentTimeInMillis(): Long {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         return calendar.timeInMillis
@@ -124,6 +138,10 @@ class CalendarUtil {
         val differenceInMillis = endCalendar.timeInMillis - startCalendar.timeInMillis
 
         // Convert the difference in milliseconds to seconds
-        return differenceInMillis / 1000L
+        return differenceInMillis.millisToSeconds()
+    }
+
+    fun Long.millisToSeconds(): Long {
+        return this / 1000L
     }
 }

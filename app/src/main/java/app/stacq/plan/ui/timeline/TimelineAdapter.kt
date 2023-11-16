@@ -10,13 +10,11 @@ import app.stacq.plan.R
 import app.stacq.plan.databinding.ListItemTimelineBinding
 import app.stacq.plan.databinding.ListItemTimelineHeaderBinding
 import app.stacq.plan.domain.Task
+import app.stacq.plan.util.DateUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 
 class TimelineAdapter(
@@ -101,29 +99,10 @@ class TimelineAdapter(
         }
     }
 
-    private fun Long.toSimpleDate(difference: Long): String {
-        val dateFormat =
-            if (difference < 345600) SimpleDateFormat("EEEE", Locale.getDefault())
-            else  SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        val date = Date(this * 1000)
-        return dateFormat.format(date)
-    }
-
-    private fun Long.formatTimeAgo(): String {
-        val currentTime = System.currentTimeMillis() / 1000
-        val timestampDiff = currentTime - this
-        return when {
-            timestampDiff < 86400 -> "Today"
-            timestampDiff < 172800 -> "Yesterday"
-            else -> {
-                this.toSimpleDate(timestampDiff)
-            }
-        }
-    }
 
     private fun groupTasksByDate(tasks: List<Task>): List<Timeline> {
         val groupedItems = mutableListOf<Timeline>()
-        val groupedTasks = tasks.groupBy { it.completedAt.formatTimeAgo() }
+        val groupedTasks = tasks.groupBy {  DateUtil().formatTimeAgo(it.completedAt) }
 
         for ((date, taskList) in groupedTasks) {
             taskList.forEach { task ->
