@@ -14,6 +14,7 @@ import app.stacq.plan.util.installCheckProviderFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
+import io.sentry.Sentry
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,10 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        FirebaseApp.initializeApp(this)
-        FirebaseAppCheck.getInstance().installCheckProviderFactory()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -37,6 +36,16 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, _, arguments ->
             bottomNavView.isVisible = arguments?.getBoolean("ShowBottomNav", false) == true
+        }
+
+        FirebaseApp.initializeApp(this)
+        FirebaseAppCheck.getInstance().installCheckProviderFactory()
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            try {
+                throw Exception("This app uses Sentry! :)")
+            } catch (e: Exception) {
+                Sentry.captureException(e)
+            }
         }
     }
 
