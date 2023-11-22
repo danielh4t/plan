@@ -7,6 +7,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.devtools.ksp'
+    id 'io.sentry.android.gradle' version '3.14.0'
 }
 
 android {
@@ -116,4 +117,11 @@ dependencies {
 
 kapt {
     correctErrorTypes true
+}
+
+
+sentry {
+    org = "stacq"
+    projectName = "plan"
+    includeSourceContext = true
 }

@@ -203,3 +203,5 @@ obj/
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
+# Sentry Config File
+sentry.properties
