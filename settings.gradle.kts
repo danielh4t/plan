@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "plan"
-include ':app'
-include ':macrobenchmark'
+include(":app")
+include(":macrobenchmark")

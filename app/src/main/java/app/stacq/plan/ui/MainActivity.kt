@@ -14,7 +14,6 @@ import app.stacq.plan.util.installCheckProviderFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
-import io.sentry.Sentry
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,13 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         FirebaseAppCheck.getInstance().installCheckProviderFactory()
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            try {
-                throw Exception("This app uses Sentry! :)")
-            } catch (e: Exception) {
-                Sentry.captureException(e)
-            }
-        }
     }
 
     override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
