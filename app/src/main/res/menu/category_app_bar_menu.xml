@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/edit_category"
-        android:contentDescription="@string/content_edit_category"
+        android:contentDescription="@string/content_edit_icon"
         android:icon="@drawable/ic_edit_outline"
         android:title="@string/edit"
         app:showAsAction="ifRoom" />

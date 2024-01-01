@@ -16,9 +16,12 @@
             android:layout_width="0dp"
             android:layout_height="240dp"
             android:layout_margin="48dp"
-            android:contentDescription="@string/content_envelope_image"
-            android:src="@drawable/ic_sync"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/content_auth_illustration"
+            android:src="@drawable/il_auth"
+            app:layout_constraintBottom_toTopOf="@+id/auth_label_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,17 +32,20 @@
             android:layout_margin="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/sign_in_sign_up_sync"
+            android:textAlignment="center"
             android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/auth_email_layout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/auth_image" />
+            app:layout_constraintTop_toBottomOf="@+id/auth_image" />
 
         <ImageView
             android:id="@+id/auth_email_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/content_envelope_image"
+            android:contentDescription="@string/content_envelope_icon"
             android:src="@drawable/ic_email"
             app:layout_constraintBottom_toBottomOf="@+id/auth_email_layout"
             app:layout_constraintEnd_toStartOf="@+id/auth_email_layout"
@@ -76,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/content_lock_image"
+            android:contentDescription="@string/content_lock_icon"
             android:src="@drawable/ic_lock"
             app:layout_constraintBottom_toBottomOf="@+id/auth_password_layout"
             app:layout_constraintEnd_toStartOf="@+id/auth_password_layout"
@@ -112,12 +118,13 @@
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="@string/sign_up"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-            app:layout_constraintWidth_max="@dimen/button_max"/>
+            app:layout_constraintWidth_max="@dimen/button_max" />
 
         <Button
             android:id="@+id/sign_in_button"
@@ -125,10 +132,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/sign_in"
+            app:layout_constraintBottom_toTopOf="@+id/sign_up_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/forgot_password_text"
+            app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintWidth_max="@dimen/button_max" />
 
         <TextView
@@ -137,10 +146,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/forgot_password"
-            android:textSize="16sp"
             android:fontFamily="@font/roboto"
+            android:text="@string/forgot_password"
             android:textColor="?attr/colorControlNormal"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_password_layout" />
 

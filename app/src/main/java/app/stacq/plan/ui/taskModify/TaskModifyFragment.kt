@@ -24,6 +24,7 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskModifyBinding
+import app.stacq.plan.ui.taskModify.TaskModifyConstants.TASK_NAME_STATE_KEY
 import app.stacq.plan.util.CalendarUtil
 import app.stacq.plan.util.ui.CategoryMenuAdapter
 import coil.load
@@ -179,6 +180,11 @@ class TaskModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        if (savedInstanceState != null) {
+            val taskName = savedInstanceState.getString(TASK_NAME_STATE_KEY)
+            binding.taskNameEditText.setText(taskName)
+        }
+
         binding.taskModifyStartEditText.setOnClickListener {
             val startDatePicker = startDatePicker()
             if (!startDatePicker.isAdded) {
@@ -269,8 +275,8 @@ class TaskModifyFragment : Fragment() {
         }
 
         viewModel.task.observe(viewLifecycleOwner) {
-            binding.task = it
             it?.let {
+                binding.task = it
                 viewModel.setSelectedCategoryId(it.categoryId)
                 viewModel.startCalendar.setLocalTimeSeconds(it.startedAt)
                 viewModel.completionCalendar.setLocalTimeSeconds(it.completedAt)
@@ -478,6 +484,11 @@ class TaskModifyFragment : Fragment() {
             }
         }
         return datePicker
+    }
+
+    override fun onSaveInstanceState(bundle: Bundle) {
+        bundle.putString(TASK_NAME_STATE_KEY, binding.taskNameEditText.text.toString())
+        super.onSaveInstanceState(bundle)
     }
 
     override fun onDestroyView() {

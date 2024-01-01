@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/category_creation_icon"
+            android:contentDescription="@string/content_circle_plus"
             android:src="@drawable/ic_plus_circle"
             app:layout_constraintBottom_toBottomOf="@id/category_creation_text"
             app:layout_constraintStart_toStartOf="parent"
