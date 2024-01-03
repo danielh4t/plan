@@ -187,7 +187,7 @@ class TaskModifyFragment : Fragment() {
 
         binding.taskModifyStartEditText.setOnClickListener {
             val startDatePicker = startDatePicker()
-            if (!startDatePicker.isAdded) {
+            if (!startDatePicker.isVisible) {
                 startDatePicker.show(
                     requireActivity().supportFragmentManager,
                     "start_date_picker"
@@ -200,7 +200,7 @@ class TaskModifyFragment : Fragment() {
                 Snackbar.make(it, R.string.start_not_set_error, Snackbar.LENGTH_LONG)
                     .setAction(R.string.set_start) {
                         val startDatePicker = startDatePicker()
-                        if (!startDatePicker.isAdded) {
+                        if (!startDatePicker.isVisible) {
                             startDatePicker.show(
                                 requireActivity().supportFragmentManager,
                                 "start_date_picker"
@@ -211,7 +211,7 @@ class TaskModifyFragment : Fragment() {
                     .show()
             } else {
                 val completionDatePicker = completionDatePicker()
-                if (!completionDatePicker.isAdded) {
+                if (!completionDatePicker.isVisible) {
                     completionDatePicker.show(
                         requireActivity().supportFragmentManager,
                         "completion_date_picker"
@@ -369,7 +369,7 @@ class TaskModifyFragment : Fragment() {
                 // check start date is less than or equal to completion
                 if (it <= completion) {
                     viewModel.startCalendar.setLocalDate(it)
-                    if (!timePicker.isAdded) {
+                    if (!timePicker.isVisible) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,
                             "start_time_picker"
@@ -467,7 +467,7 @@ class TaskModifyFragment : Fragment() {
                 // check if completion date is greater or equal to start and start is set
                 else if (it >= viewModel.startCalendar.getUTCStartOfDayInMillis()) {
                     viewModel.completionCalendar.setLocalDate(it)
-                    if (!timePicker.isAdded) {
+                    if (!timePicker.isVisible) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,
                             "completion_time_picker"
