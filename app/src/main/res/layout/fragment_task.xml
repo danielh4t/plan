@@ -89,49 +89,6 @@
                     app:layout_constraintTop_toBottomOf="@id/task_category_label_text"
                     tools:text="@string/category" />
 
-                <ImageView
-                    android:id="@+id/task_creation_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="@string/content_task_creation_icon"
-                    android:src="@drawable/ic_plus_circle"
-                    app:layout_constraintBottom_toBottomOf="@id/task_creation_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/task_creation_label_text"
-                    app:tint="?attr/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/task_creation_label_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="@string/content_task_creation_label"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/created"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@id/task_creation_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/task_creation_image"
-                    app:layout_constraintTop_toBottomOf="@id/task_category_text" />
-
-                <TextView
-                    android:id="@+id/task_creation_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="@string/content_task_creation"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/task_creation_image"
-                    app:layout_constraintTop_toBottomOf="@id/task_creation_label_text"
-                    app:taskCreationDateTime="@{task.createdAt}"
-                    tools:text="@string/tools_creation" />
-
                 <!-- started -->
                 <ImageView
                     android:id="@+id/task_start_image"
@@ -159,7 +116,7 @@
                     app:layout_constraintBottom_toTopOf="@id/task_start_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/task_start_image"
-                    app:layout_constraintTop_toBottomOf="@id/task_creation_text" />
+                    app:layout_constraintTop_toBottomOf="@id/task_category_text" />
 
                 <TextView
                     android:id="@+id/task_start_text"
