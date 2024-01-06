@@ -15,6 +15,7 @@ import java.util.Date
 import java.util.Locale
 
 
+
 @BindingAdapter("timelineLineColor")
 fun ImageView.setTimelineLineColor(color: String) {
     backgroundTintList = ColorStateList.valueOf(Color.parseColor(color))
@@ -93,3 +94,16 @@ fun TextView.getTimelineHeader(dayOfWeek: String) {
     }
 }
 
+@BindingAdapter("timelineHeightStarted", "timelineHeightCompleted")
+fun ImageView.setTimelineHeight(startedAt: Long, completedAt: Long) {
+    val minHeight = 256L
+    val maxHeight = 512L
+    // in seconds
+    val difference = CalendarUtil().startToEndDifferenceInSeconds(startedAt, completedAt).toInt()
+
+    val scalingFactor = (difference.toFloat() / (24 * 60 * 60)).coerceIn(0f, 1f)
+    val height = (minHeight + (maxHeight - minHeight) * scalingFactor).toInt()
+    val layoutParams = this.layoutParams
+    layoutParams.height = height
+    this.layoutParams = layoutParams
+}

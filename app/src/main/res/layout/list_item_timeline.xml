@@ -29,11 +29,12 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_vertical_bar"
             android:contentDescription="@string/content_timeline_vertical_bar"
-            android:minHeight="128dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:timelineLineColor="@{task.categoryColor}" />
+            app:timelineLineColor="@{task.categoryColor}"
+            app:timelineHeightStarted="@{task.startedAt}"
+            app:timelineHeightCompleted="@{task.completedAt}"/>
 
         <TextView
             android:id="@+id/timeline_task_name"
