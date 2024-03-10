@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:contentDescription="@string/content_name_image"
+            android:contentDescription="@string/content_brush_icon"
             android:src="@drawable/ic_brush"
             app:layout_constraintBottom_toBottomOf="@+id/category_modify_name_layout"
             app:layout_constraintEnd_toStartOf="@+id/category_modify_name_layout"

@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:contentDescription="@string/content_category_image"
+                android:contentDescription="@string/content_artist_palette_icon"
                 android:src="@drawable/ic_color_palette_outline"
                 app:layout_constraintBottom_toBottomOf="@id/goal_category_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,47 +91,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/goal_category_label_text"
                 tools:text="@string/category" />
 
-            <ImageView
-                android:id="@+id/goal_creation_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:contentDescription="@string/content_goal_creation_icon"
-                android:src="@drawable/ic_clock_outline"
-                app:layout_constraintBottom_toBottomOf="@id/goal_creation_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/goal_creation_label_text"
-                app:tint="?attr/colorPrimary" />
-
-            <TextView
-                android:id="@+id/goal_creation_label_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/content_goal_creation_label"
-                android:fontFamily="@font/roboto"
-                android:text="@string/created"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/goal_creation_image"
-                app:layout_constraintTop_toBottomOf="@id/goal_category_text" />
-
-            <TextView
-                android:id="@+id/goal_creation_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/content_goal_creation"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                app:goalCreationDateTime="@{goal.createdAt}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/goal_creation_image"
-                app:layout_constraintTop_toBottomOf="@id/goal_creation_label_text"
-                tools:text="@string/tools_creation" />
 
             <ImageView
                 android:id="@+id/goal_measure_image"
@@ -158,7 +117,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/goal_measure_image"
-                app:layout_constraintTop_toBottomOf="@id/goal_creation_text" />
+                app:layout_constraintTop_toBottomOf="@id/goal_category_text" />
 
             <TextView
                 android:id="@+id/goal_measure_text"
@@ -222,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:contentDescription="@string/content_goal_creation_icon"
+                android:contentDescription="@string/content_clock_icon"
                 android:src="@drawable/ic_pie_chart"
                 app:layout_constraintBottom_toBottomOf="@id/goal_period_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -264,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:contentDescription="@string/content_goal_creation_icon"
+                android:contentDescription="@string/content_clock_icon"
                 android:src="@drawable/ic_sun"
                 app:layout_constraintBottom_toBottomOf="@id/goal_days_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -322,9 +281,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:contentDescription="@string/generate"
+                android:contentDescription="@string/generate_task"
                 android:fontFamily="@font/roboto"
-                android:text="@string/generate"
+                android:text="@string/generate_task"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/goal_generate_switch"
                 app:layout_constraintStart_toEndOf="@id/goal_generate_image"

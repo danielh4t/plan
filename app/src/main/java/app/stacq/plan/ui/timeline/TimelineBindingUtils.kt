@@ -15,6 +15,7 @@ import java.util.Date
 import java.util.Locale
 
 
+
 @BindingAdapter("timelineLineColor")
 fun ImageView.setTimelineLineColor(color: String) {
     backgroundTintList = ColorStateList.valueOf(Color.parseColor(color))
@@ -75,4 +76,34 @@ fun TextView.setDaysDifference(startedAt: Long, completedAt: Long) {
             resources.getQuantityString(R.plurals.numberOfDays, quantity, quantity)
         }
     }
+}
+
+@BindingAdapter("timelineHeader")
+fun TextView.getTimelineHeader(dayOfWeek: String) {
+    text = when (dayOfWeek) {
+        "Sunday" -> resources.getString(R.string.day_sunday)
+        "Monday" -> resources.getString(R.string.day_monday)
+        "Tuesday" -> resources.getString(R.string.day_tuesday)
+        "Wednesday" -> resources.getString(R.string.day_wednesday)
+        "Thursday" -> resources.getString(R.string.day_thursday)
+        "Friday" -> resources.getString(R.string.day_friday)
+        "Saturday" -> resources.getString(R.string.day_saturday)
+        "Today" -> resources.getString(R.string.today)
+        "Yesterday" -> resources.getString(R.string.yesterday)
+        else -> dayOfWeek
+    }
+}
+
+@BindingAdapter("timelineHeightStarted", "timelineHeightCompleted")
+fun ImageView.setTimelineHeight(startedAt: Long, completedAt: Long) {
+    val minHeight = 256L
+    val maxHeight = 512L
+    // in seconds
+    val difference = CalendarUtil().startToEndDifferenceInSeconds(startedAt, completedAt).toInt()
+
+    val scalingFactor = (difference.toFloat() / (24 * 60 * 60)).coerceIn(0f, 1f)
+    val height = (minHeight + (maxHeight - minHeight) * scalingFactor).toInt()
+    val layoutParams = this.layoutParams
+    layoutParams.height = height
+    this.layoutParams = layoutParams
 }

@@ -24,6 +24,7 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTaskModifyBinding
+import app.stacq.plan.ui.taskModify.TaskModifyConstants.TASK_NAME_STATE_KEY
 import app.stacq.plan.util.CalendarUtil
 import app.stacq.plan.util.ui.CategoryMenuAdapter
 import coil.load
@@ -179,9 +180,14 @@ class TaskModifyFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.taskModifyAppBar.setupWithNavController(navController, appBarConfiguration)
 
+        if (savedInstanceState != null) {
+            val taskName = savedInstanceState.getString(TASK_NAME_STATE_KEY)
+            binding.taskNameEditText.setText(taskName)
+        }
+
         binding.taskModifyStartEditText.setOnClickListener {
             val startDatePicker = startDatePicker()
-            if (!startDatePicker.isAdded) {
+            if (!startDatePicker.isVisible) {
                 startDatePicker.show(
                     requireActivity().supportFragmentManager,
                     "start_date_picker"
@@ -194,7 +200,7 @@ class TaskModifyFragment : Fragment() {
                 Snackbar.make(it, R.string.start_not_set_error, Snackbar.LENGTH_LONG)
                     .setAction(R.string.set_start) {
                         val startDatePicker = startDatePicker()
-                        if (!startDatePicker.isAdded) {
+                        if (!startDatePicker.isVisible) {
                             startDatePicker.show(
                                 requireActivity().supportFragmentManager,
                                 "start_date_picker"
@@ -205,7 +211,7 @@ class TaskModifyFragment : Fragment() {
                     .show()
             } else {
                 val completionDatePicker = completionDatePicker()
-                if (!completionDatePicker.isAdded) {
+                if (!completionDatePicker.isVisible) {
                     completionDatePicker.show(
                         requireActivity().supportFragmentManager,
                         "completion_date_picker"
@@ -269,8 +275,8 @@ class TaskModifyFragment : Fragment() {
         }
 
         viewModel.task.observe(viewLifecycleOwner) {
-            binding.task = it
             it?.let {
+                binding.task = it
                 viewModel.setSelectedCategoryId(it.categoryId)
                 viewModel.startCalendar.setLocalTimeSeconds(it.startedAt)
                 viewModel.completionCalendar.setLocalTimeSeconds(it.completedAt)
@@ -363,7 +369,7 @@ class TaskModifyFragment : Fragment() {
                 // check start date is less than or equal to completion
                 if (it <= completion) {
                     viewModel.startCalendar.setLocalDate(it)
-                    if (!timePicker.isAdded) {
+                    if (!timePicker.isVisible) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,
                             "start_time_picker"
@@ -461,7 +467,7 @@ class TaskModifyFragment : Fragment() {
                 // check if completion date is greater or equal to start and start is set
                 else if (it >= viewModel.startCalendar.getUTCStartOfDayInMillis()) {
                     viewModel.completionCalendar.setLocalDate(it)
-                    if (!timePicker.isAdded) {
+                    if (!timePicker.isVisible) {
                         timePicker.show(
                             requireActivity().supportFragmentManager,
                             "completion_time_picker"
@@ -478,6 +484,11 @@ class TaskModifyFragment : Fragment() {
             }
         }
         return datePicker
+    }
+
+    override fun onSaveInstanceState(bundle: Bundle) {
+        bundle.putString(TASK_NAME_STATE_KEY, binding.taskNameEditText.text.toString())
+        super.onSaveInstanceState(bundle)
     }
 
     override fun onDestroyView() {

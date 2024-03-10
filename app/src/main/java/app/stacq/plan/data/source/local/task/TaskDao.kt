@@ -105,7 +105,7 @@ interface TaskDao {
                 "FROM task " +
                 "WHERE goal_id = :goalId " +
                 "AND strftime('%Y-%m-%d', datetime(completed_at, 'unixepoch')) = strftime('%Y-%m-%d', 'now') " +
-                "AND completed_at != 0"
+                "AND (completed_at != 0 OR archived)"
     )
     fun hasCompletedTaskGoalToday(goalId: String): Boolean
 

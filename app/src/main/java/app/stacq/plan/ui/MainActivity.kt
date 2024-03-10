@@ -22,10 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        FirebaseApp.initializeApp(this)
-        FirebaseAppCheck.getInstance().installCheckProviderFactory()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -38,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, _, arguments ->
             bottomNavView.isVisible = arguments?.getBoolean("ShowBottomNav", false) == true
         }
+
+        FirebaseApp.initializeApp(this)
+        FirebaseAppCheck.getInstance().installCheckProviderFactory()
     }
 
     override fun onSupportNavigateUp() = navController().navigateUp() || super.onSupportNavigateUp()
