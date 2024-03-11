@@ -39,6 +39,9 @@ interface TaskDao {
     @Delete
     suspend fun delete(taskEntity: TaskEntity)
 
+    @Upsert
+    fun upsert(taskEntity: TaskEntity)
+
     /**
      * Update the archive of a task to true
      *

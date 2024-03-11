@@ -1,10 +1,12 @@
 package app.stacq.plan.data.source.remote.task
 
+import app.stacq.plan.util.CalendarUtil
 import app.stacq.plan.util.constants.FirestoreConstants.TASKS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
@@ -148,5 +150,20 @@ TaskRemoteDataSourceImpl(
             .collection(TASKS)
             .document(taskId)
             .update(fields)
+    }
+
+    override suspend fun getTaskDocuments(categoryId: String): List<TaskDocument> {
+
+        val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
+        val time = CalendarUtil().getUTCStartOfDayInMillis() / 1000L;
+
+        return firestore.collection(uid)
+            .document(categoryId)
+            .collection(TASKS)
+            .whereGreaterThanOrEqualTo("createdAt", time)
+            .get()
+            .await()
+            .toObjects(TaskDocument::class.java)
+            .toList()
     }
 }

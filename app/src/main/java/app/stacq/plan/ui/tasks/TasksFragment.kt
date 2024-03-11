@@ -30,13 +30,14 @@ import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
 import app.stacq.plan.ui.timer.cancelAlarm
-import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.TimeUtil
+import app.stacq.plan.util.constants.WorkerConstants
 import app.stacq.plan.util.ui.BottomMarginItemDecoration
 import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GenerateTaskWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
+import app.stacq.plan.worker.TaskSyncWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -107,7 +108,8 @@ class TasksFragment : Fragment() {
                 .show()
         }
 
-        val adapter = TasksAdapter(taskNavigateListener, taskStartCompleteListener, taskArchiveListener)
+        val adapter =
+            TasksAdapter(taskNavigateListener, taskStartCompleteListener, taskArchiveListener)
         binding.tasksList.adapter = adapter
 
         val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object :
@@ -250,11 +252,16 @@ class TasksFragment : Fragment() {
             .addTag(WorkerConstants.TAG.GOAL_SYNC)
             .build()
 
+        val syncTask = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+            .setConstraints(constraints)
+            .addTag(WorkerConstants.TAG.TASK_SYNC)
+            .build()
+
         val continuation = workManager.beginUniqueWork(
             WorkerConstants.SYNC,
             ExistingWorkPolicy.KEEP,
             syncCategory
-        ).then(syncGoal)
+        ).then(syncGoal).then(syncTask)
 
         continuation.enqueue()
     }

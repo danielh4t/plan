@@ -88,3 +88,18 @@ fun TaskEntityAndCategoryEntity.asTask() = Task(
     archived = taskEntity.archived,
     notes = taskEntity.notes,
 )
+
+fun TaskDocument.asTask() = Task(
+    id = id  ?: "",
+    createdAt = createdAt?: 0L,
+    name = name ?: "",
+    categoryId = categoryId ?: "",
+    completedAt = completedAt?: 0L,
+    startedAt = startedAt?: 0L,
+    timerAlarm = timerAlarm ?: false,
+    timerFinishAt = timerFinishAt?: 0L,
+    priority = priority?: 0,
+    goalId = goalId,
+    archived = archived ?: false,
+    notes = notes ?: "",
+)
