@@ -29,6 +29,10 @@ class TaskLocalDataSourceImpl(
         taskDao.delete(taskEntity)
     }
 
+    override suspend fun upsert(taskEntity: TaskEntity) = withContext(ioDispatcher) {
+        taskDao.upsert(taskEntity)
+    }
+
     override suspend fun archive(taskId: String) = withContext(ioDispatcher) {
         taskDao.archive(taskId)
     }

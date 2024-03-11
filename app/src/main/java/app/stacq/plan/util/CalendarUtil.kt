@@ -141,7 +141,7 @@ class CalendarUtil {
         return differenceInMillis.millisToSeconds()
     }
 
-    fun Long.millisToSeconds(): Long {
+    private fun Long.millisToSeconds(): Long {
         return this / 1000L
     }
 }
