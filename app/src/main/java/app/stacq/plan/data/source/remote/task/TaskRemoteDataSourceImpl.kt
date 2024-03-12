@@ -26,6 +26,7 @@ TaskRemoteDataSourceImpl(
         if (uid == null || taskId == null || categoryId == null) return@withContext
 
         val fields = hashMapOf(
+            "id" to taskDocument.id,
             "createdAt" to taskDocument.createdAt,
             "name" to taskDocument.name,
             "categoryId" to taskDocument.categoryId,
@@ -55,6 +56,7 @@ TaskRemoteDataSourceImpl(
         if (uid == null || taskId == null || categoryId == null) return@withContext
 
         val fields = hashMapOf(
+            "id" to taskDocument.id,
             "createdAt" to taskDocument.createdAt,
             "name" to taskDocument.name,
             "categoryId" to taskDocument.categoryId,
@@ -93,6 +95,7 @@ TaskRemoteDataSourceImpl(
                 .delete()
 
             val fields = hashMapOf(
+                "id" to taskDocument.id,
                 "createdAt" to taskDocument.createdAt,
                 "name" to taskDocument.name,
                 "categoryId" to taskDocument.categoryId,
@@ -155,7 +158,7 @@ TaskRemoteDataSourceImpl(
     override suspend fun getTaskDocuments(categoryId: String): List<TaskDocument> {
 
         val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
-        val time = CalendarUtil().getUTCStartOfDayInMillis() / 1000L;
+        val time = CalendarUtil().getUTCStartOfDayInMillis() / 1000L
 
         return firestore.collection(uid)
             .document(categoryId)
