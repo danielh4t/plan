@@ -164,6 +164,7 @@ TaskRemoteDataSourceImpl(
             .document(categoryId)
             .collection(TASKS)
             .whereGreaterThanOrEqualTo("createdAt", time)
+            .whereEqualTo("name", "Sleep")
             .get()
             .await()
             .toObjects(TaskDocument::class.java)

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -29,6 +30,7 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
+import app.stacq.plan.ui.MainActivity
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.TimeUtil
 import app.stacq.plan.util.constants.WorkerConstants
@@ -90,6 +92,11 @@ class TasksFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.tasksAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        binding.tasksAppBar.setNavigationOnClickListener {
+            val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+            drawerLayout.open()
+        }
 
         val taskNavigateListener = TaskNavigateListener {
             val action = TasksFragmentDirections.actionNavTasksToNavTask(it)

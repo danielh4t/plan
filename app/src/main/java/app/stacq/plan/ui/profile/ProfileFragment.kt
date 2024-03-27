@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -46,7 +47,6 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -67,6 +67,11 @@ class ProfileFragment : Fragment() {
         binding.profileAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
 
+        binding.profileAppBar.setNavigationOnClickListener {
+            val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+            drawerLayout.open()
+        }
+
         val navController = findNavController()
 
         authStateListener = FirebaseAuth.AuthStateListener {
@@ -75,14 +80,18 @@ class ProfileFragment : Fragment() {
                 // signed in
                 val profileRef = Firebase.storage.reference.child("${user.uid}/profile")
                 // Create a reference with an initial file path and name
+
                 profileRef.downloadUrl.addOnSuccessListener { imageUri ->
-                    binding.accountImageView.load(imageUri) {
-                        crossfade(true)
-                        placeholder(R.drawable.ic_account_circle)
-                        size(ViewSizeResolver(binding.accountImageView))
-                        transformations(CircleCropTransformation())
+                    if (isAdded) {
+                        binding.accountImageView.load(imageUri) {
+                            crossfade(true)
+                            placeholder(R.drawable.ic_account_circle)
+                            size(ViewSizeResolver(binding.accountImageView))
+                            transformations(CircleCropTransformation())
+                        }
                     }
                 }
+
 
                 binding.authButton.setText(R.string.sign_out)
                 binding.authButton.setOnClickListener {
@@ -103,45 +112,8 @@ class ProfileFragment : Fragment() {
 
         Firebase.auth.addAuthStateListener(authStateListener)
 
-        // Registers a photo picker activity launcher in single-select mode.
-        val pickMedia =
-            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                // Callback is invoked after the user selects a media item or closes the
-                // photo picker.
-                if (uri != null) {
-                    // selected
-                    val uid = Firebase.auth.uid
-                    if (uid != null) {
-                        val profileRef = Firebase.storage.reference.child("$uid/profile")
-                        val uploadTask = profileRef.putFile(uri)
-                        uploadTask.addOnSuccessListener {
-                            // Handle successful upload
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.profile_picture_updated,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }.addOnFailureListener {
-                            // Handle failed upload
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.profile_picture_upload_failed,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.no_media_selected,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
         binding.accountImageView.setOnClickListener {
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
         viewModel.taskCompletedToday.observe(viewLifecycleOwner) {
@@ -194,5 +166,41 @@ class ProfileFragment : Fragment() {
         _binding = null
         Firebase.auth.removeAuthStateListener(authStateListener)
     }
+
+    private val pickMediaLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                // selected
+                val uid = Firebase.auth.uid
+                if (uid != null) {
+                    val profileRef = Firebase.storage.reference.child("$uid/profile")
+                    val uploadTask = profileRef.putFile(uri)
+                    uploadTask.addOnSuccessListener {
+                        // Handle successful upload
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.profile_picture_updated,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }.addOnFailureListener {
+                        // Handle failed upload
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.profile_picture_upload_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.no_media_selected,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 }
 
