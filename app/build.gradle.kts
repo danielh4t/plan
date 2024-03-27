@@ -16,8 +16,8 @@ android {
         applicationId = "app.stacq.plan"
         minSdk = 28
         targetSdk = 34
-        versionCode = 79
-        versionName = "1.79"
+        versionCode = 80
+        versionName = "1.80"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles("proguard-rules.pro")
@@ -78,7 +78,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.databinding:databinding-common:8.3.0")
+    implementation("androidx.databinding:databinding-common:8.3.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.preference:preference-ktx:1.2.1")
@@ -89,7 +89,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("androidx.profileinstaller:profileinstaller:1.3.1")
     implementation("com.google.android.material:material:1.11.0")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
@@ -114,8 +114,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.7")
     androidTestImplementation("androidx.benchmark:benchmark-macro-junit4:1.2.3")
-    androidTestImplementation("androidx.fragment:fragment-testing:1.7.0-alpha10")
-    debugImplementation("androidx.fragment:fragment-testing-manifest:1.7.0-alpha10")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.7.0-beta01")
+    debugImplementation("androidx.fragment:fragment-testing-manifest:1.7.0-beta01")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }
 
