@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -71,6 +72,11 @@ class GoalsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.goalsAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        binding.goalsAppBar.setNavigationOnClickListener {
+            val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+            drawerLayout.open()
+        }
 
         val navController = findNavController()
 

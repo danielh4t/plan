@@ -21,8 +21,7 @@
                 android:id="@+id/profile_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:liftOnScroll="true"
+                app:navigationIcon="@drawable/ic_menu_outline"
                 app:title="@string/profile">
 
             </com.google.android.material.appbar.MaterialToolbar>

@@ -108,13 +108,11 @@
     <string name="timer_complete_no_notification">Timer complete notification will not be sent</string>
     <string name="no_notification">No notifications</string>
 
-    <!-- Bottom Navigation Menu -->
-    <string name="title_tasks">Tasks tab</string>
-    <string name="content_tasks_menu">View, add, edit tasks</string>
-    <string name="title_categories">Categories tab</string>
-    <string name="content_categories_menu">View, add or remove categories</string>
-    <string name="title_goals">Goals tab</string>
-    <string name="content_goals_menu">View, add, edit  goals</string>
+    <string name="content_tasks_menu">View, add and edit tasks</string>
+    <string name="content_categories_menu">View, add and remove categories</string>
+    <string name="content_goals_menu">View, add and edit  goals</string>
+    <string name="content_timeline_menu">View timeline</string>
+    <string name="content_profile_menu">View profile</string>
 
     <string name="content_list_tasks">List of tasks</string>
 
@@ -215,8 +213,6 @@
     <string name="content_goal_result_label">Goal result label</string>
 
 
-    <string name="content_profile_menu">Profile tab</string>
-    <string name="title_profile">Profile tab</string>
 
     <string name="no_media_selected">No media selected</string>
 
@@ -238,7 +234,6 @@
     <string name="take_notes">Take notes</string>
     <string name="task_cloned">Task cloned</string>
 
-    <string name="content_timeline_menu">View tasks timeline</string>
     <string name="content_timeline">Timeline of completed tasks</string>
     <string name="time">00:00</string>
     <string name="content_timeline_vertical_bar">Vertical bar</string>

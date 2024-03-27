@@ -23,8 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:liftOnScroll="true"
+                app:navigationIcon="@drawable/ic_menu_outline"
                 app:title="@string/categories">
 
             </com.google.android.material.appbar.MaterialToolbar>

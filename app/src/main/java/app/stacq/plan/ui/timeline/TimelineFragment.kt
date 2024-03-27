@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.stacq.plan.R
 import app.stacq.plan.data.repository.task.TaskRepositoryImpl
 import app.stacq.plan.data.source.local.PlanDatabase.Companion.getDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
@@ -51,6 +53,11 @@ class TimelineFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.timelineAppBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        binding.timelineAppBar.setNavigationOnClickListener {
+            val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+            drawerLayout.open()
+        }
 
         val navController = findNavController()
 
