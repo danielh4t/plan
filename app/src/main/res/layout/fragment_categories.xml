@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_menu_outline"
+                app:navigationIconTint="?attr/colorPrimary"
                 app:title="@string/categories">
 
             </com.google.android.material.appbar.MaterialToolbar>
