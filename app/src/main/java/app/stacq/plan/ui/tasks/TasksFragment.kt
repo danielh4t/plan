@@ -30,7 +30,6 @@ import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.category.CategoryRemoteDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.databinding.FragmentTasksBinding
-import app.stacq.plan.ui.MainActivity
 import app.stacq.plan.ui.timer.cancelAlarm
 import app.stacq.plan.util.TimeUtil
 import app.stacq.plan.util.constants.WorkerConstants
@@ -39,7 +38,6 @@ import app.stacq.plan.worker.CategorySyncWorker
 import app.stacq.plan.worker.GenerateTaskWorker
 import app.stacq.plan.worker.GoalProgressWorker
 import app.stacq.plan.worker.GoalSyncWorker
-import app.stacq.plan.worker.TaskSyncWorker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -259,16 +257,12 @@ class TasksFragment : Fragment() {
             .addTag(WorkerConstants.TAG.GOAL_SYNC)
             .build()
 
-        val syncTask = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-            .setConstraints(constraints)
-            .addTag(WorkerConstants.TAG.TASK_SYNC)
-            .build()
 
         val continuation = workManager.beginUniqueWork(
             WorkerConstants.SYNC,
             ExistingWorkPolicy.KEEP,
             syncCategory
-        ).then(syncGoal).then(syncTask)
+        ).then(syncGoal)
 
         continuation.enqueue()
     }
@@ -281,12 +275,12 @@ class TasksFragment : Fragment() {
             .build()
 
         val updateGoalProgress =
-            PeriodicWorkRequestBuilder<GoalProgressWorker>(3, TimeUnit.HOURS)
+            PeriodicWorkRequestBuilder<GoalProgressWorker>(3, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
 
         val generateTask =
-            PeriodicWorkRequestBuilder<GenerateTaskWorker>(3, TimeUnit.HOURS)
+            PeriodicWorkRequestBuilder<GenerateTaskWorker>(3, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
 

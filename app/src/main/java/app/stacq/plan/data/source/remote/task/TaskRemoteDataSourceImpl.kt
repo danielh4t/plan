@@ -154,20 +154,4 @@ TaskRemoteDataSourceImpl(
             .document(taskId)
             .update(fields)
     }
-
-    override suspend fun getTaskDocuments(categoryId: String): List<TaskDocument> {
-
-        val uid = firebaseAuth.currentUser?.uid ?: return emptyList()
-        val time = CalendarUtil().getUTCStartOfDayInMillis() / 1000L
-
-        return firestore.collection(uid)
-            .document(categoryId)
-            .collection(TASKS)
-            .whereGreaterThanOrEqualTo("createdAt", time)
-            .whereEqualTo("name", "Sleep")
-            .get()
-            .await()
-            .toObjects(TaskDocument::class.java)
-            .toList()
-    }
 }
