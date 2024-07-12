@@ -34,7 +34,7 @@ class GoalRemoteDataSourceImpl(
             "progress" to goalDocument.progress,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
-            "deleted" to goalDocument.deleted,
+            "archived" to goalDocument.archived,
         )
 
         firestore.collection(uid)
@@ -63,7 +63,7 @@ class GoalRemoteDataSourceImpl(
             "progress" to goalDocument.progress,
             "completedAt" to goalDocument.completedAt,
             "generate" to goalDocument.generate,
-            "deleted" to goalDocument.deleted,
+            "archived" to goalDocument.archived,
         )
 
         firestore.collection(uid)
@@ -81,7 +81,7 @@ class GoalRemoteDataSourceImpl(
 
         if (uid == null || categoryId == null || goalId == null) return@withContext
 
-        val fields = mapOf("deleted" to goalDocument.deleted)
+        val fields = mapOf("archived" to goalDocument.archived)
 
         firestore.collection(uid)
             .document(categoryId)

@@ -26,6 +26,14 @@ interface CategoryDao {
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(categoryEntity: CategoryEntity)
 
+    /**
+     * Soft delete a category and disable.
+     *
+     * @param categoryId to be delete
+     */
+    @Query("UPDATE category SET archived = 1, enabled = 0 WHERE id = :categoryId")
+    suspend fun delete(categoryId: String)
+
     @Upsert
     fun upsert(categoryEntity: CategoryEntity)
 
@@ -36,14 +44,6 @@ interface CategoryDao {
      */
     @Query("UPDATE category SET enabled = NOT enabled WHERE id = :categoryId")
     suspend fun updateEnabledById(categoryId: String)
-
-    /**
-     * Soft delete a category and disable.
-     *
-     * @param categoryId to be delete
-     */
-    @Query("UPDATE category SET deleted = 1, enabled = 0 WHERE id = :categoryId")
-    suspend fun delete(categoryId: String)
 
     /**
      * Count categories.
@@ -62,7 +62,7 @@ interface CategoryDao {
     @Query("SELECT * FROM category")
     fun getCategoryEntities(): List<CategoryEntity>
 
-    @Query("SELECT COUNT(*) FROM category WHERE enabled AND NOT deleted")
+    @Query("SELECT COUNT(*) FROM category WHERE enabled AND NOT archived")
     fun getCount(): LiveData<Int>
 
     /**
@@ -81,7 +81,7 @@ interface CategoryDao {
      * @return all categories.
      */
     @Query(
-        "SELECT * FROM category WHERE NOT deleted ORDER By name"
+        "SELECT * FROM category WHERE NOT archived ORDER By name"
     )
     fun getCategories(): LiveData<List<CategoryEntity>>
 

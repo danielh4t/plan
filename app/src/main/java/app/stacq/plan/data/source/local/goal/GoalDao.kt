@@ -33,12 +33,12 @@ interface GoalDao {
     suspend fun update(goalEntity: GoalEntity)
 
     /**
-     * Delete a goal
+     * Soft delete a goal
      *
-     * @param goalEntity to delete
+     * @param goalId id to delete
      */
-    @Delete
-    suspend fun delete(goalEntity: GoalEntity)
+    @Query("UPDATE goal SET archived = 1 WHERE id = :goalId")
+    suspend fun delete(goalId: String)
 
     @Upsert
     suspend fun upsert(goalEntity: GoalEntity)
@@ -73,7 +73,7 @@ interface GoalDao {
      * @return goals.
      */
     @Transaction
-    @Query("SELECT * FROM goal ORDER BY name")
+    @Query("SELECT * FROM goal WHERE NOT archived ORDER BY name")
     fun getGoals(): LiveData<List<GoalEntityAndCategoryEntity>>
 
     /**

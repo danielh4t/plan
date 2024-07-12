@@ -275,12 +275,12 @@ class TasksFragment : Fragment() {
             .build()
 
         val updateGoalProgress =
-            PeriodicWorkRequestBuilder<GoalProgressWorker>(3, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<GoalProgressWorker>(3, TimeUnit.SECONDS)
                 .setConstraints(constraints)
                 .build()
 
         val generateTask =
-            PeriodicWorkRequestBuilder<GenerateTaskWorker>(3, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<GenerateTaskWorker>(3, TimeUnit.SECONDS)
                 .setConstraints(constraints)
                 .build()
 

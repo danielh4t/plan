@@ -30,7 +30,7 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun delete(category: Category) = withContext(ioDispatcher) {
-        categoryLocalDataSource.delete(category.asEntity())
+        categoryLocalDataSource.delete(category.asEntity().id)
         categoryRemoteDataSource.delete(category.asDocument())
     }
 

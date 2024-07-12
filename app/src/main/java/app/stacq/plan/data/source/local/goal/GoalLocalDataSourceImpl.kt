@@ -22,8 +22,8 @@ class GoalLocalDataSourceImpl(
         goalDao.update(goalEntity)
     }
 
-    override suspend fun delete(goalEntity: GoalEntity) = withContext(ioDispatcher) {
-        goalDao.delete(goalEntity)
+    override suspend fun delete(goalId: String) = withContext(ioDispatcher) {
+        goalDao.delete(goalId)
     }
 
     override suspend fun upsert(goalEntity: GoalEntity) {

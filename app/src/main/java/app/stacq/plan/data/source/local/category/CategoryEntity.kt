@@ -23,5 +23,5 @@ data class CategoryEntity(
 
     var enabled: Boolean = true,
 
-    var deleted: Boolean = false
+    var archived: Boolean = false
 )

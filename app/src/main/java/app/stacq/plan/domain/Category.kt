@@ -15,7 +15,7 @@ data class Category(
     var name: String,
     var color: String,
     var enabled: Boolean,
-    var deleted: Boolean,
+    var archived: Boolean,
 ) : Parcelable
 
 fun Category.asEntity() = CategoryEntity(
@@ -32,7 +32,7 @@ fun Category.asDocument() = CategoryDocument(
     name = name,
     color = color,
     enabled = enabled,
-    deleted = deleted,
+    archived = archived,
 )
 
 fun CategoryEntity.asCategory() = Category(
@@ -41,7 +41,7 @@ fun CategoryEntity.asCategory() = Category(
     name = name,
     color = color,
     enabled = enabled,
-    deleted = deleted,
+    archived = archived,
 )
 
 fun CategoryDocument.asCategory() = Category(
@@ -50,5 +50,5 @@ fun CategoryDocument.asCategory() = Category(
     name = name ?: "",
     color = color ?: "",
     enabled = enabled ?: false,
-    deleted = deleted ?: false,
+    archived = archived ?: false,
 )

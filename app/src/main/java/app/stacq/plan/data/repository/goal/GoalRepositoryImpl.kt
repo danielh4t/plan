@@ -34,7 +34,7 @@ class GoalRepositoryImpl(
     }
 
     override suspend fun delete(goal: Goal) = withContext(ioDispatcher) {
-        goalLocalDataSource.delete(goal.asEntity())
+        goalLocalDataSource.delete(goal.asEntity().id)
         goalRemoteDataSource.delete(goal.asDocument())
     }
 

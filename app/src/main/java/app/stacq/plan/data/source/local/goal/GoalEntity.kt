@@ -33,9 +33,9 @@ data class GoalEntity(
     var progress: Int = 0,
 
     @ColumnInfo(name = "completed_at")
-    var completedAt: Long = 0,
+    var completedAt: Long? = null,
 
     var generate: Boolean = false,
 
-    var deleted: Boolean = false,
+    var archived: Boolean = false,
 )

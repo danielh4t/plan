@@ -10,7 +10,7 @@ interface GoalLocalDataSource {
 
     suspend fun update(goalEntity: GoalEntity)
 
-    suspend fun delete(goalEntity: GoalEntity)
+    suspend fun delete(goalId: String)
 
     suspend fun upsert(goalEntity: GoalEntity)
 
