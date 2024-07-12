@@ -28,7 +28,7 @@ class CategoryRemoteDataSourceImpl(
             "name" to categoryDocument.name,
             "color" to categoryDocument.color,
             "enabled" to categoryDocument.enabled,
-            "deleted" to categoryDocument.deleted,
+            "archived" to categoryDocument.archived,
         )
 
         firestore.collection(uid).document(categoryId).set(fields)
@@ -47,7 +47,7 @@ class CategoryRemoteDataSourceImpl(
             "name" to categoryDocument.name,
             "color" to categoryDocument.color,
             "enabled" to categoryDocument.enabled,
-            "deleted" to categoryDocument.deleted,
+            "archived" to categoryDocument.archived,
         )
 
         firestore.collection(uid)
@@ -63,7 +63,7 @@ class CategoryRemoteDataSourceImpl(
         if (uid == null || categoryId == null) return@withContext
 
         // flips deleted
-        val fields = mapOf("deleted" to categoryDocument.deleted)
+        val fields = mapOf("archived" to categoryDocument.archived)
 
         firestore.collection(uid)
             .document(categoryId)

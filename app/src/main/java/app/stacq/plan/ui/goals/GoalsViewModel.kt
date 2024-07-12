@@ -21,24 +21,24 @@ class GoalsViewModel(
 
     fun complete(goal: Goal) {
         viewModelScope.launch {
-            goal.completedAt = if (goal.completedAt == 0L) {
+            goal.completedAt = if (goal.completedAt == null) {
                 TimeUtil().nowInSeconds()
             } else {
-                0L
+                null
             }
             goalRepository.update(goal)
         }
     }
 
     fun delete(goal: Goal) {
-        goal.deleted = true
+        goal.archived = true
         viewModelScope.launch {
             goalRepository.delete(goal)
         }
     }
 
     fun undoDelete(goal: Goal) {
-        goal.deleted = false
+        goal.archived = false
         viewModelScope.launch {
             goalRepository.create(goal)
         }

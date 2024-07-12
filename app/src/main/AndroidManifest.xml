@@ -8,7 +8,6 @@
 
     <application
         android:name=".PlanApplication"
-        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"

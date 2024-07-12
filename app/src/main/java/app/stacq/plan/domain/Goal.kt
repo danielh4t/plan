@@ -18,9 +18,9 @@ data class Goal(
     var categoryId: String,
     var days: Int,
     var progress: Int,
-    var completedAt: Long,
+    var completedAt: Long?,
     var generate: Boolean,
-    var deleted: Boolean,
+    var archived: Boolean,
     var categoryName: String? = null,
     var categoryColor: String? = null,
 ) : Parcelable
@@ -36,7 +36,7 @@ fun Goal.asEntity() = GoalEntity(
     progress = progress,
     completedAt = completedAt,
     generate = generate,
-    deleted = deleted,
+    archived = archived,
 )
 
 fun Goal.asDocument() = GoalDocument(
@@ -50,7 +50,7 @@ fun Goal.asDocument() = GoalDocument(
     progress = progress,
     completedAt = completedAt,
     generate = generate,
-    deleted = deleted,
+    archived = archived,
 )
 
 fun GoalEntity.asGoal() = Goal(
@@ -64,7 +64,7 @@ fun GoalEntity.asGoal() = Goal(
     progress = progress,
     completedAt = completedAt,
     generate = generate,
-    deleted = deleted,
+    archived = archived,
 )
 
 fun GoalEntityAndCategoryEntity.asGoal() = Goal(
@@ -78,7 +78,7 @@ fun GoalEntityAndCategoryEntity.asGoal() = Goal(
     progress = goalEntity.progress,
     completedAt = goalEntity.completedAt,
     generate = goalEntity.generate,
-    deleted = goalEntity.deleted,
+    archived = goalEntity.archived,
     categoryName = categoryEntity.name,
     categoryColor = categoryEntity.color,
 )
@@ -94,5 +94,5 @@ fun GoalDocument.asGoal() = Goal(
     progress = progress ?: 0,
     completedAt = completedAt ?: 0L,
     generate = generate ?: false,
-    deleted = deleted ?: false,
+    archived = archived ?: false,
 )

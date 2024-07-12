@@ -31,17 +31,15 @@ class GenerateTaskWorker(context: Context, params: WorkerParameters) :
 
         return try {
             for (goal in goalLocalDataSource.getGenerateGoals()) {
-
                 val completedToday = taskRepository.hasCompletedTaskGoalToday(goal.id)
                 val hasGenerated = taskRepository.hasGeneratedTask(goal.id)
-                if (completedToday || hasGenerated) {
+                if (goal.completedAt != null || completedToday || hasGenerated) {
                     continue
+                } else {
+                    val task =
+                        TaskEntity(name = goal.name, categoryId = goal.categoryId, goalId = goal.id)
+                    taskRepository.create(task.asTask())
                 }
-
-                val task =
-                    TaskEntity(name = goal.name, categoryId = goal.categoryId, goalId = goal.id)
-                taskRepository.create(task.asTask())
-
             }
             Result.success()
         } catch (throwable: Throwable) {

@@ -8,7 +8,7 @@ interface CategoryLocalDataSource {
 
     suspend fun update(categoryEntity: CategoryEntity)
 
-    suspend fun delete(categoryEntity: CategoryEntity)
+    suspend fun delete(categoryId: String)
 
     suspend fun upsert(categoryEntity: CategoryEntity)
 

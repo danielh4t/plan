@@ -30,11 +30,11 @@ class GoalSyncWorker(context: Context, params: WorkerParameters) :
 
         return try {
             categoryLocalDataSource.getCategoryEntities().map { category ->
-                if (category.enabled && !category.deleted) {
+                if (category.enabled && !category.archived) {
                     goalRemoteDataSource.getGoalDocuments(category.id).map {
                         val goalEntity = it.asGoal().asEntity()
-                        it.deleted?.let { deleted ->
-                            if (!deleted) {
+                        it.archived?.let { archived ->
+                            if (!archived) {
                                 goalLocalDataSource.upsert(goalEntity)
                             }
                         }

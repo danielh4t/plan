@@ -35,8 +35,8 @@ class CategorySyncWorker(context: Context, params: WorkerParameters) :
             categoryRemoteDataSource.getCategoryDocuments().map {
                 val categoryEntity = it.asCategory().asEntity()
                 // Ignore deleted categories
-                it.deleted?.let { deleted ->
-                    if (!deleted) {
+                it.archived?.let { archived ->
+                    if (!archived) {
                         categoryLocalDataSource.upsert(categoryEntity)
                     }
                 }

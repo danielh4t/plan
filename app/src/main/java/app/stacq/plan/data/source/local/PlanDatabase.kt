@@ -16,7 +16,7 @@ import app.stacq.plan.data.source.local.task.TaskEntity
 
 @Database(
     entities = [TaskEntity::class, CategoryEntity::class, GoalEntity::class],
-    version = 6,
+    version = 1,
     exportSchema = false
 )
 abstract class PlanDatabase : RoomDatabase() {
@@ -40,10 +40,6 @@ abstract class PlanDatabase : RoomDatabase() {
                         PlanDatabase::class.java,
                         PLAN_DATABASE
                     )
-                        .addMigrations(MIGRATION_2_3)
-                        .addMigrations(MIGRATION_3_4)
-                        .addMigrations(MIGRATION_4_5)
-                        .addMigrations(MIGRATION_5_6)
                         .build()
                     INSTANCE = instance
                 }
@@ -54,29 +50,3 @@ abstract class PlanDatabase : RoomDatabase() {
 }
 
 private const val PLAN_DATABASE = "plan_database"
-
-val MIGRATION_2_3 = object : Migration(2, 3) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE task ADD COLUMN notes TEXT DEFAULT ''")
-    }
-}
-
-val MIGRATION_3_4 = object : Migration(3, 4) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS bite")
-    }
-}
-
-val MIGRATION_4_5 = object : Migration(4, 5) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE task ADD COLUMN started_at INTEGER DEFAULT 0")
-    }
-}
-
-val MIGRATION_5_6 = object : Migration(5, 6) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE task DROP COLUMN completed")
-        database.execSQL("ALTER TABLE goal DROP COLUMN completed")
-        database.execSQL("ALTER TABLE goal RENAME COLUMN completedAt TO completed_at")
-    }
-}

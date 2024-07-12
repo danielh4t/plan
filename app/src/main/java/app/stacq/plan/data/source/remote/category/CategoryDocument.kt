@@ -9,5 +9,5 @@ data class CategoryDocument(
     val name: String? = null,
     var color: String? = null,
     var enabled: Boolean? = null,
-    var deleted: Boolean? = null,
+    var archived: Boolean? = null,
 )
