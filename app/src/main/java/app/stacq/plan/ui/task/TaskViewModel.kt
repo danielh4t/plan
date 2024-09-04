@@ -1,5 +1,6 @@
 package app.stacq.plan.ui.task
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +11,6 @@ import app.stacq.plan.domain.asTask
 import app.stacq.plan.util.constants.FirebaseAnalyticsConstants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
@@ -27,9 +27,9 @@ class TaskViewModel(
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     fun logPermission(isGranted: Boolean) {
-        firebaseAnalytics.logEvent(FirebaseAnalyticsConstants.Event.NOTIFICATION_PERMISSION) {
-            param("notifications", if (isGranted) "true" else "false")
-        }
+        firebaseAnalytics.logEvent(FirebaseAnalyticsConstants.Event.NOTIFICATION_PERMISSION, bundleOf(
+            "notifications" to if (isGranted) "true" else "false"
+        ))
     }
 
     fun clone() {

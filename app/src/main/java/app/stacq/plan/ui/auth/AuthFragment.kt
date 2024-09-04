@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import app.stacq.plan.R
@@ -81,9 +82,9 @@ class AuthFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            val bundle = Bundle()
-                            bundle.putString(FirebaseAnalytics.Param.METHOD, "createUserWithEmail")
-                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundleOf(
+                                FirebaseAnalytics.Param.METHOD to "createUserWithEmail"
+                            ))
                             navController.popBackStack()
                         } else {
                             // If sign in fails, display a message to the user.
@@ -120,9 +121,9 @@ class AuthFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            val bundle = Bundle()
-                            bundle.putString(FirebaseAnalytics.Param.METHOD, "signInWithEmail")
-                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(
+                                FirebaseAnalytics.Param.METHOD to "signInWithEmail"
+                            ))
                             navController.popBackStack()
                         } else {
                             // If sign in fails, display a message to the user.
