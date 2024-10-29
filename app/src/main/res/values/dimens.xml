@@ -1,12 +1,5 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="vertical_list_margin">8dp</dimen>
-    <dimen name="goal_image_bottom_margin">8dp</dimen>
-    <dimen name="goal_image">24dp</dimen>
-    <dimen name="input_layout_min">300dp</dimen>
-    <dimen name="input_layout_max">480dp</dimen>
-    <dimen name="button_max">300dp</dimen>
-    <dimen name="timer_text_size">240sp</dimen>
     <dimen name="fab_margin_bottom">48dp</dimen>
 </resources>

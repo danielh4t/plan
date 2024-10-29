@@ -6,9 +6,5 @@ interface TaskRemoteDataSource {
 
     suspend fun update(taskDocument: TaskDocument)
 
-    suspend fun updateCategory(taskDocument: TaskDocument, previousCategoryId: String)
-
-    suspend fun updatePriority(taskDocument: TaskDocument)
-
-    suspend fun updateStartCompletion(taskDocument: TaskDocument)
+    suspend fun getTasks(): List<TaskDocument>
 }
