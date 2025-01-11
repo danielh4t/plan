@@ -15,6 +15,8 @@ android {
         targetSdk = 35
         versionCode = 87
         versionName = "1.87"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles("proguard-rules.pro")
     }
 
