@@ -13,8 +13,8 @@ android {
         applicationId = "app.stacq.plan"
         minSdk = 28
         targetSdk = 35
-        versionCode = 86
-        versionName = "1.86"
+        versionCode = 87
+        versionName = "1.87"
         proguardFiles("proguard-rules.pro")
     }
 
