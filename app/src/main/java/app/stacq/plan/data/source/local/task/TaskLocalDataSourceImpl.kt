@@ -8,20 +8,17 @@ import javax.inject.Singleton
 class TaskLocalDataSourceImpl(
     private val taskDao: TaskDao
 ) : TaskLocalDataSource {
-
     override suspend fun create(taskEntity: TaskEntity) = taskDao.create(taskEntity)
-
 
     override suspend fun read(taskId: String): TaskEntity? = taskDao.read(taskId)
 
-
     override suspend fun update(taskEntity: TaskEntity) = taskDao.update(taskEntity)
-
 
     override suspend fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity)
 
-
     override suspend fun upsert(taskEntity: TaskEntity) = taskDao.upsert(taskEntity)
 
-    override fun getTask(): Flow<TaskEntity?> = taskDao.getTask()
+    override suspend fun getTask(): Flow<TaskEntity?> = taskDao.getTask()
+
+    override suspend fun getTasks(): Flow<List<TaskEntity>> = taskDao.getTasks()
 }

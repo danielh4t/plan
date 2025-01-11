@@ -14,11 +14,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.stacq.plan.ui.auth.AuthScreen
 import app.stacq.plan.ui.task.TaskScreen
+import app.stacq.plan.ui.time.TimeScreen
 
 
 enum class Screens {
     Auth,
-    Task
+    Task,
+    Time
 }
 
 @Preview
@@ -54,8 +56,14 @@ fun MainScreen(
                 TaskScreen(
                     handleSignOut = {
                         viewModel.signOut()
+                    },
+                    handleTime = {
+                        navController.navigate(Screens.Time.name)
                     }
                 )
+            }
+            composable(route = Screens.Time.name) {
+                TimeScreen()
             }
         }
     }

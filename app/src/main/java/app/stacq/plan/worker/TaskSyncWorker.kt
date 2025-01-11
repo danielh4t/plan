@@ -10,10 +10,12 @@ import app.stacq.plan.data.source.local.PlanDatabase
 import app.stacq.plan.data.source.local.task.TaskLocalDataSourceImpl
 import app.stacq.plan.data.source.remote.task.TaskRemoteDataSourceImpl
 import app.stacq.plan.domain.asTask
+import app.stacq.plan.domain.asTaskDocument
 import app.stacq.plan.domain.asTaskEntity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.map
 
 
 class TaskSyncWorker(context: Context, params: WorkerParameters) :
@@ -23,7 +25,6 @@ class TaskSyncWorker(context: Context, params: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         val database = PlanDatabase.getDatabase(appContext)
-
 
         val taskLocalDataSource = TaskLocalDataSourceImpl(database.taskDao())
         val taskRemoteDataSource =
@@ -39,8 +40,14 @@ class TaskSyncWorker(context: Context, params: WorkerParameters) :
                     }
                 }
             }
+            taskLocalDataSource.getTasks().map {
+                it.map { taskEntity ->
+                    val taskDocument = taskEntity.asTask().asTaskDocument()
+                    taskRemoteDataSource.update(taskDocument)
+                }
+            }
             Result.success()
-        } catch (throwable: Throwable) {
+        } catch (_: Throwable) {
             Result.failure()
         }
     }

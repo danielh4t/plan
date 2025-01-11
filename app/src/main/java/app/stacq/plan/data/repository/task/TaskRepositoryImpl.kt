@@ -36,8 +36,15 @@ class TaskRepositoryImpl(
     override suspend fun upsert(task: Task) =
         taskLocalDataSource.upsert(task.asTaskEntity())
 
-    override fun getTask(): Flow<Task?> =
+    override suspend fun getTask(): Flow<Task?> =
         taskLocalDataSource.getTask().map {
             it?.asTask()
+        }
+
+    override suspend fun getTasks(): Flow<List<Task>> =
+        taskLocalDataSource.getTasks().map {
+            it.map {
+                it.asTask()
+            }
         }
 }

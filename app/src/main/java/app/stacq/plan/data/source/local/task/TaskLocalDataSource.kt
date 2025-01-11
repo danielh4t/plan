@@ -15,5 +15,7 @@ interface TaskLocalDataSource {
 
     suspend fun upsert(taskEntity: TaskEntity)
 
-    fun getTask(): Flow<TaskEntity?>
+    suspend fun getTask(): Flow<TaskEntity?>
+
+    suspend fun getTasks(): Flow<List<TaskEntity>>
 }

@@ -6,12 +6,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.stacq.plan.PlanApplication
 import app.stacq.plan.ui.task.TaskViewModel
+import app.stacq.plan.ui.time.TimeViewModel
 
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             TaskViewModel(planApplication().container.taskRepository)
+        }
+        initializer {
+            TimeViewModel(planApplication().container.taskRepository)
         }
     }
 }

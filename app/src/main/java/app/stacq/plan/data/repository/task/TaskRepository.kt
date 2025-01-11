@@ -15,5 +15,7 @@ interface TaskRepository {
 
     suspend fun upsert(task: Task)
 
-    fun getTask(): Flow<Task?>
+    suspend fun getTask(): Flow<Task?>
+
+    suspend fun getTasks(): Flow<List<Task>>
 }

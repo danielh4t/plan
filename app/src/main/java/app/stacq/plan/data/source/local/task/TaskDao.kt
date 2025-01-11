@@ -45,4 +45,8 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM task WHERE completed_at IS NULL ORDER BY created_at ASC LIMIT 1")
     fun getTask(): Flow<TaskEntity?>
+
+    @Transaction
+    @Query("SELECT * FROM task ORDER BY created_at DESC")
+    fun getTasks(): Flow<List<TaskEntity>>
 }
