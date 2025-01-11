@@ -1,6 +1,7 @@
 package app.stacq.plan.data.source.local.task
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
+
 
 interface TaskLocalDataSource {
 
@@ -14,33 +15,7 @@ interface TaskLocalDataSource {
 
     suspend fun upsert(taskEntity: TaskEntity)
 
-    suspend fun archive(taskId: String)
+    suspend fun getTask(): Flow<TaskEntity?>
 
-    suspend fun unarchive(taskId: String)
-
-    suspend fun updateStartCompletion(taskEntity: TaskEntity)
-
-    suspend fun updateTimerFinish(taskEntity: TaskEntity)
-
-    suspend fun updateTimerAlarmById(taskId: String)
-
-    suspend fun updatePriority(taskEntity: TaskEntity)
-
-    suspend fun getTasksList(): List<TaskEntity>
-
-    suspend fun hasGeneratedTask(goalId: String): Boolean
-
-    suspend fun hasCompletedTaskGoalToday(goalId: String): Boolean
-
-    fun getCompletedToday(): LiveData<Int>
-
-    fun getCompletedTaskGoalToday(): LiveData<Int>
-
-    fun getCount(): LiveData<Int>
-
-    fun getTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
-
-    fun getTask(taskId: String): LiveData<TaskEntityAndCategoryEntity>
-
-    fun getCompletedTasks(): LiveData<List<TaskEntityAndCategoryEntity>>
+    suspend fun getTasks(): Flow<List<TaskEntity>>
 }
