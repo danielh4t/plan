@@ -3,15 +3,11 @@ package app.stacq.plan.ui.task
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
@@ -53,11 +49,15 @@ fun TaskContent(
     Column(modifier = modifier.fillMaxSize()) {
         when (uiState) {
             is TaskUIState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.width(64.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
             }
 
             is TaskUIState.Success -> {
@@ -66,23 +66,22 @@ fun TaskContent(
                 val task = uiState.task
 
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .fillMaxWidth()
                     ) {
-                        Time(
+                        Title(
+                            onTitleClick = handleTime,
                             modifier = Modifier
-                                .padding(top = 16.dp, start = 16.dp),
-                            onTimeClick = handleTime,
+                                .align(Alignment.Center)
                         )
                         Profile(
                             imageUrl = imageUrl,
                             modifier = Modifier
-                                .padding(top = 16.dp, end = 16.dp),
-                            onProfileClick = handleSignOut,
+                                .align(Alignment.CenterEnd)
+                                .padding(end = 16.dp),
+                            onProfileClick = handleSignOut
                         )
-
                     }
                     if (showBottomSheet) {
                         ModalBottomSheet(

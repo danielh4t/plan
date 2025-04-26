@@ -4,11 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,19 +16,16 @@ import app.stacq.plan.ui.theme.PlanTheme
 
 
 @Composable
-fun Time(
+fun Title(
     modifier: Modifier = Modifier,
-    onTimeClick: () -> Unit = {},
+    onTitleClick: () -> Unit = {},
 ) {
-
-    IconButton(
-        onClick = { onTimeClick() },
+    TextButton(
+        onClick = { onTitleClick() },
         modifier = modifier
     ) {
-        Icon(
-            imageVector = Icons.Default.CheckCircle,
-            contentDescription = stringResource(R.string.content_account_circle),
-            modifier = Modifier.size(40.dp)
+        Text(
+            stringResource(R.string.app_name)
         )
     }
 }
@@ -45,10 +39,10 @@ fun TimePreview() {
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Center
         ) {
-            Time(
-                onTimeClick = {}
+            Title(
+                onTitleClick = {}
             )
         }
     }

@@ -63,7 +63,11 @@ fun MainScreen(
                 )
             }
             composable(route = Screens.Time.name) {
-                TimeScreen()
+                TimeScreen(
+                    handleTask = {
+                        navController.navigate(Screens.Task.name)
+                    }
+                )
             }
         }
     }
